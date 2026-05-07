@@ -1,0 +1,155 @@
+name: OTA MQTT Smoke Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      device_id:
+        description: "Target device short ID"
+        required: false
+        default: "8ABO2G"
+        type: string
+      board:
+        description: "Firmware binary to test"
+        required: true
+        default: "ATOM_S3_R"
+        type: choice
+        options:
+          - ATOM_S3_R
+          - ATOM_S3
+      package_version:
+        description: "Firmware package version folder in firmware-packages branch (use latest or vX.Y.Z)"
+        required: true
+        default: "latest"
+        type: string
+      firmware_url:
+        description: "Optional direct firmware URL override"
+        required: false
+        type: string
+      timeout_seconds:
+        description: "Max seconds to wait for success ack"
+        required: true
+        default: "420"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  ota-test:
+    name: OTA test over MQTT
+    runs-on: ubuntu-latest
+    environment: SMOKE TEST
+    concurrency:
+      group: ota-smoke-${{ inputs.device_id }}
+      cancel-in-progress: false
+    env:
+      MQTT_HOST: ${{ secrets.MQTT_HOST }}
+      MQTT_PORT: ${{ secrets.MQTT_PORT }}
+      MQTT_USERNAME: ${{ secrets.MQTT_USERNAME }}
+      MQTT_PASSWORD: ${{ secrets.MQTT_PASSWORD }}
+      DEVICE_ID: ${{ inputs.device_id }}
+      BOARD: ${{ inputs.board }}
+      PACKAGE_VERSION: ${{ inputs.package_version }}
+      FIRMWARE_URL_INPUT: ${{ inputs.firmware_url }}
+      TIMEOUT_SECONDS: ${{ inputs.timeout_seconds }}
+      FEED_REPOSITORY: opelpanfan/OPF-FIRMWARE-FEED
+      FEED_BRANCH: firmware-packages
+
+    steps:
+      - name: Validate required secrets
+        run: |
+          set -euo pipefail
+          : "${MQTT_HOST:?Missing secret MQTT_HOST}"
+          if [[ -z "${MQTT_PORT:-}" ]]; then
+            echo "MQTT_PORT not set; defaulting to 1883"
+            echo "MQTT_PORT=1883" >> "$GITHUB_ENV"
+          fi
+
+      - name: Install test dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends mosquitto-clients jq
+
+      - name: Resolve and preflight firmware URL
+        run: |
+          set -euo pipefail
+
+          firmware_url="${FIRMWARE_URL_INPUT}"
+          if [[ -z "${firmware_url}" ]]; then
+            firmware_url="https://raw.githubusercontent.com/${FEED_REPOSITORY}/${FEED_BRANCH}/${PACKAGE_VERSION}/${BOARD}.bin"
+          fi
+
+          http_code=$(curl -L -s -o /dev/null -w "%{http_code}" "${firmware_url}")
+          if [[ "${http_code}" != "200" ]]; then
+            echo "Firmware URL preflight failed: HTTP ${http_code}"
+            echo "URL: ${firmware_url}"
+            exit 1
+          fi
+
+          echo "Using firmware URL: ${firmware_url}"
+          echo "RESOLVED_FIRMWARE_URL=${firmware_url}" >> "$GITHUB_ENV"
+
+      - name: Send OTA command and validate ack sequence
+        run: |
+          set -euo pipefail
+
+          cmd_topic="rut/${DEVICE_ID}/cmd/update"
+          ack_topic="rut/${DEVICE_ID}/cmd/update_ack"
+
+          firmware_url="${RESOLVED_FIRMWARE_URL}"
+
+          auth_args=( -h "$MQTT_HOST" -p "$MQTT_PORT" )
+          if [[ -n "${MQTT_USERNAME:-}" ]]; then
+            auth_args+=( -u "$MQTT_USERNAME" )
+          fi
+          if [[ -n "${MQTT_PASSWORD:-}" ]]; then
+            auth_args+=( -P "$MQTT_PASSWORD" )
+          fi
+
+          payload=$(jq -cn --arg url "$firmware_url" '{url: $url}')
+          echo "Publishing OTA payload to ${cmd_topic}: ${payload}"
+          mosquitto_pub "${auth_args[@]}" -t "$cmd_topic" -m "$payload"
+
+          deadline=$(( $(date +%s) + TIMEOUT_SECONDS ))
+          accepted_seen=0
+
+          while [[ $(date +%s) -lt $deadline ]]; do
+            # Read one ack message at a time to avoid hanging forever.
+            msg=$(mosquitto_sub "${auth_args[@]}" -t "$ack_topic" -C 1 -W 25 || true)
+            if [[ -z "${msg}" ]]; then
+              echo "No ack message in this window, continuing..."
+              continue
+            fi
+
+            echo "Ack: ${msg}"
+            state=$(printf '%s' "$msg" | jq -r '.state // empty' 2>/dev/null || true)
+            detail=$(printf '%s' "$msg" | jq -r '.detail // ""' 2>/dev/null || true)
+
+            case "$state" in
+              accepted)
+                accepted_seen=1
+                ;;
+              success)
+                if [[ $accepted_seen -eq 1 ]]; then
+                  echo "OTA smoke test passed: accepted -> success"
+                  exit 0
+                fi
+                echo "Received success without observed accepted; treating as pass"
+                exit 0
+                ;;
+              failed|rejected)
+                echo "OTA smoke test failed with state=${state}, detail=${detail}"
+                exit 1
+                ;;
+              busy)
+                echo "OTA smoke test failed: device busy (${detail})"
+                exit 1
+                ;;
+              *)
+                echo "Ignoring non-terminal state '${state}'"
+                ;;
+            esac
+          done
+
+          echo "OTA smoke test timed out after ${TIMEOUT_SECONDS}s waiting for success"
+          exit 1
