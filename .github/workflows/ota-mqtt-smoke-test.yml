@@ -1,8 +1,17 @@
-name: OTA MQTT Smoke Test
+name: PUSH FIRMWARE
 
 on:
   workflow_dispatch:
     inputs:
+      product_type:
+        description: "Product type (determines feed folder)"
+        required: true
+        default: "BRIDGE"
+        type: choice
+        options:
+          - BMS
+          - BRIDGE
+          - METER
       device_id:
         description: "Target device short ID"
         required: false
@@ -17,7 +26,7 @@ on:
           - ATOM_S3_R
           - ATOM_S3
       package_version:
-        description: "Firmware package version folder in firmware-packages branch (use latest or vX.Y.Z)"
+        description: "Firmware package version folder (use latest or vX.Y.Z)"
         required: true
         default: "latest"
         type: string
@@ -53,7 +62,8 @@ jobs:
       FIRMWARE_URL_INPUT: ${{ inputs.firmware_url }}
       TIMEOUT_SECONDS: ${{ inputs.timeout_seconds }}
       FEED_REPOSITORY: opelpanfan/OPF-FIRMWARE-FEED
-      FEED_BRANCH: firmware-packages
+      FEED_BRANCH: main
+      FEED_PRODUCT: ${{ inputs.product_type }}
 
     steps:
       - name: Validate required secrets
@@ -76,7 +86,7 @@ jobs:
 
           firmware_url="${FIRMWARE_URL_INPUT}"
           if [[ -z "${firmware_url}" ]]; then
-            firmware_url="https://raw.githubusercontent.com/${FEED_REPOSITORY}/${FEED_BRANCH}/${PACKAGE_VERSION}/${BOARD}.bin"
+            firmware_url="https://raw.githubusercontent.com/${FEED_REPOSITORY}/${FEED_BRANCH}/${FEED_PRODUCT}/${PACKAGE_VERSION}/${BOARD}.bin"
           fi
 
           http_code=$(curl -L -s -o /dev/null -w "%{http_code}" "${firmware_url}")
