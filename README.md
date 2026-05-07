@@ -36,7 +36,7 @@ The `OTA MQTT Smoke Test` workflow is run manually from Actions.
 
 Required Environment and Secrets:
 
-- Environment: `SMOKE TEST`
+- Environment: `QA`
 - Secrets:
   - `MQTT_HOST`
   - `MQTT_PORT` (optional; defaults to 1883)

@@ -38,7 +38,7 @@ jobs:
   ota-test:
     name: OTA test over MQTT
     runs-on: ubuntu-latest
-    environment: SMOKE TEST
+    environment: QA
     concurrency:
       group: ota-smoke-${{ inputs.device_id }}
       cancel-in-progress: false
