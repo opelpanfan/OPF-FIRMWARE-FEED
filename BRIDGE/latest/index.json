@@ -1,0 +1,7 @@
+{
+  "version": "v1.0.1",
+  "files": {
+    "ATOM_S3": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin",
+    "ATOM_S3_R": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
+  }
+}
