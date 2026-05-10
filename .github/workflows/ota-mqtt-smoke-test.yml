@@ -6,7 +6,7 @@ on:
       product_type:
         description: "Product type (determines feed folder)"
         required: true
-        default: "BRIDGE"
+        default: ""
         type: choice
         options:
           - BMS
@@ -15,14 +15,15 @@ on:
       device_id:
         description: "Target device short ID"
         required: false
-        default: "8ABO2G"
+        default: ""
         type: string
       board:
         description: "Firmware binary to test"
         required: true
-        default: "ATOM_S3_R"
+        default: ""
         type: choice
         options:
+          - ESP32-S3-RS485-CAN
           - ATOM_S3_R
           - ATOM_S3
       package_version:
