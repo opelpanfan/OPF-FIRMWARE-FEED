@@ -1,0 +1,6 @@
+{
+  "version": "master_ws_redesign",
+  "files": {
+    "OPF_WS": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin"
+  }
+}
