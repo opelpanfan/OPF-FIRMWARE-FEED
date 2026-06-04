@@ -119,7 +119,33 @@ jobs:
 
           payload=$(jq -cn --arg url "$firmware_url" '{url: $url}')
           echo "Publishing OTA payload to ${cmd_topic}: ${payload}"
-          mosquitto_pub "${auth_args[@]}" -t "$cmd_topic" -m "$payload"
+
+          max_publish_attempts=5
+          publish_attempt=1
+          publish_succeeded=0
+
+          while [[ $publish_attempt -le $max_publish_attempts ]]; do
+            echo "MQTT publish attempt ${publish_attempt}/${max_publish_attempts}"
+
+            if mosquitto_pub "${auth_args[@]}" -t "$cmd_topic" -m "$payload"; then
+              echo "MQTT publish succeeded"
+              publish_succeeded=1
+              break
+            fi
+
+            if [[ $publish_attempt -lt $max_publish_attempts ]]; then
+              sleep_seconds=$(( publish_attempt * 2 ))
+              echo "MQTT publish failed; retrying in ${sleep_seconds}s..."
+              sleep "$sleep_seconds"
+            fi
+
+            publish_attempt=$((publish_attempt + 1))
+          done
+
+          if [[ $publish_succeeded -ne 1 ]]; then
+            echo "MQTT publish failed after ${max_publish_attempts} attempts"
+            exit 1
+          fi
 
           deadline=$(( $(date +%s) + TIMEOUT_SECONDS ))
           accepted_seen=0
