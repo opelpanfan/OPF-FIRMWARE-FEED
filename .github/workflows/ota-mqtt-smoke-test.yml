@@ -23,6 +23,7 @@ on:
         default: ""
         type: choice
         options:
+          - OPF_WS
           - ESP32-S3-RS485-CAN
           - ATOM_S3_R
           - ATOM_S3
