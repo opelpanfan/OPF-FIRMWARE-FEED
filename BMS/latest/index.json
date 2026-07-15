@@ -1,6 +1,10 @@
 {
-  "version": "1.0.3",
   "files": {
+    "OPF_ATOM_S3": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3.bin",
+    "OPF_ATOM_S3R": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3R.bin",
+    "OPF_T2CAN": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_T2CAN.bin",
+    "OPF_WS": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin",
     "OPF_WS_NO_TEMP": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin"
-  }
+  },
+  "version": "1.0.3"
 }
