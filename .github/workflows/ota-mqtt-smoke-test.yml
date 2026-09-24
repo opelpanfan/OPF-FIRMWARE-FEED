@@ -42,7 +42,7 @@ on:
         type: string
 
       timeout_seconds:
-        description: "Max seconds to wait for success ack"
+        description: "Max seconds to wait for OTA success/reboot"
         required: true
         default: "420"
         type: string
@@ -77,6 +77,9 @@ jobs:
       FEED_PRODUCT: ${{ inputs.product_type }}
 
     steps:
+      # ------------------------------------------------------------
+      # Validate configuration
+      # ------------------------------------------------------------
       - name: Validate required secrets and inputs
         run: |
           set -euo pipefail
@@ -99,16 +102,23 @@ jobs:
             exit 1
           fi
 
+      # ------------------------------------------------------------
+      # Dependencies
+      # ------------------------------------------------------------
       - name: Install test dependencies
         run: |
           set -euo pipefail
 
           sudo apt-get update
+
           sudo apt-get install -y --no-install-recommends \
             mosquitto-clients \
             jq \
             netcat-openbsd
 
+      # ------------------------------------------------------------
+      # Resolve firmware URL
+      # ------------------------------------------------------------
       - name: Resolve and preflight firmware URL
         run: |
           set -euo pipefail
@@ -141,6 +151,9 @@ jobs:
           echo "Firmware URL preflight successful"
           echo "RESOLVED_FIRMWARE_URL=${firmware_url}" >> "$GITHUB_ENV"
 
+      # ------------------------------------------------------------
+      # MQTT connectivity
+      # ------------------------------------------------------------
       - name: Diagnose MQTT connectivity
         run: |
           set -euo pipefail
@@ -151,7 +164,10 @@ jobs:
           echo "Testing TCP connectivity to ${MQTT_HOST}:${MQTT_PORT}"
           nc -vz -w 10 "$MQTT_HOST" "$MQTT_PORT"
 
-      - name: Send OTA command and validate ack sequence
+      # ------------------------------------------------------------
+      # OTA
+      # ------------------------------------------------------------
+      - name: Send OTA command and validate reboot
         run: |
           set -euo pipefail
 
@@ -160,12 +176,23 @@ jobs:
 
           firmware_url="${RESOLVED_FIRMWARE_URL}"
 
-          # OTA command payload must be the RAW firmware URL.
-          # Do NOT JSON encode it and do NOT add quotes.
+          # Device expects ONLY the raw URL.
+          #
+          # Example:
+          #
+          # https://raw.githubusercontent.com/.../OPF_WS.bin
+          #
+          # NOT:
+          #
+          # {"url":"https://..."}
+          #
+          # and NOT:
+          #
+          # "https://..."
+          #
           payload="${firmware_url}"
 
-          # mosquitto requires different client IDs for the subscriber
-          # and publisher because both connections exist at the same time.
+          # Publisher and subscriber MUST have different MQTT IDs.
           sub_client_id="gha-ota-sub-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           pub_client_id="gha-ota-pub-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
 
@@ -183,14 +210,22 @@ jobs:
             mqtt_common_args+=( -P "$MQTT_PASSWORD" )
           fi
 
-          echo "Command topic: ${cmd_topic}"
-          echo "Ack topic: ${ack_topic}"
-          echo "Firmware URL: ${firmware_url}"
-          echo "Publishing RAW OTA payload:"
-          printf '%s\n' "${payload}"
+          echo "======================================================"
+          echo "OTA TEST"
+          echo "======================================================"
+          echo "Device:       ${DEVICE_ID}"
+          echo "Board:        ${BOARD}"
+          echo "Product:      ${FEED_PRODUCT}"
+          echo "Version dir:  ${PACKAGE_VERSION}"
+          echo "Command:      ${cmd_topic}"
+          echo "ACK:          ${ack_topic}"
+          echo "Firmware URL:"
+          echo "${firmware_url}"
+          echo "======================================================"
 
           ack_log="$(mktemp)"
-          echo "Ack log file: ${ack_log}"
+
+          echo "ACK log: ${ack_log}"
 
           cleanup() {
             if [[ -n "${sub_pid:-}" ]]; then
@@ -203,7 +238,12 @@ jobs:
 
           trap cleanup EXIT
 
-          echo "Starting MQTT ACK subscriber before publishing OTA command"
+          # --------------------------------------------------------
+          # Start subscriber BEFORE sending OTA command
+          # --------------------------------------------------------
+
+          echo
+          echo "Starting MQTT ACK subscriber..."
 
           mosquitto_sub \
             "${mqtt_common_args[@]}" \
@@ -218,10 +258,15 @@ jobs:
 
           if ! kill -0 "$sub_pid" 2>/dev/null; then
             echo "MQTT subscriber exited before OTA command was published"
+            echo
             echo "Subscriber output:"
             cat "$ack_log" || true
             exit 1
           fi
+
+          # --------------------------------------------------------
+          # Publish OTA command
+          # --------------------------------------------------------
 
           max_publish_attempts=5
           publish_attempt=1
@@ -229,6 +274,7 @@ jobs:
 
           while [[ "$publish_attempt" -le "$max_publish_attempts" ]]; do
 
+            echo
             echo "MQTT publish attempt ${publish_attempt}/${max_publish_attempts}"
 
             if mosquitto_pub \
@@ -237,15 +283,18 @@ jobs:
               -t "$cmd_topic" \
               -m "$payload"
             then
-              echo "MQTT publish succeeded"
+              echo "MQTT OTA command published successfully"
               publish_succeeded=1
               break
             fi
 
             if [[ "$publish_attempt" -lt "$max_publish_attempts" ]]; then
+
               sleep_seconds=$((publish_attempt * 2))
 
-              echo "MQTT publish failed; retrying in ${sleep_seconds}s..."
+              echo "MQTT publish failed."
+              echo "Retrying in ${sleep_seconds}s..."
+
               sleep "$sleep_seconds"
             fi
 
@@ -253,25 +302,42 @@ jobs:
           done
 
           if [[ "$publish_succeeded" -ne 1 ]]; then
+
+            echo
             echo "MQTT publish failed after ${max_publish_attempts} attempts"
+            echo
             echo "Subscriber output:"
+
             cat "$ack_log" || true
+
             exit 1
           fi
+
+          # --------------------------------------------------------
+          # Wait for OTA ACK / reboot
+          # --------------------------------------------------------
 
           deadline=$(( $(date +%s) + TIMEOUT_SECONDS ))
 
           accepted_seen=0
           seen_lines=0
 
-          echo "Waiting up to ${TIMEOUT_SECONDS}s for OTA result..."
+          echo
+          echo "OTA command sent."
+          echo "Waiting up to ${TIMEOUT_SECONDS}s for OTA result or device reboot..."
+          echo
 
           while [[ $(date +%s) -lt "$deadline" ]]; do
 
+            # Subscriber should remain alive.
             if ! kill -0 "$sub_pid" 2>/dev/null; then
+
               echo "MQTT subscriber exited while waiting for ACK"
+              echo
               echo "Subscriber output:"
+
               cat "$ack_log" || true
+
               exit 1
             fi
 
@@ -287,68 +353,214 @@ jobs:
 
                 echo "ACK raw: ${line}"
 
+                # Remove MQTT topic prefix.
                 msg="${line#${ack_topic} }"
+
+                # --------------------------------------------------
+                # Validate JSON
+                # --------------------------------------------------
+
+                if ! printf '%s' "$msg" | jq -e . >/dev/null 2>&1; then
+                  echo "Ignoring non-JSON ACK"
+                  continue
+                fi
+
+                # --------------------------------------------------
+                # Extract common fields
+                # --------------------------------------------------
 
                 state=$(
                   printf '%s' "$msg" |
-                    jq -r '.state // empty' 2>/dev/null ||
-                    true
+                    jq -r '.state // empty'
                 )
 
                 detail=$(
                   printf '%s' "$msg" |
-                    jq -r '.detail // ""' 2>/dev/null ||
-                    true
+                    jq -r '.detail // empty'
                 )
+
+                d_action=$(
+                  printf '%s' "$msg" |
+                    jq -r '.d_action // empty'
+                )
+
+                ack_device=$(
+                  printf '%s' "$msg" |
+                    jq -r '.device // empty'
+                )
+
+                fw_version=$(
+                  printf '%s' "$msg" |
+                    jq -r '.fw_version // empty'
+                )
+
+                chip_ip=$(
+                  printf '%s' "$msg" |
+                    jq -r '.chip_ip // empty'
+                )
+
+                boot_reason=$(
+                  printf '%s' "$msg" |
+                    jq -r '.boot_reason // empty'
+                )
+
+                # --------------------------------------------------
+                # Explicit OTA state messages
+                # --------------------------------------------------
 
                 case "$state" in
 
                   accepted)
+
                     echo "OTA command accepted by device"
+
                     accepted_seen=1
+                    continue
                     ;;
 
                   success)
-                    if [[ "$accepted_seen" -eq 1 ]]; then
-                      echo "OTA smoke test PASSED: accepted -> success"
-                    else
-                      echo "OTA smoke test PASSED: success received"
-                      echo "Note: accepted ACK was not observed"
+
+                    echo
+                    echo "======================================================"
+                    echo "OTA SUCCESS"
+                    echo "======================================================"
+                    echo "Device reported explicit OTA success."
+
+                    if [[ -n "$detail" ]]; then
+                      echo "Detail: ${detail}"
                     fi
+
+                    echo "======================================================"
 
                     exit 0
                     ;;
 
                   failed|rejected)
-                    echo "OTA smoke test FAILED"
-                    echo "State: ${state}"
+
+                    echo
+                    echo "======================================================"
+                    echo "OTA FAILED"
+                    echo "======================================================"
+                    echo "State:  ${state}"
                     echo "Detail: ${detail}"
+                    echo "======================================================"
+
                     exit 1
                     ;;
 
                   busy)
-                    echo "OTA smoke test FAILED: device busy"
+
+                    echo
+                    echo "======================================================"
+                    echo "OTA FAILED"
+                    echo "======================================================"
+                    echo "Device is busy."
                     echo "Detail: ${detail}"
+                    echo "======================================================"
+
                     exit 1
                     ;;
 
-                  "")
-                    echo "Ignoring message without valid JSON state"
-                    ;;
-
-                  *)
-                    echo "Ignoring non-terminal state: ${state}"
-                    ;;
-
                 esac
+
+                # --------------------------------------------------
+                # Device startup after OTA
+                #
+                # Example:
+                #
+                # {
+                #   "device":"PS0HZW",
+                #   "chip_id":277336689007388,
+                #   "d_action":"startup",
+                #   "fw_version":"1.0.2",
+                #   "chip_ip":"192.168.1.245",
+                #   "boot_reason":"SW"
+                # }
+                #
+                # A startup message received AFTER we published the
+                # OTA command means the device rebooted and returned
+                # to MQTT.
+                # --------------------------------------------------
+
+                if [[ "$d_action" == "startup" ]]; then
+
+                  # Extra safety: make sure startup belongs to the
+                  # device targeted by this workflow.
+                  if [[ -n "$ack_device" && "$ack_device" != "$DEVICE_ID" ]]; then
+
+                    echo "Ignoring startup ACK from unexpected device:"
+                    echo "Expected: ${DEVICE_ID}"
+                    echo "Received: ${ack_device}"
+
+                    continue
+                  fi
+
+                  echo
+                  echo "======================================================"
+                  echo "OTA SUCCESS - DEVICE RESTARTED"
+                  echo "======================================================"
+                  echo "Device:       ${ack_device:-$DEVICE_ID}"
+
+                  if [[ -n "$fw_version" ]]; then
+                    echo "FW version:   ${fw_version}"
+                  fi
+
+                  if [[ -n "$chip_ip" ]]; then
+                    echo "IP address:   ${chip_ip}"
+                  fi
+
+                  if [[ -n "$boot_reason" ]]; then
+                    echo "Boot reason:  ${boot_reason}"
+                  fi
+
+                  if [[ "$accepted_seen" -eq 1 ]]; then
+                    echo "OTA accepted: yes"
+                  else
+                    echo "OTA accepted: not observed"
+                  fi
+
+                  echo
+                  echo "Device rebooted and returned to MQTT."
+                  echo "OTA smoke test PASSED."
+                  echo "======================================================"
+
+                  exit 0
+                fi
+
+                # --------------------------------------------------
+                # Other JSON ACK
+                # --------------------------------------------------
+
+                if [[ -n "$state" ]]; then
+                  echo "Ignoring non-terminal OTA state: ${state}"
+                elif [[ -n "$d_action" ]]; then
+                  echo "Ignoring device action: ${d_action}"
+                else
+                  echo "Ignoring unrelated JSON ACK"
+                fi
+
               done
             fi
 
             sleep 2
           done
 
-          echo "OTA smoke test TIMED OUT after ${TIMEOUT_SECONDS}s"
+          # --------------------------------------------------------
+          # Timeout
+          # --------------------------------------------------------
+
+          echo
+          echo "======================================================"
+          echo "OTA TEST TIMED OUT"
+          echo "======================================================"
+          echo "No OTA success or startup ACK received within"
+          echo "${TIMEOUT_SECONDS} seconds."
+          echo
           echo "Captured subscriber output:"
+          echo "------------------------------------------------------"
+
           cat "$ack_log" || true
+
+          echo "======================================================"
 
           exit 1
