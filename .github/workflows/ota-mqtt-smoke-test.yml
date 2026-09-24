@@ -129,7 +129,7 @@ jobs:
             auth_args+=( -P "$MQTT_PASSWORD" )
           fi
 
-          payload=$(jq -cn --arg url "$firmware_url" '{url: $url}')
+          payload=$(jq -cn --arg url "$firmware_url" '$url')
           echo "Client ID: ${client_id}"
           echo "Command topic: ${cmd_topic}"
           echo "Ack topic: ${ack_topic}"
