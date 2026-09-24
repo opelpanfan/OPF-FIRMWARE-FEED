@@ -116,8 +116,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          cmd_topic="rut/${DEVICE_ID}/cmd/update"
-          ack_topic="rut/${DEVICE_ID}/cmd/update_ack"
+          cmd_topic="storage/${DEVICE_ID}/cmd/update"
+          ack_topic="storage/${DEVICE_ID}/cmd/ack"
           firmware_url="${RESOLVED_FIRMWARE_URL}"
           client_id="gha-ota-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
 
