@@ -12,11 +12,13 @@ on:
           - BMS
           - BRIDGE
           - METER
+
       device_id:
         description: "Target device short ID"
         required: true
         default: ""
         type: string
+
       board:
         description: "Firmware binary to test"
         required: true
@@ -27,15 +29,18 @@ on:
           - ESP32-S3-RS485-CAN
           - ATOM_S3_R
           - ATOM_S3
+
       package_version:
         description: "Firmware package version folder (use latest or vX.Y.Z)"
         required: true
         default: "latest"
         type: string
+
       firmware_url:
         description: "Optional direct firmware URL override"
         required: false
         type: string
+
       timeout_seconds:
         description: "Max seconds to wait for success ack"
         required: true
@@ -50,19 +55,23 @@ jobs:
     name: OTA test over MQTT
     runs-on: ubuntu-latest
     environment: QA
+
     concurrency:
       group: ota-smoke-${{ inputs.device_id }}
       cancel-in-progress: false
+
     env:
       MQTT_HOST: ${{ secrets.MQTT_HOST }}
       MQTT_PORT: ${{ secrets.MQTT_PORT }}
       MQTT_USERNAME: ${{ secrets.MQTT_USERNAME }}
       MQTT_PASSWORD: ${{ secrets.MQTT_PASSWORD }}
+
       DEVICE_ID: ${{ inputs.device_id }}
       BOARD: ${{ inputs.board }}
       PACKAGE_VERSION: ${{ inputs.package_version }}
       FIRMWARE_URL_INPUT: ${{ inputs.firmware_url }}
       TIMEOUT_SECONDS: ${{ inputs.timeout_seconds }}
+
       FEED_REPOSITORY: opelpanfan/OPF-FIRMWARE-FEED
       FEED_BRANCH: main
       FEED_PRODUCT: ${{ inputs.product_type }}
@@ -71,35 +80,65 @@ jobs:
       - name: Validate required secrets and inputs
         run: |
           set -euo pipefail
+
           : "${MQTT_HOST:?Missing secret MQTT_HOST}"
           : "${DEVICE_ID:?Missing required input device_id}"
+
           if [[ -z "${MQTT_PORT:-}" ]]; then
             echo "MQTT_PORT not set; defaulting to 1883"
             echo "MQTT_PORT=1883" >> "$GITHUB_ENV"
           fi
 
+          if ! [[ "${TIMEOUT_SECONDS}" =~ ^[0-9]+$ ]]; then
+            echo "timeout_seconds must be a positive integer"
+            exit 1
+          fi
+
+          if [[ "${TIMEOUT_SECONDS}" -le 0 ]]; then
+            echo "timeout_seconds must be greater than zero"
+            exit 1
+          fi
+
       - name: Install test dependencies
         run: |
+          set -euo pipefail
+
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends mosquitto-clients jq netcat-openbsd
+          sudo apt-get install -y --no-install-recommends \
+            mosquitto-clients \
+            jq \
+            netcat-openbsd
 
       - name: Resolve and preflight firmware URL
         run: |
           set -euo pipefail
 
           firmware_url="${FIRMWARE_URL_INPUT}"
+
           if [[ -z "${firmware_url}" ]]; then
             firmware_url="https://raw.githubusercontent.com/${FEED_REPOSITORY}/${FEED_BRANCH}/${FEED_PRODUCT}/${PACKAGE_VERSION}/${BOARD}.bin"
           fi
 
-          http_code=$(curl -L -s -o /dev/null -w "%{http_code}" "${firmware_url}")
+          echo "Firmware URL:"
+          echo "${firmware_url}"
+
+          http_code=$(curl \
+            --location \
+            --silent \
+            --show-error \
+            --output /dev/null \
+            --write-out "%{http_code}" \
+            --connect-timeout 15 \
+            --max-time 60 \
+            "${firmware_url}")
+
           if [[ "${http_code}" != "200" ]]; then
             echo "Firmware URL preflight failed: HTTP ${http_code}"
             echo "URL: ${firmware_url}"
             exit 1
           fi
 
-          echo "Using firmware URL: ${firmware_url}"
+          echo "Firmware URL preflight successful"
           echo "RESOLVED_FIRMWARE_URL=${firmware_url}" >> "$GITHUB_ENV"
 
       - name: Diagnose MQTT connectivity
@@ -109,7 +148,7 @@ jobs:
           echo "Testing DNS resolution for MQTT broker host"
           getent hosts "$MQTT_HOST"
 
-          echo "Testing TCP connectivity to $MQTT_HOST:$MQTT_PORT"
+          echo "Testing TCP connectivity to ${MQTT_HOST}:${MQTT_PORT}"
           nc -vz -w 10 "$MQTT_HOST" "$MQTT_PORT"
 
       - name: Send OTA command and validate ack sequence
@@ -118,22 +157,37 @@ jobs:
 
           cmd_topic="storage/${DEVICE_ID}/cmd/update"
           ack_topic="storage/${DEVICE_ID}/cmd/ack"
+
           firmware_url="${RESOLVED_FIRMWARE_URL}"
-          client_id="gha-ota-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
 
-          auth_args=( -V mqttv311 -i "$client_id" -h "$MQTT_HOST" -p "$MQTT_PORT" -d )
+          # OTA command payload must be the RAW firmware URL.
+          # Do NOT JSON encode it and do NOT add quotes.
+          payload="${firmware_url}"
+
+          # mosquitto requires different client IDs for the subscriber
+          # and publisher because both connections exist at the same time.
+          sub_client_id="gha-ota-sub-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          pub_client_id="gha-ota-pub-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+
+          mqtt_common_args=(
+            -V mqttv311
+            -h "$MQTT_HOST"
+            -p "$MQTT_PORT"
+          )
+
           if [[ -n "${MQTT_USERNAME:-}" ]]; then
-            auth_args+=( -u "$MQTT_USERNAME" )
-          fi
-          if [[ -n "${MQTT_PASSWORD:-}" ]]; then
-            auth_args+=( -P "$MQTT_PASSWORD" )
+            mqtt_common_args+=( -u "$MQTT_USERNAME" )
           fi
 
-          payload=$(jq -cn --arg url "$firmware_url" $url)
-          echo "Client ID: ${client_id}"
+          if [[ -n "${MQTT_PASSWORD:-}" ]]; then
+            mqtt_common_args+=( -P "$MQTT_PASSWORD" )
+          fi
+
           echo "Command topic: ${cmd_topic}"
           echo "Ack topic: ${ack_topic}"
-          echo "Publishing OTA payload: ${payload}"
+          echo "Firmware URL: ${firmware_url}"
+          echo "Publishing RAW OTA payload:"
+          printf '%s\n' "${payload}"
 
           ack_log="$(mktemp)"
           echo "Ack log file: ${ack_log}"
@@ -143,17 +197,27 @@ jobs:
               kill "$sub_pid" 2>/dev/null || true
               wait "$sub_pid" 2>/dev/null || true
             fi
+
+            rm -f "$ack_log" 2>/dev/null || true
           }
+
           trap cleanup EXIT
 
-          echo "Starting MQTT subscriber before publish"
-          mosquitto_sub "${auth_args[@]}" -t "$ack_topic" -v >"$ack_log" 2>&1 &
+          echo "Starting MQTT ACK subscriber before publishing OTA command"
+
+          mosquitto_sub \
+            "${mqtt_common_args[@]}" \
+            -i "$sub_client_id" \
+            -t "$ack_topic" \
+            -v \
+            >"$ack_log" 2>&1 &
+
           sub_pid=$!
 
           sleep 2
 
           if ! kill -0 "$sub_pid" 2>/dev/null; then
-            echo "Subscriber exited early before publish"
+            echo "MQTT subscriber exited before OTA command was published"
             echo "Subscriber output:"
             cat "$ack_log" || true
             exit 1
@@ -163,17 +227,24 @@ jobs:
           publish_attempt=1
           publish_succeeded=0
 
-          while [[ $publish_attempt -le $max_publish_attempts ]]; do
+          while [[ "$publish_attempt" -le "$max_publish_attempts" ]]; do
+
             echo "MQTT publish attempt ${publish_attempt}/${max_publish_attempts}"
 
-            if mosquitto_pub "${auth_args[@]}" -t "$cmd_topic" -m "$payload"; then
+            if mosquitto_pub \
+              "${mqtt_common_args[@]}" \
+              -i "$pub_client_id" \
+              -t "$cmd_topic" \
+              -m "$payload"
+            then
               echo "MQTT publish succeeded"
               publish_succeeded=1
               break
             fi
 
-            if [[ $publish_attempt -lt $max_publish_attempts ]]; then
-              sleep_seconds=$(( publish_attempt * 2 ))
+            if [[ "$publish_attempt" -lt "$max_publish_attempts" ]]; then
+              sleep_seconds=$((publish_attempt * 2))
+
               echo "MQTT publish failed; retrying in ${sleep_seconds}s..."
               sleep "$sleep_seconds"
             fi
@@ -181,7 +252,7 @@ jobs:
             publish_attempt=$((publish_attempt + 1))
           done
 
-          if [[ $publish_succeeded -ne 1 ]]; then
+          if [[ "$publish_succeeded" -ne 1 ]]; then
             echo "MQTT publish failed after ${max_publish_attempts} attempts"
             echo "Subscriber output:"
             cat "$ack_log" || true
@@ -189,12 +260,16 @@ jobs:
           fi
 
           deadline=$(( $(date +%s) + TIMEOUT_SECONDS ))
+
           accepted_seen=0
           seen_lines=0
 
-          while [[ $(date +%s) -lt $deadline ]]; do
+          echo "Waiting up to ${TIMEOUT_SECONDS}s for OTA result..."
+
+          while [[ $(date +%s) -lt "$deadline" ]]; do
+
             if ! kill -0 "$sub_pid" 2>/dev/null; then
-              echo "Subscriber exited while waiting for ack"
+              echo "MQTT subscriber exited while waiting for ACK"
               echo "Subscriber output:"
               cat "$ack_log" || true
               exit 1
@@ -203,38 +278,68 @@ jobs:
             total_lines=$(wc -l < "$ack_log" || echo 0)
 
             if [[ "$total_lines" -gt "$seen_lines" ]]; then
+
               while [[ "$seen_lines" -lt "$total_lines" ]]; do
+
                 seen_lines=$((seen_lines + 1))
+
                 line=$(sed -n "${seen_lines}p" "$ack_log")
-                echo "Ack raw: $line"
+
+                echo "ACK raw: ${line}"
 
                 msg="${line#${ack_topic} }"
-                state=$(printf '%s' "$msg" | jq -r '.state // empty' 2>/dev/null || true)
-                detail=$(printf '%s' "$msg" | jq -r '.detail // ""' 2>/dev/null || true)
+
+                state=$(
+                  printf '%s' "$msg" |
+                    jq -r '.state // empty' 2>/dev/null ||
+                    true
+                )
+
+                detail=$(
+                  printf '%s' "$msg" |
+                    jq -r '.detail // ""' 2>/dev/null ||
+                    true
+                )
 
                 case "$state" in
+
                   accepted)
+                    echo "OTA command accepted by device"
                     accepted_seen=1
                     ;;
+
                   success)
-                    if [[ $accepted_seen -eq 1 ]]; then
-                      echo "OTA smoke test passed: accepted -> success"
-                      exit 0
+                    if [[ "$accepted_seen" -eq 1 ]]; then
+                      echo "OTA smoke test PASSED: accepted -> success"
+                    else
+                      echo "OTA smoke test PASSED: success received"
+                      echo "Note: accepted ACK was not observed"
                     fi
-                    echo "Received success without observed accepted; treating as pass"
+
                     exit 0
                     ;;
+
                   failed|rejected)
-                    echo "OTA smoke test failed with state=${state}, detail=${detail}"
+                    echo "OTA smoke test FAILED"
+                    echo "State: ${state}"
+                    echo "Detail: ${detail}"
                     exit 1
                     ;;
+
                   busy)
-                    echo "OTA smoke test failed: device busy (${detail})"
+                    echo "OTA smoke test FAILED: device busy"
+                    echo "Detail: ${detail}"
                     exit 1
                     ;;
-                  *)
-                    echo "Ignoring non-terminal state '${state}'"
+
+                  "")
+                    echo "Ignoring message without valid JSON state"
                     ;;
+
+                  *)
+                    echo "Ignoring non-terminal state: ${state}"
+                    ;;
+
                 esac
               done
             fi
@@ -242,7 +347,8 @@ jobs:
             sleep 2
           done
 
-          echo "OTA smoke test timed out after ${TIMEOUT_SECONDS}s waiting for success"
+          echo "OTA smoke test TIMED OUT after ${TIMEOUT_SECONDS}s"
           echo "Captured subscriber output:"
           cat "$ack_log" || true
+
           exit 1
