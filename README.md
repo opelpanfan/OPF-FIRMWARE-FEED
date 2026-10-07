@@ -14,11 +14,11 @@ Read `latest.BMS`, `latest.BRIDGE`, and `latest.P1`. `latest.METER` is the same 
 
 Use a product only when `available` is true. Download each object in `artifacts[]`, check `sha256`, then flash. For P1/METER, flash `RAK3172_TX` and `RAK3172_RX` from that same latest object as a pair. If either board is missing, do not flash.
 
-`products[].versions[]` lists every immutable `vX.Y.Z/` folder, with `artifacts` and `sha256`. `latest.*` is the channel. Historical version folders were removed, so today `products[].versions` is empty, `matched_folder` is null, and `highest_semver_is_latest` is false. The next publish writes `vX.Y.Z/` again and lists it there. The version label stored inside each `latest/` folder is:
+`products[].versions[]` lists every immutable version folder, with `artifacts` and `sha256`. Those folders stay in the tree. `latest.*` is the channel and is refreshed from a publish only when `set_latest` is true. `highest_semver_is_latest` is false: the highest folder is not the channel.
 
-- BMS latest is version `1.0.1`. The bytes are only at `BMS/latest/` until the next publish also stores `BMS/vX.Y.Z/`.
-- Bridge latest is version `v1.0.1`. Flash only `ATOM_S3_R` and `ATOM_S3`. `latest.BRIDGE.runtime_config` records that DTU versus RS485 is chosen after flash. There are no `ATOM_S3_R_DTU` or `ATOM_S3_DTU` files.
-- P1 latest stays unavailable until tag `v1.0.1` is ingested (`opf-p1-rak3172_transmiter-fw6.bin` and `opf-p1-rak3172_receiver-fw6.bin`).
+- BMS `latest/` is version `1.0.1` and matches `BMS/v1.0.1/`. Older folders such as `BMS/v1.0.5/` and `BMS/1.0.2/` stay published.
+- Bridge `latest/` is version `v1.0.1` and matches `BRIDGE/v1.0.1/`. Flash only `ATOM_S3_R` and `ATOM_S3`. `latest.BRIDGE.runtime_config` records that DTU versus RS485 is chosen after flash. There are no `ATOM_S3_R_DTU` or `ATOM_S3_DTU` files. Older folders through `BRIDGE/v1.0.14/` stay published.
+- P1 latest stays unavailable until tag `v1.0.1` is ingested (`opf-p1-rak3172_transmiter-fw6.bin` and `opf-p1-rak3172_receiver-fw6.bin`). That ingest needs `SOURCE_READ_TOKEN` on this repo.
 
 Direct latest URLs that exist today:
 
@@ -31,7 +31,7 @@ After the first successful P1 ingest, the same pattern is:
 - `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin`
 - `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin`
 
-A later publish still writes an immutable `vX.Y.Z/` folder and copies those bytes onto `latest/`. Until that happens, older pinned URLs such as `BMS/1.0.2/`, `BMS/v1.0.5/`, `BMS/master_ws_redesign/`, and `BRIDGE/v1.0.14/` are not in the feed.
+A publish writes an immutable `vX.Y.Z/` folder and, when `set_latest` is true, copies those bytes onto `latest/`. It does not delete older version folders. Pinned URLs such as `BMS/v1.0.1/`, `BMS/1.0.2/`, `BRIDGE/v1.0.1/`, and `BRIDGE/v1.0.14/` stay in the feed.
 
 ## Layout
 

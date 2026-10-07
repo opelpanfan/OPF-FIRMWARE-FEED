@@ -28,9 +28,9 @@ BMS has no workflow filename in the catalog yet. Pass `workflow_file` (basename 
 
 `index.json` at the repository root is the list flasher should use. `latest.BMS`, `latest.BRIDGE`, and `latest.P1` are the channels. `latest.METER` aliases P1.
 
-Every publish writes an immutable `PRODUCT/vX.Y.Z/` folder (`1.0.1` and `v1.0.1` both normalize to `v1.0.1`). `products[].versions[]` lists each of those folders with `artifacts` and `sha256`. That list is what flasher reads for pinned versions. `set_latest` (default true) then copies the same bytes to `PRODUCT/latest/`. `set_latest: false` leaves `latest/` unchanged.
+Every publish writes an immutable `PRODUCT/vX.Y.Z/` folder (`1.0.1` and `v1.0.1` both normalize to `v1.0.1`) and leaves every older version folder in place. `products[].versions[]` lists each of those folders with `artifacts` and `sha256`. That list is what flasher reads for pinned versions. `set_latest` (default true) then copies the same bytes to `PRODUCT/latest/`. `set_latest: false` leaves `latest/` unchanged. Nothing in publish or manifest rebuild deletes a version folder.
 
-`highest_semver_folder` is informational. It is not the channel. The tree currently has no version folders beside `latest/`, so `products[].versions` is empty and `matched_folder` is null until the next publish. A version folder is still not the channel: `latest/` is.
+`highest_semver_folder` is informational. It is not the channel. Bridge `latest/` matches `v1.0.1` while `v1.0.14/` is still in the tree. BMS `latest/` matches `v1.0.1` while `v1.0.5/` is still in the tree. `highest_semver_is_latest` is false for both.
 
 After a good publish with `set_latest` true, `latest/` is an exact copy of that version folder. A later publish does not edit the old folder. Rollback copies an older folder that is still in the tree back onto `latest/` and leaves every version folder untouched.
 
@@ -109,7 +109,7 @@ The Actions tab can still run **Publish firmware** by hand (`workflow_dispatch`)
 
 ## Rollback
 
-Pass the product plus a version folder that is still in the tree, such as `v1.2.3`. Historical folders were removed, so there is no rollback target until a later publish writes `vX.Y.Z/` again. The folder must contain every required board for that product. `latest/` is replaced with that folder’s binaries. The folder itself is not modified.
+Pass the product plus a version folder that is in the tree, such as `BRIDGE/v1.0.1` or `v1.2.3`. The folder must contain every required board for that product. `latest/` is replaced with that folder’s binaries. The folder itself is not modified, and no other version folder is deleted.
 
 ```bash
 python3 .github/scripts/publish_firmware.py rollback --product BRIDGE --folder v1.2.3

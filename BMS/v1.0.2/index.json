@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "product": "BMS",
+  "version": "v1.0.2",
+  "semver": "1.0.2",
+  "channel": "version",
+  "folder": "v1.0.2",
+  "files": {
+    "OPF_WS": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v1.0.2/OPF_WS.bin"
+  },
+  "sha256": {
+    "OPF_WS": "b2b9fa2cc7de3935701e663c7979cf05e47b19e94de7ceb5ee543a87f174f9ce"
+  },
+  "artifacts": [
+    {
+      "board": "OPF_WS",
+      "filename": "OPF_WS.bin",
+      "sha256": "b2b9fa2cc7de3935701e663c7979cf05e47b19e94de7ceb5ee543a87f174f9ce",
+      "size": 1254448,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v1.0.2/OPF_WS.bin"
+    }
+  ]
+}
