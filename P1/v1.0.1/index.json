@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "product": "P1",
+  "version": "v1.0.1",
+  "semver": "1.0.1",
+  "channel": "version",
+  "folder": "v1.0.1",
+  "files": {
+    "RAK3172_RX": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v1.0.1/RAK3172_RX.bin",
+    "RAK3172_TX": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v1.0.1/RAK3172_TX.bin"
+  },
+  "sha256": {
+    "RAK3172_RX": "d8715d588d00c13b35e672c0434cf472687e26517ec430ba9410f7b219627fd0",
+    "RAK3172_TX": "b240cfcb933f4947cfcfdd4e3b42a74b86b501a4489feb55717c4e3ffdb7dde9"
+  },
+  "artifacts": [
+    {
+      "board": "RAK3172_RX",
+      "filename": "RAK3172_RX.bin",
+      "sha256": "d8715d588d00c13b35e672c0434cf472687e26517ec430ba9410f7b219627fd0",
+      "size": 69468,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v1.0.1/RAK3172_RX.bin",
+      "source_filename": "RAK3172_RX.bin"
+    },
+    {
+      "board": "RAK3172_TX",
+      "filename": "RAK3172_TX.bin",
+      "sha256": "b240cfcb933f4947cfcfdd4e3b42a74b86b501a4489feb55717c4e3ffdb7dde9",
+      "size": 91028,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v1.0.1/RAK3172_TX.bin",
+      "source_filename": "RAK3172_TX.bin"
+    }
+  ],
+  "flash_as_pair": [
+    "RAK3172_TX",
+    "RAK3172_RX"
+  ],
+  "source": {
+    "kind": "directory",
+    "repository": "opelpanfan/OPF-P1"
+  }
+}
