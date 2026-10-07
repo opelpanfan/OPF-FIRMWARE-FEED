@@ -448,18 +448,18 @@ class FeedTests(unittest.TestCase):
         bms = root_index["latest"]["BMS"]
         self.assertTrue(bridge["available"])
         self.assertEqual(bridge["version"], "v1.0.1")
-        self.assertIsNone(bridge["matched_folder"])
-        self.assertEqual(bridge["matches_folders"], [])
-        self.assertIsNone(bridge["highest_semver_folder"])
+        self.assertEqual(bridge["matched_folder"], "v1.0.1")
+        self.assertEqual(bridge["matches_folders"], ["v1.0.1"])
+        self.assertEqual(bridge["highest_semver_folder"], "v1.0.14")
         self.assertFalse(bridge["highest_semver_is_latest"])
         self.assertEqual(bridge["boards"], ["ATOM_S3", "ATOM_S3_R"])
         self.assertEqual(bridge["board_contract_sha"], "d9ca7a0")
         self.assertIn("after flash", bridge["runtime_config"])
         self.assertTrue(all("/BRIDGE/latest/" in item["url"] for item in bridge["artifacts"]))
         self.assertEqual(bms["version"], "1.0.1")
-        self.assertIsNone(bms["matched_folder"])
-        self.assertEqual(bms["matches_folders"], [])
-        self.assertIsNone(bms["highest_semver_folder"])
+        self.assertEqual(bms["matched_folder"], "v1.0.1")
+        self.assertEqual(bms["matches_folders"], ["v1.0.1"])
+        self.assertEqual(bms["highest_semver_folder"], "v1.0.5")
         self.assertFalse(bms["highest_semver_is_latest"])
         self.assertTrue(all("/BMS/latest/" in item["url"] for item in bms["artifacts"]))
         self.assertFalse(root_index["latest"]["P1"]["available"])
@@ -469,17 +469,33 @@ class FeedTests(unittest.TestCase):
         self.assertIn("v1.0.1", products["P1"]["note"])
         self.assertIn("opf-p1-rak3172_transmiter-fw", products["P1"]["note"])
         self.assertIn("opf-p1-rak3172_receiver-fw", products["P1"]["note"])
-        for product_id in ("BMS", "BRIDGE", "P1", "METER"):
-            self.assertEqual(products[product_id]["versions"], [])
+        self.assertEqual(products["P1"]["versions"], [])
+        self.assertEqual(products["METER"]["versions"], [])
+        for product_id in ("BMS", "BRIDGE"):
             product_dir = ROOT / product_id
-            folders = sorted(path.name for path in product_dir.iterdir() if path.is_dir())
-            if product_id in ("BMS", "BRIDGE"):
-                self.assertEqual(folders, ["latest"])
-            else:
-                self.assertEqual(folders, [])
+            folders = sorted(path.name for path in product_dir.iterdir() if path.is_dir() and path.name != "latest")
+            listed = products[product_id]["versions"]
+            self.assertEqual(sorted(item["folder"] for item in listed), folders)
+            self.assertIn("v1.0.1", folders)
+            for item in listed:
+                self.assertTrue(item["artifacts"])
+                self.assertEqual(
+                    item["sha256"],
+                    {artifact["board"]: artifact["sha256"] for artifact in item["artifacts"]},
+                )
+        self.assertTrue((ROOT / "BRIDGE/v1.0.1/ATOM_S3.bin").is_file())
+        self.assertTrue((ROOT / "BRIDGE/v1.0.1/ATOM_S3_R.bin").is_file())
+        self.assertEqual(
+            (ROOT / "BRIDGE/v1.0.1/ATOM_S3_R.bin").read_bytes(),
+            (ROOT / "BRIDGE/latest/ATOM_S3_R.bin").read_bytes(),
+        )
+        bridge_v101 = next(item for item in products["BRIDGE"]["versions"] if item["folder"] == "v1.0.1")
+        self.assertEqual(bridge_v101["sha256"], bridge["sha256"])
         sums = (ROOT / "SHA256SUMS").read_text()
-        self.assertNotIn("/v1.", sums)
-        self.assertNotIn("master_ws_redesign", sums)
+        self.assertIn("BMS/v1.0.1/OPF_WS.bin", sums)
+        self.assertIn("BMS/master_ws_redesign/OPF_WS.bin", sums)
+        self.assertIn("BRIDGE/v1.0.1/ATOM_S3_R.bin", sums)
+        self.assertIn("BRIDGE/v1.0.14/ATOM_S3.bin", sums)
         self.assertIn("BMS/latest/OPF_WS.bin", sums)
         self.assertIn("BRIDGE/latest/ATOM_S3_R.bin", sums)
         bms_latest = json.loads((ROOT / "BMS/latest/index.json").read_text())

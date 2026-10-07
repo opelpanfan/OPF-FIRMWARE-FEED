@@ -1,7 +1,9 @@
 """Fail-closed firmware feed catalog, ingest, and manifest rendering.
 
-Binaries already on ``main`` stay where they are. This module only adds
-manifests, checks images, and places new publishes into ``vX.Y.Z`` folders.
+Binaries already on ``main`` stay where they are. Publish adds an immutable
+``vX.Y.Z`` folder and, when requested, refreshes ``latest/`` from that release.
+Existing version folders are never deleted. ``latest/`` is not a substitute
+for those folders.
 """
 
 from __future__ import annotations
