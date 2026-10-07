@@ -5,6 +5,28 @@ private releases or workflow artifacts. Binaries already on ``main`` stay
 where they are. A local publish adds an immutable ``vX.Y.Z`` folder and, when
 requested, refreshes ``latest/`` from that release. Existing version folders
 are never deleted. ``latest/`` is not a substitute for those folders.
+
+Release notes contract
+----------------------
+Optional UTF-8 markdown, ``RELEASE_NOTES.md``, may sit in a version folder
+(``BMS|BRIDGE|P1/vX.Y.Z/``). When a publish or rollback updates ``latest/``
+from that folder, the same file is mirrored into ``latest/``. Notes are not
+required.
+
+When the file is present, that folder's ``index.json`` and the root catalog
+(``latest.<PRODUCT>`` and ``products[].versions[]``) include:
+
+- ``release_notes``: the markdown text (what Flasher should show)
+- ``release_notes_url``: raw URL of ``RELEASE_NOTES.md`` in that same folder
+
+Both fields are omitted when the file is absent. ``SHA256SUMS`` lists ``.bin``
+images only.
+
+``.bin`` bytes in a version folder are immutable. Notes are written by the
+publish that creates the folder (``apply_publish(..., release_notes=...`` or
+``release_notes_path=...)``). If that folder was published without notes,
+``attach_release_notes`` may add ``RELEASE_NOTES.md`` once. It does not
+rewrite ``.bin`` bytes. Notes that are already published cannot be changed.
 """
 
 from __future__ import annotations
@@ -25,6 +47,8 @@ FOLDER_RE = re.compile(
 )
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 BOARD_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
+RELEASE_NOTES_NAME = "RELEASE_NOTES.md"
+MAX_RELEASE_NOTES = 128 * 1024
 
 ESP_MAGIC = 0xE9
 MIN_ESP = 64 * 1024
@@ -219,6 +243,174 @@ def _dump(data: dict) -> str:
     return json.dumps(data, indent=2) + "\n"
 
 
+def _notes_label(folder: Path) -> str:
+    return f"{folder.parent.name}/{folder.name}/{RELEASE_NOTES_NAME}"
+
+
+def _encode_release_notes(text: str) -> bytes | None:
+    """Normalize publisher input to UTF-8 file bytes. Blank input is no notes."""
+
+    if "\x00" in text:
+        raise FeedError("release notes must be UTF-8 markdown text")
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
+    if normalized.startswith("\ufeff"):
+        normalized = normalized[1:]
+    if not normalized.strip():
+        return None
+    if not normalized.endswith("\n"):
+        normalized += "\n"
+    data = normalized.encode("utf-8")
+    if len(data) > MAX_RELEASE_NOTES:
+        raise FeedError(f"release notes are {len(data)} bytes; limit is {MAX_RELEASE_NOTES}")
+    return data
+
+
+def _read_release_notes_input(path: str | Path) -> str:
+    note_path = Path(path)
+    try:
+        if not note_path.is_file():
+            raise FeedError(f"release notes path is not a file: {note_path}")
+        size = note_path.stat().st_size
+    except FeedError:
+        raise
+    except OSError as exc:
+        raise FeedError(f"cannot read release notes {note_path}: {exc}") from exc
+    if size > MAX_RELEASE_NOTES:
+        raise FeedError(f"{note_path} is {size} bytes; limit is {MAX_RELEASE_NOTES}")
+    try:
+        raw = note_path.read_bytes()
+    except OSError as exc:
+        raise FeedError(f"cannot read release notes {note_path}: {exc}") from exc
+    if b"\x00" in raw:
+        raise FeedError(f"{note_path} must be UTF-8 markdown text")
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise FeedError(f"{note_path} must be UTF-8 markdown: {exc}") from exc
+
+
+def resolve_release_notes(text: str | None, path: str | Path | None) -> tuple[bool, bytes | None]:
+    """Accept notes as markdown text or a UTF-8 file path.
+
+    Returns ``(provided, bytes)``. ``provided`` is false when both arguments
+    were omitted. Blank text is provided and encodes to ``None`` (no file).
+    """
+
+    if text is not None and path is not None:
+        raise FeedError("pass release notes as text or a path, not both")
+    if text is None and path is None:
+        return False, None
+    if path is not None:
+        text = _read_release_notes_input(path)
+    assert text is not None
+    return True, _encode_release_notes(text)
+
+
+def _release_notes_path(folder: Path) -> Path:
+    return folder / RELEASE_NOTES_NAME
+
+
+def _stored_release_notes(folder: Path) -> bytes | None:
+    path = _release_notes_path(folder)
+    if path.is_symlink():
+        raise FeedError(f"{_notes_label(folder)} must be a regular file")
+    if not path.exists():
+        return None
+    if not path.is_file():
+        raise FeedError(f"{_notes_label(folder)} must be a regular file")
+    return path.read_bytes()
+
+
+def _load_release_notes(folder: Path) -> str | None:
+    data = _stored_release_notes(folder)
+    if data is None:
+        return None
+    label = _notes_label(folder)
+    if not data.strip():
+        raise FeedError(f"{label} is empty")
+    if len(data) > MAX_RELEASE_NOTES:
+        raise FeedError(f"{label} is {len(data)} bytes; limit is {MAX_RELEASE_NOTES}")
+    if b"\x00" in data:
+        raise FeedError(f"{label} must be UTF-8 markdown text")
+    try:
+        return data.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise FeedError(f"{label} must be UTF-8 markdown: {exc}") from exc
+
+
+def _write_release_notes_file(directory: Path, data: bytes, *, replace: bool) -> None:
+    destination = _release_notes_path(directory)
+    if destination.is_symlink():
+        raise FeedError(f"{_notes_label(directory)} must be a regular file")
+    if destination.exists():
+        if destination.read_bytes() == data:
+            return
+        if not replace:
+            raise FeedError(
+                f"{_notes_label(directory)} already exists. "
+                "Release notes cannot be changed after they are published."
+            )
+    temporary = directory / f".{RELEASE_NOTES_NAME}.tmp"
+    try:
+        temporary.write_bytes(data)
+        os.replace(temporary, destination)
+    except Exception:
+        if temporary.exists():
+            temporary.unlink()
+        raise
+
+
+def _mirror_release_notes(source: Path, destination: Path) -> None:
+    """Copy ``RELEASE_NOTES.md`` onto a channel folder, or remove it when absent.
+
+    Does not read or write ``.bin`` files. ``latest/`` is a channel copy, so
+    its notes follow the version folder they were mirrored from.
+    """
+
+    data = _stored_release_notes(source)
+    dest = _release_notes_path(destination)
+    if data is None:
+        if dest.is_symlink():
+            raise FeedError(f"{_notes_label(destination)} must be a regular file")
+        if dest.exists():
+            dest.unlink()
+        return
+    destination.mkdir(parents=True, exist_ok=True)
+    _write_release_notes_file(destination, data, replace=True)
+
+
+def _merge_release_notes(folder: Path, notes_bytes: bytes | None) -> None:
+    """Write notes only when ``folder`` does not have them yet.
+
+    Blank notes (``None``) do not create a file and do not delete one.
+    """
+
+    current = _stored_release_notes(folder)
+    if current is None:
+        if notes_bytes is not None:
+            _write_release_notes_file(folder, notes_bytes, replace=False)
+        return
+    if notes_bytes != current:
+        raise FeedError(
+            f"{_notes_label(folder)} already exists. "
+            "Release notes cannot be changed after they are published."
+        )
+
+
+def _bin_sha_map(folder: Path) -> dict[str, str]:
+    if not folder.is_dir():
+        return {}
+    return {path.name: sha256_file(path) for path in folder.glob("*.bin")}
+
+
+def _include_release_notes(entry: dict, document: dict) -> None:
+    notes = document.get("release_notes")
+    url = document.get("release_notes_url")
+    if isinstance(notes, str) and notes.strip() and isinstance(url, str) and url:
+        entry["release_notes"] = notes
+        entry["release_notes_url"] = url
+
+
 def _artifact(board: str, filename: str, digest: str, size: int, url: str, source_filename: str | None) -> dict:
     item = {
         "board": board,
@@ -242,7 +434,8 @@ def _folder_documents(
     spec = product_spec(catalog, product)
     boards = spec.get("boards") or {}
     existing = _read_json(folder / "index.json")
-    allowed_names = {"index.json", "SHA256SUMS", "README.md"}
+    # RELEASE_NOTES.md is optional UTF-8 markdown, not a board binary.
+    allowed_names = {"index.json", "SHA256SUMS", "README.md", RELEASE_NOTES_NAME}
     bins = []
     for path in folder.iterdir():
         if path.is_dir() or path.name.startswith("."):
@@ -324,6 +517,10 @@ def _folder_documents(
         document["flash_as_pair"] = list(spec["flash_as_pair"])
     if source:
         document["source"] = source
+    notes = _load_release_notes(folder)
+    if notes is not None:
+        document["release_notes"] = notes
+        document["release_notes_url"] = raw_url(catalog, product, folder.name, RELEASE_NOTES_NAME)
     sums_text = "\n".join(sums) + "\n"
     return document, sums_text
 
@@ -376,6 +573,7 @@ def _available_latest(catalog, product, spec, latest_doc, matches, highest_semve
         if missing:
             entry["available"] = False
             entry["note"] = f"incomplete pair, missing {', '.join(missing)}"
+    _include_release_notes(entry, latest_doc)
     return entry
 
 
@@ -492,18 +690,18 @@ def render_manifests(
                 legacy_folders.append((version_key(semver), folder_name))
             else:
                 layout = "snapshot"
-            versions.append(
-                {
-                    "folder": folder_name,
-                    "semver": semver,
-                    "layout": layout,
-                    "channel": document["channel"],
-                    "boards": [item["board"] for item in document["artifacts"]],
-                    "sha256": dict(document["sha256"]),
-                    "index_url": raw_url(catalog, product, folder_name, "index.json"),
-                    "artifacts": document["artifacts"],
-                }
-            )
+            version_entry = {
+                "folder": folder_name,
+                "semver": semver,
+                "layout": layout,
+                "channel": document["channel"],
+                "boards": [item["board"] for item in document["artifacts"]],
+                "sha256": dict(document["sha256"]),
+                "index_url": raw_url(catalog, product, folder_name, "index.json"),
+                "artifacts": document["artifacts"],
+            }
+            _include_release_notes(version_entry, document)
+            versions.append(version_entry)
 
         versions.sort(key=_version_sort_key)
         canonical_folders.sort()
@@ -726,16 +924,26 @@ def apply_publish(
     set_latest: bool,
     overwrite: bool = False,
     source: dict | None = None,
+    release_notes: str | None = None,
+    release_notes_path: str | Path | None = None,
 ) -> str:
     """Place a complete release. Version folders are immutable. Returns the folder name.
 
     ``binaries`` maps board id to ``(data, source_filename)``.
+
+    Optional ``release_notes`` or ``release_notes_path`` is UTF-8 markdown.
+    Pass one, not both. On the publish that creates the folder, notes are
+    written to ``RELEASE_NOTES.md``. If the folder already exists with the
+    same ``.bin`` bytes and has no notes yet, the same arguments fill notes
+    in once and do not rewrite binaries. Existing notes must match; they are
+    not edited. When ``set_latest`` is true, notes are mirrored into ``latest/``.
     """
 
     if overwrite:
         raise FeedError(
             "version folders are immutable. Publish a new version, or point latest at an older folder with rollback."
         )
+    notes_provided, notes_bytes = resolve_release_notes(release_notes, release_notes_path)
     spec = product_spec(catalog, product)
     boards = require_publishable(spec, product)
     semver = normalize_version(version)
@@ -767,16 +975,25 @@ def apply_publish(
                 f"{product}/{folder_name} is immutable and already has different bytes. "
                 "Publish a new version. To move the channel without changing history, roll latest back."
             )
+        before_bins = {name: sha256_bytes(data) for name, data in existing.items()}
+        if notes_provided:
+            _merge_release_notes(destination, notes_bytes)
+        if _bin_sha_map(destination) != before_bins:
+            raise FeedError(f"{product}/{folder_name} firmware bytes changed while writing release notes")
     else:
         destination.mkdir(parents=True, exist_ok=False)
         try:
             _replace_tree(destination, planned)
+            if notes_bytes is not None:
+                _write_release_notes_file(destination, notes_bytes, replace=False)
         except Exception:
             shutil.rmtree(destination, ignore_errors=True)
             raise
 
     if set_latest:
-        _replace_tree(root / product / "latest", planned)
+        latest_dir = root / product / "latest"
+        _replace_tree(latest_dir, planned)
+        _mirror_release_notes(destination, latest_dir)
 
     provenance: dict[tuple[str, str], dict] = {}
     names: dict[tuple[str, str, str], str] = {}
@@ -794,6 +1011,63 @@ def apply_publish(
                 names[(product, folder, board)] = source_filename
 
     write_manifests(root, catalog, provenance, names)
+    return folder_name
+
+
+def attach_release_notes(
+    root: Path,
+    catalog: dict,
+    product: str,
+    folder: str,
+    *,
+    release_notes: str | None = None,
+    release_notes_path: str | Path | None = None,
+) -> str:
+    """Add ``RELEASE_NOTES.md`` to a version folder that does not have one yet.
+
+    Does not rewrite ``.bin`` bytes. If ``latest/`` is a byte-identical copy of
+    this folder, the notes file is mirrored there so Flasher sees
+    ``release_notes`` on the channel index too. Notes already stored in the
+    version folder cannot be replaced. Passing the same notes again is a no-op
+    aside from refreshing manifests.
+    """
+
+    spec = product_spec(catalog, product)
+    require_publishable(spec, product)
+    folder_name = (folder or "").strip()
+    if folder_name in ("", "latest") or not FOLDER_RE.fullmatch(folder_name):
+        raise FeedError("release notes attach to an existing version folder, not latest")
+    if "/" in folder_name or ".." in folder_name:
+        raise FeedError("unsafe version folder")
+    _provided, notes_bytes = resolve_release_notes(release_notes, release_notes_path)
+    if notes_bytes is None:
+        raise FeedError("attach-notes requires release notes text or a path")
+
+    destination = root / product / folder_name
+    if not destination.is_dir():
+        raise FeedError(f"{product}/{folder_name} does not exist")
+    bins_before = _bin_sha_map(destination)
+    if not bins_before:
+        raise FeedError(f"{product}/{folder_name} has no binaries")
+    latest_dir = root / product / "latest"
+    latest_before = _bin_sha_map(latest_dir)
+    mirror = bool(latest_before) and latest_before == bins_before
+
+    current = _stored_release_notes(destination)
+    if current is None:
+        _write_release_notes_file(destination, notes_bytes, replace=False)
+    elif current != notes_bytes:
+        raise FeedError(
+            f"{product}/{folder_name} already has release notes. "
+            "Notes cannot be changed after they are published."
+        )
+    if mirror:
+        _mirror_release_notes(destination, latest_dir)
+    if _bin_sha_map(destination) != bins_before:
+        raise FeedError(f"attach changed firmware bytes in {product}/{folder_name}")
+    if _bin_sha_map(latest_dir) != latest_before:
+        raise FeedError(f"attach changed firmware bytes in {product}/latest")
+    write_manifests(root, catalog)
     return folder_name
 
 
@@ -827,10 +1101,15 @@ def rollback_latest(root: Path, catalog: dict, product: str, folder: str) -> str
     if missing:
         raise FeedError(f"cannot point latest at {folder_name}; missing {', '.join(missing)}")
     originals = {path.name: hashlib.sha256(files[path.name]).hexdigest() for path in bins}
-    _replace_tree(root / product / "latest", files)
+    source_notes = _stored_release_notes(source_dir)
+    latest_dir = root / product / "latest"
+    _replace_tree(latest_dir, files)
+    _mirror_release_notes(source_dir, latest_dir)
     for path in bins:
         if hashlib.sha256(path.read_bytes()).hexdigest() != originals[path.name]:
             raise FeedError(f"rollback changed {path}, which must stay immutable")
+    if _stored_release_notes(source_dir) != source_notes:
+        raise FeedError(f"rollback changed release notes in {product}/{folder_name}")
     label = folder_name if spec.get("version_label") == "prefixed" or folder_name.startswith("v") else folder_name
     if spec.get("version_label") == "plain" and parse_semver(folder_name):
         label = parse_semver(folder_name) if not folder_name.startswith("v") else folder_name
