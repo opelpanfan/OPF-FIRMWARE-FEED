@@ -1,16 +1,16 @@
 {
   "schema": 1,
   "product": "BMS",
-  "version": "0.0.3",
+  "version": "v0.0.3",
   "semver": "0.0.3",
-  "channel": "latest",
-  "folder": "latest",
+  "channel": "version",
+  "folder": "v0.0.3",
   "files": {
-    "OPF_ATOM_S3": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3.bin",
-    "OPF_ATOM_S3R": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3R.bin",
-    "OPF_T2CAN": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_T2CAN.bin",
-    "OPF_WS": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin",
-    "OPF_WS_NO_TEMP": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin"
+    "OPF_ATOM_S3": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/OPF_ATOM_S3.bin",
+    "OPF_ATOM_S3R": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/OPF_ATOM_S3R.bin",
+    "OPF_T2CAN": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/OPF_T2CAN.bin",
+    "OPF_WS": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/OPF_WS.bin",
+    "OPF_WS_NO_TEMP": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/OPF_WS_NO_TEMP.bin"
   },
   "sha256": {
     "OPF_ATOM_S3": "f8912e4a5ac6a83f397c13cc08cd0df185b4988241a32d151e01b6b3cc9d0d83",
@@ -25,7 +25,7 @@
       "filename": "OPF_ATOM_S3.bin",
       "sha256": "f8912e4a5ac6a83f397c13cc08cd0df185b4988241a32d151e01b6b3cc9d0d83",
       "size": 1262544,
-      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3.bin",
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/OPF_ATOM_S3.bin",
       "source_filename": "OPF_ATOM_S3.bin"
     },
     {
@@ -33,7 +33,7 @@
       "filename": "OPF_ATOM_S3R.bin",
       "sha256": "c32994c778a5bb92314d9c8d2e3c5226a562b716d615a015b994011d1834a680",
       "size": 1448320,
-      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3R.bin",
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/OPF_ATOM_S3R.bin",
       "source_filename": "OPF_ATOM_S3R.bin"
     },
     {
@@ -41,7 +41,7 @@
       "filename": "OPF_T2CAN.bin",
       "sha256": "474ebc0f4dd43715434dcdb4837ebf9ba37e6edf7190deadb21e0422b51997c8",
       "size": 1279216,
-      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_T2CAN.bin",
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/OPF_T2CAN.bin",
       "source_filename": "OPF_T2CAN.bin"
     },
     {
@@ -49,7 +49,7 @@
       "filename": "OPF_WS.bin",
       "sha256": "b308b4560b242d642797746e5ff82e2b3207248cd4485a4625f9f0cab1c0e098",
       "size": 1284432,
-      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin",
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/OPF_WS.bin",
       "source_filename": "OPF_WS.bin"
     },
     {
@@ -57,7 +57,7 @@
       "filename": "OPF_WS_NO_TEMP.bin",
       "sha256": "97ccdd809954afef169efa9de581a20829001f024170631f25c67eb789561551",
       "size": 1284160,
-      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin",
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/OPF_WS_NO_TEMP.bin",
       "source_filename": "OPF_WS_NO_TEMP.bin"
     }
   ],
@@ -71,5 +71,5 @@
     "workflow": "build-and-push-feed.yml"
   },
   "release_notes": "# BMS v0.0.3 \u2014 testing material\n\nThese release notes are for Flasher/FEED UI verification.\n\n- Device: BMS (OPF-STORAGE-DASH)\n- Boards: OPF_WS, OPF_WS_NO_TEMP, OPF_T2CAN, OPF_ATOM_S3, OPF_ATOM_S3R\n- Channel: immutable `BMS/v0.0.3` + `BMS/latest`\n\nIf you can read this in OPF-FLASHER, release notes are working.\n",
-  "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/RELEASE_NOTES.md"
+  "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.3/RELEASE_NOTES.md"
 }
