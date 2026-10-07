@@ -3,11 +3,11 @@
   "product": "BRIDGE",
   "version": "v0.0.3",
   "semver": "0.0.3",
-  "channel": "latest",
-  "folder": "latest",
+  "channel": "version",
+  "folder": "v0.0.3",
   "files": {
-    "ATOM_S3": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin",
-    "ATOM_S3_R": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
+    "ATOM_S3": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.3/ATOM_S3.bin",
+    "ATOM_S3_R": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.3/ATOM_S3_R.bin"
   },
   "sha256": {
     "ATOM_S3": "55fe020030bf182e7dc24bdb2c3a68eebd658e8a15fece4ee9ceb67d4a9b9b53",
@@ -19,14 +19,14 @@
       "filename": "ATOM_S3.bin",
       "sha256": "55fe020030bf182e7dc24bdb2c3a68eebd658e8a15fece4ee9ceb67d4a9b9b53",
       "size": 1861280,
-      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin"
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.3/ATOM_S3.bin"
     },
     {
       "board": "ATOM_S3_R",
       "filename": "ATOM_S3_R.bin",
       "sha256": "7432b5c5c4261c83044116ef592818efff2d5d8b8c5e20e283c0c6967e0a4695",
       "size": 1905808,
-      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.3/ATOM_S3_R.bin"
     }
   ],
   "source": {
@@ -39,5 +39,5 @@
     "workflow": "build-and-push-feed.yml"
   },
   "release_notes": "# BRIDGE v0.0.3 \u2014 testing material\n\nThese release notes are for Flasher/FEED UI verification.\n\n- Device: BRIDGE (OPF-STORAGE-M5-BRIDGE)\n- Boards: ATOM_S3, ATOM_S3_R\n- Channel: immutable `BRIDGE/v0.0.3` + `BRIDGE/latest`\n\nIf you can read this in OPF-FLASHER, release notes are working.\n",
-  "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
+  "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.3/RELEASE_NOTES.md"
 }
