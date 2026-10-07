@@ -115,7 +115,9 @@
         }
       ],
       "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
-      "board_contract_sha": "d9ca7a0"
+      "board_contract_sha": "d9ca7a0",
+      "release_notes": "# BRIDGE v0.0.3 \u2014 testing material\n\nThese release notes are for Flasher/FEED UI verification.\n\n- Device: BRIDGE (OPF-STORAGE-M5-BRIDGE)\n- Boards: ATOM_S3, ATOM_S3_R\n- Channel: immutable `BRIDGE/v0.0.3` + `BRIDGE/latest`\n\nIf you can read this in OPF-FLASHER, release notes are working.\n",
+      "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
     },
     "P1": {
       "product": "P1",
@@ -521,7 +523,9 @@
           }
         ],
         "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
-        "board_contract_sha": "d9ca7a0"
+        "board_contract_sha": "d9ca7a0",
+        "release_notes": "# BRIDGE v0.0.3 \u2014 testing material\n\nThese release notes are for Flasher/FEED UI verification.\n\n- Device: BRIDGE (OPF-STORAGE-M5-BRIDGE)\n- Boards: ATOM_S3, ATOM_S3_R\n- Channel: immutable `BRIDGE/v0.0.3` + `BRIDGE/latest`\n\nIf you can read this in OPF-FLASHER, release notes are working.\n",
+        "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
       },
       "versions": [
         {

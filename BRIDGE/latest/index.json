@@ -36,5 +36,7 @@
     "sha": "6c130c5ec82e1fbc1217012eab19b945898b7fab",
     "run_id": 37668428454,
     "workflow": "build-and-push-feed.yml"
-  }
+  },
+  "release_notes": "# BRIDGE v0.0.3 \u2014 testing material\n\nThese release notes are for Flasher/FEED UI verification.\n\n- Device: BRIDGE (OPF-STORAGE-M5-BRIDGE)\n- Boards: ATOM_S3, ATOM_S3_R\n- Channel: immutable `BRIDGE/v0.0.3` + `BRIDGE/latest`\n\nIf you can read this in OPF-FLASHER, release notes are working.\n",
+  "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
 }
