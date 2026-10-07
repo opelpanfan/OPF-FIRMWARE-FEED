@@ -1,36 +1,28 @@
-"""Fail-closed firmware feed catalog, ingest, and manifest rendering.
+"""Fail-closed firmware feed catalog and manifest rendering.
 
-Binaries already on ``main`` stay where they are. Publish adds an immutable
-``vX.Y.Z`` folder and, when requested, refreshes ``latest/`` from that release.
-Existing version folders are never deleted. ``latest/`` is not a substitute
-for those folders.
+This repository stores folders that source repos push. It does not download
+private releases or workflow artifacts. Binaries already on ``main`` stay
+where they are. A local publish adds an immutable ``vX.Y.Z`` folder and, when
+requested, refreshes ``latest/`` from that release. Existing version folders
+are never deleted. ``latest/`` is not a substitute for those folders.
 """
 
 from __future__ import annotations
 
 import hashlib
-import io
 import json
 import os
 import re
 import shutil
-import sys
-import time
-import urllib.error
 import urllib.parse
-import urllib.request
-import zipfile
 from fnmatch import fnmatchcase
 from pathlib import Path
 
 CATALOG_PATH = Path(__file__).resolve().parents[1] / "feed-catalog.json"
-API = "https://api.github.com"
 SEMVER_RE = re.compile(r"^v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")
 FOLDER_RE = re.compile(
     r"^(latest|master_ws_redesign|v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*))$"
 )
-REPO_RE = re.compile(r"^opelpanfan/[A-Za-z0-9._-]+$")
-WORKFLOW_FILE_RE = re.compile(r"^[A-Za-z0-9._-]+\.ya?ml$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 BOARD_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
 
@@ -59,13 +51,7 @@ class FeedError(Exception):
 
 
 class ReleaseNotReady(FeedError):
-    """A release tag exists but both firmware assets are not ready yet."""
-
-
-class GitHubHTTPError(FeedError):
-    def __init__(self, code: int, message: str):
-        super().__init__(message)
-        self.code = code
+    """A required board asset name is missing from a local release set."""
 
 
 def load_catalog(path: Path | None = None) -> dict:
@@ -426,8 +412,9 @@ def _empty_product(catalog: dict, product: str, spec: dict) -> dict:
     if spec.get("flash_as_pair"):
         entry["flash_as_pair"] = list(spec["flash_as_pair"])
         entry["note"] = (
-            "Publish waits for a matched pair of OPF-P1 release assets "
-            "opf-p1-rak3172_transmiter-fw*.bin and opf-p1-rak3172_receiver-fw*.bin."
+            "OPF-P1 pushes a matched pair. Store opf-p1-rak3172_transmiter-fw*.bin "
+            "as RAK3172_TX.bin and opf-p1-rak3172_receiver-fw*.bin as RAK3172_RX.bin "
+            "under P1/vX.Y.Z/. This feed does not download the private release."
         )
     if spec.get("alias_of"):
         entry["alias_of"] = spec["alias_of"]
@@ -550,9 +537,10 @@ def render_manifests(
             entry["note"] = "Alias of P1. Transmitter and receiver bytes are stored under P1/."
         elif product == "P1" and not latest_entry.get("available"):
             entry["note"] = (
-                "Publish waits for a matched pair of OPF-P1 release assets "
-                "opf-p1-rak3172_transmiter-fw*.bin and opf-p1-rak3172_receiver-fw*.bin "
-                "from tag vX.Y.Z (currently v1.0.1) on branch master-grok."
+                "OPF-P1 pushes a matched pair. Store opf-p1-rak3172_transmiter-fw*.bin "
+                "as RAK3172_TX.bin and opf-p1-rak3172_receiver-fw*.bin as RAK3172_RX.bin "
+                "under P1/vX.Y.Z/ (first published tag v1.0.1). This feed does not download "
+                "the private release."
             )
         root_products.append(entry)
 
@@ -698,7 +686,7 @@ def assert_complete_publish(spec: dict, binaries: dict) -> None:
         pair = spec.get("flash_as_pair") or []
         if pair:
             raise FeedError(
-                "refusing partial P1 publish; TX and RX must be ingested together. "
+                "refusing partial P1 publish; TX and RX must be published together. "
                 f"Missing {', '.join(missing)}"
             )
         raise FeedError(f"refusing partial publish; missing {', '.join(missing)}")
@@ -914,117 +902,6 @@ def _validate_override_url(url: str) -> str:
     return url
 
 
-def host_allowed(hostname: str) -> bool:
-    host = (hostname or "").lower().rstrip(".")
-    return host == "github.com" or host.endswith(".github.com") or host.endswith(".githubusercontent.com")
-
-
-def _backoff(attempt: int, kind: str = "http") -> None:
-    if os.environ.get("FEED_NO_SLEEP") == "1":
-        return
-    delays = (2, 4, 8, 16, 16) if kind == "http" else (10, 20, 30, 30, 30)
-    time.sleep(delays[min(attempt, len(delays) - 1)])
-
-
-def _request_bytes(url: str, token: str, accept: str) -> bytes:
-    parsed = urllib.parse.urlparse(url)
-    if parsed.scheme != "https" or not host_allowed(parsed.hostname or ""):
-        raise FeedError(f"refusing URL host {parsed.hostname!r}")
-    if parsed.hostname != "api.github.com":
-        raise FeedError("downloads must start at api.github.com")
-
-    class Guard(urllib.request.HTTPRedirectHandler):
-        def redirect_request(self, req, fp, code, msg, headers, newurl):
-            target = urllib.parse.urlparse(newurl)
-            if target.scheme != "https" or not host_allowed(target.hostname or ""):
-                raise FeedError(f"refusing redirect host {target.hostname!r}")
-            new_req = super().redirect_request(req, fp, code, msg, headers, newurl)
-            if new_req is not None:
-                # Authorization is an unredirected header and must not follow to object storage.
-                new_req.remove_header("Authorization")
-            return new_req
-
-    opener = urllib.request.build_opener(Guard)
-    last_error: Exception | None = None
-    for attempt in range(5):
-        request = urllib.request.Request(url)
-        request.add_header("Accept", accept)
-        request.add_header("User-Agent", "opf-firmware-feed")
-        request.add_header("X-GitHub-Api-Version", "2026-03-10")
-        if token:
-            request.add_unredirected_header("Authorization", f"Bearer {token}")
-        try:
-            with opener.open(request, timeout=60) as response:
-                return response.read()
-        except FeedError:
-            raise
-        except urllib.error.HTTPError as exc:
-            detail = exc.read(300).decode("utf-8", errors="replace").replace("\n", " ")
-            hint = ""
-            if exc.code in (401, 403):
-                hint = " Check SOURCE_READ_TOKEN (contents: read on the private source repo)."
-            message = f"GitHub API {exc.code} for {parsed.path}.{hint} {detail}"
-            if exc.code in (429, 500, 502, 503, 504) and attempt < 4:
-                print(f"retrying GitHub API {exc.code} ({attempt + 1}/5)", file=sys.stderr)
-                last_error = GitHubHTTPError(exc.code, message)
-                _backoff(attempt, "http")
-                continue
-            raise GitHubHTTPError(exc.code, message) from exc
-        except urllib.error.URLError as exc:
-            last_error = FeedError(f"GitHub API request failed: {exc.reason}")
-            if attempt < 4:
-                print(f"retrying GitHub API connection ({attempt + 1}/5)", file=sys.stderr)
-                _backoff(attempt, "http")
-                continue
-            raise last_error from exc
-    raise last_error or FeedError("GitHub API request failed")
-
-
-def github_json(url: str, token: str) -> dict:
-    data = _request_bytes(url, token, "application/vnd.github+json")
-    try:
-        parsed = json.loads(data.decode("utf-8"))
-    except json.JSONDecodeError as exc:
-        raise FeedError("GitHub API returned non-JSON") from exc
-    if not isinstance(parsed, dict):
-        raise FeedError("GitHub API returned an unexpected payload")
-    return parsed
-
-
-def github_bytes(url: str, token: str) -> bytes:
-    return _request_bytes(url, token, "application/octet-stream")
-
-
-def parse_repo(repository: str) -> str:
-    repo = (repository or "").strip()
-    if not REPO_RE.fullmatch(repo):
-        raise FeedError(f"source repository {repository!r} must look like opelpanfan/NAME")
-    return repo
-
-
-def bins_in_zip(data: bytes) -> list[tuple[str, bytes]]:
-    try:
-        archive = zipfile.ZipFile(io.BytesIO(data))
-    except zipfile.BadZipFile as exc:
-        raise FeedError("workflow artifact is not a zip") from exc
-    found = []
-    for info in archive.infolist():
-        if info.is_dir():
-            continue
-        name = info.filename.replace("\\", "/")
-        parts = Path(name).parts
-        if not name or name.startswith("/") or ".." in parts:
-            raise FeedError("artifact zip contains an unsafe path")
-        if "__MACOSX" in parts:
-            continue
-        if not name.lower().endswith(".bin"):
-            continue
-        if info.file_size > MAX_BIN:
-            raise FeedError(f"{name} inside the artifact exceeds the size limit")
-        found.append((name, archive.read(info)))
-    return found
-
-
 def _board_keys(board: str, spec: dict) -> list[str]:
     keys = [board]
     for env in spec.get("envs") or []:
@@ -1170,343 +1047,3 @@ def _release_name_matches(name: str, pattern: str) -> bool:
         return True
     return fnmatchcase(name.casefold(), pattern.casefold())
 
-
-def parse_board_list(value, boards: dict) -> set[str] | None:
-    if value is None or value == "":
-        return None
-    if isinstance(value, list):
-        parts = value
-    else:
-        text = str(value).strip()
-        if not text:
-            return None
-        parts = text.split(",")
-    found = []
-    for part in parts:
-        board = str(part).strip()
-        if not board:
-            continue
-        if board not in boards:
-            known = ", ".join(sorted(boards))
-            raise FeedError(f"unknown board {board!r}; known boards: {known}")
-        found.append(board)
-    if not found:
-        raise FeedError("boards filter is empty")
-    return set(found)
-
-
-def parse_expected_sha256(value) -> dict[str, str]:
-    if value in (None, "", {}):
-        return {}
-    if isinstance(value, str):
-        value = json.loads(value)
-    if not isinstance(value, dict):
-        raise FeedError("sha256 must be an object of board to hex digest")
-    expected = {}
-    for board, digest in value.items():
-        if not BOARD_RE.fullmatch(str(board)):
-            raise FeedError(f"invalid sha256 board {board!r}")
-        text = str(digest).strip().lower()
-        if not SHA256_RE.fullmatch(text):
-            raise FeedError(f"sha256 for {board} must be 64 hex characters")
-        expected[str(board)] = text
-    return expected
-
-
-def check_expected_sha256(binaries: dict[str, tuple[bytes, str]], expected: dict[str, str]) -> None:
-    for board, digest in expected.items():
-        if board not in binaries:
-            raise FeedError(f"sha256 was provided for {board}, which was not ingested")
-        actual = sha256_bytes(binaries[board][0])
-        if actual != digest:
-            raise FeedError(f"sha256 mismatch for {board}")
-    for board in binaries:
-        if expected and board not in expected:
-            # Partial expected hashes are allowed, but a provided digest must match.
-            continue
-
-
-def _truthy(value, default: bool) -> bool:
-    if value is None or value == "":
-        return default
-    if isinstance(value, bool):
-        return value
-    text = str(value).strip().lower()
-    if text in ("1", "true", "yes"):
-        return True
-    if text in ("0", "false", "no"):
-        return False
-    raise FeedError(f"expected true/false, got {value!r}")
-
-
-def ingest_from_env(root: Path, env: dict[str, str] | None = None) -> str:
-    env = env if env is not None else dict(os.environ)
-    catalog = load_catalog()
-    event = env.get("EVENT_NAME") or "workflow_dispatch"
-    if event == "repository_dispatch":
-        try:
-            payload = json.loads(env.get("CLIENT_PAYLOAD") or "{}")
-        except json.JSONDecodeError as exc:
-            raise FeedError("repository_dispatch client_payload is not JSON") from exc
-        if not isinstance(payload, dict):
-            raise FeedError("repository_dispatch client_payload must be an object")
-        request = payload
-    else:
-        request = {
-            "product": env.get("INPUT_PRODUCT"),
-            "version": env.get("INPUT_VERSION"),
-            "source": env.get("INPUT_SOURCE"),
-            "source_repository": env.get("INPUT_SOURCE_REPOSITORY"),
-            "run_id": env.get("INPUT_RUN_ID"),
-            "tag": env.get("INPUT_TAG"),
-            "workflow_file": env.get("INPUT_WORKFLOW_FILE"),
-            "boards": env.get("INPUT_BOARDS"),
-            "set_latest": env.get("INPUT_SET_LATEST"),
-            "overwrite": env.get("INPUT_OVERWRITE"),
-            "allow_any_ref": env.get("INPUT_ALLOW_ANY_REF"),
-            "sha256": env.get("INPUT_SHA256"),
-        }
-
-    product = str(request.get("product") or "").strip()
-    spec = product_spec(catalog, product)
-    boards = require_publishable(spec, product)
-    semver = normalize_version(str(request.get("version") or ""))
-    source_kind = str(request.get("source") or "").strip()
-    allowed = spec.get("ingest") or "any"
-    if not source_kind:
-        source_kind = "release" if allowed == "release" else ""
-    if source_kind not in ("workflow_run", "release"):
-        raise FeedError("source must be workflow_run or release")
-    if allowed == "release" and source_kind != "release":
-        raise FeedError(f"{product} only accepts GitHub Release asset ingest")
-    if allowed == "workflow_run" and source_kind != "workflow_run":
-        raise FeedError(f"{product} only accepts workflow artifact ingest")
-
-    catalog_repo = spec.get("source_repository")
-    requested_repo = str(request.get("source_repository") or "").strip()
-    if requested_repo and requested_repo != catalog_repo:
-        raise FeedError(f"source_repository must be {catalog_repo}")
-    repository = parse_repo(catalog_repo)
-    token = env.get("SOURCE_READ_TOKEN") or ""
-    if not token:
-        raise FeedError(
-            "Missing secret SOURCE_READ_TOKEN. Create a fine-grained PAT with "
-            "Contents: Read on the source repository and store it on OPF-FIRMWARE-FEED."
-        )
-
-    set_latest = _truthy(request.get("set_latest"), True)
-    if _truthy(request.get("overwrite"), False):
-        raise FeedError(
-            "version folders are immutable. Publish a new version, or roll latest back to an older folder."
-        )
-    allow_any_ref = _truthy(request.get("allow_any_ref"), False)
-    requested_boards = parse_board_list(request.get("boards"), boards)
-    if requested_boards is not None:
-        missing_required = [board for board in required_board_ids(spec) if board not in requested_boards]
-        if missing_required:
-            raise FeedError(
-                f"boards filter omits {', '.join(missing_required)}; refusing a partial publish"
-            )
-    expected = parse_expected_sha256(request.get("sha256"))
-
-    if source_kind == "release":
-        binaries, source = _fetch_release(
-            repository, semver, str(request.get("tag") or ""), boards, requested_boards, token, spec, allow_any_ref
-        )
-    else:
-        binaries, source = _fetch_workflow_run(
-            repository,
-            spec,
-            str(request.get("run_id") or ""),
-            str(request.get("workflow_file") or ""),
-            boards,
-            requested_boards,
-            allow_any_ref,
-            token,
-        )
-    assert_complete_publish(spec, binaries)
-    check_expected_sha256(binaries, expected)
-    folder = apply_publish(
-        root,
-        catalog,
-        product,
-        semver,
-        binaries,
-        set_latest=set_latest,
-        source=source,
-    )
-    validate_feed(root, catalog)
-    _export_github_env(product, semver, folder)
-    return folder
-
-
-def _export_github_env(product: str, semver: str, folder: str) -> None:
-    path = os.environ.get("GITHUB_ENV")
-    if not path:
-        return
-    with open(path, "a", encoding="utf-8") as handle:
-        handle.write(f"PUBLISH_PRODUCT={product}\n")
-        handle.write(f"PUBLISH_VERSION={semver}\n")
-        handle.write(f"PUBLISH_FOLDER={folder}\n")
-
-
-def _fetch_release(repository, semver, tag, boards, requested, token, spec, allow_any_ref=False):
-    tag = tag.strip() or f"v{semver}"
-    if parse_semver(tag) != semver:
-        raise FeedError(f"release tag {tag} does not match version {semver}")
-    last: Exception | None = None
-    for attempt in range(5):
-        try:
-            return _fetch_release_once(repository, semver, tag, boards, requested, token, spec, allow_any_ref)
-        except ReleaseNotReady as exc:
-            last = exc
-            print(f"release {tag} not ready ({attempt + 1}/5): {exc}", file=sys.stderr)
-            if attempt == 4:
-                break
-            _backoff(attempt, "release")
-        except GitHubHTTPError as exc:
-            if exc.code != 404:
-                raise
-            last = ReleaseNotReady(f"release tag {tag} is not available yet ({exc})")
-            print(f"release {tag} not ready ({attempt + 1}/5): {last}", file=sys.stderr)
-            if attempt == 4:
-                break
-            _backoff(attempt, "release")
-    raise FeedError(f"{last} Nothing was published.")
-
-
-def _fetch_release_once(repository, semver, tag, boards, requested, token, spec, allow_any_ref):
-    quoted = urllib.parse.quote(tag, safe="")
-    try:
-        release = github_json(f"{API}/repos/{repository}/releases/tags/{quoted}", token)
-    except GitHubHTTPError as exc:
-        if exc.code == 404:
-            raise ReleaseNotReady(f"release tag {tag} is not available yet") from exc
-        raise
-    target = str(release.get("target_commitish") or "")
-    expected_ref = spec.get("source_ref")
-    if expected_ref and not allow_any_ref and target and not re.fullmatch(r"[0-9a-fA-F]{40}", target):
-        if target != expected_ref:
-            raise FeedError(
-                f"release target_commitish is {target!r}; catalog requires {expected_ref}. "
-                "Pass allow_any_ref=true only for an intentional exception."
-            )
-    assets = release.get("assets") or []
-    if not isinstance(assets, list):
-        raise FeedError("release assets payload is invalid")
-    selected = match_release_assets(assets, boards, requested)
-    binaries = {}
-    for board, asset in selected.items():
-        api_url = asset.get("url") or ""
-        if not str(api_url).startswith(f"{API}/"):
-            raise FeedError(f"release asset {asset.get('name')} has no API download URL")
-        data = github_bytes(api_url, token)
-        digest = str(asset.get("digest") or "")
-        if digest.startswith("sha256:"):
-            expected = digest.split(":", 1)[1].lower()
-            actual = sha256_bytes(data)
-            if actual != expected:
-                raise FeedError(f"sha256 mismatch for release asset {asset.get('name')}")
-        binaries[board] = (data, str(asset.get("name")))
-    source = {
-        "kind": "release",
-        "repository": repository,
-        "ref": spec.get("source_ref"),
-        "tag": tag,
-        "release_id": release.get("id"),
-        "sha": target if re.fullmatch(r"[0-9a-fA-F]{40}", target) else None,
-    }
-    return binaries, canonical_source(source) or source
-
-
-def _fetch_workflow_run(repository, spec, run_id, workflow_file, boards, requested, allow_any_ref, token):
-    if not re.fullmatch(r"[1-9]\d{0,18}", run_id or ""):
-        raise FeedError("run_id must be a positive integer")
-    run = github_json(f"{API}/repos/{repository}/actions/runs/{run_id}", token)
-    if run.get("status") != "completed" or run.get("conclusion") != "success":
-        raise FeedError(
-            f"workflow run {run_id} is {run.get('status')}/{run.get('conclusion')}; only successful runs can be published"
-        )
-    head_repo = ((run.get("head_repository") or {}).get("full_name"))
-    if head_repo != repository:
-        raise FeedError(f"refusing workflow run from {head_repo or 'a fork'}; expected {repository}")
-    expected_ref = spec.get("source_ref")
-    if expected_ref and not allow_any_ref and run.get("head_branch") != expected_ref:
-        raise FeedError(
-            f"workflow run branch is {run.get('head_branch')!r}; catalog requires {expected_ref}. "
-            "Pass allow_any_ref=true only for an intentional exception."
-        )
-    expected_workflow = _expected_workflow_file(spec, workflow_file)
-    actual_workflow = Path(str(run.get("path") or "")).name
-    if actual_workflow != expected_workflow:
-        raise FeedError(f"workflow run file is {run.get('path')}; expected {expected_workflow}")
-
-    artifacts = _list_artifacts(repository, run_id, token)
-    binaries: dict[str, tuple[bytes, str]] = {}
-    for artifact in artifacts:
-        if artifact.get("expired"):
-            raise FeedError(f"artifact {artifact.get('name')} is expired; re-run the source workflow")
-        archive_url = artifact.get("archive_download_url") or ""
-        if not str(archive_url).startswith(f"{API}/"):
-            raise FeedError(f"artifact {artifact.get('name')} has no API download URL")
-        files = bins_in_zip(github_bytes(archive_url, token))
-        mapped = match_zip_bins(
-            str(artifact.get("name") or ""),
-            files,
-            boards,
-            list(spec.get("ignored_envs") or []),
-        )
-        for board, source_name, data in mapped:
-            if requested is not None and board not in requested:
-                raise FeedError(
-                    f"artifact produced {board}, which is outside the boards filter; refusing to drop it silently"
-                )
-            if board in binaries:
-                raise FeedError(f"{board} was produced by more than one artifact")
-            binaries[board] = (data, source_name)
-    if requested is not None:
-        missing = sorted(requested - set(binaries))
-        if missing:
-            raise FeedError(f"workflow run is missing requested boards: {', '.join(missing)}")
-    if not binaries:
-        raise FeedError("workflow run artifacts contained no mapped firmware binaries")
-    source = {
-        "kind": "workflow_run",
-        "repository": repository,
-        "ref": run.get("head_branch"),
-        "sha": run.get("head_sha"),
-        "run_id": int(run_id),
-        "workflow": run.get("path"),
-    }
-    return binaries, source
-
-
-def _expected_workflow_file(spec: dict, requested: str) -> str:
-    catalog_file = spec.get("workflow_file")
-    requested = (requested or "").strip()
-    if catalog_file:
-        if requested and requested != catalog_file:
-            raise FeedError(f"workflow_file must be {catalog_file}")
-        return str(catalog_file)
-    if not WORKFLOW_FILE_RE.fullmatch(requested):
-        raise FeedError(
-            "workflow_file is required for this product until .github/feed-catalog.json records one "
-            "(basename only, for example build-firmware.yml)"
-        )
-    return requested
-
-
-def _list_artifacts(repository: str, run_id: str, token: str) -> list[dict]:
-    artifacts = []
-    for page in range(1, 21):
-        payload = github_json(
-            f"{API}/repos/{repository}/actions/runs/{run_id}/artifacts?per_page=100&page={page}",
-            token,
-        )
-        batch = payload.get("artifacts") or []
-        if not isinstance(batch, list):
-            raise FeedError("artifact list payload is invalid")
-        artifacts.extend(batch)
-        if len(batch) < 100:
-            return artifacts
-    raise FeedError("workflow run has too many artifact pages")

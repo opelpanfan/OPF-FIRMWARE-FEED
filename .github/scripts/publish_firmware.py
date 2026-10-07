@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Publish firmware into the feed, rebuild manifests, or roll latest back."""
+"""Local tools for the passive OPF firmware feed.
+
+Source repositories push product folders themselves. These commands read and
+write the checkout only. They do not download private releases or workflow
+artifacts.
+"""
 
 from __future__ import annotations
 
@@ -9,13 +14,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from feedlib import FeedError, apply_publish, ingest_from_env, load_catalog, rollback_latest, validate_feed, write_manifests
+from feedlib import FeedError, apply_publish, load_catalog, rollback_latest, validate_feed, write_manifests
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="OPF firmware feed publisher")
+    parser = argparse.ArgumentParser(description="OPF firmware feed local tools")
     sub = parser.add_subparsers(dest="command", required=True)
 
     rebuild = sub.add_parser("rebuild", help="rewrite index.json and SHA256SUMS from binaries on disk")
@@ -23,9 +28,6 @@ def main(argv: list[str] | None = None) -> int:
 
     validate = sub.add_parser("validate", help="fail if manifests or firmware images are inconsistent")
     validate.add_argument("--root", type=Path, default=ROOT)
-
-    ingest = sub.add_parser("ingest", help="download a source release or workflow run and publish it")
-    ingest.add_argument("--root", type=Path, default=ROOT)
 
     apply = sub.add_parser("apply", help="publish binaries that are already named as feed boards")
     apply.add_argument("--root", type=Path, default=ROOT)
@@ -47,9 +49,6 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "validate":
             validate_feed(args.root, load_catalog())
             print("feed ok")
-        elif args.command == "ingest":
-            folder = ingest_from_env(args.root)
-            print(f"published {folder}")
         elif args.command == "apply":
             catalog = load_catalog()
             binaries = {}
