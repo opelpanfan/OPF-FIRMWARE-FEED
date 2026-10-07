@@ -16,6 +16,31 @@ P1, BMS, BRIDGE, and the METER alias are empty until sources publish `v0.0.1`. E
 
 This repository is a passive catalog. Sources push `P1/`, `BRIDGE/`, and `BMS/` themselves. There is no ingest workflow and no Action that downloads private releases. This repository does not need `SOURCE_READ_TOKEN`.
 
+## Release notes
+
+A version folder may include optional UTF-8 markdown at `RELEASE_NOTES.md`. The same file is copied to `latest/` when a publish or rollback updates that channel. Notes are not required, and they are not listed in `SHA256SUMS`.
+
+When the file is present, that folder's `index.json`, `latest.<PRODUCT>`, and `products[].versions[]` include:
+
+- `release_notes` — the markdown text Flasher should show
+- `release_notes_url` — raw URL of `RELEASE_NOTES.md` in that folder
+
+Both fields are omitted when the file is absent.
+
+`.bin` bytes in a version folder stay immutable. Notes are stored by the publish that creates the folder. If that publish did not include notes, add them once with `attach-notes`. That command only writes `RELEASE_NOTES.md`. When `latest/` is a byte copy of the folder, it mirrors the file there. Notes cannot be edited after they are published.
+
+```bash
+python3 .github/scripts/publish_firmware.py apply \
+  --product BMS --version X.Y.Z --from-dir ./out --set-latest \
+  --release-notes-file ./RELEASE_NOTES.md
+
+python3 .github/scripts/publish_firmware.py attach-notes \
+  --product BMS --folder vX.Y.Z \
+  --release-notes-file ./RELEASE_NOTES.md
+```
+
+Source repos pass `--release-notes` or `--release-notes-file` on `apply`. This feed does not download notes or firmware.
+
 Board filenames are in `.github/feed-catalog.json`.
 
 - `P1/`: `RAK3172_TX.bin` and `RAK3172_RX.bin`, published together.
