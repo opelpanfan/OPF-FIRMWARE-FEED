@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "product": "BRIDGE",
+  "version": "v1.0.5",
+  "semver": "1.0.5",
+  "channel": "version",
+  "folder": "v1.0.5",
+  "files": {
+    "ATOM_S3": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v1.0.5/ATOM_S3.bin",
+    "ATOM_S3_R": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v1.0.5/ATOM_S3_R.bin"
+  },
+  "sha256": {
+    "ATOM_S3": "4560c0403b8de2d2873c7379d33636760aac1670fc7fd2a050596a1d45c39727",
+    "ATOM_S3_R": "30a8459588dd4c70c095561f13060220f43701cb48ccc218355617b6445f69c1"
+  },
+  "artifacts": [
+    {
+      "board": "ATOM_S3",
+      "filename": "ATOM_S3.bin",
+      "sha256": "4560c0403b8de2d2873c7379d33636760aac1670fc7fd2a050596a1d45c39727",
+      "size": 1514560,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v1.0.5/ATOM_S3.bin"
+    },
+    {
+      "board": "ATOM_S3_R",
+      "filename": "ATOM_S3_R.bin",
+      "sha256": "30a8459588dd4c70c095561f13060220f43701cb48ccc218355617b6445f69c1",
+      "size": 1580544,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v1.0.5/ATOM_S3_R.bin"
+    }
+  ]
+}

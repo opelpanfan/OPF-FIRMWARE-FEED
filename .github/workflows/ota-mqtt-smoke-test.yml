@@ -1,16 +1,20 @@
-name: PUSH FIRMWARE
+name: OTA MQTT smoke test
+
+# Manual QA check. This workflow does not publish firmware.
+# Publish firmware is .github/workflows/publish-firmware.yml.
 
 on:
   workflow_dispatch:
     inputs:
       product_type:
-        description: "Product type (determines feed folder)"
+        description: "BMS, BRIDGE, P1, or METER (METER is an alias of P1)"
         required: true
         default: ""
         type: choice
         options:
           - BMS
           - BRIDGE
+          - P1
           - METER
 
       device_id:
@@ -20,18 +24,24 @@ on:
         type: string
 
       board:
-        description: "Firmware binary to test"
+        description: "Firmware binary. Bridge is ATOM_S3_R or ATOM_S3 only; DTU vs RS485 is runtime config."
         required: true
         default: ""
         type: choice
         options:
           - OPF_WS
+          - OPF_WS_NO_TEMP
+          - OPF_T2CAN
+          - OPF_ATOM_S3
+          - OPF_ATOM_S3R
           - ESP32-S3-RS485-CAN
-          - ATOM_S3_R
           - ATOM_S3
+          - ATOM_S3_R
+          - RAK3172_TX
+          - RAK3172_RX
 
       package_version:
-        description: "Firmware package version folder (use latest or vX.Y.Z)"
+        description: "Folder name: latest, vX.Y.Z, legacy X.Y.Z, or master_ws_redesign"
         required: true
         default: "latest"
         type: string
@@ -53,7 +63,8 @@ permissions:
 jobs:
   ota-test:
     name: OTA test over MQTT
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
     environment: QA
 
     concurrency:
@@ -72,8 +83,6 @@ jobs:
       FIRMWARE_URL_INPUT: ${{ inputs.firmware_url }}
       TIMEOUT_SECONDS: ${{ inputs.timeout_seconds }}
 
-      FEED_REPOSITORY: opelpanfan/OPF-FIRMWARE-FEED
-      FEED_BRANCH: main
       FEED_PRODUCT: ${{ inputs.product_type }}
 
     steps:
@@ -97,10 +106,15 @@ jobs:
             exit 1
           fi
 
-          if [[ "${TIMEOUT_SECONDS}" -le 0 ]]; then
-            echo "timeout_seconds must be greater than zero"
+          if [[ "${TIMEOUT_SECONDS}" -le 0 || "${TIMEOUT_SECONDS}" -gt 1800 ]]; then
+            echo "timeout_seconds must be from 1 to 1800"
             exit 1
           fi
+
+      - name: Checkout feed catalog
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
 
       # ------------------------------------------------------------
       # Dependencies
@@ -123,11 +137,11 @@ jobs:
         run: |
           set -euo pipefail
 
-          firmware_url="${FIRMWARE_URL_INPUT}"
-
-          if [[ -z "${firmware_url}" ]]; then
-            firmware_url="https://raw.githubusercontent.com/${FEED_REPOSITORY}/${FEED_BRANCH}/${FEED_PRODUCT}/${PACKAGE_VERSION}/${BOARD}.bin"
-          fi
+          firmware_url="$(python3 .github/scripts/resolve_ota_url.py \
+            --product "${FEED_PRODUCT}" \
+            --board "${BOARD}" \
+            --package-version "${PACKAGE_VERSION}" \
+            --firmware-url "${FIRMWARE_URL_INPUT}")"
 
           echo "Firmware URL:"
           echo "${firmware_url}"

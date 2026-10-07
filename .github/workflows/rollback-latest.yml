@@ -1,0 +1,69 @@
+name: Rollback latest channel
+
+# Point latest/ at an older immutable version folder. Version folders are not modified.
+
+on:
+  workflow_dispatch:
+    inputs:
+      product:
+        description: "Product whose latest channel should move"
+        required: true
+        type: choice
+        options:
+          - BMS
+          - BRIDGE
+          - P1
+      folder:
+        description: "Existing folder to copy onto latest, such as v1.0.11 or 1.0.2"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: firmware-publish
+  cancel-in-progress: false
+
+jobs:
+  rollback:
+    name: Point latest at an older release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Require main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "Rollback only runs from main"
+          exit 1
+
+      - name: Checkout main
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 1
+
+      - name: Roll latest back
+        env:
+          PRODUCT: ${{ inputs.product }}
+          FOLDER: ${{ inputs.folder }}
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/publish_firmware.py rollback --product "$PRODUCT" --folder "$FOLDER"
+
+      - name: Commit and push
+        env:
+          PRODUCT: ${{ inputs.product }}
+          FOLDER: ${{ inputs.folder }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- BMS BRIDGE P1 METER index.json SHA256SUMS
+          if git diff --cached --quiet; then
+            echo "latest already matches ${FOLDER}"
+            exit 0
+          fi
+          git commit -m "Roll ${PRODUCT} latest back to ${FOLDER}"
+          git push origin HEAD:main
