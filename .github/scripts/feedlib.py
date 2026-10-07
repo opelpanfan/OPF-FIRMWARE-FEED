@@ -378,6 +378,10 @@ def _available_latest(catalog, product, spec, latest_doc, matches, highest_semve
         "sha256": latest_doc["sha256"],
         "artifacts": latest_doc["artifacts"],
     }
+    if spec.get("runtime_config"):
+        entry["runtime_config"] = spec["runtime_config"]
+    if spec.get("board_contract_sha"):
+        entry["board_contract_sha"] = spec["board_contract_sha"]
     if spec.get("flash_as_pair"):
         entry["flash_as_pair"] = list(spec["flash_as_pair"])
         missing = [board for board in spec["flash_as_pair"] if board not in entry["boards"]]
@@ -529,6 +533,12 @@ def render_manifests(
             "latest": latest_entry,
             "versions": versions,
         }
+        if spec.get("source_ref"):
+            entry["source_ref"] = spec["source_ref"]
+        if spec.get("board_contract_sha"):
+            entry["board_contract_sha"] = spec["board_contract_sha"]
+        if spec.get("runtime_config"):
+            entry["runtime_config"] = spec["runtime_config"]
         if spec.get("flash_as_pair"):
             entry["flash_as_pair"] = list(spec["flash_as_pair"])
         if spec.get("alias_of"):

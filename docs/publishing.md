@@ -7,7 +7,7 @@ Required set:
 | Product | Source | Required files |
 | --- | --- | --- |
 | BMS | `opelpanfan/OPF-STORAGE-DASH` branch `master-grok`, env `opf-ws` | `OPF_WS.bin` |
-| BRIDGE | `opelpanfan/OPF-STORAGE-M5-BRIDGE` branch `master-grok`, workflow `build-firmware.yml`, envs `ATOM_S3` and `ATOM_S3_R` | both `ATOM_S3.bin` and `ATOM_S3_R.bin` |
+| BRIDGE | `opelpanfan/OPF-STORAGE-M5-BRIDGE` `master-grok` @ `d9ca7a0`, workflow `build-firmware.yml` | `ATOM_S3_R.bin` and `ATOM_S3.bin` |
 | P1 | `opelpanfan/OPF-P1` branch `master-grok`, GitHub Release tag `v1.0.0` (or a newer `vX.Y.Z`) | both TX and RX assets |
 
 P1 asset names, including the transmitter spelling used by the release:
@@ -15,7 +15,7 @@ P1 asset names, including the transmitter spelling used by the release:
 - `opf-p1-rak3172_transmiter-fw*.bin` → `P1/vX.Y.Z/RAK3172_TX.bin`
 - `rak3172_receiver-fw*.bin` → `P1/vX.Y.Z/RAK3172_RX.bin`
 
-Bridge artifact names must be the env name (`ATOM_S3`, `ATOM_S3_R`) or the zip must contain `<env>/firmware.bin`. `ATOM_S3_DTU` and `ATOM_S3_R_DTU` artifacts are ignored and are not published. Any other unmapped `.bin` fails the job.
+Bridge artifact names must be `ATOM_S3_R` or `ATOM_S3`, or the zip must contain `<env>/firmware.bin`. DTU versus RS485 is runtime configuration after flash. A workflow artifact named `ATOM_S3_DTU` or `ATOM_S3_R_DTU` is not a feed board: it is skipped, and the publish still requires the two real images. Any other unmapped `.bin` fails the job.
 
 BMS has no workflow filename in the catalog yet. Pass `workflow_file` (basename only) on the first workflow-run publish, or set it in `.github/feed-catalog.json`.
 

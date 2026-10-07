@@ -106,7 +106,9 @@
           "size": 1710048,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
         }
-      ]
+      ],
+      "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
+      "board_contract_sha": "d9ca7a0"
     },
     "P1": {
       "product": "P1",
@@ -493,7 +495,8 @@
             }
           ]
         }
-      ]
+      ],
+      "source_ref": "master-grok"
     },
     {
       "id": "BRIDGE",
@@ -534,7 +537,9 @@
             "size": 1710048,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
           }
-        ]
+        ],
+        "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
+        "board_contract_sha": "d9ca7a0"
       },
       "versions": [
         {
@@ -915,7 +920,10 @@
             }
           ]
         }
-      ]
+      ],
+      "source_ref": "master-grok",
+      "board_contract_sha": "d9ca7a0",
+      "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin."
     },
     {
       "id": "P1",
@@ -941,6 +949,7 @@
         "note": "No matched TX/RX release is in the feed yet."
       },
       "versions": [],
+      "source_ref": "master-grok",
       "flash_as_pair": [
         "RAK3172_TX",
         "RAK3172_RX"

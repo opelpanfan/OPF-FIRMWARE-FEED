@@ -17,7 +17,7 @@ Use a product only when `available` is true. Download each object in `artifacts[
 Do not pick the highest `vX.Y.Z` folder. Those numbers were not published in order. `latest.*.highest_semver_is_latest` is false for the current BMS and Bridge channels. `matched_folder` is the immutable folder whose bytes match `latest/` today:
 
 - BMS latest is `1.0.2` (folder `BMS/1.0.2`, also `BMS/latest`). The highest semver folder is `v1.0.4`, published earlier, and it is a different image.
-- Bridge latest is `v1.0.11`. `v1.0.12` through `v1.0.14` were published before `v1.0.11`.
+- Bridge latest is `v1.0.11`. `v1.0.12` through `v1.0.14` were published before `v1.0.11`. Flash only `ATOM_S3_R` and `ATOM_S3`. `latest.BRIDGE.runtime_config` records that DTU versus RS485 is chosen after flash. There are no `ATOM_S3_R_DTU` or `ATOM_S3_DTU` files.
 - P1 latest stays unavailable until both `v1.0.0` release assets have been ingested.
 
 Direct latest URLs that exist today:
@@ -38,7 +38,7 @@ Pinned builds stay at `BMS/vX.Y.Z/`, `BMS/X.Y.Z/` (legacy), `BRIDGE/vX.Y.Z/`, an
 ## Layout
 
 - `BMS/` from [OPF-STORAGE-DASH](https://github.com/opelpanfan/OPF-STORAGE-DASH) `master-grok`, env `opf-ws`, file `OPF_WS.bin`. Older boards remain in historical folders.
-- `BRIDGE/` from [OPF-STORAGE-M5-BRIDGE](https://github.com/opelpanfan/OPF-STORAGE-M5-BRIDGE) `master-grok`, envs `ATOM_S3` and `ATOM_S3_R` together. DTU builds are not a separate feed binary.
+- `BRIDGE/` from [OPF-STORAGE-M5-BRIDGE](https://github.com/opelpanfan/OPF-STORAGE-M5-BRIDGE) `master-grok` at `d9ca7a0`. Flash `ATOM_S3_R.bin` and `ATOM_S3.bin` only. DTU versus RS485 is runtime configuration after flash, so the feed has no `ATOM_S3_R_DTU` or `ATOM_S3_DTU` assets.
 - `P1/` from [OPF-P1](https://github.com/opelpanfan/OPF-P1) `master-grok` release tags. `opf-p1-rak3172_transmiter-fw*.bin` becomes `RAK3172_TX.bin`. `rak3172_receiver-fw*.bin` becomes `RAK3172_RX.bin`. TX and RX are published together or not at all.
 - `METER/` has no binaries. It is the flasher alias for P1.
 

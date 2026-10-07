@@ -24,7 +24,7 @@ on:
         type: string
 
       board:
-        description: "Firmware binary to test"
+        description: "Firmware binary. Bridge is ATOM_S3_R or ATOM_S3 only; DTU vs RS485 is runtime config."
         required: true
         default: ""
         type: choice

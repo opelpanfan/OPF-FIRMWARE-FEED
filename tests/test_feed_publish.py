@@ -121,6 +121,15 @@ class FeedTests(unittest.TestCase):
             self.assertEqual((root / "BRIDGE/latest/ATOM_S3.bin").read_bytes(), esp(1))
             self.assertEqual((root / "BRIDGE/v1.0.1/ATOM_S3_R.bin").read_bytes(), before)
 
+    def test_bridge_feed_boards_are_atom_s3_r_and_atom_s3(self):
+        spec = load_catalog()["products"]["BRIDGE"]
+        self.assertEqual(spec["required_boards"], ["ATOM_S3_R", "ATOM_S3"])
+        self.assertEqual(set(spec["boards"]), {"ATOM_S3_R", "ATOM_S3"})
+        self.assertEqual(spec["source_ref"], "master-grok")
+        self.assertEqual(spec["board_contract_sha"], "d9ca7a0")
+        self.assertNotIn("ATOM_S3_DTU", spec["boards"])
+        self.assertNotIn("ATOM_S3_R_DTU", spec["boards"])
+
     def test_dtu_artifact_is_ignored_and_names_do_not_overlap(self):
         boards = bridge_catalog()["products"]["BRIDGE"]["boards"]
         ignored = ["ATOM_S3_DTU", "ATOM_S3_R_DTU"]
@@ -241,6 +250,8 @@ class FeedTests(unittest.TestCase):
         self.assertEqual(bridge["highest_semver_folder"], "v1.0.14")
         self.assertFalse(bridge["highest_semver_is_latest"])
         self.assertEqual(bridge["boards"], ["ATOM_S3", "ATOM_S3_R"])
+        self.assertEqual(bridge["board_contract_sha"], "d9ca7a0")
+        self.assertIn("after flash", bridge["runtime_config"])
         self.assertEqual(bms["version"], "1.0.2")
         self.assertEqual(bms["matched_folder"], "1.0.2")
         self.assertFalse(root_index["latest"]["P1"]["available"])

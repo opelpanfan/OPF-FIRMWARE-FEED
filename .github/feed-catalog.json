@@ -49,8 +49,10 @@
       "version_label": "prefixed",
       "source_repository": "opelpanfan/OPF-STORAGE-M5-BRIDGE",
       "source_ref": "master-grok",
+      "board_contract_sha": "d9ca7a0",
       "workflow_file": "build-firmware.yml",
-      "required_boards": ["ATOM_S3", "ATOM_S3_R"],
+      "required_boards": ["ATOM_S3_R", "ATOM_S3"],
+      "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
       "ignored_envs": ["ATOM_S3_DTU", "ATOM_S3_R_DTU"],
       "boards": {
         "ATOM_S3": {
