@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "repository": "opelpanfan/OPF-FIRMWARE-FEED",
+  "branch": "main",
+  "raw_base": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main",
+  "aliases": {
+    "METER": "P1"
+  },
+  "products": {
+    "BMS": {
+      "family": "esp32",
+      "ingest": "any",
+      "version_label": "plain",
+      "source_repository": "opelpanfan/OPF-STORAGE-DASH",
+      "source_ref": "master-grok",
+      "workflow_file": null,
+      "required_boards": ["OPF_WS"],
+      "boards": {
+        "OPF_WS": {
+          "filename": "OPF_WS.bin",
+          "envs": ["opf-ws", "OPF_WS"],
+          "required": true
+        },
+        "OPF_WS_NO_TEMP": {
+          "filename": "OPF_WS_NO_TEMP.bin",
+          "envs": ["OPF_WS_NO_TEMP", "opf-ws-no-temp"]
+        },
+        "OPF_T2CAN": {
+          "filename": "OPF_T2CAN.bin",
+          "envs": ["OPF_T2CAN"]
+        },
+        "OPF_ATOM_S3": {
+          "filename": "OPF_ATOM_S3.bin",
+          "envs": ["OPF_ATOM_S3"]
+        },
+        "OPF_ATOM_S3R": {
+          "filename": "OPF_ATOM_S3R.bin",
+          "envs": ["OPF_ATOM_S3R"]
+        },
+        "ESP32-S3-RS485-CAN": {
+          "filename": "ESP32-S3-RS485-CAN.bin",
+          "envs": ["ESP32-S3-RS485-CAN"]
+        }
+      }
+    },
+    "BRIDGE": {
+      "family": "esp32",
+      "ingest": "any",
+      "version_label": "prefixed",
+      "source_repository": "opelpanfan/OPF-STORAGE-M5-BRIDGE",
+      "source_ref": "master-grok",
+      "workflow_file": "build-firmware.yml",
+      "required_boards": ["ATOM_S3", "ATOM_S3_R"],
+      "ignored_envs": ["ATOM_S3_DTU", "ATOM_S3_R_DTU"],
+      "boards": {
+        "ATOM_S3": {
+          "filename": "ATOM_S3.bin",
+          "envs": ["ATOM_S3"],
+          "required": true
+        },
+        "ATOM_S3_R": {
+          "filename": "ATOM_S3_R.bin",
+          "envs": ["ATOM_S3_R"],
+          "required": true
+        }
+      }
+    },
+    "P1": {
+      "family": "stm32",
+      "ingest": "release",
+      "version_label": "prefixed",
+      "source_repository": "opelpanfan/OPF-P1",
+      "source_ref": "master-grok",
+      "workflow_file": null,
+      "required_boards": ["RAK3172_TX", "RAK3172_RX"],
+      "flash_as_pair": ["RAK3172_TX", "RAK3172_RX"],
+      "boards": {
+        "RAK3172_TX": {
+          "filename": "RAK3172_TX.bin",
+          "envs": ["RAK3172_TX"],
+          "required": true,
+          "asset_globs": [
+            "opf-p1-rak3172_transmiter-fw*.bin",
+            "opf-p1-rak3172_transmitter-fw*.bin",
+            "rak3172_transmiter-fw*.bin",
+            "rak3172_transmitter-fw*.bin"
+          ]
+        },
+        "RAK3172_RX": {
+          "filename": "RAK3172_RX.bin",
+          "envs": ["RAK3172_RX"],
+          "required": true,
+          "asset_globs": [
+            "rak3172_receiver-fw*.bin",
+            "opf-p1-rak3172_receiver-fw*.bin"
+          ]
+        }
+      }
+    },
+    "METER": {
+      "family": "reserved",
+      "ingest": "none",
+      "alias_of": "P1",
+      "version_label": "prefixed",
+      "source_repository": null,
+      "source_ref": null,
+      "workflow_file": null,
+      "boards": {}
+    }
+  }
+}

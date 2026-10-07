@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "product": "BMS",
+  "version": "v1.0.1",
+  "semver": "1.0.1",
+  "channel": "version",
+  "folder": "v1.0.1",
+  "files": {
+    "OPF_T2CAN": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v1.0.1/OPF_T2CAN.bin",
+    "OPF_WS": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v1.0.1/OPF_WS.bin"
+  },
+  "sha256": {
+    "OPF_T2CAN": "0d9a2cc927fe361d0a5702229e6b2e7ed70564b33b52211616878bdd58465178",
+    "OPF_WS": "072d4a5333a6dd470d4a8cb04afa8e962c53f077b47351ab05e85bcb9babe98c"
+  },
+  "artifacts": [
+    {
+      "board": "OPF_T2CAN",
+      "filename": "OPF_T2CAN.bin",
+      "sha256": "0d9a2cc927fe361d0a5702229e6b2e7ed70564b33b52211616878bdd58465178",
+      "size": 1234288,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v1.0.1/OPF_T2CAN.bin"
+    },
+    {
+      "board": "OPF_WS",
+      "filename": "OPF_WS.bin",
+      "sha256": "072d4a5333a6dd470d4a8cb04afa8e962c53f077b47351ab05e85bcb9babe98c",
+      "size": 1253264,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v1.0.1/OPF_WS.bin"
+    }
+  ]
+}

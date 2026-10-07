@@ -1,0 +1,110 @@
+name: Publish firmware
+
+# Ingest a complete release into main. This is not the OTA smoke test.
+# Version folders are immutable. latest/ is replaced only after the full set validates.
+
+on:
+  workflow_dispatch:
+    inputs:
+      product:
+        description: "Product folder"
+        required: true
+        type: choice
+        options:
+          - BMS
+          - BRIDGE
+          - P1
+      version:
+        description: "Release semver, such as 1.0.0 or v1.0.0. P1 is v1.0.0 until a newer tag exists."
+        required: true
+        type: string
+      source:
+        description: "Where to download the binaries"
+        required: true
+        type: choice
+        options:
+          - workflow_run
+          - release
+      run_id:
+        description: "Source Actions run id. Required for workflow_run. Run must be successful on master-grok."
+        required: false
+        type: string
+      tag:
+        description: "Release tag. Defaults to v<version>. P1 assets are read from this tag (v1.0.0)."
+        required: false
+        type: string
+      workflow_file:
+        description: "Workflow filename. Required for BMS until feed-catalog.json records one. Bridge uses build-firmware.yml."
+        required: false
+        type: string
+      set_latest:
+        description: "Point latest/ at this release after it is stored. Default true."
+        required: true
+        type: boolean
+        default: true
+      allow_any_ref:
+        description: "Allow a source ref other than master-grok. Leave false."
+        required: true
+        type: boolean
+        default: false
+      sha256:
+        description: "Optional JSON object of board to sha256. A mismatch fails the publish."
+        required: false
+        type: string
+  repository_dispatch:
+    types: [publish-firmware]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: firmware-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish firmware to main
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Require main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "Publish firmware only runs from main"
+          exit 1
+
+      - name: Checkout main
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: main
+          persist-credentials: true
+          fetch-depth: 1
+
+      - name: Ingest and validate
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          CLIENT_PAYLOAD: ${{ github.event_name == 'repository_dispatch' && toJson(github.event.client_payload) || '{}' }}
+          INPUT_PRODUCT: ${{ inputs.product }}
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_SOURCE: ${{ inputs.source }}
+          INPUT_RUN_ID: ${{ inputs.run_id }}
+          INPUT_TAG: ${{ inputs.tag }}
+          INPUT_WORKFLOW_FILE: ${{ inputs.workflow_file }}
+          INPUT_SET_LATEST: ${{ inputs.set_latest }}
+          INPUT_ALLOW_ANY_REF: ${{ inputs.allow_any_ref }}
+          INPUT_SHA256: ${{ inputs.sha256 }}
+          SOURCE_READ_TOKEN: ${{ secrets.SOURCE_READ_TOKEN }}
+        run: python3 .github/scripts/publish_firmware.py ingest
+
+      - name: Commit and push
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- BMS BRIDGE P1 METER index.json SHA256SUMS
+          if git diff --cached --quiet; then
+            echo "Feed already contained this release"
+            exit 0
+          fi
+          git commit -m "Publish ${PUBLISH_PRODUCT} firmware ${PUBLISH_VERSION}"
+          git push origin HEAD:main
