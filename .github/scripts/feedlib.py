@@ -425,7 +425,7 @@ def _empty_product(catalog: dict, product: str, spec: dict) -> dict:
         entry["flash_as_pair"] = list(spec["flash_as_pair"])
         entry["note"] = (
             "Publish waits for a matched pair of OPF-P1 release assets "
-            "opf-p1-rak3172_transmiter-fw*.bin and rak3172_receiver-fw*.bin."
+            "opf-p1-rak3172_transmiter-fw*.bin and opf-p1-rak3172_receiver-fw*.bin."
         )
     if spec.get("alias_of"):
         entry["alias_of"] = spec["alias_of"]
@@ -510,6 +510,7 @@ def render_manifests(
                     "layout": layout,
                     "channel": document["channel"],
                     "boards": [item["board"] for item in document["artifacts"]],
+                    "sha256": dict(document["sha256"]),
                     "index_url": raw_url(catalog, product, folder_name, "index.json"),
                     "artifacts": document["artifacts"],
                 }
@@ -548,8 +549,8 @@ def render_manifests(
         elif product == "P1" and not latest_entry.get("available"):
             entry["note"] = (
                 "Publish waits for a matched pair of OPF-P1 release assets "
-                "opf-p1-rak3172_transmiter-fw*.bin and rak3172_receiver-fw*.bin "
-                "from tag vX.Y.Z (currently v1.0.0) on branch master-grok."
+                "opf-p1-rak3172_transmiter-fw*.bin and opf-p1-rak3172_receiver-fw*.bin "
+                "from tag vX.Y.Z (currently v1.0.1) on branch master-grok."
             )
         root_products.append(entry)
 
@@ -1131,7 +1132,11 @@ def match_release_assets(assets: list[dict], boards: dict, requested: set[str] |
         if requested is not None and board not in requested:
             continue
         globs = list(spec.get("asset_globs") or [spec["filename"]])
-        hits = [asset for asset in assets if any(fnmatchcase(asset.get("name", ""), pattern) for pattern in globs)]
+        hits = [
+            asset
+            for asset in assets
+            if any(_release_name_matches(asset.get("name", ""), pattern) for pattern in globs)
+        ]
         if len(hits) > 1:
             names = ", ".join(asset.get("name", "") for asset in hits)
             raise FeedError(f"{board} matched multiple release assets: {names}")
@@ -1139,7 +1144,9 @@ def match_release_assets(assets: list[dict], boards: dict, requested: set[str] |
             selected[board] = hits[0]
             used.add(hits[0].get("name", ""))
         elif spec.get("required"):
-            raise ReleaseNotReady(f"release is missing required asset for {board}")
+            raise ReleaseNotReady(
+                f"release is missing required asset for {board} (expected one of: {', '.join(globs)})"
+            )
 
     for asset in assets:
         name = asset.get("name") or ""
@@ -1154,13 +1161,27 @@ def match_release_assets(assets: list[dict], boards: dict, requested: set[str] |
     return selected
 
 
-def parse_board_list(value: str, boards: dict) -> set[str] | None:
-    text = (value or "").strip()
-    if not text:
+def _release_name_matches(name: str, pattern: str) -> bool:
+    """Match a release asset name. Globs are case-insensitive; spelling stays exact."""
+
+    if fnmatchcase(name, pattern):
+        return True
+    return fnmatchcase(name.casefold(), pattern.casefold())
+
+
+def parse_board_list(value, boards: dict) -> set[str] | None:
+    if value is None or value == "":
         return None
+    if isinstance(value, list):
+        parts = value
+    else:
+        text = str(value).strip()
+        if not text:
+            return None
+        parts = text.split(",")
     found = []
-    for part in text.split(","):
-        board = part.strip()
+    for part in parts:
+        board = str(part).strip()
         if not board:
             continue
         if board not in boards:
@@ -1277,7 +1298,7 @@ def ingest_from_env(root: Path, env: dict[str, str] | None = None) -> str:
             "version folders are immutable. Publish a new version, or roll latest back to an older folder."
         )
     allow_any_ref = _truthy(request.get("allow_any_ref"), False)
-    requested_boards = parse_board_list(str(request.get("boards") or ""), boards)
+    requested_boards = parse_board_list(request.get("boards"), boards)
     if requested_boards is not None:
         missing_required = [board for board in required_board_ids(spec) if board not in requested_boards]
         if missing_required:

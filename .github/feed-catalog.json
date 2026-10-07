@@ -93,8 +93,8 @@
           "envs": ["RAK3172_RX"],
           "required": true,
           "asset_globs": [
-            "rak3172_receiver-fw*.bin",
-            "opf-p1-rak3172_receiver-fw*.bin"
+            "opf-p1-rak3172_receiver-fw*.bin",
+            "rak3172_receiver-fw*.bin"
           ]
         }
       }
