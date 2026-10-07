@@ -15,7 +15,7 @@ on:
           - BRIDGE
           - P1
       version:
-        description: "Release semver, such as 1.0.0 or v1.0.0. P1 is v1.0.0 until a newer tag exists."
+        description: "Release semver, such as 1.0.1 or v1.0.1. Stored as an immutable vX.Y.Z folder. P1 tag to ingest is v1.0.1."
         required: true
         type: string
       source:
@@ -30,7 +30,7 @@ on:
         required: false
         type: string
       tag:
-        description: "Release tag. Defaults to v<version>. P1 assets are read from this tag (v1.0.0)."
+        description: "Release tag. Defaults to v<version>. P1 v1.0.1 assets are opf-p1-rak3172_transmiter-fw6.bin and opf-p1-rak3172_receiver-fw6.bin."
         required: false
         type: string
       workflow_file:
@@ -51,6 +51,9 @@ on:
         description: "Optional JSON object of board to sha256. A mismatch fails the publish."
         required: false
         type: string
+  # Source repos POST /dispatches with event_type publish-firmware.
+  # Their Actions secret is FW_FEED_PUSH_TOKEN. This job reads sources with SOURCE_READ_TOKEN.
+  # Payload fields: docs/publishing.md.
   repository_dispatch:
     types: [publish-firmware]
 

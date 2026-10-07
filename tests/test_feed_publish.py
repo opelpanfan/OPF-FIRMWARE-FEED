@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 import sys
@@ -13,6 +14,7 @@ from feedlib import (
     GitHubHTTPError,
     ReleaseNotReady,
     apply_publish,
+    ingest_from_env,
     load_catalog,
     match_release_assets,
     match_zip_bins,
@@ -120,6 +122,14 @@ class FeedTests(unittest.TestCase):
             rollback_latest(root, catalog, "BRIDGE", "v1.0.0")
             self.assertEqual((root / "BRIDGE/latest/ATOM_S3.bin").read_bytes(), esp(1))
             self.assertEqual((root / "BRIDGE/v1.0.1/ATOM_S3_R.bin").read_bytes(), before)
+            index = json.loads((root / "index.json").read_text())
+            versions = index["products"][0]["versions"]
+            self.assertEqual([item["folder"] for item in versions], ["v1.0.1", "v1.0.0"])
+            self.assertEqual(versions[1]["sha256"]["ATOM_S3"], hashlib.sha256(esp(1)).hexdigest())
+            self.assertEqual(versions[1]["artifacts"][0]["sha256"], versions[1]["sha256"]["ATOM_S3"])
+            self.assertEqual(index["latest"]["BRIDGE"]["matched_folder"], "v1.0.0")
+            self.assertEqual(index["latest"]["BRIDGE"]["highest_semver_folder"], "v1.0.1")
+            self.assertFalse(index["latest"]["BRIDGE"]["highest_semver_is_latest"])
 
     def test_bridge_feed_boards_are_atom_s3_r_and_atom_s3(self):
         spec = load_catalog()["products"]["BRIDGE"]
@@ -167,6 +177,197 @@ class FeedTests(unittest.TestCase):
         self.assertEqual(set(selected), {"RAK3172_TX", "RAK3172_RX"})
         with self.assertRaises(ReleaseNotReady):
             match_release_assets(assets[:1], boards, None)
+
+    def test_p1_v101_release_asset_names_map_tx_and_rx(self):
+        boards = load_catalog()["products"]["P1"]["boards"]
+        assets = [
+            {"name": "opf-p1-rak3172_transmiter-fw6.bin", "url": "https://api.github.com/asset/1"},
+            {"name": "opf-p1-rak3172_receiver-fw6.bin", "url": "https://api.github.com/asset/2"},
+            {"name": "opf-p1-rak3172_transmiter-fw6.elf", "url": "https://api.github.com/asset/3"},
+            {"name": "opf-p1-rak3172_receiver-fw6.elf", "url": "https://api.github.com/asset/4"},
+        ]
+        selected = match_release_assets(assets, boards, None)
+        self.assertEqual(selected["RAK3172_TX"]["name"], "opf-p1-rak3172_transmiter-fw6.bin")
+        self.assertEqual(selected["RAK3172_RX"]["name"], "opf-p1-rak3172_receiver-fw6.bin")
+        folded = [
+            {"name": "OPF-P1-RAK3172_TRANSMITER-FW6.BIN", "url": "https://api.github.com/asset/1"},
+            {"name": "OPF-P1-RAK3172_RECEIVER-FW6.BIN", "url": "https://api.github.com/asset/2"},
+        ]
+        selected = match_release_assets(folded, boards, None)
+        self.assertEqual(set(selected), {"RAK3172_TX", "RAK3172_RX"})
+        with self.assertRaises(FeedError):
+            match_release_assets(assets + [{"name": "bootloader.bin", "url": "https://api.github.com/asset/9"}], boards, None)
+
+    def test_p1_ingest_writes_v101_and_latest_from_release_names(self):
+        os.environ["FEED_NO_SLEEP"] = "1"
+        tx = stm(11)
+        rx = stm(22)
+        assets = [
+            {
+                "name": "opf-p1-rak3172_transmiter-fw6.bin",
+                "url": "https://api.github.com/repos/opelpanfan/OPF-P1/releases/assets/11",
+                "digest": "sha256:" + hashlib.sha256(tx).hexdigest(),
+            },
+            {
+                "name": "opf-p1-rak3172_receiver-fw6.bin",
+                "url": "https://api.github.com/repos/opelpanfan/OPF-P1/releases/assets/22",
+                "digest": "sha256:" + hashlib.sha256(rx).hexdigest(),
+            },
+            {"name": "opf-p1-rak3172_transmiter-fw6.elf", "url": "https://api.github.com/repos/opelpanfan/OPF-P1/releases/assets/33"},
+            {"name": "opf-p1-rak3172_receiver-fw6.elf", "url": "https://api.github.com/repos/opelpanfan/OPF-P1/releases/assets/44"},
+        ]
+
+        def fake_json(url, token):
+            self.assertEqual(token, "test-token")
+            self.assertIn("/releases/tags/v1.0.1", url)
+            return {"id": 101, "target_commitish": "master-grok", "assets": assets}
+
+        def fake_bytes(url, token):
+            if url.endswith("/11"):
+                return tx
+            if url.endswith("/22"):
+                return rx
+            raise AssertionError(url)
+
+        import feedlib
+
+        original_json = feedlib.github_json
+        original_bytes = feedlib.github_bytes
+        feedlib.github_json = fake_json
+        feedlib.github_bytes = fake_bytes
+        payload = {
+            "product": "P1",
+            "version": "v1.0.1",
+            "source": "release",
+            "tag": "v1.0.1",
+            "set_latest": True,
+            "boards": ["RAK3172_TX", "RAK3172_RX"],
+        }
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                env = {
+                    "EVENT_NAME": "repository_dispatch",
+                    "CLIENT_PAYLOAD": json.dumps(payload),
+                    "SOURCE_READ_TOKEN": "test-token",
+                }
+                folder = ingest_from_env(root, env)
+                self.assertEqual(folder, "v1.0.1")
+                self.assertEqual((root / "P1/v1.0.1/RAK3172_TX.bin").read_bytes(), tx)
+                self.assertEqual((root / "P1/v1.0.1/RAK3172_RX.bin").read_bytes(), rx)
+                self.assertEqual((root / "P1/latest/RAK3172_TX.bin").read_bytes(), tx)
+                self.assertEqual((root / "P1/latest/RAK3172_RX.bin").read_bytes(), rx)
+                self.assertFalse((root / "METER").exists())
+                index = json.loads((root / "index.json").read_text())
+                products = {item["id"]: item for item in index["products"]}
+                version = products["P1"]["versions"][0]
+                self.assertEqual(version["folder"], "v1.0.1")
+                self.assertEqual(version["sha256"]["RAK3172_TX"], hashlib.sha256(tx).hexdigest())
+                self.assertEqual(version["sha256"]["RAK3172_RX"], hashlib.sha256(rx).hexdigest())
+                by_board = {item["board"]: item for item in version["artifacts"]}
+                self.assertEqual(by_board["RAK3172_TX"]["filename"], "RAK3172_TX.bin")
+                self.assertEqual(by_board["RAK3172_TX"]["source_filename"], "opf-p1-rak3172_transmiter-fw6.bin")
+                self.assertEqual(by_board["RAK3172_RX"]["source_filename"], "opf-p1-rak3172_receiver-fw6.bin")
+                self.assertEqual(by_board["RAK3172_TX"]["sha256"], version["sha256"]["RAK3172_TX"])
+                self.assertTrue(index["latest"]["P1"]["available"])
+                self.assertEqual(index["latest"]["P1"]["matched_folder"], "v1.0.1")
+                self.assertEqual(index["latest"]["P1"]["version"], "v1.0.1")
+                self.assertTrue(index["latest"]["METER"]["available"])
+                self.assertEqual(index["latest"]["METER"]["alias_of"], "P1")
+                self.assertEqual(products["METER"]["versions"], [])
+                ingest_from_env(root, env)
+                self.assertEqual((root / "P1/v1.0.1/RAK3172_TX.bin").read_bytes(), tx)
+        finally:
+            feedlib.github_json = original_json
+            feedlib.github_bytes = original_bytes
+            os.environ.pop("FEED_NO_SLEEP", None)
+
+    def test_set_latest_false_writes_only_the_version_folder(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            catalog = load_catalog()
+            binaries = {
+                "RAK3172_TX": (stm(1), "opf-p1-rak3172_transmiter-fw6.bin"),
+                "RAK3172_RX": (stm(2), "opf-p1-rak3172_receiver-fw6.bin"),
+            }
+            folder = apply_publish(
+                root,
+                catalog,
+                "P1",
+                "v1.0.1",
+                binaries,
+                set_latest=False,
+                source={"kind": "release", "repository": "opelpanfan/OPF-P1", "tag": "v1.0.1"},
+            )
+            self.assertEqual(folder, "v1.0.1")
+            self.assertTrue((root / "P1/v1.0.1/RAK3172_TX.bin").is_file())
+            self.assertFalse((root / "P1/latest").exists())
+            index = json.loads((root / "index.json").read_text())
+            products = {item["id"]: item for item in index["products"]}
+            self.assertEqual(products["P1"]["versions"][0]["folder"], "v1.0.1")
+            self.assertIn("RAK3172_RX", products["P1"]["versions"][0]["sha256"])
+            self.assertFalse(index["latest"]["P1"]["available"])
+            apply_publish(
+                root,
+                catalog,
+                "P1",
+                "1.0.1",
+                binaries,
+                set_latest=True,
+                source={"kind": "release", "repository": "opelpanfan/OPF-P1", "tag": "v1.0.1"},
+            )
+            self.assertEqual((root / "P1/latest/RAK3172_RX.bin").read_bytes(), stm(2))
+            self.assertEqual((root / "P1/v1.0.1/RAK3172_TX.bin").read_bytes(), stm(1))
+            index = json.loads((root / "index.json").read_text())
+            self.assertTrue(index["latest"]["P1"]["available"])
+            self.assertEqual(index["latest"]["P1"]["highest_semver_folder"], "v1.0.1")
+            self.assertTrue(index["latest"]["P1"]["highest_semver_is_latest"])
+
+    def test_ingest_requires_source_read_token_and_refuses_a_partial_board_list(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with self.assertRaises(FeedError) as missing:
+                ingest_from_env(
+                    root,
+                    {
+                        "EVENT_NAME": "repository_dispatch",
+                        "CLIENT_PAYLOAD": json.dumps(
+                            {"product": "P1", "version": "1.0.1", "source": "release", "tag": "v1.0.1"}
+                        ),
+                    },
+                )
+            self.assertIn("SOURCE_READ_TOKEN", str(missing.exception))
+            with self.assertRaises(FeedError) as partial:
+                ingest_from_env(
+                    root,
+                    {
+                        "EVENT_NAME": "repository_dispatch",
+                        "CLIENT_PAYLOAD": json.dumps(
+                            {
+                                "product": "P1",
+                                "version": "1.0.1",
+                                "source": "release",
+                                "boards": ["RAK3172_TX"],
+                            }
+                        ),
+                        "SOURCE_READ_TOKEN": "test-token",
+                    },
+                )
+            self.assertIn("RAK3172_RX", str(partial.exception))
+            self.assertFalse((root / "P1").exists())
+
+    def test_publish_docs_name_the_source_dispatch_secret(self):
+        text = (ROOT / "docs/publishing.md").read_text()
+        self.assertIn("FW_FEED_PUSH_TOKEN", text)
+        self.assertIn("publish-firmware", text)
+        self.assertIn("repository_dispatch", text)
+        self.assertIn("client_payload", text)
+        self.assertIn("SOURCE_READ_TOKEN", text)
+        self.assertNotIn("FEED_DISPATCH_TOKEN", text)
+        workflow = (ROOT / ".github/workflows/publish-firmware.yml").read_text()
+        self.assertIn("publish-firmware", workflow)
+        self.assertIn("repository_dispatch", workflow)
+        self.assertIn("SOURCE_READ_TOKEN", workflow)
 
     def test_release_retries_until_the_pair_exists(self):
         os.environ["FEED_NO_SLEEP"] = "1"
@@ -265,6 +466,9 @@ class FeedTests(unittest.TestCase):
         self.assertEqual(root_index["latest"]["METER"]["alias_of"], "P1")
         self.assertFalse(root_index["latest"]["METER"]["available"])
         products = {item["id"]: item for item in root_index["products"]}
+        self.assertIn("v1.0.1", products["P1"]["note"])
+        self.assertIn("opf-p1-rak3172_transmiter-fw", products["P1"]["note"])
+        self.assertIn("opf-p1-rak3172_receiver-fw", products["P1"]["note"])
         for product_id in ("BMS", "BRIDGE", "P1", "METER"):
             self.assertEqual(products[product_id]["versions"], [])
             product_dir = ROOT / product_id

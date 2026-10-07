@@ -301,7 +301,7 @@
         "RAK3172_TX",
         "RAK3172_RX"
       ],
-      "note": "Publish waits for a matched pair of OPF-P1 release assets opf-p1-rak3172_transmiter-fw*.bin and rak3172_receiver-fw*.bin from tag vX.Y.Z (currently v1.0.0) on branch master-grok."
+      "note": "Publish waits for a matched pair of OPF-P1 release assets opf-p1-rak3172_transmiter-fw*.bin and opf-p1-rak3172_receiver-fw*.bin from tag vX.Y.Z (currently v1.0.1) on branch master-grok."
     },
     {
       "id": "METER",
