@@ -1,9 +1,5 @@
-# BRIDGE firmware
+# BRIDGE
 
-Public OTA binaries for the M5 bridge. Flash `ATOM_S3_R.bin` and `ATOM_S3.bin` only. Source is OPF-STORAGE-M5-BRIDGE `master-grok` at `d9ca7a0` (`build-firmware.yml`).
+Empty until sources push `v0.0.1`.
 
-DTU versus RS485 is selected on the device after flash. `ATOM_S3_R_DTU` and `ATOM_S3_DTU` are not feed firmware.
-
-`latest/` is the channel. Its version label is `v1.0.1`, and those bytes also live in immutable `v1.0.1/`. Older version folders, including `v1.0.14/`, stay in this directory. OPF-STORAGE-M5-BRIDGE pushes `vX.Y.Z/` and refreshes `latest/` only when that release is the channel. The push does not delete older folders.
-
-Flasher reads `latest.BRIDGE` and that product’s `versions[]` in the repository root `index.json`.
+The next publish is the ATOM pair: `ATOM_S3_R.bin` and `ATOM_S3.bin`.

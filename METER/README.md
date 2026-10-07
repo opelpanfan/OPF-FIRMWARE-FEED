@@ -1,5 +1,5 @@
 # METER
 
-METER is an alias of P1. There are no binaries in this folder.
+Empty until sources push `v0.0.1`.
 
-Flasher reads `latest.METER` in the repository root `index.json`. That object is the P1 transmitter/receiver pair stored under `P1/`.
+METER is an alias of P1. There are no binaries in this folder. Transmitter and receiver bytes are stored under `P1/` (`RAK3172_TX.bin` and `RAK3172_RX.bin`).
