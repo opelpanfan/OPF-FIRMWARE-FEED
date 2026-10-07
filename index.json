@@ -81,44 +81,41 @@
     "BRIDGE": {
       "product": "BRIDGE",
       "available": true,
-      "semver": "0.0.3",
-      "version": "v0.0.3",
-      "matched_folder": "v0.0.3",
+      "semver": "0.0.11",
+      "version": "v0.0.11",
+      "matched_folder": "v0.0.11",
       "matches_folders": [
-        "v0.0.3",
-        "v0.0.8"
+        "v0.0.11"
       ],
-      "highest_semver_folder": "v0.0.8",
-      "highest_semver_is_latest": false,
+      "highest_semver_folder": "v0.0.11",
+      "highest_semver_is_latest": true,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/index.json",
       "boards": [
         "ATOM_S3",
         "ATOM_S3_R"
       ],
       "sha256": {
-        "ATOM_S3": "55fe020030bf182e7dc24bdb2c3a68eebd658e8a15fece4ee9ceb67d4a9b9b53",
-        "ATOM_S3_R": "7432b5c5c4261c83044116ef592818efff2d5d8b8c5e20e283c0c6967e0a4695"
+        "ATOM_S3": "2cfb12cccff266c7e6a6cf320f9863bcfd018eb70117b9a1aaa7c63153e119b0",
+        "ATOM_S3_R": "9b3d35f81f034cdf4d739968445e061966abaf158367c21c53c5623c61f759d4"
       },
       "artifacts": [
         {
           "board": "ATOM_S3",
           "filename": "ATOM_S3.bin",
-          "sha256": "55fe020030bf182e7dc24bdb2c3a68eebd658e8a15fece4ee9ceb67d4a9b9b53",
-          "size": 1861280,
+          "sha256": "2cfb12cccff266c7e6a6cf320f9863bcfd018eb70117b9a1aaa7c63153e119b0",
+          "size": 1862400,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin"
         },
         {
           "board": "ATOM_S3_R",
           "filename": "ATOM_S3_R.bin",
-          "sha256": "7432b5c5c4261c83044116ef592818efff2d5d8b8c5e20e283c0c6967e0a4695",
-          "size": 1905808,
+          "sha256": "9b3d35f81f034cdf4d739968445e061966abaf158367c21c53c5623c61f759d4",
+          "size": 1906976,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
         }
       ],
       "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
-      "board_contract_sha": "d9ca7a0",
-      "release_notes": "# BRIDGE v0.0.3 \u2014 testing material\n\nThese release notes are for Flasher/FEED UI verification.\n\n- Device: BRIDGE (OPF-STORAGE-M5-BRIDGE)\n- Boards: ATOM_S3, ATOM_S3_R\n- Channel: immutable `BRIDGE/v0.0.3` + `BRIDGE/latest`\n\nIf you can read this in OPF-FLASHER, release notes are working.\n",
-      "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
+      "board_contract_sha": "d9ca7a0"
     },
     "P1": {
       "product": "P1",
@@ -486,46 +483,74 @@
       "latest": {
         "product": "BRIDGE",
         "available": true,
-        "semver": "0.0.3",
-        "version": "v0.0.3",
-        "matched_folder": "v0.0.3",
+        "semver": "0.0.11",
+        "version": "v0.0.11",
+        "matched_folder": "v0.0.11",
         "matches_folders": [
-          "v0.0.3",
-          "v0.0.8"
+          "v0.0.11"
         ],
-        "highest_semver_folder": "v0.0.8",
-        "highest_semver_is_latest": false,
+        "highest_semver_folder": "v0.0.11",
+        "highest_semver_is_latest": true,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/index.json",
         "boards": [
           "ATOM_S3",
           "ATOM_S3_R"
         ],
         "sha256": {
-          "ATOM_S3": "55fe020030bf182e7dc24bdb2c3a68eebd658e8a15fece4ee9ceb67d4a9b9b53",
-          "ATOM_S3_R": "7432b5c5c4261c83044116ef592818efff2d5d8b8c5e20e283c0c6967e0a4695"
+          "ATOM_S3": "2cfb12cccff266c7e6a6cf320f9863bcfd018eb70117b9a1aaa7c63153e119b0",
+          "ATOM_S3_R": "9b3d35f81f034cdf4d739968445e061966abaf158367c21c53c5623c61f759d4"
         },
         "artifacts": [
           {
             "board": "ATOM_S3",
             "filename": "ATOM_S3.bin",
-            "sha256": "55fe020030bf182e7dc24bdb2c3a68eebd658e8a15fece4ee9ceb67d4a9b9b53",
-            "size": 1861280,
+            "sha256": "2cfb12cccff266c7e6a6cf320f9863bcfd018eb70117b9a1aaa7c63153e119b0",
+            "size": 1862400,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin"
           },
           {
             "board": "ATOM_S3_R",
             "filename": "ATOM_S3_R.bin",
-            "sha256": "7432b5c5c4261c83044116ef592818efff2d5d8b8c5e20e283c0c6967e0a4695",
-            "size": 1905808,
+            "sha256": "9b3d35f81f034cdf4d739968445e061966abaf158367c21c53c5623c61f759d4",
+            "size": 1906976,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
           }
         ],
         "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
-        "board_contract_sha": "d9ca7a0",
-        "release_notes": "# BRIDGE v0.0.3 \u2014 testing material\n\nThese release notes are for Flasher/FEED UI verification.\n\n- Device: BRIDGE (OPF-STORAGE-M5-BRIDGE)\n- Boards: ATOM_S3, ATOM_S3_R\n- Channel: immutable `BRIDGE/v0.0.3` + `BRIDGE/latest`\n\nIf you can read this in OPF-FLASHER, release notes are working.\n",
-        "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
+        "board_contract_sha": "d9ca7a0"
       },
       "versions": [
+        {
+          "folder": "v0.0.11",
+          "semver": "0.0.11",
+          "layout": "canonical",
+          "channel": "version",
+          "boards": [
+            "ATOM_S3",
+            "ATOM_S3_R"
+          ],
+          "sha256": {
+            "ATOM_S3": "2cfb12cccff266c7e6a6cf320f9863bcfd018eb70117b9a1aaa7c63153e119b0",
+            "ATOM_S3_R": "9b3d35f81f034cdf4d739968445e061966abaf158367c21c53c5623c61f759d4"
+          },
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.11/index.json",
+          "artifacts": [
+            {
+              "board": "ATOM_S3",
+              "filename": "ATOM_S3.bin",
+              "sha256": "2cfb12cccff266c7e6a6cf320f9863bcfd018eb70117b9a1aaa7c63153e119b0",
+              "size": 1862400,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.11/ATOM_S3.bin"
+            },
+            {
+              "board": "ATOM_S3_R",
+              "filename": "ATOM_S3_R.bin",
+              "sha256": "9b3d35f81f034cdf4d739968445e061966abaf158367c21c53c5623c61f759d4",
+              "size": 1906976,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.11/ATOM_S3_R.bin"
+            }
+          ]
+        },
         {
           "folder": "v0.0.8",
           "semver": "0.0.8",
