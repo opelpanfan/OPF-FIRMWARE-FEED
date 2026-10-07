@@ -18,42 +18,36 @@ Use a product only when `available` is true. Download each object in `artifacts[
 
 - BMS `latest/` is version `1.0.1` and matches `BMS/v1.0.1/`. Older folders such as `BMS/v1.0.5/` and `BMS/1.0.2/` stay published.
 - Bridge `latest/` is version `v1.0.1` and matches `BRIDGE/v1.0.1/`. Flash only `ATOM_S3_R` and `ATOM_S3`. `latest.BRIDGE.runtime_config` records that DTU versus RS485 is chosen after flash. There are no `ATOM_S3_R_DTU` or `ATOM_S3_DTU` files. Older folders through `BRIDGE/v1.0.14/` stay published.
-- P1 latest stays unavailable until tag `v1.0.1` is ingested (`opf-p1-rak3172_transmiter-fw6.bin` and `opf-p1-rak3172_receiver-fw6.bin`). That ingest needs `SOURCE_READ_TOKEN` on this repo.
+- P1 `latest/` is version `v1.0.1` and matches `P1/v1.0.1/`. Flash `RAK3172_TX` and `RAK3172_RX` as a pair. `latest.METER` is that same pair.
 
-Direct latest URLs that exist today:
+Direct latest URLs:
 
 - `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin`
 - `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin`
 - `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin`
-
-After the first successful P1 ingest, the same pattern is:
-
 - `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin`
 - `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin`
 
-A publish writes an immutable `vX.Y.Z/` folder and, when `set_latest` is true, copies those bytes onto `latest/`. It does not delete older version folders. Pinned URLs such as `BMS/v1.0.1/`, `BMS/1.0.2/`, `BRIDGE/v1.0.1/`, and `BRIDGE/v1.0.14/` stay in the feed.
+A source push writes an immutable `vX.Y.Z/` folder and, when that release is the channel, copies those bytes onto `latest/`. It does not delete older version folders. Pinned URLs such as `BMS/v1.0.1/`, `BMS/1.0.2/`, `BRIDGE/v1.0.1/`, `BRIDGE/v1.0.14/`, and `P1/v1.0.1/` stay in the feed.
 
 ## Layout
 
 - `BMS/` from [OPF-STORAGE-DASH](https://github.com/opelpanfan/OPF-STORAGE-DASH) `master-grok`, env `opf-ws`. The channel is `BMS/latest/`.
 - `BRIDGE/` from [OPF-STORAGE-M5-BRIDGE](https://github.com/opelpanfan/OPF-STORAGE-M5-BRIDGE) `master-grok` at `d9ca7a0`. Flash `ATOM_S3_R.bin` and `ATOM_S3.bin` only. DTU versus RS485 is runtime configuration after flash, so the feed has no `ATOM_S3_R_DTU` or `ATOM_S3_DTU` assets.
-- `P1/` from [OPF-P1](https://github.com/opelpanfan/OPF-P1) `master-grok` release tags. `opf-p1-rak3172_transmiter-fw*.bin` becomes `RAK3172_TX.bin`. `opf-p1-rak3172_receiver-fw*.bin` becomes `RAK3172_RX.bin`. Tag `v1.0.1` uses the `fw6` asset names. TX and RX are published together or not at all.
+- `P1/` from [OPF-P1](https://github.com/opelpanfan/OPF-P1). The source renames `opf-p1-rak3172_transmiter-fw*.bin` to `RAK3172_TX.bin` and `opf-p1-rak3172_receiver-fw*.bin` to `RAK3172_RX.bin`, then pushes the folder. Tag `v1.0.1` is already published. TX and RX are published together or not at all.
 - `METER/` has no binaries. It is the flasher alias for P1.
 
-## Workflows
+## How firmware arrives
 
-- **Publish firmware** downloads a complete source release or `master-grok` workflow run, checks the image, writes `vX.Y.Z/`, then points `latest/` at that release.
+This repository is a passive catalog. OPF-P1, OPF-STORAGE-M5-BRIDGE, and OPF-STORAGE-DASH push `P1/`, `BRIDGE/`, and `BMS/` themselves. There is no ingest workflow and no Action that downloads private releases.
 
-Publish details, including the secrets below, are in [docs/publishing.md](docs/publishing.md).
+Publish details are in [docs/publishing.md](docs/publishing.md).
 
-## Secrets and permissions
+## Secrets
 
-On this repository:
-
-- Actions workflow permissions must allow GitHub Actions to write contents. **Publish firmware** pushes to `main` as `github-actions[bot]`, which is how firmware already landed. If `main` is protected, that identity needs a bypass.
-- Secret `SOURCE_READ_TOKEN`: fine-grained PAT with Contents read on `OPF-STORAGE-DASH`, `OPF-STORAGE-M5-BRIDGE`, and `OPF-P1`.
+This repository does not need `SOURCE_READ_TOKEN`, and it does not need an Actions secret to receive firmware.
 
 On each source repository:
 
-- Secret `FW_FEED_PUSH_TOKEN`: fine-grained PAT for `OPF-FIRMWARE-FEED` only, Contents read and write, used to send `repository_dispatch` event `publish-firmware`. The feed then downloads the binaries with `SOURCE_READ_TOKEN`.
+- Secret `FW_FEED_PUSH_TOKEN`: fine-grained PAT for `OPF-FIRMWARE-FEED` only, Contents read and write, used to clone this feed and push the product folder.
 

@@ -9,7 +9,7 @@
   "products": {
     "BMS": {
       "family": "esp32",
-      "ingest": "any",
+      "ingest": "push",
       "version_label": "plain",
       "source_repository": "opelpanfan/OPF-STORAGE-DASH",
       "source_ref": "master-grok",
@@ -45,7 +45,7 @@
     },
     "BRIDGE": {
       "family": "esp32",
-      "ingest": "any",
+      "ingest": "push",
       "version_label": "prefixed",
       "source_repository": "opelpanfan/OPF-STORAGE-M5-BRIDGE",
       "source_ref": "master-grok",
@@ -69,7 +69,7 @@
     },
     "P1": {
       "family": "stm32",
-      "ingest": "release",
+      "ingest": "push",
       "version_label": "prefixed",
       "source_repository": "opelpanfan/OPF-P1",
       "source_ref": "master-grok",
