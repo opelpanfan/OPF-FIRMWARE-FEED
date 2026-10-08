@@ -37,6 +37,10 @@
           "filename": "OPF_ATOM_S3R.bin",
           "envs": ["OPF_ATOM_S3R"]
         },
+        "OPF_WS_DASH": {
+          "filename": "OPF_WS_DASH.bin",
+          "envs": ["OPF_WS_DASH"]
+        },
         "ESP32-S3-RS485-CAN": {
           "filename": "ESP32-S3-RS485-CAN.bin",
           "envs": ["ESP32-S3-RS485-CAN"]
