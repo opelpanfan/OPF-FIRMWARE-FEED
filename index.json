@@ -10,13 +10,13 @@
     "BMS": {
       "product": "BMS",
       "available": true,
-      "semver": "0.0.3",
-      "version": "0.0.3",
-      "matched_folder": "v0.0.3",
+      "semver": "0.0.8",
+      "version": "0.0.8",
+      "matched_folder": "v0.0.8",
       "matches_folders": [
-        "v0.0.3"
+        "v0.0.8"
       ],
-      "highest_semver_folder": "v0.0.3",
+      "highest_semver_folder": "v0.0.8",
       "highest_semver_is_latest": true,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/index.json",
       "boards": [
@@ -27,55 +27,55 @@
         "OPF_WS_NO_TEMP"
       ],
       "sha256": {
-        "OPF_ATOM_S3": "f8912e4a5ac6a83f397c13cc08cd0df185b4988241a32d151e01b6b3cc9d0d83",
-        "OPF_ATOM_S3R": "c32994c778a5bb92314d9c8d2e3c5226a562b716d615a015b994011d1834a680",
-        "OPF_T2CAN": "474ebc0f4dd43715434dcdb4837ebf9ba37e6edf7190deadb21e0422b51997c8",
-        "OPF_WS": "b308b4560b242d642797746e5ff82e2b3207248cd4485a4625f9f0cab1c0e098",
-        "OPF_WS_NO_TEMP": "97ccdd809954afef169efa9de581a20829001f024170631f25c67eb789561551"
+        "OPF_ATOM_S3": "71840d382f244b16128c81f9f4afc8a21e13f3e313492491bb7beb2c0f04feec",
+        "OPF_ATOM_S3R": "d9ad48c1097053e7981957cbe31891a2c5e33add57711fe70ae6008a8a00a63a",
+        "OPF_T2CAN": "9d9f6517b7feae86272bf1a93556c4a49408e14bdee83510408bc82c5dbbd3a5",
+        "OPF_WS": "aa4af5de0f900cb36034227444c496fe7cd78ffef70eb4b7ea5902709265af25",
+        "OPF_WS_NO_TEMP": "de3be6d912425d36eef35ded8363c85d4355fce492ef6ed74c7f3c2e82800e92"
       },
       "artifacts": [
         {
           "board": "OPF_ATOM_S3",
           "filename": "OPF_ATOM_S3.bin",
-          "sha256": "f8912e4a5ac6a83f397c13cc08cd0df185b4988241a32d151e01b6b3cc9d0d83",
-          "size": 1262544,
+          "sha256": "71840d382f244b16128c81f9f4afc8a21e13f3e313492491bb7beb2c0f04feec",
+          "size": 1478208,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3.bin",
           "source_filename": "OPF_ATOM_S3.bin"
         },
         {
           "board": "OPF_ATOM_S3R",
           "filename": "OPF_ATOM_S3R.bin",
-          "sha256": "c32994c778a5bb92314d9c8d2e3c5226a562b716d615a015b994011d1834a680",
-          "size": 1448320,
+          "sha256": "d9ad48c1097053e7981957cbe31891a2c5e33add57711fe70ae6008a8a00a63a",
+          "size": 1672240,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3R.bin",
           "source_filename": "OPF_ATOM_S3R.bin"
         },
         {
           "board": "OPF_T2CAN",
           "filename": "OPF_T2CAN.bin",
-          "sha256": "474ebc0f4dd43715434dcdb4837ebf9ba37e6edf7190deadb21e0422b51997c8",
-          "size": 1279216,
+          "sha256": "9d9f6517b7feae86272bf1a93556c4a49408e14bdee83510408bc82c5dbbd3a5",
+          "size": 1494928,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_T2CAN.bin",
           "source_filename": "OPF_T2CAN.bin"
         },
         {
           "board": "OPF_WS",
           "filename": "OPF_WS.bin",
-          "sha256": "b308b4560b242d642797746e5ff82e2b3207248cd4485a4625f9f0cab1c0e098",
-          "size": 1284432,
+          "sha256": "aa4af5de0f900cb36034227444c496fe7cd78ffef70eb4b7ea5902709265af25",
+          "size": 1507728,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin",
           "source_filename": "OPF_WS.bin"
         },
         {
           "board": "OPF_WS_NO_TEMP",
           "filename": "OPF_WS_NO_TEMP.bin",
-          "sha256": "97ccdd809954afef169efa9de581a20829001f024170631f25c67eb789561551",
-          "size": 1284160,
+          "sha256": "de3be6d912425d36eef35ded8363c85d4355fce492ef6ed74c7f3c2e82800e92",
+          "size": 1507584,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin",
           "source_filename": "OPF_WS_NO_TEMP.bin"
         }
       ],
-      "release_notes": "# BMS v0.0.3 \u2014 testing material\n\nThese release notes are for Flasher/FEED UI verification.\n\n- Device: BMS (OPF-STORAGE-DASH)\n- Boards: OPF_WS, OPF_WS_NO_TEMP, OPF_T2CAN, OPF_ATOM_S3, OPF_ATOM_S3R\n- Channel: immutable `BMS/v0.0.3` + `BMS/latest`\n\nIf you can read this in OPF-FLASHER, release notes are working.\n",
+      "release_notes": "# BMS v0.0.8\n\n- Always-on BLE (`OPF-BMS-<id>`) for commissioning via the shared `/device` path \u2014 works without Wi\u2011Fi.\n- BLE OTA, same protocol as Bridge (`ota_info` / `ota_begin` / `ota_data` / `ota_end`), usable from OPF-FLASHER and OPF-CONFIG-APP.\n- BLE telemetry: `tel_get` / `telem_get` live pack snapshot for OPF-CONFIG-APP.\n- eFuse-based `device_id` plus firmware version/build reported in `cfg_get` and `ota_info`.\n- Web Device Console: sticky BLE status bar (advertising / connected) mirrored in `/health` and `/diag`.\n- Wi\u2011Fi modem sleep enabled for stable BLE + Wi\u2011Fi coexistence.\n- Type dropdown: Slave/Display run SoftAP only; Master keeps STA + MQTT + web, with MS readiness and master-only fleet MQTT.\n",
       "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/RELEASE_NOTES.md"
     },
     "BRIDGE": {
@@ -217,13 +217,13 @@
       "latest": {
         "product": "BMS",
         "available": true,
-        "semver": "0.0.3",
-        "version": "0.0.3",
-        "matched_folder": "v0.0.3",
+        "semver": "0.0.8",
+        "version": "0.0.8",
+        "matched_folder": "v0.0.8",
         "matches_folders": [
-          "v0.0.3"
+          "v0.0.8"
         ],
-        "highest_semver_folder": "v0.0.3",
+        "highest_semver_folder": "v0.0.8",
         "highest_semver_is_latest": true,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/index.json",
         "boards": [
@@ -234,58 +234,123 @@
           "OPF_WS_NO_TEMP"
         ],
         "sha256": {
-          "OPF_ATOM_S3": "f8912e4a5ac6a83f397c13cc08cd0df185b4988241a32d151e01b6b3cc9d0d83",
-          "OPF_ATOM_S3R": "c32994c778a5bb92314d9c8d2e3c5226a562b716d615a015b994011d1834a680",
-          "OPF_T2CAN": "474ebc0f4dd43715434dcdb4837ebf9ba37e6edf7190deadb21e0422b51997c8",
-          "OPF_WS": "b308b4560b242d642797746e5ff82e2b3207248cd4485a4625f9f0cab1c0e098",
-          "OPF_WS_NO_TEMP": "97ccdd809954afef169efa9de581a20829001f024170631f25c67eb789561551"
+          "OPF_ATOM_S3": "71840d382f244b16128c81f9f4afc8a21e13f3e313492491bb7beb2c0f04feec",
+          "OPF_ATOM_S3R": "d9ad48c1097053e7981957cbe31891a2c5e33add57711fe70ae6008a8a00a63a",
+          "OPF_T2CAN": "9d9f6517b7feae86272bf1a93556c4a49408e14bdee83510408bc82c5dbbd3a5",
+          "OPF_WS": "aa4af5de0f900cb36034227444c496fe7cd78ffef70eb4b7ea5902709265af25",
+          "OPF_WS_NO_TEMP": "de3be6d912425d36eef35ded8363c85d4355fce492ef6ed74c7f3c2e82800e92"
         },
         "artifacts": [
           {
             "board": "OPF_ATOM_S3",
             "filename": "OPF_ATOM_S3.bin",
-            "sha256": "f8912e4a5ac6a83f397c13cc08cd0df185b4988241a32d151e01b6b3cc9d0d83",
-            "size": 1262544,
+            "sha256": "71840d382f244b16128c81f9f4afc8a21e13f3e313492491bb7beb2c0f04feec",
+            "size": 1478208,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3.bin",
             "source_filename": "OPF_ATOM_S3.bin"
           },
           {
             "board": "OPF_ATOM_S3R",
             "filename": "OPF_ATOM_S3R.bin",
-            "sha256": "c32994c778a5bb92314d9c8d2e3c5226a562b716d615a015b994011d1834a680",
-            "size": 1448320,
+            "sha256": "d9ad48c1097053e7981957cbe31891a2c5e33add57711fe70ae6008a8a00a63a",
+            "size": 1672240,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3R.bin",
             "source_filename": "OPF_ATOM_S3R.bin"
           },
           {
             "board": "OPF_T2CAN",
             "filename": "OPF_T2CAN.bin",
-            "sha256": "474ebc0f4dd43715434dcdb4837ebf9ba37e6edf7190deadb21e0422b51997c8",
-            "size": 1279216,
+            "sha256": "9d9f6517b7feae86272bf1a93556c4a49408e14bdee83510408bc82c5dbbd3a5",
+            "size": 1494928,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_T2CAN.bin",
             "source_filename": "OPF_T2CAN.bin"
           },
           {
             "board": "OPF_WS",
             "filename": "OPF_WS.bin",
-            "sha256": "b308b4560b242d642797746e5ff82e2b3207248cd4485a4625f9f0cab1c0e098",
-            "size": 1284432,
+            "sha256": "aa4af5de0f900cb36034227444c496fe7cd78ffef70eb4b7ea5902709265af25",
+            "size": 1507728,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin",
             "source_filename": "OPF_WS.bin"
           },
           {
             "board": "OPF_WS_NO_TEMP",
             "filename": "OPF_WS_NO_TEMP.bin",
-            "sha256": "97ccdd809954afef169efa9de581a20829001f024170631f25c67eb789561551",
-            "size": 1284160,
+            "sha256": "de3be6d912425d36eef35ded8363c85d4355fce492ef6ed74c7f3c2e82800e92",
+            "size": 1507584,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin",
             "source_filename": "OPF_WS_NO_TEMP.bin"
           }
         ],
-        "release_notes": "# BMS v0.0.3 \u2014 testing material\n\nThese release notes are for Flasher/FEED UI verification.\n\n- Device: BMS (OPF-STORAGE-DASH)\n- Boards: OPF_WS, OPF_WS_NO_TEMP, OPF_T2CAN, OPF_ATOM_S3, OPF_ATOM_S3R\n- Channel: immutable `BMS/v0.0.3` + `BMS/latest`\n\nIf you can read this in OPF-FLASHER, release notes are working.\n",
+        "release_notes": "# BMS v0.0.8\n\n- Always-on BLE (`OPF-BMS-<id>`) for commissioning via the shared `/device` path \u2014 works without Wi\u2011Fi.\n- BLE OTA, same protocol as Bridge (`ota_info` / `ota_begin` / `ota_data` / `ota_end`), usable from OPF-FLASHER and OPF-CONFIG-APP.\n- BLE telemetry: `tel_get` / `telem_get` live pack snapshot for OPF-CONFIG-APP.\n- eFuse-based `device_id` plus firmware version/build reported in `cfg_get` and `ota_info`.\n- Web Device Console: sticky BLE status bar (advertising / connected) mirrored in `/health` and `/diag`.\n- Wi\u2011Fi modem sleep enabled for stable BLE + Wi\u2011Fi coexistence.\n- Type dropdown: Slave/Display run SoftAP only; Master keeps STA + MQTT + web, with MS readiness and master-only fleet MQTT.\n",
         "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/RELEASE_NOTES.md"
       },
       "versions": [
+        {
+          "folder": "v0.0.8",
+          "semver": "0.0.8",
+          "layout": "canonical",
+          "channel": "version",
+          "boards": [
+            "OPF_ATOM_S3",
+            "OPF_ATOM_S3R",
+            "OPF_T2CAN",
+            "OPF_WS",
+            "OPF_WS_NO_TEMP"
+          ],
+          "sha256": {
+            "OPF_ATOM_S3": "71840d382f244b16128c81f9f4afc8a21e13f3e313492491bb7beb2c0f04feec",
+            "OPF_ATOM_S3R": "d9ad48c1097053e7981957cbe31891a2c5e33add57711fe70ae6008a8a00a63a",
+            "OPF_T2CAN": "9d9f6517b7feae86272bf1a93556c4a49408e14bdee83510408bc82c5dbbd3a5",
+            "OPF_WS": "aa4af5de0f900cb36034227444c496fe7cd78ffef70eb4b7ea5902709265af25",
+            "OPF_WS_NO_TEMP": "de3be6d912425d36eef35ded8363c85d4355fce492ef6ed74c7f3c2e82800e92"
+          },
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.8/index.json",
+          "artifacts": [
+            {
+              "board": "OPF_ATOM_S3",
+              "filename": "OPF_ATOM_S3.bin",
+              "sha256": "71840d382f244b16128c81f9f4afc8a21e13f3e313492491bb7beb2c0f04feec",
+              "size": 1478208,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.8/OPF_ATOM_S3.bin",
+              "source_filename": "OPF_ATOM_S3.bin"
+            },
+            {
+              "board": "OPF_ATOM_S3R",
+              "filename": "OPF_ATOM_S3R.bin",
+              "sha256": "d9ad48c1097053e7981957cbe31891a2c5e33add57711fe70ae6008a8a00a63a",
+              "size": 1672240,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.8/OPF_ATOM_S3R.bin",
+              "source_filename": "OPF_ATOM_S3R.bin"
+            },
+            {
+              "board": "OPF_T2CAN",
+              "filename": "OPF_T2CAN.bin",
+              "sha256": "9d9f6517b7feae86272bf1a93556c4a49408e14bdee83510408bc82c5dbbd3a5",
+              "size": 1494928,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.8/OPF_T2CAN.bin",
+              "source_filename": "OPF_T2CAN.bin"
+            },
+            {
+              "board": "OPF_WS",
+              "filename": "OPF_WS.bin",
+              "sha256": "aa4af5de0f900cb36034227444c496fe7cd78ffef70eb4b7ea5902709265af25",
+              "size": 1507728,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.8/OPF_WS.bin",
+              "source_filename": "OPF_WS.bin"
+            },
+            {
+              "board": "OPF_WS_NO_TEMP",
+              "filename": "OPF_WS_NO_TEMP.bin",
+              "sha256": "de3be6d912425d36eef35ded8363c85d4355fce492ef6ed74c7f3c2e82800e92",
+              "size": 1507584,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.8/OPF_WS_NO_TEMP.bin",
+              "source_filename": "OPF_WS_NO_TEMP.bin"
+            }
+          ],
+          "release_notes": "# BMS v0.0.8\n\n- Always-on BLE (`OPF-BMS-<id>`) for commissioning via the shared `/device` path \u2014 works without Wi\u2011Fi.\n- BLE OTA, same protocol as Bridge (`ota_info` / `ota_begin` / `ota_data` / `ota_end`), usable from OPF-FLASHER and OPF-CONFIG-APP.\n- BLE telemetry: `tel_get` / `telem_get` live pack snapshot for OPF-CONFIG-APP.\n- eFuse-based `device_id` plus firmware version/build reported in `cfg_get` and `ota_info`.\n- Web Device Console: sticky BLE status bar (advertising / connected) mirrored in `/health` and `/diag`.\n- Wi\u2011Fi modem sleep enabled for stable BLE + Wi\u2011Fi coexistence.\n- Type dropdown: Slave/Display run SoftAP only; Master keeps STA + MQTT + web, with MS readiness and master-only fleet MQTT.\n",
+          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.8/RELEASE_NOTES.md"
+        },
         {
           "folder": "v0.0.3",
           "semver": "0.0.3",
