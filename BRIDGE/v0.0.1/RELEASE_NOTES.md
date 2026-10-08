@@ -1,5 +1,6 @@
 # BRIDGE v0.0.1
 
+- DTU (P1 over LoRa) retuned for OPF-P1 v0.0.2: 869.525 MHz (EU868 g3), SF7/BW125/CR4/5, preamble 8, sync 0x1424; fast frame every 1 s, slow ~30 s. Units on the old 868.0 MHz default move to 869.525 MHz automatically (custom frequencies kept). **Update the P1 transmitter to v0.0.2 first**, or the link stays down. link_state: stale after 3 s and lost after 10 s without a fast frame. Smartmeter emulator safety: meter reads get Modbus exception 0x0B when P1 data is older than 3 s (or none yet) instead of frozen values, and recover on the next good frame. New diagnostics in `/api/lora` and BLE telem: frame rate / period / gap / burst stats, last rejected frame (length + hex), ignored P1 ACK/command frames (`rx_other_type`). See `docs/OPF_P1_LORA.md`.
 - BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.
 - LCD OTA screen (AtomS3R, BMS twin look): full-screen progress (% + bar + KB), source (via Bluetooth / via Web) and result (failed / aborted / updated + build) during updates; ATOM_S3 uses the RGB LED.
 - BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.
