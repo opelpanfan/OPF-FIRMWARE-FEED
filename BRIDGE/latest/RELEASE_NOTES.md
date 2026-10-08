@@ -1,10 +1,14 @@
 # BRIDGE v0.0.1
 
-- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails.
+- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.
+- LCD OTA screen (AtomS3R, BMS twin look): full-screen progress (% + bar + KB), source (via Bluetooth / via Web) and result (failed / aborted / updated + build) during updates; ATOM_S3 uses the RGB LED.
 - BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.
+- BLE Wi-Fi/BLE info keys: `wifi_state`, `wifi_ssid`, `wifi_rssi`, `wifi_ip`, `ap_on`, `ble_conn`, `ble_peer`, `ble_conn_s`… in `telem_get`, `GET /health` and `/diag` (plus `wifi_mode_str` for the header badge).
+- Device Name advertising: the BLE name follows the configured Device Name (`OPF-BRIDGE-<NAME>`).
+- BLE robustness: keeps advertising while a free connection slot exists, so a dead app whose OS keeps the link open no longer hides the device; silent older links are dropped when a new app connects.
+- RS485 over BLE: `rs485_info`, `rs485_read`, `rs485_write` (confirm required), `rs485_raw`, `rs485_scan`, `rs485_sniff`, `rs485_set` (session-only baud/parity/stop/slave), `rs485_pause` / `rs485_resume`, `rs485_reinit`, `rs485_stats_reset`. Polling pauses with owner tracking and resumes automatically 60 s after the last command or on BLE disconnect. See `manuals/BLE_COMMANDS_RS485.md`.
 - Deye HV: grid/load voltage and current, battery 2 absent gate, derived totals, and `device_id`.
 - Read-only `board` identity (`ATOM_S3_R` / `ATOM_S3`, equals the FEED artifact name) in BLE `ota_info` / `cfg_get` / `telem_get` and `GET /health` + `/diag`.
-- Credentials: NVS is the source of truth for Wi‑Fi, MQTT and OTA login; build-time values only seed empty keys once, so FEED images keep stored settings. `cfg_get`, `telem_get` and `/diag` report credential source/presence (never the values).
-- FEED metadata: `source_sha` and `fw_build` recorded for each BRIDGE publish.
-- UI: always-on BLE indicator (advertising vs connected).
-- Build reports `fw_version` from the release tag.
+- Credentials: NVS is the source of truth for Wi‑Fi, MQTT and OTA login; build-time values are seeded only once into empty keys, so FEED images keep stored settings. `cfg_get`, `telem_get` and `/diag` report credential source/presence (never the values).
+- UI header: Wi-Fi badge (SSID + RSSI / connecting / no creds / AP only) and BLE badge (advertising / app connected) in the theme-chip row, identical to BMS; 4 themes; wraps on mobile.
+- Build reports `fw_version` from the release tag; commit info is in each manifest's `source.sha` / `source.fw_build`.

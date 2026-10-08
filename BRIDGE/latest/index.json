@@ -10,22 +10,22 @@
     "ATOM_S3_R": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
   },
   "sha256": {
-    "ATOM_S3": "22c1c6d28e609fa6ecb1adca797a9a5c812b3025fe92c746bda732a2560705cd",
-    "ATOM_S3_R": "e9d8c2dddfd58477cd238eea2b24670dcbbdfdd02fbc8f726a393a712f54c79e"
+    "ATOM_S3": "677adfb75ac0ce8848923122289aae4555a6e99fe73eff44630804ce177a02b6",
+    "ATOM_S3_R": "1a0dd31e3e879cbf70f520566d751e2d78ba4a1216289cea9b17cd02970569d9"
   },
   "artifacts": [
     {
       "board": "ATOM_S3",
       "filename": "ATOM_S3.bin",
-      "sha256": "22c1c6d28e609fa6ecb1adca797a9a5c812b3025fe92c746bda732a2560705cd",
-      "size": 1893312,
+      "sha256": "677adfb75ac0ce8848923122289aae4555a6e99fe73eff44630804ce177a02b6",
+      "size": 1890256,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin"
     },
     {
       "board": "ATOM_S3_R",
       "filename": "ATOM_S3_R.bin",
-      "sha256": "e9d8c2dddfd58477cd238eea2b24670dcbbdfdd02fbc8f726a393a712f54c79e",
-      "size": 1938976,
+      "sha256": "1a0dd31e3e879cbf70f520566d751e2d78ba4a1216289cea9b17cd02970569d9",
+      "size": 1935248,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
     }
   ],
@@ -33,11 +33,11 @@
     "kind": "workflow_run",
     "repository": "opelpanfan/OPF-STORAGE-M5-BRIDGE",
     "ref": "master-grok",
-    "sha": "465450ca160c757889453698403773709950116d",
-    "run_id": 37735283663,
+    "sha": "dfaf1168e89ae1a094a0b647bfbe4723566365d8",
+    "run_id": 37742298357,
     "workflow": "build-and-push-feed.yml",
-    "fw_build": "465450c"
+    "fw_build": "dfaf116"
   },
-  "release_notes": "# BRIDGE v0.0.1\n\n- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails.\n- BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.\n- Deye HV: grid/load voltage and current, battery 2 absent gate, derived totals, and `device_id`.\n- Read-only `board` identity (`ATOM_S3_R` / `ATOM_S3`, equals the FEED artifact name) in BLE `ota_info` / `cfg_get` / `telem_get` and `GET /health` + `/diag`.\n- Credentials: NVS is the source of truth for Wi\u2011Fi, MQTT and OTA login; build-time values only seed empty keys once, so FEED images keep stored settings. `cfg_get`, `telem_get` and `/diag` report credential source/presence (never the values).\n- FEED metadata: `source_sha` and `fw_build` recorded for each BRIDGE publish.\n- UI: always-on BLE indicator (advertising vs connected).\n- Build reports `fw_version` from the release tag.\n",
+  "release_notes": "# BRIDGE v0.0.1\n\n- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.\n- LCD OTA screen (AtomS3R, BMS twin look): full-screen progress (% + bar + KB), source (via Bluetooth / via Web) and result (failed / aborted / updated + build) during updates; ATOM_S3 uses the RGB LED.\n- BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.\n- BLE Wi-Fi/BLE info keys: `wifi_state`, `wifi_ssid`, `wifi_rssi`, `wifi_ip`, `ap_on`, `ble_conn`, `ble_peer`, `ble_conn_s`\u2026 in `telem_get`, `GET /health` and `/diag` (plus `wifi_mode_str` for the header badge).\n- Device Name advertising: the BLE name follows the configured Device Name (`OPF-BRIDGE-<NAME>`).\n- BLE robustness: keeps advertising while a free connection slot exists, so a dead app whose OS keeps the link open no longer hides the device; silent older links are dropped when a new app connects.\n- RS485 over BLE: `rs485_info`, `rs485_read`, `rs485_write` (confirm required), `rs485_raw`, `rs485_scan`, `rs485_sniff`, `rs485_set` (session-only baud/parity/stop/slave), `rs485_pause` / `rs485_resume`, `rs485_reinit`, `rs485_stats_reset`. Polling pauses with owner tracking and resumes automatically 60 s after the last command or on BLE disconnect. See `manuals/BLE_COMMANDS_RS485.md`.\n- Deye HV: grid/load voltage and current, battery 2 absent gate, derived totals, and `device_id`.\n- Read-only `board` identity (`ATOM_S3_R` / `ATOM_S3`, equals the FEED artifact name) in BLE `ota_info` / `cfg_get` / `telem_get` and `GET /health` + `/diag`.\n- Credentials: NVS is the source of truth for Wi\u2011Fi, MQTT and OTA login; build-time values are seeded only once into empty keys, so FEED images keep stored settings. `cfg_get`, `telem_get` and `/diag` report credential source/presence (never the values).\n- UI header: Wi-Fi badge (SSID + RSSI / connecting / no creds / AP only) and BLE badge (advertising / app connected) in the theme-chip row, identical to BMS; 4 themes; wraps on mobile.\n- Build reports `fw_version` from the release tag; commit info is in each manifest's `source.sha` / `source.fw_build`.\n",
   "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
 }
