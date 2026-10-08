@@ -3,11 +3,11 @@
   "product": "P1",
   "version": "v0.0.1",
   "semver": "0.0.1",
-  "channel": "latest",
-  "folder": "latest",
+  "channel": "version",
+  "folder": "v0.0.1",
   "files": {
-    "RAK3172_RX": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin",
-    "RAK3172_TX": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin"
+    "RAK3172_RX": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RAK3172_RX.bin",
+    "RAK3172_TX": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RAK3172_TX.bin"
   },
   "sha256": {
     "RAK3172_RX": "a20607e53611b589bad8c50a31771d3ac0619334a60f088df00899c604c94120",
@@ -19,7 +19,7 @@
       "filename": "RAK3172_RX.bin",
       "sha256": "a20607e53611b589bad8c50a31771d3ac0619334a60f088df00899c604c94120",
       "size": 69468,
-      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin",
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RAK3172_RX.bin",
       "source_filename": "RAK3172_RX.bin"
     },
     {
@@ -27,7 +27,7 @@
       "filename": "RAK3172_TX.bin",
       "sha256": "21cb219001ff0e005abe5f37a4b0fbb80cad553e09fc8f5e8d0181b0885db713",
       "size": 91028,
-      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin",
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RAK3172_TX.bin",
       "source_filename": "RAK3172_TX.bin"
     }
   ],
@@ -40,5 +40,5 @@
     "repository": "opelpanfan/OPF-P1"
   },
   "release_notes": "# P1 v0.0.1\n\nFirst FEED release of the P1 meter link (RAK3172 / STM32WLE5): `RAK3172_TX` reads the smart-meter P1 port and sends it over LoRa; `RAK3172_RX` serves it as an Eastron-style meter on RS485/Modbus. Flash both as a pair (TX, then RX).\n\n- P1 (DSMR/Sagemcom) telegram parsing with CRC check; corrupt telegrams are never parsed.\n- LoRa split into a fast electrical frame (voltage, current, per-phase power, frequency, ~200 ms) and a slow energy frame (import/export Wh, ~30 s).\n- When P1 drops, TX keeps sending the last known-good snapshot flagged `dataInvalid`; stale data expires by age and is not published as live.\n- Long-run hardening: no allocation on the 1 Hz telegram path, wedged UART restarts with backoff, task stalls trip the watchdog instead of hanging, and RX stops serving Modbus after a silent LoRa link.\n- RX holds RS485 DE through the last stop bit.\n",
-  "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RELEASE_NOTES.md"
+  "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RELEASE_NOTES.md"
 }
