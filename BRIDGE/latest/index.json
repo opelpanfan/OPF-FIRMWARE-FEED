@@ -37,7 +37,5 @@
     "run_id": 37729136008,
     "workflow": "build-and-push-feed.yml",
     "fw_build": "647deb8"
-  },
-  "source_sha": "647deb84c4a27ec7ca778ba2b518a10e2f0d3abf",
-  "fw_build": "647deb8"
+  }
 }
