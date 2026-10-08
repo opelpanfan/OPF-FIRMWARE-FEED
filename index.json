@@ -81,13 +81,13 @@
     "BRIDGE": {
       "product": "BRIDGE",
       "available": true,
-      "semver": "0.0.1",
-      "version": "v0.0.1",
-      "matched_folder": "v0.0.1",
+      "semver": "0.0.21",
+      "version": "v0.0.21",
+      "matched_folder": "v0.0.21",
       "matches_folders": [
-        "v0.0.1"
+        "v0.0.21"
       ],
-      "highest_semver_folder": "v0.0.1",
+      "highest_semver_folder": "v0.0.21",
       "highest_semver_is_latest": true,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/index.json",
       "boards": [
@@ -95,29 +95,29 @@
         "ATOM_S3_R"
       ],
       "sha256": {
-        "ATOM_S3": "de3d779c01c6808dbd631bdb62149ba67e390757f3ae96bfdfbffbcabe69a588",
-        "ATOM_S3_R": "dfff87b3ae0196c4a577f6bde523f44469ccee56c01e6dc82980f4574981d65f"
+        "ATOM_S3": "3c616bc9a5e48542784439ab69605fd3bf56760f812c8d44b34e0fb7847ed22b",
+        "ATOM_S3_R": "0620b9dfa6e32c16d2d353536dc1847b548337d6bfee3ddb015d1739af64487b"
       },
       "artifacts": [
         {
           "board": "ATOM_S3",
           "filename": "ATOM_S3.bin",
-          "sha256": "de3d779c01c6808dbd631bdb62149ba67e390757f3ae96bfdfbffbcabe69a588",
-          "size": 1876416,
+          "sha256": "3c616bc9a5e48542784439ab69605fd3bf56760f812c8d44b34e0fb7847ed22b",
+          "size": 1880416,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin"
         },
         {
           "board": "ATOM_S3_R",
           "filename": "ATOM_S3_R.bin",
-          "sha256": "dfff87b3ae0196c4a577f6bde523f44469ccee56c01e6dc82980f4574981d65f",
-          "size": 1920656,
+          "sha256": "0620b9dfa6e32c16d2d353536dc1847b548337d6bfee3ddb015d1739af64487b",
+          "size": 1924448,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
         }
       ],
       "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
       "board_contract_sha": "d9ca7a0",
-      "release_notes": "# BRIDGE v0.0.8\n\n- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails.\n- BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.\n- Deye HV: grid/load voltage and current, battery 2 absent gate, derived totals, and `device_id`.\n- UI: always-on BLE indicator (advertising vs connected).\n- Build reports `fw_version` from the release tag.\n",
-      "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
+      "source_sha": "647deb84c4a27ec7ca778ba2b518a10e2f0d3abf",
+      "fw_build": "647deb8"
     },
     "P1": {
       "product": "P1",
@@ -363,13 +363,13 @@
       "latest": {
         "product": "BRIDGE",
         "available": true,
-        "semver": "0.0.1",
-        "version": "v0.0.1",
-        "matched_folder": "v0.0.1",
+        "semver": "0.0.21",
+        "version": "v0.0.21",
+        "matched_folder": "v0.0.21",
         "matches_folders": [
-          "v0.0.1"
+          "v0.0.21"
         ],
-        "highest_semver_folder": "v0.0.1",
+        "highest_semver_folder": "v0.0.21",
         "highest_semver_is_latest": true,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/index.json",
         "boards": [
@@ -377,31 +377,62 @@
           "ATOM_S3_R"
         ],
         "sha256": {
-          "ATOM_S3": "de3d779c01c6808dbd631bdb62149ba67e390757f3ae96bfdfbffbcabe69a588",
-          "ATOM_S3_R": "dfff87b3ae0196c4a577f6bde523f44469ccee56c01e6dc82980f4574981d65f"
+          "ATOM_S3": "3c616bc9a5e48542784439ab69605fd3bf56760f812c8d44b34e0fb7847ed22b",
+          "ATOM_S3_R": "0620b9dfa6e32c16d2d353536dc1847b548337d6bfee3ddb015d1739af64487b"
         },
         "artifacts": [
           {
             "board": "ATOM_S3",
             "filename": "ATOM_S3.bin",
-            "sha256": "de3d779c01c6808dbd631bdb62149ba67e390757f3ae96bfdfbffbcabe69a588",
-            "size": 1876416,
+            "sha256": "3c616bc9a5e48542784439ab69605fd3bf56760f812c8d44b34e0fb7847ed22b",
+            "size": 1880416,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin"
           },
           {
             "board": "ATOM_S3_R",
             "filename": "ATOM_S3_R.bin",
-            "sha256": "dfff87b3ae0196c4a577f6bde523f44469ccee56c01e6dc82980f4574981d65f",
-            "size": 1920656,
+            "sha256": "0620b9dfa6e32c16d2d353536dc1847b548337d6bfee3ddb015d1739af64487b",
+            "size": 1924448,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin"
           }
         ],
         "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
         "board_contract_sha": "d9ca7a0",
-        "release_notes": "# BRIDGE v0.0.8\n\n- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails.\n- BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.\n- Deye HV: grid/load voltage and current, battery 2 absent gate, derived totals, and `device_id`.\n- UI: always-on BLE indicator (advertising vs connected).\n- Build reports `fw_version` from the release tag.\n",
-        "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
+        "source_sha": "647deb84c4a27ec7ca778ba2b518a10e2f0d3abf",
+        "fw_build": "647deb8"
       },
       "versions": [
+        {
+          "folder": "v0.0.21",
+          "semver": "0.0.21",
+          "layout": "canonical",
+          "channel": "version",
+          "boards": [
+            "ATOM_S3",
+            "ATOM_S3_R"
+          ],
+          "sha256": {
+            "ATOM_S3": "3c616bc9a5e48542784439ab69605fd3bf56760f812c8d44b34e0fb7847ed22b",
+            "ATOM_S3_R": "0620b9dfa6e32c16d2d353536dc1847b548337d6bfee3ddb015d1739af64487b"
+          },
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.21/index.json",
+          "artifacts": [
+            {
+              "board": "ATOM_S3",
+              "filename": "ATOM_S3.bin",
+              "sha256": "3c616bc9a5e48542784439ab69605fd3bf56760f812c8d44b34e0fb7847ed22b",
+              "size": 1880416,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.21/ATOM_S3.bin"
+            },
+            {
+              "board": "ATOM_S3_R",
+              "filename": "ATOM_S3_R.bin",
+              "sha256": "0620b9dfa6e32c16d2d353536dc1847b548337d6bfee3ddb015d1739af64487b",
+              "size": 1924448,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.21/ATOM_S3_R.bin"
+            }
+          ]
+        },
         {
           "folder": "v0.0.1",
           "semver": "0.0.1",
