@@ -1,16 +1,19 @@
 # BMS v0.0.1
 
-- Always-on BLE (`OPF-BMS-<id>`) for commissioning via the shared `/device` path — works without Wi‑Fi.
-- BLE OTA, same protocol as Bridge (`ota_info` / `ota_begin` / `ota_data` / `ota_end`), usable from OPF-FLASHER and OPF-CONFIG-APP.
-- BLE telemetry: `tel_get` / `telem_get` live pack snapshot for OPF-CONFIG-APP.
-- eFuse-based `device_id` plus firmware version/build reported in `cfg_get` and `ota_info`.
-- Read-only `board` identity (equals the FEED artifact name, e.g. `OPF_WS`, `OPF_T2CAN`) in BLE `ota_info` / `cfg_get` / `telem_get` and in `/health` + `/diag`; `cfg_set` on `board` / `device_id` / `fw` answers `ERR|read_only`.
-- Web Device Console: Wi‑Fi and BLE link badges in the header (live, polled from `/health` every 4 s), same as the Bridge.
-- Device Name over BLE: `cfg_set:device_name=` (max 32), advertised as `OPF-BMS-<name>`; no reboot needed.
-- `telem_get` matches the web dashboard: power, contactors, charge/discharge limits, health and warnings, every cell voltage and temperature, Wi‑Fi/AP and BLE link state; `telem_cells:<n>` returns a slave's cells.
-- Wi‑Fi modem sleep enabled for stable BLE + Wi‑Fi coexistence.
-- Type dropdown: Slave/Display run SoftAP only; Master keeps STA + MQTT + web, with MS readiness and master-only fleet MQTT.
-- New board `OPF_WS_DASH`: Waveshare ESP32-S3-Touch-LCD-4.3 / -5 (800×480 variant) / -7, 800×480 RGB panel with the BMS dash UI (based on `opf-dash`, Waveshare 16 MHz panel timing). Builds; untested on hardware.
-- Super-stable BLE OTA (Bridge twin): resume after a BLE drop (120 s idle window), SHA-256 flash read-back before the boot switch, `verify_fail` on a bad image, ESP-IDF rollback until the new image passes health checks.
-- Full-screen OTA progress view on boards with a screen (`opf-dash`, `OPF_WS_DASH`, `OPF_ATOM_S3R`); `ota_info` reports `lcd=1`.
-- `cfg_get` adds read-only `wifi_cred_source` and `ssid_set`; feed `index.json` records the source commit and `fw_build` under `source`.
+Source: `opelpanfan/OPF-STORAGE-DASH` branch `master-grok` tip **`cac0af0`** (`cac0af0e23fa8b208717e79fc92d497b48494d15`).
+
+## What changed vs the previous feed image (`3340aa9`)
+
+- **Restored the working `master_ws` 0x334 decoder**: 4 cells per mux (`mux * 4`, mux 0–23) so the pack fills **96/96** cells again.
+- **Reverted the bad `×4` on v2/v4** from `3340aa9` (those fields were already scaled; applying `×4` again pushed voltages to ~16 kV and the sanity window dropped half the pack → 48/96).
+- **Dropped the experimental 3-cell-per-mux unpack** that landed on `master-grok` as `8cc394d` (not flashable / not the live path). Live verification under `master_ws` and this tip shows the 4-cell layout.
+
+## Verified
+
+- Live BMS `.158` flashed with this tip: **96/96** cells, voltages ~4010–4028 mV.
+
+## Boards in this feed folder
+
+`OPF_WS`, `OPF_WS_NO_TEMP`, `OPF_T2CAN`, `OPF_ATOM_S3`, `OPF_ATOM_S3R`, `OPF_WS_DASH` (same catalog as before).
+
+Prior release notes (BLE commissioning, OTA, Device Console, etc.) still apply; this republish is a **PSA2 cell-decode fix only**.
