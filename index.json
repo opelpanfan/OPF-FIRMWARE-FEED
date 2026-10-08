@@ -132,13 +132,13 @@
     "P1": {
       "product": "P1",
       "available": true,
-      "semver": "0.0.1",
-      "version": "v0.0.1",
-      "matched_folder": "v0.0.1",
+      "semver": "0.0.4",
+      "version": "v0.0.4",
+      "matched_folder": "v0.0.4",
       "matches_folders": [
-        "v0.0.1"
+        "v0.0.4"
       ],
-      "highest_semver_folder": "v0.0.1",
+      "highest_semver_folder": "v0.0.4",
       "highest_semver_is_latest": true,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
       "boards": [
@@ -146,23 +146,23 @@
         "RAK3172_TX"
       ],
       "sha256": {
-        "RAK3172_RX": "a20607e53611b589bad8c50a31771d3ac0619334a60f088df00899c604c94120",
-        "RAK3172_TX": "21cb219001ff0e005abe5f37a4b0fbb80cad553e09fc8f5e8d0181b0885db713"
+        "RAK3172_RX": "6453e0c6bb07b74e7e70b267468a6cee7ea4d3ae02f35e1e9bb8cebef0a39348",
+        "RAK3172_TX": "5e5e09d8faf5c6d0ac583ce5eb568a66c971587c15e1be1267a19a2f72d6b9c3"
       },
       "artifacts": [
         {
           "board": "RAK3172_RX",
           "filename": "RAK3172_RX.bin",
-          "sha256": "a20607e53611b589bad8c50a31771d3ac0619334a60f088df00899c604c94120",
-          "size": 69468,
+          "sha256": "6453e0c6bb07b74e7e70b267468a6cee7ea4d3ae02f35e1e9bb8cebef0a39348",
+          "size": 69860,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin",
           "source_filename": "RAK3172_RX.bin"
         },
         {
           "board": "RAK3172_TX",
           "filename": "RAK3172_TX.bin",
-          "sha256": "21cb219001ff0e005abe5f37a4b0fbb80cad553e09fc8f5e8d0181b0885db713",
-          "size": 91028,
+          "sha256": "5e5e09d8faf5c6d0ac583ce5eb568a66c971587c15e1be1267a19a2f72d6b9c3",
+          "size": 92140,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin",
           "source_filename": "RAK3172_TX.bin"
         }
@@ -171,19 +171,19 @@
         "RAK3172_TX",
         "RAK3172_RX"
       ],
-      "release_notes": "# P1 v0.0.1\n\nFirst FEED release of the P1 meter link (RAK3172 / STM32WLE5): `RAK3172_TX` reads the smart-meter P1 port and sends it over LoRa; `RAK3172_RX` serves it as an Eastron-style meter on RS485/Modbus. Flash both as a pair (TX, then RX).\n\n- P1 (DSMR/Sagemcom) telegram parsing with CRC check; corrupt telegrams are never parsed.\n- LoRa split into a fast electrical frame (voltage, current, per-phase power, frequency, ~200 ms) and a slow energy frame (import/export Wh, ~30 s).\n- When P1 drops, TX keeps sending the last known-good snapshot flagged `dataInvalid`; stale data expires by age and is not published as live.\n- Long-run hardening: no allocation on the 1 Hz telegram path, wedged UART restarts with backoff, task stalls trip the watchdog instead of hanging, and RX stops serving Modbus after a silent LoRa link.\n- RX holds RS485 DE through the last stop bit.\n",
+      "release_notes": "# P1 v0.0.4\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- `FW_ITERATION_ID` 8.\n",
       "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RELEASE_NOTES.md"
     },
     "METER": {
       "product": "P1",
       "available": true,
-      "semver": "0.0.1",
-      "version": "v0.0.1",
-      "matched_folder": "v0.0.1",
+      "semver": "0.0.4",
+      "version": "v0.0.4",
+      "matched_folder": "v0.0.4",
       "matches_folders": [
-        "v0.0.1"
+        "v0.0.4"
       ],
-      "highest_semver_folder": "v0.0.1",
+      "highest_semver_folder": "v0.0.4",
       "highest_semver_is_latest": true,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
       "boards": [
@@ -191,23 +191,23 @@
         "RAK3172_TX"
       ],
       "sha256": {
-        "RAK3172_RX": "a20607e53611b589bad8c50a31771d3ac0619334a60f088df00899c604c94120",
-        "RAK3172_TX": "21cb219001ff0e005abe5f37a4b0fbb80cad553e09fc8f5e8d0181b0885db713"
+        "RAK3172_RX": "6453e0c6bb07b74e7e70b267468a6cee7ea4d3ae02f35e1e9bb8cebef0a39348",
+        "RAK3172_TX": "5e5e09d8faf5c6d0ac583ce5eb568a66c971587c15e1be1267a19a2f72d6b9c3"
       },
       "artifacts": [
         {
           "board": "RAK3172_RX",
           "filename": "RAK3172_RX.bin",
-          "sha256": "a20607e53611b589bad8c50a31771d3ac0619334a60f088df00899c604c94120",
-          "size": 69468,
+          "sha256": "6453e0c6bb07b74e7e70b267468a6cee7ea4d3ae02f35e1e9bb8cebef0a39348",
+          "size": 69860,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin",
           "source_filename": "RAK3172_RX.bin"
         },
         {
           "board": "RAK3172_TX",
           "filename": "RAK3172_TX.bin",
-          "sha256": "21cb219001ff0e005abe5f37a4b0fbb80cad553e09fc8f5e8d0181b0885db713",
-          "size": 91028,
+          "sha256": "5e5e09d8faf5c6d0ac583ce5eb568a66c971587c15e1be1267a19a2f72d6b9c3",
+          "size": 92140,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin",
           "source_filename": "RAK3172_TX.bin"
         }
@@ -216,7 +216,7 @@
         "RAK3172_TX",
         "RAK3172_RX"
       ],
-      "release_notes": "# P1 v0.0.1\n\nFirst FEED release of the P1 meter link (RAK3172 / STM32WLE5): `RAK3172_TX` reads the smart-meter P1 port and sends it over LoRa; `RAK3172_RX` serves it as an Eastron-style meter on RS485/Modbus. Flash both as a pair (TX, then RX).\n\n- P1 (DSMR/Sagemcom) telegram parsing with CRC check; corrupt telegrams are never parsed.\n- LoRa split into a fast electrical frame (voltage, current, per-phase power, frequency, ~200 ms) and a slow energy frame (import/export Wh, ~30 s).\n- When P1 drops, TX keeps sending the last known-good snapshot flagged `dataInvalid`; stale data expires by age and is not published as live.\n- Long-run hardening: no allocation on the 1 Hz telegram path, wedged UART restarts with backoff, task stalls trip the watchdog instead of hanging, and RX stops serving Modbus after a silent LoRa link.\n- RX holds RS485 DE through the last stop bit.\n",
+      "release_notes": "# P1 v0.0.4\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- `FW_ITERATION_ID` 8.\n",
       "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RELEASE_NOTES.md",
       "alias_of": "P1"
     }
@@ -477,13 +477,13 @@
       "latest": {
         "product": "P1",
         "available": true,
-        "semver": "0.0.1",
-        "version": "v0.0.1",
-        "matched_folder": "v0.0.1",
+        "semver": "0.0.4",
+        "version": "v0.0.4",
+        "matched_folder": "v0.0.4",
         "matches_folders": [
-          "v0.0.1"
+          "v0.0.4"
         ],
-        "highest_semver_folder": "v0.0.1",
+        "highest_semver_folder": "v0.0.4",
         "highest_semver_is_latest": true,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
         "boards": [
@@ -491,23 +491,23 @@
           "RAK3172_TX"
         ],
         "sha256": {
-          "RAK3172_RX": "a20607e53611b589bad8c50a31771d3ac0619334a60f088df00899c604c94120",
-          "RAK3172_TX": "21cb219001ff0e005abe5f37a4b0fbb80cad553e09fc8f5e8d0181b0885db713"
+          "RAK3172_RX": "6453e0c6bb07b74e7e70b267468a6cee7ea4d3ae02f35e1e9bb8cebef0a39348",
+          "RAK3172_TX": "5e5e09d8faf5c6d0ac583ce5eb568a66c971587c15e1be1267a19a2f72d6b9c3"
         },
         "artifacts": [
           {
             "board": "RAK3172_RX",
             "filename": "RAK3172_RX.bin",
-            "sha256": "a20607e53611b589bad8c50a31771d3ac0619334a60f088df00899c604c94120",
-            "size": 69468,
+            "sha256": "6453e0c6bb07b74e7e70b267468a6cee7ea4d3ae02f35e1e9bb8cebef0a39348",
+            "size": 69860,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin",
             "source_filename": "RAK3172_RX.bin"
           },
           {
             "board": "RAK3172_TX",
             "filename": "RAK3172_TX.bin",
-            "sha256": "21cb219001ff0e005abe5f37a4b0fbb80cad553e09fc8f5e8d0181b0885db713",
-            "size": 91028,
+            "sha256": "5e5e09d8faf5c6d0ac583ce5eb568a66c971587c15e1be1267a19a2f72d6b9c3",
+            "size": 92140,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin",
             "source_filename": "RAK3172_TX.bin"
           }
@@ -516,10 +516,45 @@
           "RAK3172_TX",
           "RAK3172_RX"
         ],
-        "release_notes": "# P1 v0.0.1\n\nFirst FEED release of the P1 meter link (RAK3172 / STM32WLE5): `RAK3172_TX` reads the smart-meter P1 port and sends it over LoRa; `RAK3172_RX` serves it as an Eastron-style meter on RS485/Modbus. Flash both as a pair (TX, then RX).\n\n- P1 (DSMR/Sagemcom) telegram parsing with CRC check; corrupt telegrams are never parsed.\n- LoRa split into a fast electrical frame (voltage, current, per-phase power, frequency, ~200 ms) and a slow energy frame (import/export Wh, ~30 s).\n- When P1 drops, TX keeps sending the last known-good snapshot flagged `dataInvalid`; stale data expires by age and is not published as live.\n- Long-run hardening: no allocation on the 1 Hz telegram path, wedged UART restarts with backoff, task stalls trip the watchdog instead of hanging, and RX stops serving Modbus after a silent LoRa link.\n- RX holds RS485 DE through the last stop bit.\n",
+        "release_notes": "# P1 v0.0.4\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- `FW_ITERATION_ID` 8.\n",
         "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RELEASE_NOTES.md"
       },
       "versions": [
+        {
+          "folder": "v0.0.4",
+          "semver": "0.0.4",
+          "layout": "canonical",
+          "channel": "version",
+          "boards": [
+            "RAK3172_RX",
+            "RAK3172_TX"
+          ],
+          "sha256": {
+            "RAK3172_RX": "6453e0c6bb07b74e7e70b267468a6cee7ea4d3ae02f35e1e9bb8cebef0a39348",
+            "RAK3172_TX": "5e5e09d8faf5c6d0ac583ce5eb568a66c971587c15e1be1267a19a2f72d6b9c3"
+          },
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.4/index.json",
+          "artifacts": [
+            {
+              "board": "RAK3172_RX",
+              "filename": "RAK3172_RX.bin",
+              "sha256": "6453e0c6bb07b74e7e70b267468a6cee7ea4d3ae02f35e1e9bb8cebef0a39348",
+              "size": 69860,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.4/RAK3172_RX.bin",
+              "source_filename": "RAK3172_RX.bin"
+            },
+            {
+              "board": "RAK3172_TX",
+              "filename": "RAK3172_TX.bin",
+              "sha256": "5e5e09d8faf5c6d0ac583ce5eb568a66c971587c15e1be1267a19a2f72d6b9c3",
+              "size": 92140,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.4/RAK3172_TX.bin",
+              "source_filename": "RAK3172_TX.bin"
+            }
+          ],
+          "release_notes": "# P1 v0.0.4\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- `FW_ITERATION_ID` 8.\n",
+          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.4/RELEASE_NOTES.md"
+        },
         {
           "folder": "v0.0.1",
           "semver": "0.0.1",
@@ -569,13 +604,13 @@
       "latest": {
         "product": "P1",
         "available": true,
-        "semver": "0.0.1",
-        "version": "v0.0.1",
-        "matched_folder": "v0.0.1",
+        "semver": "0.0.4",
+        "version": "v0.0.4",
+        "matched_folder": "v0.0.4",
         "matches_folders": [
-          "v0.0.1"
+          "v0.0.4"
         ],
-        "highest_semver_folder": "v0.0.1",
+        "highest_semver_folder": "v0.0.4",
         "highest_semver_is_latest": true,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
         "boards": [
@@ -583,23 +618,23 @@
           "RAK3172_TX"
         ],
         "sha256": {
-          "RAK3172_RX": "a20607e53611b589bad8c50a31771d3ac0619334a60f088df00899c604c94120",
-          "RAK3172_TX": "21cb219001ff0e005abe5f37a4b0fbb80cad553e09fc8f5e8d0181b0885db713"
+          "RAK3172_RX": "6453e0c6bb07b74e7e70b267468a6cee7ea4d3ae02f35e1e9bb8cebef0a39348",
+          "RAK3172_TX": "5e5e09d8faf5c6d0ac583ce5eb568a66c971587c15e1be1267a19a2f72d6b9c3"
         },
         "artifacts": [
           {
             "board": "RAK3172_RX",
             "filename": "RAK3172_RX.bin",
-            "sha256": "a20607e53611b589bad8c50a31771d3ac0619334a60f088df00899c604c94120",
-            "size": 69468,
+            "sha256": "6453e0c6bb07b74e7e70b267468a6cee7ea4d3ae02f35e1e9bb8cebef0a39348",
+            "size": 69860,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin",
             "source_filename": "RAK3172_RX.bin"
           },
           {
             "board": "RAK3172_TX",
             "filename": "RAK3172_TX.bin",
-            "sha256": "21cb219001ff0e005abe5f37a4b0fbb80cad553e09fc8f5e8d0181b0885db713",
-            "size": 91028,
+            "sha256": "5e5e09d8faf5c6d0ac583ce5eb568a66c971587c15e1be1267a19a2f72d6b9c3",
+            "size": 92140,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin",
             "source_filename": "RAK3172_TX.bin"
           }
@@ -608,7 +643,7 @@
           "RAK3172_TX",
           "RAK3172_RX"
         ],
-        "release_notes": "# P1 v0.0.1\n\nFirst FEED release of the P1 meter link (RAK3172 / STM32WLE5): `RAK3172_TX` reads the smart-meter P1 port and sends it over LoRa; `RAK3172_RX` serves it as an Eastron-style meter on RS485/Modbus. Flash both as a pair (TX, then RX).\n\n- P1 (DSMR/Sagemcom) telegram parsing with CRC check; corrupt telegrams are never parsed.\n- LoRa split into a fast electrical frame (voltage, current, per-phase power, frequency, ~200 ms) and a slow energy frame (import/export Wh, ~30 s).\n- When P1 drops, TX keeps sending the last known-good snapshot flagged `dataInvalid`; stale data expires by age and is not published as live.\n- Long-run hardening: no allocation on the 1 Hz telegram path, wedged UART restarts with backoff, task stalls trip the watchdog instead of hanging, and RX stops serving Modbus after a silent LoRa link.\n- RX holds RS485 DE through the last stop bit.\n",
+        "release_notes": "# P1 v0.0.4\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- `FW_ITERATION_ID` 8.\n",
         "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RELEASE_NOTES.md",
         "alias_of": "P1"
       },
