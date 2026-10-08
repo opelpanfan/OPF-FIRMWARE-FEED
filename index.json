@@ -16,8 +16,8 @@
       "matches_folders": [
         "v0.0.1"
       ],
-      "highest_semver_folder": "v0.0.1",
-      "highest_semver_is_latest": true,
+      "highest_semver_folder": "1.0.2",
+      "highest_semver_is_latest": false,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/index.json",
       "boards": [
         "OPF_ATOM_S3",
@@ -28,59 +28,59 @@
         "OPF_WS_NO_TEMP"
       ],
       "sha256": {
-        "OPF_ATOM_S3": "d64d60b641ef969a313b6b6bc3ffad50a8e731c56321a7d50b833a9e46b56362",
-        "OPF_ATOM_S3R": "1e707902cb66822f9b490263b7f9131184b71e3f285613c8f02b4f64b0d859a5",
-        "OPF_T2CAN": "a0bee4a9533f4bc4c84c006a53d5c27bcfcfc04bc52e47ab84517a30f8786a50",
-        "OPF_WS": "88aabb20aa8b2a7e6e214bcc31b5a37168a304d6c3c56376e82a1f3c58112803",
-        "OPF_WS_DASH": "84e420cd648c4f27e4c32f82d463abc1b3d992cbcf1874974cd5cb9de87a3f62",
-        "OPF_WS_NO_TEMP": "5b959395a99c607253381a47a3056ad9d164b3f340999bc03eeeb7908891372c"
+        "OPF_ATOM_S3": "71a1ea744ee0d30952191dfe87cf1352b294327306a43b8c73f1273c691eff2a",
+        "OPF_ATOM_S3R": "8f5c6edb2302bb1cae4c3376a4db4d036eae10d247a16d4954dbd15d4490d903",
+        "OPF_T2CAN": "70caff91e54d7053b75e4105ca497602eb55fc13c60287dcabb4e29641a3cf27",
+        "OPF_WS": "1352d19954332cc04fe16119bca6b2ca78e64d363162f3b6769bf8bbac7e3a15",
+        "OPF_WS_DASH": "df7886367ad1ecd5637a302b0ddb24d7fbbfa49ed58a13b0ed7d7bc01b2d898d",
+        "OPF_WS_NO_TEMP": "15decaa1d13e6c0bf443cb043eb2c87573204b21263c63bc7a6a2bf757224e50"
       },
       "artifacts": [
         {
           "board": "OPF_ATOM_S3",
           "filename": "OPF_ATOM_S3.bin",
-          "sha256": "d64d60b641ef969a313b6b6bc3ffad50a8e731c56321a7d50b833a9e46b56362",
-          "size": 1575616,
+          "sha256": "71a1ea744ee0d30952191dfe87cf1352b294327306a43b8c73f1273c691eff2a",
+          "size": 1575664,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3.bin",
           "source_filename": "OPF_ATOM_S3.bin"
         },
         {
           "board": "OPF_ATOM_S3R",
           "filename": "OPF_ATOM_S3R.bin",
-          "sha256": "1e707902cb66822f9b490263b7f9131184b71e3f285613c8f02b4f64b0d859a5",
-          "size": 1773984,
+          "sha256": "8f5c6edb2302bb1cae4c3376a4db4d036eae10d247a16d4954dbd15d4490d903",
+          "size": 1774032,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3R.bin",
           "source_filename": "OPF_ATOM_S3R.bin"
         },
         {
           "board": "OPF_T2CAN",
           "filename": "OPF_T2CAN.bin",
-          "sha256": "a0bee4a9533f4bc4c84c006a53d5c27bcfcfc04bc52e47ab84517a30f8786a50",
-          "size": 1612512,
+          "sha256": "70caff91e54d7053b75e4105ca497602eb55fc13c60287dcabb4e29641a3cf27",
+          "size": 1612560,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_T2CAN.bin",
           "source_filename": "OPF_T2CAN.bin"
         },
         {
           "board": "OPF_WS",
           "filename": "OPF_WS.bin",
-          "sha256": "88aabb20aa8b2a7e6e214bcc31b5a37168a304d6c3c56376e82a1f3c58112803",
-          "size": 1607744,
+          "sha256": "1352d19954332cc04fe16119bca6b2ca78e64d363162f3b6769bf8bbac7e3a15",
+          "size": 1607792,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin",
           "source_filename": "OPF_WS.bin"
         },
         {
           "board": "OPF_WS_DASH",
           "filename": "OPF_WS_DASH.bin",
-          "sha256": "84e420cd648c4f27e4c32f82d463abc1b3d992cbcf1874974cd5cb9de87a3f62",
-          "size": 2315040,
+          "sha256": "df7886367ad1ecd5637a302b0ddb24d7fbbfa49ed58a13b0ed7d7bc01b2d898d",
+          "size": 2315088,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_DASH.bin",
           "source_filename": "OPF_WS_DASH.bin"
         },
         {
           "board": "OPF_WS_NO_TEMP",
           "filename": "OPF_WS_NO_TEMP.bin",
-          "sha256": "5b959395a99c607253381a47a3056ad9d164b3f340999bc03eeeb7908891372c",
-          "size": 1607584,
+          "sha256": "15decaa1d13e6c0bf443cb043eb2c87573204b21263c63bc7a6a2bf757224e50",
+          "size": 1607632,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin",
           "source_filename": "OPF_WS_NO_TEMP.bin"
         }
@@ -235,8 +235,8 @@
         "matches_folders": [
           "v0.0.1"
         ],
-        "highest_semver_folder": "v0.0.1",
-        "highest_semver_is_latest": true,
+        "highest_semver_folder": "1.0.2",
+        "highest_semver_is_latest": false,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/index.json",
         "boards": [
           "OPF_ATOM_S3",
@@ -247,59 +247,59 @@
           "OPF_WS_NO_TEMP"
         ],
         "sha256": {
-          "OPF_ATOM_S3": "d64d60b641ef969a313b6b6bc3ffad50a8e731c56321a7d50b833a9e46b56362",
-          "OPF_ATOM_S3R": "1e707902cb66822f9b490263b7f9131184b71e3f285613c8f02b4f64b0d859a5",
-          "OPF_T2CAN": "a0bee4a9533f4bc4c84c006a53d5c27bcfcfc04bc52e47ab84517a30f8786a50",
-          "OPF_WS": "88aabb20aa8b2a7e6e214bcc31b5a37168a304d6c3c56376e82a1f3c58112803",
-          "OPF_WS_DASH": "84e420cd648c4f27e4c32f82d463abc1b3d992cbcf1874974cd5cb9de87a3f62",
-          "OPF_WS_NO_TEMP": "5b959395a99c607253381a47a3056ad9d164b3f340999bc03eeeb7908891372c"
+          "OPF_ATOM_S3": "71a1ea744ee0d30952191dfe87cf1352b294327306a43b8c73f1273c691eff2a",
+          "OPF_ATOM_S3R": "8f5c6edb2302bb1cae4c3376a4db4d036eae10d247a16d4954dbd15d4490d903",
+          "OPF_T2CAN": "70caff91e54d7053b75e4105ca497602eb55fc13c60287dcabb4e29641a3cf27",
+          "OPF_WS": "1352d19954332cc04fe16119bca6b2ca78e64d363162f3b6769bf8bbac7e3a15",
+          "OPF_WS_DASH": "df7886367ad1ecd5637a302b0ddb24d7fbbfa49ed58a13b0ed7d7bc01b2d898d",
+          "OPF_WS_NO_TEMP": "15decaa1d13e6c0bf443cb043eb2c87573204b21263c63bc7a6a2bf757224e50"
         },
         "artifacts": [
           {
             "board": "OPF_ATOM_S3",
             "filename": "OPF_ATOM_S3.bin",
-            "sha256": "d64d60b641ef969a313b6b6bc3ffad50a8e731c56321a7d50b833a9e46b56362",
-            "size": 1575616,
+            "sha256": "71a1ea744ee0d30952191dfe87cf1352b294327306a43b8c73f1273c691eff2a",
+            "size": 1575664,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3.bin",
             "source_filename": "OPF_ATOM_S3.bin"
           },
           {
             "board": "OPF_ATOM_S3R",
             "filename": "OPF_ATOM_S3R.bin",
-            "sha256": "1e707902cb66822f9b490263b7f9131184b71e3f285613c8f02b4f64b0d859a5",
-            "size": 1773984,
+            "sha256": "8f5c6edb2302bb1cae4c3376a4db4d036eae10d247a16d4954dbd15d4490d903",
+            "size": 1774032,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3R.bin",
             "source_filename": "OPF_ATOM_S3R.bin"
           },
           {
             "board": "OPF_T2CAN",
             "filename": "OPF_T2CAN.bin",
-            "sha256": "a0bee4a9533f4bc4c84c006a53d5c27bcfcfc04bc52e47ab84517a30f8786a50",
-            "size": 1612512,
+            "sha256": "70caff91e54d7053b75e4105ca497602eb55fc13c60287dcabb4e29641a3cf27",
+            "size": 1612560,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_T2CAN.bin",
             "source_filename": "OPF_T2CAN.bin"
           },
           {
             "board": "OPF_WS",
             "filename": "OPF_WS.bin",
-            "sha256": "88aabb20aa8b2a7e6e214bcc31b5a37168a304d6c3c56376e82a1f3c58112803",
-            "size": 1607744,
+            "sha256": "1352d19954332cc04fe16119bca6b2ca78e64d363162f3b6769bf8bbac7e3a15",
+            "size": 1607792,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin",
             "source_filename": "OPF_WS.bin"
           },
           {
             "board": "OPF_WS_DASH",
             "filename": "OPF_WS_DASH.bin",
-            "sha256": "84e420cd648c4f27e4c32f82d463abc1b3d992cbcf1874974cd5cb9de87a3f62",
-            "size": 2315040,
+            "sha256": "df7886367ad1ecd5637a302b0ddb24d7fbbfa49ed58a13b0ed7d7bc01b2d898d",
+            "size": 2315088,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_DASH.bin",
             "source_filename": "OPF_WS_DASH.bin"
           },
           {
             "board": "OPF_WS_NO_TEMP",
             "filename": "OPF_WS_NO_TEMP.bin",
-            "sha256": "5b959395a99c607253381a47a3056ad9d164b3f340999bc03eeeb7908891372c",
-            "size": 1607584,
+            "sha256": "15decaa1d13e6c0bf443cb043eb2c87573204b21263c63bc7a6a2bf757224e50",
+            "size": 1607632,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin",
             "source_filename": "OPF_WS_NO_TEMP.bin"
           }
@@ -308,6 +308,122 @@
         "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/RELEASE_NOTES.md"
       },
       "versions": [
+        {
+          "folder": "1.0.2",
+          "semver": "1.0.2",
+          "layout": "legacy_unprefixed",
+          "channel": "version",
+          "boards": [
+            "OPF_ATOM_S3",
+            "OPF_ATOM_S3R",
+            "OPF_T2CAN",
+            "OPF_WS",
+            "OPF_WS_NO_TEMP"
+          ],
+          "sha256": {
+            "OPF_ATOM_S3": "f1961b2f56f2326485983acabd4b641fea67ba75a3acc60ea7cf9e37ac60f1ce",
+            "OPF_ATOM_S3R": "2dabdb97f3ff6801a85dacfecbadc84cf00cd0c88137df229ddc44b66636e667",
+            "OPF_T2CAN": "771ecd5852a4a98994820c3f68597e42e0958471a78ffbd2be16db6f9670d3b4",
+            "OPF_WS": "d51aba4ed29b91f6860ce110c94da667ab78caa7fbbed8fe40c3655423b5a634",
+            "OPF_WS_NO_TEMP": "d09ab392cdd024ee6d51c4f6529e7b55d09fd50b3be1cd6df0da530f3b56f470"
+          },
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.2/index.json",
+          "artifacts": [
+            {
+              "board": "OPF_ATOM_S3",
+              "filename": "OPF_ATOM_S3.bin",
+              "sha256": "f1961b2f56f2326485983acabd4b641fea67ba75a3acc60ea7cf9e37ac60f1ce",
+              "size": 1181264,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.2/OPF_ATOM_S3.bin"
+            },
+            {
+              "board": "OPF_ATOM_S3R",
+              "filename": "OPF_ATOM_S3R.bin",
+              "sha256": "2dabdb97f3ff6801a85dacfecbadc84cf00cd0c88137df229ddc44b66636e667",
+              "size": 1363424,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.2/OPF_ATOM_S3R.bin"
+            },
+            {
+              "board": "OPF_T2CAN",
+              "filename": "OPF_T2CAN.bin",
+              "sha256": "771ecd5852a4a98994820c3f68597e42e0958471a78ffbd2be16db6f9670d3b4",
+              "size": 1181264,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.2/OPF_T2CAN.bin"
+            },
+            {
+              "board": "OPF_WS",
+              "filename": "OPF_WS.bin",
+              "sha256": "d51aba4ed29b91f6860ce110c94da667ab78caa7fbbed8fe40c3655423b5a634",
+              "size": 1199488,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.2/OPF_WS.bin"
+            },
+            {
+              "board": "OPF_WS_NO_TEMP",
+              "filename": "OPF_WS_NO_TEMP.bin",
+              "sha256": "d09ab392cdd024ee6d51c4f6529e7b55d09fd50b3be1cd6df0da530f3b56f470",
+              "size": 1199216,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.2/OPF_WS_NO_TEMP.bin"
+            }
+          ]
+        },
+        {
+          "folder": "1.0.1",
+          "semver": "1.0.1",
+          "layout": "legacy_unprefixed",
+          "channel": "version",
+          "boards": [
+            "OPF_ATOM_S3",
+            "OPF_ATOM_S3R",
+            "OPF_T2CAN",
+            "OPF_WS",
+            "OPF_WS_NO_TEMP"
+          ],
+          "sha256": {
+            "OPF_ATOM_S3": "a298be3eecc3920362aae846c0a607495da007755bba2235dd218d8cd1c77b93",
+            "OPF_ATOM_S3R": "67d2a6033d1cece45ff2ecbc2e70b51e2260be6bfd3d4ea56193102ae9078bcd",
+            "OPF_T2CAN": "e29567d4abf1b8026c5f83a97c44649fed480d9d2ea4cd18e66722519a0e5ff0",
+            "OPF_WS": "fe35f31d44a8331b52d4aff5f98197bb2da2db496206e82804b121a233146c43",
+            "OPF_WS_NO_TEMP": "939187623e9f4756bde8da06a533b4eed0b9b228cde32b2bc350c7abf884c785"
+          },
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.1/index.json",
+          "artifacts": [
+            {
+              "board": "OPF_ATOM_S3",
+              "filename": "OPF_ATOM_S3.bin",
+              "sha256": "a298be3eecc3920362aae846c0a607495da007755bba2235dd218d8cd1c77b93",
+              "size": 1156448,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.1/OPF_ATOM_S3.bin"
+            },
+            {
+              "board": "OPF_ATOM_S3R",
+              "filename": "OPF_ATOM_S3R.bin",
+              "sha256": "67d2a6033d1cece45ff2ecbc2e70b51e2260be6bfd3d4ea56193102ae9078bcd",
+              "size": 1337168,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.1/OPF_ATOM_S3R.bin"
+            },
+            {
+              "board": "OPF_T2CAN",
+              "filename": "OPF_T2CAN.bin",
+              "sha256": "e29567d4abf1b8026c5f83a97c44649fed480d9d2ea4cd18e66722519a0e5ff0",
+              "size": 1156448,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.1/OPF_T2CAN.bin"
+            },
+            {
+              "board": "OPF_WS",
+              "filename": "OPF_WS.bin",
+              "sha256": "fe35f31d44a8331b52d4aff5f98197bb2da2db496206e82804b121a233146c43",
+              "size": 1173280,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.1/OPF_WS.bin"
+            },
+            {
+              "board": "OPF_WS_NO_TEMP",
+              "filename": "OPF_WS_NO_TEMP.bin",
+              "sha256": "939187623e9f4756bde8da06a533b4eed0b9b228cde32b2bc350c7abf884c785",
+              "size": 1172992,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/1.0.1/OPF_WS_NO_TEMP.bin"
+            }
+          ]
+        },
         {
           "folder": "v0.0.1",
           "semver": "0.0.1",
@@ -322,60 +438,60 @@
             "OPF_WS_NO_TEMP"
           ],
           "sha256": {
-            "OPF_ATOM_S3": "d64d60b641ef969a313b6b6bc3ffad50a8e731c56321a7d50b833a9e46b56362",
-            "OPF_ATOM_S3R": "1e707902cb66822f9b490263b7f9131184b71e3f285613c8f02b4f64b0d859a5",
-            "OPF_T2CAN": "a0bee4a9533f4bc4c84c006a53d5c27bcfcfc04bc52e47ab84517a30f8786a50",
-            "OPF_WS": "88aabb20aa8b2a7e6e214bcc31b5a37168a304d6c3c56376e82a1f3c58112803",
-            "OPF_WS_DASH": "84e420cd648c4f27e4c32f82d463abc1b3d992cbcf1874974cd5cb9de87a3f62",
-            "OPF_WS_NO_TEMP": "5b959395a99c607253381a47a3056ad9d164b3f340999bc03eeeb7908891372c"
+            "OPF_ATOM_S3": "71a1ea744ee0d30952191dfe87cf1352b294327306a43b8c73f1273c691eff2a",
+            "OPF_ATOM_S3R": "8f5c6edb2302bb1cae4c3376a4db4d036eae10d247a16d4954dbd15d4490d903",
+            "OPF_T2CAN": "70caff91e54d7053b75e4105ca497602eb55fc13c60287dcabb4e29641a3cf27",
+            "OPF_WS": "1352d19954332cc04fe16119bca6b2ca78e64d363162f3b6769bf8bbac7e3a15",
+            "OPF_WS_DASH": "df7886367ad1ecd5637a302b0ddb24d7fbbfa49ed58a13b0ed7d7bc01b2d898d",
+            "OPF_WS_NO_TEMP": "15decaa1d13e6c0bf443cb043eb2c87573204b21263c63bc7a6a2bf757224e50"
           },
           "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/index.json",
           "artifacts": [
             {
               "board": "OPF_ATOM_S3",
               "filename": "OPF_ATOM_S3.bin",
-              "sha256": "d64d60b641ef969a313b6b6bc3ffad50a8e731c56321a7d50b833a9e46b56362",
-              "size": 1575616,
+              "sha256": "71a1ea744ee0d30952191dfe87cf1352b294327306a43b8c73f1273c691eff2a",
+              "size": 1575664,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_ATOM_S3.bin",
               "source_filename": "OPF_ATOM_S3.bin"
             },
             {
               "board": "OPF_ATOM_S3R",
               "filename": "OPF_ATOM_S3R.bin",
-              "sha256": "1e707902cb66822f9b490263b7f9131184b71e3f285613c8f02b4f64b0d859a5",
-              "size": 1773984,
+              "sha256": "8f5c6edb2302bb1cae4c3376a4db4d036eae10d247a16d4954dbd15d4490d903",
+              "size": 1774032,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_ATOM_S3R.bin",
               "source_filename": "OPF_ATOM_S3R.bin"
             },
             {
               "board": "OPF_T2CAN",
               "filename": "OPF_T2CAN.bin",
-              "sha256": "a0bee4a9533f4bc4c84c006a53d5c27bcfcfc04bc52e47ab84517a30f8786a50",
-              "size": 1612512,
+              "sha256": "70caff91e54d7053b75e4105ca497602eb55fc13c60287dcabb4e29641a3cf27",
+              "size": 1612560,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_T2CAN.bin",
               "source_filename": "OPF_T2CAN.bin"
             },
             {
               "board": "OPF_WS",
               "filename": "OPF_WS.bin",
-              "sha256": "88aabb20aa8b2a7e6e214bcc31b5a37168a304d6c3c56376e82a1f3c58112803",
-              "size": 1607744,
+              "sha256": "1352d19954332cc04fe16119bca6b2ca78e64d363162f3b6769bf8bbac7e3a15",
+              "size": 1607792,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_WS.bin",
               "source_filename": "OPF_WS.bin"
             },
             {
               "board": "OPF_WS_DASH",
               "filename": "OPF_WS_DASH.bin",
-              "sha256": "84e420cd648c4f27e4c32f82d463abc1b3d992cbcf1874974cd5cb9de87a3f62",
-              "size": 2315040,
+              "sha256": "df7886367ad1ecd5637a302b0ddb24d7fbbfa49ed58a13b0ed7d7bc01b2d898d",
+              "size": 2315088,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_WS_DASH.bin",
               "source_filename": "OPF_WS_DASH.bin"
             },
             {
               "board": "OPF_WS_NO_TEMP",
               "filename": "OPF_WS_NO_TEMP.bin",
-              "sha256": "5b959395a99c607253381a47a3056ad9d164b3f340999bc03eeeb7908891372c",
-              "size": 1607584,
+              "sha256": "15decaa1d13e6c0bf443cb043eb2c87573204b21263c63bc7a6a2bf757224e50",
+              "size": 1607632,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_WS_NO_TEMP.bin",
               "source_filename": "OPF_WS_NO_TEMP.bin"
             }
