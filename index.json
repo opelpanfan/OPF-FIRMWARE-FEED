@@ -14,7 +14,7 @@
       "version": "0.0.8",
       "matched_folder": null,
       "matches_folders": [],
-      "highest_semver_folder": "v0.0.1",
+      "highest_semver_folder": null,
       "highest_semver_is_latest": false,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/index.json",
       "boards": [
@@ -83,7 +83,7 @@
       "version": "v0.0.18",
       "matched_folder": null,
       "matches_folders": [],
-      "highest_semver_folder": "v0.0.1",
+      "highest_semver_folder": null,
       "highest_semver_is_latest": false,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/index.json",
       "boards": [
@@ -120,7 +120,7 @@
       "version": "v0.0.3",
       "matched_folder": null,
       "matches_folders": [],
-      "highest_semver_folder": "v0.0.1",
+      "highest_semver_folder": null,
       "highest_semver_is_latest": false,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
       "boards": [
@@ -163,7 +163,7 @@
       "version": "v0.0.3",
       "matched_folder": null,
       "matches_folders": [],
-      "highest_semver_folder": "v0.0.1",
+      "highest_semver_folder": null,
       "highest_semver_is_latest": false,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
       "boards": [
@@ -213,7 +213,7 @@
         "version": "0.0.8",
         "matched_folder": null,
         "matches_folders": [],
-        "highest_semver_folder": "v0.0.1",
+        "highest_semver_folder": null,
         "highest_semver_is_latest": false,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/index.json",
         "boards": [
@@ -275,71 +275,7 @@
         "release_notes": "# BMS v0.0.8\n\n- Always-on BLE (`OPF-BMS-<id>`) for commissioning via the shared `/device` path \u2014 works without Wi\u2011Fi.\n- BLE OTA, same protocol as Bridge (`ota_info` / `ota_begin` / `ota_data` / `ota_end`), usable from OPF-FLASHER and OPF-CONFIG-APP.\n- BLE telemetry: `tel_get` / `telem_get` live pack snapshot for OPF-CONFIG-APP.\n- eFuse-based `device_id` plus firmware version/build reported in `cfg_get` and `ota_info`.\n- Web Device Console: sticky BLE status bar (advertising / connected) mirrored in `/health` and `/diag`.\n- Wi\u2011Fi modem sleep enabled for stable BLE + Wi\u2011Fi coexistence.\n- Type dropdown: Slave/Display run SoftAP only; Master keeps STA + MQTT + web, with MS readiness and master-only fleet MQTT.\n",
         "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/RELEASE_NOTES.md"
       },
-      "versions": [
-        {
-          "folder": "v0.0.1",
-          "semver": "0.0.1",
-          "layout": "canonical",
-          "channel": "version",
-          "boards": [
-            "OPF_ATOM_S3",
-            "OPF_ATOM_S3R",
-            "OPF_T2CAN",
-            "OPF_WS",
-            "OPF_WS_NO_TEMP"
-          ],
-          "sha256": {
-            "OPF_ATOM_S3": "1e4e50435c586f3bfb600684643dad93176527ce9e033dada4c33a16444a00f3",
-            "OPF_ATOM_S3R": "b780bdebb7ae2cd77057297b70cab789440aff5922c1ea332d4e878478df621a",
-            "OPF_T2CAN": "4e4a2e3e6ce4efbc2bbadedb7896c37b839d41c9e481f3648972bba7acf89d06",
-            "OPF_WS": "9452884c74b93497bd90ac2a56f09947869b17557f0c935d1f482ac501be8309",
-            "OPF_WS_NO_TEMP": "6e3725df0a5430d5d05c13ef9a1635b789d4c1515f874a79821a5d4498b9d156"
-          },
-          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/index.json",
-          "artifacts": [
-            {
-              "board": "OPF_ATOM_S3",
-              "filename": "OPF_ATOM_S3.bin",
-              "sha256": "1e4e50435c586f3bfb600684643dad93176527ce9e033dada4c33a16444a00f3",
-              "size": 1259824,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_ATOM_S3.bin",
-              "source_filename": "OPF_ATOM_S3.bin"
-            },
-            {
-              "board": "OPF_ATOM_S3R",
-              "filename": "OPF_ATOM_S3R.bin",
-              "sha256": "b780bdebb7ae2cd77057297b70cab789440aff5922c1ea332d4e878478df621a",
-              "size": 1445424,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_ATOM_S3R.bin",
-              "source_filename": "OPF_ATOM_S3R.bin"
-            },
-            {
-              "board": "OPF_T2CAN",
-              "filename": "OPF_T2CAN.bin",
-              "sha256": "4e4a2e3e6ce4efbc2bbadedb7896c37b839d41c9e481f3648972bba7acf89d06",
-              "size": 1276512,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_T2CAN.bin",
-              "source_filename": "OPF_T2CAN.bin"
-            },
-            {
-              "board": "OPF_WS",
-              "filename": "OPF_WS.bin",
-              "sha256": "9452884c74b93497bd90ac2a56f09947869b17557f0c935d1f482ac501be8309",
-              "size": 1281536,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_WS.bin",
-              "source_filename": "OPF_WS.bin"
-            },
-            {
-              "board": "OPF_WS_NO_TEMP",
-              "filename": "OPF_WS_NO_TEMP.bin",
-              "sha256": "6e3725df0a5430d5d05c13ef9a1635b789d4c1515f874a79821a5d4498b9d156",
-              "size": 1281280,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_WS_NO_TEMP.bin",
-              "source_filename": "OPF_WS_NO_TEMP.bin"
-            }
-          ]
-        }
-      ],
+      "versions": [],
       "source_ref": "master-grok"
     },
     {
@@ -353,7 +289,7 @@
         "version": "v0.0.18",
         "matched_folder": null,
         "matches_folders": [],
-        "highest_semver_folder": "v0.0.1",
+        "highest_semver_folder": null,
         "highest_semver_is_latest": false,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/index.json",
         "boards": [
@@ -383,39 +319,7 @@
         "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
         "board_contract_sha": "d9ca7a0"
       },
-      "versions": [
-        {
-          "folder": "v0.0.1",
-          "semver": "0.0.1",
-          "layout": "canonical",
-          "channel": "version",
-          "boards": [
-            "ATOM_S3",
-            "ATOM_S3_R"
-          ],
-          "sha256": {
-            "ATOM_S3": "1403b17a09c7dd009036fdd266c053f87e18758ce49c87a70c61e635ea780bd1",
-            "ATOM_S3_R": "af70947bce15b06909b3c93d7ba31c036f6b226230e44b87f8b359b05a335366"
-          },
-          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.1/index.json",
-          "artifacts": [
-            {
-              "board": "ATOM_S3",
-              "filename": "ATOM_S3.bin",
-              "sha256": "1403b17a09c7dd009036fdd266c053f87e18758ce49c87a70c61e635ea780bd1",
-              "size": 1849296,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.1/ATOM_S3.bin"
-            },
-            {
-              "board": "ATOM_S3_R",
-              "filename": "ATOM_S3_R.bin",
-              "sha256": "af70947bce15b06909b3c93d7ba31c036f6b226230e44b87f8b359b05a335366",
-              "size": 1893120,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.1/ATOM_S3_R.bin"
-            }
-          ]
-        }
-      ],
+      "versions": [],
       "source_ref": "master-grok",
       "board_contract_sha": "d9ca7a0",
       "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin."
@@ -431,7 +335,7 @@
         "version": "v0.0.3",
         "matched_folder": null,
         "matches_folders": [],
-        "highest_semver_folder": "v0.0.1",
+        "highest_semver_folder": null,
         "highest_semver_is_latest": false,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
         "boards": [
@@ -467,41 +371,7 @@
         "release_notes": "# P1 v0.0.3 \u2014 testing material\n\nThese release notes are for Flasher/FEED UI verification.\n\n- Device: P1 (OPF-P1)\n- Boards: RAK3172_TX, RAK3172_RX (flash as a pair)\n- Channel: immutable `P1/v0.0.3` + `P1/latest`\n\nIf you can read this in OPF-FLASHER, release notes are working.\n",
         "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RELEASE_NOTES.md"
       },
-      "versions": [
-        {
-          "folder": "v0.0.1",
-          "semver": "0.0.1",
-          "layout": "canonical",
-          "channel": "version",
-          "boards": [
-            "RAK3172_RX",
-            "RAK3172_TX"
-          ],
-          "sha256": {
-            "RAK3172_RX": "05314bef24cb058ed9c3f5146a1a22a37c7109f0dbb41b773fcda21b2d44ea54",
-            "RAK3172_TX": "f8af0f9cbbc12208d6f94073a19d11b61072d692f2c52d3bd8d800fe3c2e8299"
-          },
-          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/index.json",
-          "artifacts": [
-            {
-              "board": "RAK3172_RX",
-              "filename": "RAK3172_RX.bin",
-              "sha256": "05314bef24cb058ed9c3f5146a1a22a37c7109f0dbb41b773fcda21b2d44ea54",
-              "size": 69468,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RAK3172_RX.bin",
-              "source_filename": "RAK3172_RX.bin"
-            },
-            {
-              "board": "RAK3172_TX",
-              "filename": "RAK3172_TX.bin",
-              "sha256": "f8af0f9cbbc12208d6f94073a19d11b61072d692f2c52d3bd8d800fe3c2e8299",
-              "size": 91028,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RAK3172_TX.bin",
-              "source_filename": "RAK3172_TX.bin"
-            }
-          ]
-        }
-      ],
+      "versions": [],
       "source_ref": "master-grok",
       "flash_as_pair": [
         "RAK3172_TX",
@@ -519,7 +389,7 @@
         "version": "v0.0.3",
         "matched_folder": null,
         "matches_folders": [],
-        "highest_semver_folder": "v0.0.1",
+        "highest_semver_folder": null,
         "highest_semver_is_latest": false,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
         "boards": [
