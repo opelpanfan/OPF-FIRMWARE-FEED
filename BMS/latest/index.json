@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "product": "BMS",
-  "version": "0.0.1",
-  "semver": "0.0.1",
+  "version": "0.0.2",
+  "semver": "0.0.2",
   "channel": "latest",
   "folder": "latest",
   "files": {
@@ -14,59 +14,59 @@
     "OPF_WS_NO_TEMP": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin"
   },
   "sha256": {
-    "OPF_ATOM_S3": "71a1ea744ee0d30952191dfe87cf1352b294327306a43b8c73f1273c691eff2a",
-    "OPF_ATOM_S3R": "8f5c6edb2302bb1cae4c3376a4db4d036eae10d247a16d4954dbd15d4490d903",
-    "OPF_T2CAN": "70caff91e54d7053b75e4105ca497602eb55fc13c60287dcabb4e29641a3cf27",
-    "OPF_WS": "1352d19954332cc04fe16119bca6b2ca78e64d363162f3b6769bf8bbac7e3a15",
-    "OPF_WS_DASH": "df7886367ad1ecd5637a302b0ddb24d7fbbfa49ed58a13b0ed7d7bc01b2d898d",
-    "OPF_WS_NO_TEMP": "15decaa1d13e6c0bf443cb043eb2c87573204b21263c63bc7a6a2bf757224e50"
+    "OPF_ATOM_S3": "b8c7a1b59998e54d2215840e576ca7be29a0d543c591df0718a2e4bdc989ab0f",
+    "OPF_ATOM_S3R": "7bbb71cb9e58f5ca91aae2e3248bb83a357952fd71bb51c8ec8efc4fe778a695",
+    "OPF_T2CAN": "0343d2b8eb9fa1459e1e6ad9c7bfc3ab6e4d125dab13173df9dea5bf03206f65",
+    "OPF_WS": "d4c9b13f66f85a74b3a31a36d2e7ead523ed11b562ef4220395bd1a9e90af23d",
+    "OPF_WS_DASH": "d899dbe2c93b623e781fa07f5a1d788c184253f8a78e47df658e5bb571085712",
+    "OPF_WS_NO_TEMP": "b442ed397061424d4aa3625ac983ea178e00c0a1dfa26c7239406bb9822846ef"
   },
   "artifacts": [
     {
       "board": "OPF_ATOM_S3",
       "filename": "OPF_ATOM_S3.bin",
-      "sha256": "71a1ea744ee0d30952191dfe87cf1352b294327306a43b8c73f1273c691eff2a",
-      "size": 1575664,
+      "sha256": "b8c7a1b59998e54d2215840e576ca7be29a0d543c591df0718a2e4bdc989ab0f",
+      "size": 1581904,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3.bin",
       "source_filename": "OPF_ATOM_S3.bin"
     },
     {
       "board": "OPF_ATOM_S3R",
       "filename": "OPF_ATOM_S3R.bin",
-      "sha256": "8f5c6edb2302bb1cae4c3376a4db4d036eae10d247a16d4954dbd15d4490d903",
-      "size": 1774032,
+      "sha256": "7bbb71cb9e58f5ca91aae2e3248bb83a357952fd71bb51c8ec8efc4fe778a695",
+      "size": 1781280,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3R.bin",
       "source_filename": "OPF_ATOM_S3R.bin"
     },
     {
       "board": "OPF_T2CAN",
       "filename": "OPF_T2CAN.bin",
-      "sha256": "70caff91e54d7053b75e4105ca497602eb55fc13c60287dcabb4e29641a3cf27",
-      "size": 1612560,
+      "sha256": "0343d2b8eb9fa1459e1e6ad9c7bfc3ab6e4d125dab13173df9dea5bf03206f65",
+      "size": 1618768,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_T2CAN.bin",
       "source_filename": "OPF_T2CAN.bin"
     },
     {
       "board": "OPF_WS",
       "filename": "OPF_WS.bin",
-      "sha256": "1352d19954332cc04fe16119bca6b2ca78e64d363162f3b6769bf8bbac7e3a15",
-      "size": 1607792,
+      "sha256": "d4c9b13f66f85a74b3a31a36d2e7ead523ed11b562ef4220395bd1a9e90af23d",
+      "size": 1614496,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin",
       "source_filename": "OPF_WS.bin"
     },
     {
       "board": "OPF_WS_DASH",
       "filename": "OPF_WS_DASH.bin",
-      "sha256": "df7886367ad1ecd5637a302b0ddb24d7fbbfa49ed58a13b0ed7d7bc01b2d898d",
-      "size": 2315088,
+      "sha256": "d899dbe2c93b623e781fa07f5a1d788c184253f8a78e47df658e5bb571085712",
+      "size": 2323168,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_DASH.bin",
       "source_filename": "OPF_WS_DASH.bin"
     },
     {
       "board": "OPF_WS_NO_TEMP",
       "filename": "OPF_WS_NO_TEMP.bin",
-      "sha256": "15decaa1d13e6c0bf443cb043eb2c87573204b21263c63bc7a6a2bf757224e50",
-      "size": 1607632,
+      "sha256": "b442ed397061424d4aa3625ac983ea178e00c0a1dfa26c7239406bb9822846ef",
+      "size": 1614368,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin",
       "source_filename": "OPF_WS_NO_TEMP.bin"
     }
@@ -75,12 +75,12 @@
     "kind": "workflow_run",
     "repository": "opelpanfan/OPF-STORAGE-DASH",
     "ref": "master-grok",
-    "sha": "cac0af0e23fa8b208717e79fc92d497b48494d15",
-    "tag": "v0.0.1",
-    "run_id": 37818891895,
+    "sha": "e945fd827f88fd324f0f8fcccbf5cdb1b4d84277",
+    "tag": "v0.0.2",
+    "run_id": 38557495358,
     "workflow": "build-and-push-feed.yml",
-    "fw_build": "cac0af0"
+    "fw_build": "e945fd8"
   },
-  "release_notes": "# BMS v0.0.1\n\nSource: `opelpanfan/OPF-STORAGE-DASH` branch `master-grok` tip **`cac0af0`** (`cac0af0e23fa8b208717e79fc92d497b48494d15`).\n\n## What changed vs the previous feed image (`3340aa9`)\n\n- **Restored the working `master_ws` 0x334 decoder**: 4 cells per mux (`mux * 4`, mux 0\u201323) so the pack fills **96/96** cells again.\n- **Reverted the bad `\u00d74` on v2/v4** from `3340aa9` (those fields were already scaled; applying `\u00d74` again pushed voltages to ~16 kV and the sanity window dropped half the pack \u2192 48/96).\n- **Dropped the experimental 3-cell-per-mux unpack** that landed on `master-grok` as `8cc394d` (not flashable / not the live path). Live verification under `master_ws` and this tip shows the 4-cell layout.\n\n## Verified\n\n- Live BMS `.158` flashed with this tip: **96/96** cells, voltages ~4010\u20134028 mV.\n\n## Boards in this feed folder\n\n`OPF_WS`, `OPF_WS_NO_TEMP`, `OPF_T2CAN`, `OPF_ATOM_S3`, `OPF_ATOM_S3R`, `OPF_WS_DASH` (same catalog as before).\n\nPrior release notes (BLE commissioning, OTA, Device Console, etc.) still apply; this republish is a **PSA2 cell-decode fix only**.\n",
+  "release_notes": "# BMS v0.0.2\n\n- Stability: OTA task-watchdog fix; pack control, UV failsafe, and CAN keep running during OTA; prefs mutex; fixed OTA URL and IP buffers; deferred `WiFi.mode`; PSA2 mux caps.\n- Coredump capture, plus `/coredump` download and erase.\n- Dash Type: dash-only type 100 on display builds.\n- Shared-UX web UI redesign (\u22124.3 KB).\n- Earlier on this line: PSA2 96-cell decode, IVT support, UV failsafe, 0x526 gate, and duplicate-ID guard.\n",
   "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/RELEASE_NOTES.md"
 }
