@@ -19,8 +19,8 @@ When the file is present, that folder's ``index.json`` and the root catalog
 - ``release_notes``: the markdown text (what Flasher should show)
 - ``release_notes_url``: raw URL of ``RELEASE_NOTES.md`` in that same folder
 
-Both fields are omitted when the file is absent. ``SHA256SUMS`` lists ``.bin``
-images only.
+Both fields are omitted when the file is absent. ``SHA256SUMS`` lists payload
+files only (``.bin`` firmware images, ``.apk`` for android, or ``.exe``/``.deb`` packages).
 
 ``.bin`` bytes in a version folder are immutable. Notes are written by the
 publish that creates the folder (``apply_publish(..., release_notes=...`` or
@@ -54,6 +54,9 @@ ESP_MAGIC = 0xE9
 MIN_ESP = 64 * 1024
 MIN_STM = 1024
 MAX_BIN = 8 * 1024 * 1024
+MAX_PACKAGE = 512 * 1024 * 1024
+MAX_APK = 80 * 1024 * 1024
+PACKAGE_FILE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]{0,120}$")
 ALLOWED_OTA_PREFIXES = (
     "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/",
     "https://github.com/opelpanfan/OPF-FIRMWARE-FEED/",
@@ -105,8 +108,22 @@ def load_catalog(path: Path | None = None) -> dict:
             if not BOARD_RE.fullmatch(board):
                 raise FeedError(f"invalid board id {product}/{board}")
             filename = board_spec.get("filename")
-            if filename != f"{board}.bin":
-                raise FeedError(f"{product}/{board} filename must be {board}.bin")
+            if spec.get("family") == "package":
+                if not isinstance(filename, str) or not PACKAGE_FILE_RE.fullmatch(filename):
+                    raise FeedError(f"{product}/{board} has an unsafe package filename")
+                if Path(filename).suffix.lower() not in {".exe", ".deb"}:
+                    raise FeedError(f"{product}/{board} filename must end in .exe or .deb")
+            else:
+                expected_bin = f"{board}.bin"
+                expected_apk = f"{board}.apk"
+                if filename not in (expected_bin, expected_apk):
+                    raise FeedError(
+                        f"{product}/{board} filename must be {expected_bin} or {expected_apk}"
+                    )
+                if filename == expected_apk and spec.get("family") != "android":
+                    raise FeedError(f"{product}/{board} .apk requires family android")
+                if filename == expected_bin and spec.get("family") == "android":
+                    raise FeedError(f"{product}/{board} android products publish {expected_apk}")
     return catalog
 
 
@@ -148,11 +165,48 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _payload_suffixes(spec: dict) -> set[str]:
+    family = spec.get("family")
+    if family == "package":
+        return {".exe", ".deb"}
+    if family == "android":
+        return {".apk"}
+    return {".bin"}
+
+
+def _iter_payloads(folder: Path, spec: dict) -> list[Path]:
+    if not folder.is_dir():
+        return []
+    suffixes = _payload_suffixes(spec)
+    return sorted(
+        path
+        for path in folder.iterdir()
+        if path.is_file() and path.suffix.lower() in suffixes
+    )
+
+
+def _payload_sha_map(folder: Path, spec: dict) -> dict[str, str]:
+    return {path.name: sha256_file(path) for path in _iter_payloads(folder, spec)}
+
+
 def validate_image(family: str, data: bytes, label: str) -> None:
     if not data:
         raise FeedError(f"{label} is empty")
-    if len(data) > MAX_BIN:
-        raise FeedError(f"{label} is {len(data)} bytes; limit is {MAX_BIN}")
+    if family == "android":
+        if len(data) > MAX_APK:
+            raise FeedError(f"{label} is {len(data)} bytes; limit is {MAX_APK}")
+        if not data.startswith(b"PK\x03\x04"):
+            raise FeedError(f"{label} is not an Android APK")
+        if b"AndroidManifest.xml" not in data:
+            raise FeedError(f"{label} is a zip archive without AndroidManifest.xml")
+        return
+    limit = MAX_PACKAGE if family == "package" else MAX_BIN
+    if len(data) > limit:
+        raise FeedError(f"{label} is {len(data)} bytes; limit is {limit}")
+    if family == "package":
+        if len(data) < 1024:
+            raise FeedError(f"{label} is {len(data)} bytes; packages must be at least 1024")
+        return
     if data.startswith(b"\x7fELF"):
         raise FeedError(f"{label} is an ELF file; the feed stores raw .bin images")
     if data.startswith(b"PK\x03\x04"):
@@ -397,7 +451,9 @@ def _merge_release_notes(folder: Path, notes_bytes: bytes | None) -> None:
         )
 
 
-def _bin_sha_map(folder: Path) -> dict[str, str]:
+def _bin_sha_map(folder: Path, spec: dict | None = None) -> dict[str, str]:
+    if spec is not None:
+        return _payload_sha_map(folder, spec)
     if not folder.is_dir():
         return {}
     return {path.name: sha256_file(path) for path in folder.glob("*.bin")}
@@ -433,6 +489,7 @@ def _folder_documents(
 ) -> tuple[dict, str]:
     spec = product_spec(catalog, product)
     boards = spec.get("boards") or {}
+    suffixes = _payload_suffixes(spec)
     existing = _read_json(folder / "index.json")
     # RELEASE_NOTES.md is optional UTF-8 markdown, not a board binary.
     allowed_names = {"index.json", "SHA256SUMS", "README.md", RELEASE_NOTES_NAME}
@@ -440,14 +497,15 @@ def _folder_documents(
     for path in folder.iterdir():
         if path.is_dir() or path.name.startswith("."):
             raise FeedError(f"unexpected path {path.relative_to(folder.parent.parent)}")
-        if path.suffix == ".bin":
+        if path.suffix.lower() in suffixes:
             bins.append(path)
             continue
         if path.name not in allowed_names:
             raise FeedError(f"unexpected file {path.relative_to(folder.parent.parent)}")
     bins.sort()
     if not bins:
-        raise FeedError(f"{folder} has no firmware binaries")
+        kind = ("packages" if spec.get("family") == "package" else "android packages" if spec.get("family") == "android" else "firmware binaries")
+        raise FeedError(f"{folder} has no {kind}")
 
     files: dict[str, str] = {}
     digests: dict[str, str] = {}
@@ -525,15 +583,15 @@ def _folder_documents(
     return document, sums_text
 
 
-def _exact_folder_matches(root: Path, product: str, latest: Path) -> list[str]:
+def _exact_folder_matches(root: Path, product: str, latest: Path, spec: dict) -> list[str]:
     latest_bins = {
         path.name: sha256_file(path)
-        for path in latest.glob("*.bin")
+        for path in _iter_payloads(latest, spec)
     }
     matches = []
     base = root / product
     for folder in sorted(path for path in base.iterdir() if path.is_dir() and path.name != "latest"):
-        bins = list(folder.glob("*.bin"))
+        bins = _iter_payloads(folder, spec)
         if not bins:
             continue
         folder_bins = {path.name: sha256_file(path) for path in bins}
@@ -664,7 +722,7 @@ def render_manifests(
                 )
 
         latest_doc = folder_indexes.get("latest")
-        matches = _exact_folder_matches(root, product, base / "latest") if latest_doc else []
+        matches = _exact_folder_matches(root, product, base / "latest", spec) if latest_doc else []
         if latest_doc and matches and not (provenance.get((product, "latest")) or {}).get("version_label"):
             preferred = matches[0] if len(matches) == 1 else _prefer_match(matches, latest_doc.get("version"))
             current = "" if latest_doc.get("version") is None else str(latest_doc.get("version"))
@@ -756,7 +814,8 @@ def render_manifests(
         "repository": catalog["repository"],
         "branch": catalog["branch"],
         "latest_selection": (
-            "Read latest.BMS, latest.BRIDGE, and latest.P1. latest.METER aliases latest.P1. "
+            "Read latest.BMS, latest.BRIDGE, latest.P1, latest.CONFIG_APP, and latest.FLASHER. "
+            "latest.METER aliases latest.P1. "
             "Do not choose the highest semver folder: historical version numbers were not published in order."
         ),
         "aliases": catalog.get("aliases") or {},
@@ -845,7 +904,7 @@ def validate_feed(root: Path, catalog: dict | None = None) -> None:
         for folder in base.iterdir():
             if not folder.is_dir():
                 continue
-            for path in folder.glob("*.bin"):
+            for path in _iter_payloads(folder, spec):
                 validate_image(spec["family"], path.read_bytes(), f"{product}/{folder.name}/{path.name}")
 
 
@@ -893,8 +952,8 @@ def assert_complete_publish(spec: dict, binaries: dict) -> None:
         raise FeedError("TX and RX must be published as one matched pair")
 
 
-def _replace_tree(directory: Path, files: dict[str, bytes]) -> None:
-    """Write a complete binary set, then delete anything else in the directory."""
+def _replace_tree(directory: Path, files: dict[str, bytes], suffixes: set[str] | None = None) -> None:
+    """Write a complete payload set, then delete other payloads in the directory."""
 
     directory.mkdir(parents=True, exist_ok=True)
     written = []
@@ -907,8 +966,9 @@ def _replace_tree(directory: Path, files: dict[str, bytes]) -> None:
         temporary.write_bytes(data)
         os.replace(temporary, destination)
         written.append(filename)
-    for path in directory.glob("*.bin"):
-        if path.name not in files:
+    allowed = suffixes or {".bin"}
+    for path in directory.iterdir():
+        if path.is_file() and path.suffix.lower() in allowed and path.name not in files:
             path.unlink()
     if set(written) != set(files):
         raise FeedError(f"incomplete write in {directory}")
@@ -927,24 +987,29 @@ def apply_publish(
     release_notes: str | None = None,
     release_notes_path: str | Path | None = None,
 ) -> str:
-    """Place a complete release. Version folders are immutable. Returns the folder name.
+    """Place a complete release. Firmware version folders are immutable. Returns the folder name.
 
     ``binaries`` maps board id to ``(data, source_filename)``.
 
     Optional ``release_notes`` or ``release_notes_path`` is UTF-8 markdown.
     Pass one, not both. On the publish that creates the folder, notes are
     written to ``RELEASE_NOTES.md``. If the folder already exists with the
-    same ``.bin`` bytes and has no notes yet, the same arguments fill notes
-    in once and do not rewrite binaries. Existing notes must match; they are
+    same payload bytes and has no notes yet, the same arguments fill notes
+    in once and do not rewrite payloads. Existing notes must match; they are
     not edited. When ``set_latest`` is true, notes are mirrored into ``latest/``.
+
+    ``overwrite`` is refused for firmware. A ``package`` product (desktop
+    installers) may replace its fixed version folder in place, including notes,
+    so a moved tag can republish the same ``vX.Y.Z`` directory.
     """
 
-    if overwrite:
+    notes_provided, notes_bytes = resolve_release_notes(release_notes, release_notes_path)
+    spec = product_spec(catalog, product)
+    package = spec.get("family") == "package"
+    if overwrite and not package:
         raise FeedError(
             "version folders are immutable. Publish a new version, or point latest at an older folder with rollback."
         )
-    notes_provided, notes_bytes = resolve_release_notes(release_notes, release_notes_path)
-    spec = product_spec(catalog, product)
     boards = require_publishable(spec, product)
     semver = normalize_version(version)
     if not binaries:
@@ -965,25 +1030,38 @@ def apply_publish(
         incoming.append((board, data))
     _check_same_bytes(incoming)
 
+    suffixes = _payload_suffixes(spec)
     folder_name = version_folder(semver)
     label = folder_name if spec.get("version_label") == "prefixed" else semver
     destination = root / product / folder_name
+    planned_sha = {name: sha256_bytes(data) for name, data in planned.items()}
     if destination.exists():
-        existing = {path.name: path.read_bytes() for path in destination.glob("*.bin")}
+        existing = {path.name: path.read_bytes() for path in _iter_payloads(destination, spec)}
         if existing != planned:
-            raise FeedError(
-                f"{product}/{folder_name} is immutable and already has different bytes. "
-                "Publish a new version. To move the channel without changing history, roll latest back."
-            )
-        before_bins = {name: sha256_bytes(data) for name, data in existing.items()}
+            if not (overwrite and package):
+                raise FeedError(
+                    f"{product}/{folder_name} is immutable and already has different bytes. "
+                    "Publish a new version. To move the channel without changing history, roll latest back."
+                )
+            _replace_tree(destination, planned, suffixes)
         if notes_provided:
-            _merge_release_notes(destination, notes_bytes)
-        if _bin_sha_map(destination) != before_bins:
-            raise FeedError(f"{product}/{folder_name} firmware bytes changed while writing release notes")
+            if overwrite and package:
+                note_path = _release_notes_path(destination)
+                if notes_bytes is None:
+                    if note_path.is_symlink():
+                        raise FeedError(f"{_notes_label(destination)} must be a regular file")
+                    if note_path.exists():
+                        note_path.unlink()
+                else:
+                    _write_release_notes_file(destination, notes_bytes, replace=True)
+            else:
+                _merge_release_notes(destination, notes_bytes)
+        if _payload_sha_map(destination, spec) != planned_sha:
+            raise FeedError(f"{product}/{folder_name} payload bytes changed while writing release notes")
     else:
         destination.mkdir(parents=True, exist_ok=False)
         try:
-            _replace_tree(destination, planned)
+            _replace_tree(destination, planned, suffixes)
             if notes_bytes is not None:
                 _write_release_notes_file(destination, notes_bytes, replace=False)
         except Exception:
@@ -992,7 +1070,7 @@ def apply_publish(
 
     if set_latest:
         latest_dir = root / product / "latest"
-        _replace_tree(latest_dir, planned)
+        _replace_tree(latest_dir, planned, suffixes)
         _mirror_release_notes(destination, latest_dir)
 
     provenance: dict[tuple[str, str], dict] = {}
@@ -1046,11 +1124,11 @@ def attach_release_notes(
     destination = root / product / folder_name
     if not destination.is_dir():
         raise FeedError(f"{product}/{folder_name} does not exist")
-    bins_before = _bin_sha_map(destination)
+    bins_before = _bin_sha_map(destination, spec)
     if not bins_before:
         raise FeedError(f"{product}/{folder_name} has no binaries")
     latest_dir = root / product / "latest"
-    latest_before = _bin_sha_map(latest_dir)
+    latest_before = _bin_sha_map(latest_dir, spec)
     mirror = bool(latest_before) and latest_before == bins_before
 
     current = _stored_release_notes(destination)
@@ -1063,9 +1141,9 @@ def attach_release_notes(
         )
     if mirror:
         _mirror_release_notes(destination, latest_dir)
-    if _bin_sha_map(destination) != bins_before:
+    if _bin_sha_map(destination, spec) != bins_before:
         raise FeedError(f"attach changed firmware bytes in {product}/{folder_name}")
-    if _bin_sha_map(latest_dir) != latest_before:
+    if _bin_sha_map(latest_dir, spec) != latest_before:
         raise FeedError(f"attach changed firmware bytes in {product}/latest")
     write_manifests(root, catalog)
     return folder_name
@@ -1084,7 +1162,7 @@ def rollback_latest(root: Path, catalog: dict, product: str, folder: str) -> str
     source_dir = root / product / folder_name
     if not source_dir.is_dir():
         raise FeedError(f"{product}/{folder_name} does not exist")
-    bins = sorted(source_dir.glob("*.bin"))
+    bins = _iter_payloads(source_dir, spec)
     if not bins:
         raise FeedError(f"{product}/{folder_name} has no binaries")
     boards = spec.get("boards") or {}
@@ -1103,7 +1181,7 @@ def rollback_latest(root: Path, catalog: dict, product: str, folder: str) -> str
     originals = {path.name: hashlib.sha256(files[path.name]).hexdigest() for path in bins}
     source_notes = _stored_release_notes(source_dir)
     latest_dir = root / product / "latest"
-    _replace_tree(latest_dir, files)
+    _replace_tree(latest_dir, files, _payload_suffixes(spec))
     _mirror_release_notes(source_dir, latest_dir)
     for path in bins:
         if hashlib.sha256(path.read_bytes()).hexdigest() != originals[path.name]:

@@ -6,15 +6,17 @@ Fetch one file:
 
 `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/index.json`
 
-Read `latest.BMS`, `latest.BRIDGE`, and `latest.P1`. `latest.METER` is the same release as `latest.P1` (transmitter and receiver are stored under `P1/`).
+Read `latest.BMS`, `latest.BRIDGE`, `latest.P1`, `latest.CONFIG_APP`, and `latest.FLASHER`. `latest.METER` is the same release as `latest.P1` (transmitter and receiver are stored under `P1/`).
 
 Use a product only when `available` is true. Download each object in `artifacts[]`, check `sha256`, then flash. For P1/METER, flash `RAK3172_TX` and `RAK3172_RX` from that same latest object as a pair. If either board is missing, do not flash.
 
 `products[].versions[]` lists every immutable version folder. `latest.*` is the channel.
 
-P1, BMS, BRIDGE, and the METER alias are empty until sources publish `v0.0.1`. Each product folder holds only a README. `available` is false and `versions` is `[]`. There is no root `SHA256SUMS` until a binary is published.
+P1, BMS, BRIDGE, CONFIG_APP, FLASHER, and the METER alias are empty until sources publish a version folder. Each product folder holds only a README. `available` is false and `versions` is `[]`. There is no root `SHA256SUMS` until a binary is published.
 
-This repository is a passive catalog. Sources push `P1/`, `BRIDGE/`, and `BMS/` themselves. There is no ingest workflow and no Action that downloads private releases. This repository does not need `SOURCE_READ_TOKEN`.
+This repository is a passive catalog. Sources push `P1/`, `BRIDGE/`, `BMS/`, `CONFIG_APP/`, and `FLASHER/` themselves. There is no ingest workflow and no Action that downloads private releases. This repository does not need `SOURCE_READ_TOKEN`.
+
+`FLASHER/` holds the OPF-FLASHER desktop packages (a Windows portable exe and a Linux deb), not device firmware. Do not flash those files onto a board. OPF-FLASHER ignores the `FLASHER` product when it lists Bridge, P1, and BMS.
 
 ## Release notes
 
@@ -47,3 +49,5 @@ Board filenames are in `.github/feed-catalog.json`.
 - `BRIDGE/`: `ATOM_S3_R.bin` and `ATOM_S3.bin`.
 - `BMS/`: catalog boards, including `OPF_WS.bin`.
 - `METER/`: alias of P1. No binaries.
+- `FLASHER/`: `OPF-FLASHER-win-x64.exe` and `OPF-FLASHER-linux-amd64.deb`. Not a board image. Until the first real app release the version folder stays `v0.0.1` and may be replaced in place.
+- `CONFIG_APP/`: `opf-config-app.apk`.
