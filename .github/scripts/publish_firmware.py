@@ -9,6 +9,7 @@ artifacts.
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -62,6 +63,11 @@ def main(argv: list[str] | None = None) -> int:
     apply.add_argument("--version", required=True)
     apply.add_argument("--from-dir", type=Path, required=True)
     apply.add_argument("--set-latest", action="store_true")
+    apply.add_argument(
+        "--overwrite",
+        action="store_true",
+        help="replace an existing package version folder in place (refused for firmware)",
+    )
     apply_notes = apply.add_mutually_exclusive_group()
     apply_notes.add_argument("--release-notes", help="optional UTF-8 markdown stored as RELEASE_NOTES.md")
     apply_notes.add_argument("--release-notes-file", type=Path, help="optional UTF-8 markdown file")
@@ -93,9 +99,37 @@ def main(argv: list[str] | None = None) -> int:
             print("feed ok")
         elif args.command == "apply":
             catalog = load_catalog()
+            if args.product not in catalog["products"]:
+                known = ", ".join(catalog["products"])
+                raise FeedError(f"unknown product {args.product!r}; known products: {known}")
+            spec = catalog["products"][args.product]
             binaries = {}
-            for path in sorted(args.from_dir.glob("*.bin")):
-                binaries[path.stem] = (path.read_bytes(), path.name)
+            if spec.get("family") == "package":
+                for board, info in (spec.get("boards") or {}).items():
+                    path = args.from_dir / info["filename"]
+                    if path.is_file():
+                        binaries[board] = (path.read_bytes(), path.name)
+            elif spec.get("family") == "android":
+                for path in sorted(args.from_dir.glob("*.apk")):
+                    binaries[path.stem] = (path.read_bytes(), path.name)
+            else:
+                for path in sorted(args.from_dir.glob("*.bin")):
+                    binaries[path.stem] = (path.read_bytes(), path.name)
+            source = {
+                "kind": "directory",
+                "repository": spec.get("source_repository"),
+            }
+            if os.environ.get("FEED_SOURCE_KIND"):
+                source["kind"] = os.environ["FEED_SOURCE_KIND"]
+                for key, env_name in (
+                    ("sha", "GITHUB_SHA"),
+                    ("ref", "GITHUB_REF"),
+                    ("tag", "GITHUB_REF_NAME"),
+                    ("run_id", "GITHUB_RUN_ID"),
+                    ("workflow", "GITHUB_WORKFLOW"),
+                ):
+                    if os.environ.get(env_name):
+                        source[key] = os.environ[env_name]
             folder = apply_publish(
                 args.root,
                 catalog,
@@ -103,7 +137,8 @@ def main(argv: list[str] | None = None) -> int:
                 args.version,
                 binaries,
                 set_latest=args.set_latest,
-                source={"kind": "directory", "repository": catalog["products"][args.product]["source_repository"]},
+                overwrite=args.overwrite,
+                source=source,
                 release_notes=args.release_notes,
                 release_notes_path=args.release_notes_file,
             )

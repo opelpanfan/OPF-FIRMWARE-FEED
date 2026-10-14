@@ -6,15 +6,17 @@ Fetch one file:
 
 `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/index.json`
 
-Read `latest.BMS`, `latest.BRIDGE`, and `latest.P1`. `latest.METER` is the same release as `latest.P1` (transmitter and receiver are stored under `P1/`).
+Read `latest.BMS`, `latest.BRIDGE`, `latest.P1`, `latest.CONFIG_APP`, and `latest.FLASHER`. `latest.METER` is the same release as `latest.P1` (transmitter and receiver are stored under `P1/`).
 
 Use a product only when `available` is true. Download each object in `artifacts[]`, check `sha256`, then flash. For P1/METER, flash `RAK3172_TX` and `RAK3172_RX` from that same latest object as a pair. If either board is missing, do not flash.
 
 `products[].versions[]` lists every immutable version folder. `latest.*` is the channel.
 
-P1, BMS, BRIDGE, and the METER alias are empty until sources publish `v0.0.1`. Each product folder holds only a README. `available` is false and `versions` is `[]`. There is no root `SHA256SUMS` until a binary is published.
+P1, BMS, BRIDGE, CONFIG_APP, FLASHER, and the METER alias are empty until sources publish a version folder. Each product folder holds only a README. `available` is false and `versions` is `[]`. There is no root `SHA256SUMS` until a binary is published.
 
-This repository is a passive catalog. Sources push `P1/`, `BRIDGE/`, and `BMS/` themselves. There is no ingest workflow and no Action that downloads private releases. This repository does not need `SOURCE_READ_TOKEN`.
+This repository is a passive catalog. Sources push `P1/`, `BRIDGE/`, `BMS/`, `CONFIG_APP/`, and `FLASHER/` themselves. There is no ingest workflow and no Action that downloads private releases. This repository does not need `SOURCE_READ_TOKEN`.
+
+`FLASHER/` holds the OPF-FLASHER desktop packages (a Windows portable exe and a Linux deb), not device firmware. Do not flash those files onto a board. OPF-FLASHER ignores the `FLASHER` product when it lists Bridge, P1, and BMS.
 
 ## Release notes
 
@@ -47,6 +49,8 @@ Board filenames are in `.github/feed-catalog.json`.
 - `BRIDGE/`: `ATOM_S3_R.bin` and `ATOM_S3.bin`.
 - `BMS/`: catalog boards, including `OPF_WS.bin`.
 - `METER/`: alias of P1. No binaries.
+- `FLASHER/`: `OPF-FLASHER-win-x64.exe` and `OPF-FLASHER-linux-amd64.deb`. Not a board image. Until the first real app release the version folder stays `v0.0.1` and may be replaced in place.
+- `CONFIG_APP/`: `opf-config-app.apk`.
 
 <!-- FEED-SUMMARY:START -->
 ## Versions
@@ -135,20 +139,35 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
   - DTU (P1 over LoRa) retuned for OPF-P1 (v4 dual-cadence protocol): 869.525 MHz (EU868 g3), SF7/BW125/CR4/5, preamble 8, sync 0x1424; fast frame every 1 s, slow ~30 s. Units on the old 868.0 MHz default move to 869.525 MHz automatically (custom frequencies kept). **Run current…
   - BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.
 
+#### `v0.0.2`
+
+- Date: 2026-10-08
+- Source commit: `e2c8d5b326de47b2d3abc95b8f6c9a8935603e6a` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Files:
+  - `ATOM_S3.bin` (1916080 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1961600 bytes, 1.87 MiB)
+  - `RELEASE_NOTES.md` (10265 bytes, 10.0 KiB)
+  - `SHA256SUMS` (158 bytes)
+  - `index.json` (11959 bytes, 11.7 KiB)
+- Summary:
+  - Feed publish target is `BRIDGE/v0.0.2` (`FEED_FIXED_VERSION`), still with `FEED_ALLOW_OVERWRITE`, and `latest` follows that folder.
+  - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
+  - `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.
+
 #### `latest`
 
 - Date: 2026-10-13
-- Source commit: `519546a6e2f845e20ae0ed71c25e7159220f6fad` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `e2c8d5b326de47b2d3abc95b8f6c9a8935603e6a` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1912784 bytes, 1.82 MiB)
-  - `ATOM_S3_R.bin` (1958640 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (7604 bytes, 7.4 KiB)
+  - `ATOM_S3.bin` (1916080 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1961600 bytes, 1.87 MiB)
+  - `RELEASE_NOTES.md` (10265 bytes, 10.0 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (9274 bytes, 9.1 KiB)
+  - `index.json` (11958 bytes, 11.7 KiB)
 - Summary:
-  - DTU link is split into two indicators. `dtu_rf_link` (`up` / `degraded` / `down`) is the radio: any CRC-good v4 frame in the last 10 s (`degraded` when the gap is over 3 s). `dtu_p1_data` (`valid` / `invalid` / `none`) is the last fast frame's flags bit0, so a live radio with…
-  - DTU (P1 over LoRa) retuned for OPF-P1 (v4 dual-cadence protocol): 869.525 MHz (EU868 g3), SF7/BW125/CR4/5, preamble 8, sync 0x1424; fast frame every 1 s, slow ~30 s. Units on the old 868.0 MHz default move to 869.525 MHz automatically (custom frequencies kept). **Run current…
-  - BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.
+  - Feed publish target is `BRIDGE/v0.0.2` (`FEED_FIXED_VERSION`), still with `FEED_ALLOW_OVERWRITE`, and `latest` follows that folder.
+  - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
+  - `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.
 
 ### P1
 
@@ -196,7 +215,19 @@ Source repository: `opelpanfan/OPF-P1`
   - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.
   - Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.
 
+### CONFIG_APP
+
+Source repository: `opelpanfan/OPF-CONFIG-APP`
+
+No version folders.
+
 ### METER
+
+No version folders.
+
+### FLASHER
+
+Source repository: `opelpanfan/OPF-FLASHER`
 
 No version folders.
 <!-- FEED-SUMMARY:END -->
