@@ -142,13 +142,13 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.2`
 
 - Date: 2026-10-14
-- Source commit: `63231038e94a2474da27fd3e73bc70af2098b1c9` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `1ba772a380502f88726cc71d5cebf36a9bba7a0e` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1917952 bytes, 1.83 MiB)
-  - `ATOM_S3_R.bin` (1963504 bytes, 1.87 MiB)
+  - `ATOM_S3.bin` (1917968 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1963520 bytes, 1.87 MiB)
   - `RELEASE_NOTES.md` (10648 bytes, 10.4 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (12327 bytes, 12.0 KiB)
+  - `index.json` (12343 bytes, 12.1 KiB)
 - Summary:
   - Feed publish target is `BRIDGE/v0.0.2` (`FEED_FIXED_VERSION`), still with `FEED_ALLOW_OVERWRITE`, and `latest` follows that folder.
   - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
@@ -157,13 +157,13 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `latest`
 
 - Date: 2026-10-14
-- Source commit: `63231038e94a2474da27fd3e73bc70af2098b1c9` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `1ba772a380502f88726cc71d5cebf36a9bba7a0e` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1917952 bytes, 1.83 MiB)
-  - `ATOM_S3_R.bin` (1963504 bytes, 1.87 MiB)
+  - `ATOM_S3.bin` (1917968 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1963520 bytes, 1.87 MiB)
   - `RELEASE_NOTES.md` (10648 bytes, 10.4 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (12326 bytes, 12.0 KiB)
+  - `index.json` (12342 bytes, 12.1 KiB)
 - Summary:
   - Feed publish target is `BRIDGE/v0.0.2` (`FEED_FIXED_VERSION`), still with `FEED_ALLOW_OVERWRITE`, and `latest` follows that folder.
   - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
