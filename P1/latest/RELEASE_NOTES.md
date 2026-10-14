@@ -1,4 +1,4 @@
-# P1 v0.0.1
+# P1 v0.0.2
 
 **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.
 
