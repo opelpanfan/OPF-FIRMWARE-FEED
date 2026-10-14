@@ -139,9 +139,10 @@ class ReadmeSummaryTests(unittest.TestCase):
         self.assertIn("#### `v0.0.2`", section)
         self.assertIn("#### `latest`", section)
 
-    def test_workflow_regenerates_on_master_grok_without_pulling_sources(self) -> None:
+    def test_workflow_regenerates_on_main_without_pulling_sources(self) -> None:
         workflow = (ROOT / ".github/workflows/feed-readme.yml").read_text(encoding="utf-8")
-        self.assertIn("master-grok", workflow)
+        self.assertIn("- main", workflow)
+        self.assertIn("- master-grok", workflow)
         self.assertIn("paths-ignore:", workflow)
         self.assertIn("README.md", workflow)
         self.assertIn("index.json", workflow)

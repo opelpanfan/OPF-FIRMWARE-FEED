@@ -1,14 +1,16 @@
 # Refresh the root README summary after a feed update.
-# This workflow only reads the checkout. It does not build firmware and it
-# does not clone or download any source repository.
+# Source repos publish to main, which is the branch the feed serves.
+# master-grok is listed as well, so a push there refreshes the README when
+# that branch exists. This workflow only reads the checkout. It does not
+# build firmware and it does not clone or download any source repository.
 
 name: Feed README
 
 on:
   push:
     branches:
-      - master-grok
       - main
+      - master-grok
     paths-ignore:
       - "README.md"
       - "index.json"
