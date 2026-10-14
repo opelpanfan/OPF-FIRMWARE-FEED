@@ -1,0 +1,98 @@
+# Refresh the root README summary after a feed update.
+# Source repos publish to main, which is the branch the feed serves.
+# master-grok is listed as well, so a push there refreshes the README when
+# that branch exists. This workflow only reads the checkout. It does not
+# build firmware and it does not clone or download any source repository.
+
+name: Feed README
+
+on:
+  push:
+    branches:
+      - main
+      - master-grok
+    paths-ignore:
+      - "README.md"
+      - "index.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: feed-readme-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]' && github.actor != 'github-actions'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Skip commits authored by github-actions
+        id: author
+        run: |
+          name=$(git log -1 --format='%an')
+          email=$(git log -1 --format='%ae')
+          case "$name$email" in
+            *github-actions*) echo "skip=true" >> "$GITHUB_OUTPUT" ;;
+            *) echo "skip=false" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Regenerate and validate
+        if: steps.author.outputs.skip != 'true'
+        run: |
+          python3 .github/scripts/publish_firmware.py rebuild
+          python3 .github/scripts/publish_firmware.py validate
+
+      - name: Commit README and index when they change
+        if: steps.author.outputs.skip != 'true'
+        env:
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          python3 - <<'PY'
+          import subprocess
+          import sys
+
+          status = subprocess.check_output(
+              ["git", "status", "--porcelain=v1", "--untracked-files=all"],
+              text=True,
+          )
+          stage = []
+          unexpected = []
+          for line in status.splitlines():
+              path = line[3:]
+              if " -> " in path:
+                  path = path.split(" -> ", 1)[1]
+              name = path.rsplit("/", 1)[-1]
+              if path == "README.md" or name == "index.json":
+                  stage.append(path)
+              else:
+                  unexpected.append(path)
+          if unexpected:
+              print(
+                  "rebuild changed files other than README.md and index.json:",
+                  file=sys.stderr,
+              )
+              print("\n".join(unexpected), file=sys.stderr)
+              sys.exit(1)
+          if not stage:
+              print("README.md and index.json already current")
+              sys.exit(0)
+          subprocess.check_call(["git", "add", "--", *stage])
+          if subprocess.call(["git", "diff", "--cached", "--quiet"]) == 0:
+              print("README.md and index.json already current")
+              sys.exit(0)
+          subprocess.check_call(["git", "commit", "-m", "Update feed README summary"])
+          ref = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], text=True).strip()
+          subprocess.check_call(["git", "pull", "--rebase", "origin", ref])
+          subprocess.check_call(["git", "push", "origin", f"HEAD:{ref}"])
+          PY

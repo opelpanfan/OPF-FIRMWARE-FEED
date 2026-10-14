@@ -27,6 +27,14 @@ publish that creates the folder (``apply_publish(..., release_notes=...`` or
 ``release_notes_path=...)``). If that folder was published without notes,
 ``attach_release_notes`` may add ``RELEASE_NOTES.md`` once. It does not
 rewrite ``.bin`` bytes. Notes that are already published cannot be changed.
+
+README summary
+--------------
+``write_readme(root)`` rewrites the root ``README.md`` block between
+``<!-- FEED-SUMMARY:START -->`` and ``<!-- FEED-SUMMARY:END -->``. Text
+outside those markers stays put. Markers are added when they are missing.
+``write_manifests`` calls ``write_readme`` whenever it regenerates
+``index.json``.
 """
 
 from __future__ import annotations
@@ -36,6 +44,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import urllib.parse
 from fnmatch import fnmatchcase
 from pathlib import Path
@@ -48,7 +57,12 @@ FOLDER_RE = re.compile(
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 BOARD_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
 RELEASE_NOTES_NAME = "RELEASE_NOTES.md"
+FEED_RELEASE_NOTES_NAME = "FEED_RELEASE_NOTES.md"
+FEED_SUMMARY_START = "<!-- FEED-SUMMARY:START -->"
+FEED_SUMMARY_END = "<!-- FEED-SUMMARY:END -->"
 MAX_RELEASE_NOTES = 128 * 1024
+_SUMMARY_LINES = 3
+_SUMMARY_WIDTH = 280
 
 ESP_MAGIC = 0xE9
 MIN_ESP = 64 * 1024
@@ -492,7 +506,13 @@ def _folder_documents(
     suffixes = _payload_suffixes(spec)
     existing = _read_json(folder / "index.json")
     # RELEASE_NOTES.md is optional UTF-8 markdown, not a board binary.
-    allowed_names = {"index.json", "SHA256SUMS", "README.md", RELEASE_NOTES_NAME}
+    allowed_names = {
+        "index.json",
+        "SHA256SUMS",
+        "README.md",
+        RELEASE_NOTES_NAME,
+        FEED_RELEASE_NOTES_NAME,
+    }
     bins = []
     for path in folder.iterdir():
         if path.is_dir() or path.name.startswith("."):
@@ -860,12 +880,252 @@ def _reject_unexpected_product_entries(base: Path) -> None:
                 raise FeedError(f"unexpected hidden path {nested}")
 
 
+def _read_markdown_file(path: Path, label: str) -> str:
+    if path.is_symlink() or not path.is_file():
+        raise FeedError(f"{label} must be a regular file")
+    data = path.read_bytes()
+    if not data.strip():
+        raise FeedError(f"{label} is empty")
+    if len(data) > MAX_RELEASE_NOTES:
+        raise FeedError(f"{label} is {len(data)} bytes; limit is {MAX_RELEASE_NOTES}")
+    if b"\x00" in data:
+        raise FeedError(f"{label} must be UTF-8 markdown text")
+    try:
+        return data.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise FeedError(f"{label} must be UTF-8 markdown: {exc}") from exc
+
+
+def _summary_notes(folder: Path) -> str | None:
+    """Notes for the README blurb.
+
+    ``FEED_RELEASE_NOTES.md`` wins when that file is in the folder. Otherwise
+    the blurb comes from ``RELEASE_NOTES.md``.
+    """
+
+    feed_notes = folder / FEED_RELEASE_NOTES_NAME
+    if feed_notes.exists():
+        label = f"{folder.parent.name}/{folder.name}/{FEED_RELEASE_NOTES_NAME}"
+        return _read_markdown_file(feed_notes, label)
+    return _load_release_notes(folder)
+
+
+def _summary_lines(text: str | None) -> list[str]:
+    if not text:
+        return []
+    picked: list[str] = []
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        line = re.sub(r"^(?:[-*+]|\d+[.)])\s+", "", line).strip()
+        line = line.replace(FEED_SUMMARY_START, "").replace(FEED_SUMMARY_END, "").strip()
+        if not line:
+            continue
+        if len(line) > _SUMMARY_WIDTH:
+            cut = line[: _SUMMARY_WIDTH - 1].rstrip()
+            if " " in cut:
+                cut = cut.rsplit(" ", 1)[0]
+            line = cut + "…"
+        picked.append(line)
+        if len(picked) >= _SUMMARY_LINES:
+            break
+    return picked
+
+
+def _format_bytes(size: int) -> str:
+    if size >= 1024 * 1024:
+        return f"{size} bytes, {size / (1024 * 1024):.2f} MiB"
+    if size >= 1024:
+        return f"{size} bytes, {size / 1024:.1f} KiB"
+    return f"{size} bytes"
+
+
+def _summary_folder_key(name: str) -> tuple:
+    if name == "latest":
+        return (2, (0, 0, 0), name)
+    semver = parse_semver(name)
+    if semver:
+        return (0, version_key(semver), name)
+    return (1, (0, 0, 0), name)
+
+
+def _version_folders(base: Path) -> list[Path]:
+    if not base.is_dir():
+        return []
+    folders = [
+        child
+        for child in base.iterdir()
+        if child.is_dir() and not child.is_symlink() and not child.name.startswith(".")
+    ]
+    folders.sort(key=lambda path: _summary_folder_key(path.name))
+    return folders
+
+
+def _git_folder_date(root: Path, folder: Path) -> str | None:
+    """Committer date of the last feed commit that touched ``folder``, or None."""
+
+    try:
+        relative = folder.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return None
+    try:
+        top = subprocess.run(
+            ["git", "-C", str(root), "rev-parse", "--show-toplevel"],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if top.returncode != 0:
+        return None
+    try:
+        if Path(top.stdout.strip()).resolve() != root.resolve():
+            return None
+    except OSError:
+        return None
+    try:
+        log = subprocess.run(
+            ["git", "-C", str(root), "log", "-1", "--format=%cs", "--", relative],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if log.returncode != 0:
+        return None
+    date = log.stdout.strip()
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+        return None
+    return date
+
+
+def _source_commit(folder: Path) -> str | None:
+    path = folder / "index.json"
+    if not path.is_file() or path.is_symlink():
+        return None
+    source = _read_json(path).get("source")
+    if not isinstance(source, dict):
+        return None
+    sha = source.get("sha")
+    if sha in (None, ""):
+        return None
+    text = str(sha).strip()
+    if not text or any(char in text for char in ("\n", "\r", "`")):
+        return None
+    repo = source.get("repository")
+    if isinstance(repo, str) and repo.strip() and not any(char in repo for char in ("\n", "\r", "`")):
+        return f"`{text}` ({repo.strip()})"
+    return f"`{text}`"
+
+
+def _folder_files(folder: Path) -> list[Path]:
+    files = [
+        path
+        for path in folder.iterdir()
+        if path.is_file() and not path.is_symlink() and not path.name.startswith(".")
+    ]
+    files.sort(key=lambda path: path.name)
+    return files
+
+
+def _render_folder_summary(root: Path, folder: Path) -> list[str]:
+    lines = [f"#### `{folder.name}`", ""]
+    lines.append(f"- Date: {_git_folder_date(root, folder) or 'unknown'}")
+    commit = _source_commit(folder)
+    if commit:
+        lines.append(f"- Source commit: {commit}")
+    files = _folder_files(folder)
+    if files:
+        lines.append("- Files:")
+        for path in files:
+            lines.append(f"  - `{path.name}` ({_format_bytes(path.stat().st_size)})")
+    else:
+        lines.append("- Files: none")
+    summary = _summary_lines(_summary_notes(folder))
+    if summary:
+        lines.append("- Summary:")
+        for line in summary:
+            lines.append(f"  - {line}")
+    else:
+        lines.append("- Summary: no release notes in this folder.")
+    return lines
+
+
+def _render_feed_summary(root: Path, catalog: dict) -> str:
+    lines = [
+        "## Versions",
+        "",
+        "Each product below is one this feed knows. Version folders are listed from oldest to newest, then `latest`.",
+        "The date is the feed commit that last changed that folder. A source commit is shown when that folder's `index.json` metadata has `source.sha`.",
+        "The summary is the first lines of `FEED_RELEASE_NOTES.md` in that folder, or of `RELEASE_NOTES.md` when that is the notes file present.",
+        "",
+    ]
+    for product, spec in catalog["products"].items():
+        lines.append(f"### {product}")
+        lines.append("")
+        repository = spec.get("source_repository")
+        if isinstance(repository, str) and repository.strip():
+            lines.append(f"Source repository: `{repository.strip()}`")
+            lines.append("")
+        folders = _version_folders(root / product)
+        if not folders:
+            lines.append("No version folders.")
+            lines.append("")
+            continue
+        for folder in folders:
+            lines.extend(_render_folder_summary(root, folder))
+            lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def _splice_feed_summary(existing: str, body: str) -> str:
+    section = f"{FEED_SUMMARY_START}\n{body.rstrip()}\n{FEED_SUMMARY_END}"
+    start = existing.find(FEED_SUMMARY_START)
+    end = existing.find(FEED_SUMMARY_END)
+    if start != -1 and end != -1 and start < end:
+        suffix = existing[end + len(FEED_SUMMARY_END) :]
+        updated = existing[:start] + section + suffix
+        if not updated.endswith("\n"):
+            updated += "\n"
+        return updated
+    base = existing
+    if base and not base.endswith("\n"):
+        base += "\n"
+    if base and not base.endswith("\n\n"):
+        base += "\n"
+    return base + section + "\n"
+
+
+def write_readme(root: Path, catalog: dict | None = None) -> bool:
+    """Refresh the README summary block. Returns true when the file changes.
+
+    Text outside ``<!-- FEED-SUMMARY:START -->`` and
+    ``<!-- FEED-SUMMARY:END -->`` is kept. The markers are appended when the
+    README does not have them yet.
+    """
+
+    catalog = catalog or load_catalog()
+    path = root / "README.md"
+    existing = path.read_text(encoding="utf-8") if path.is_file() else ""
+    updated = _splice_feed_summary(existing, _render_feed_summary(root, catalog))
+    if existing == updated:
+        return False
+    path.write_text(updated, encoding="utf-8")
+    return True
+
+
 def write_manifests(
     root: Path,
     catalog: dict | None = None,
     provenance: dict[tuple[str, str], dict] | None = None,
     source_filenames: dict[tuple[str, str, str], str] | None = None,
 ) -> list[str]:
+    catalog = catalog or load_catalog()
     documents = render_manifests(root, catalog, provenance, source_filenames)
     written = []
     for relative, text in documents.items():
@@ -880,6 +1140,8 @@ def write_manifests(
         if current != text:
             path.write_text(text, encoding="utf-8")
             written.append(relative)
+    if write_readme(root, catalog):
+        written.append("README.md")
     return written
 
 

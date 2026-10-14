@@ -48,7 +48,10 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="OPF firmware feed local tools")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    rebuild = sub.add_parser("rebuild", help="rewrite index.json and SHA256SUMS from binaries on disk")
+    rebuild = sub.add_parser(
+        "rebuild",
+        help="rewrite index.json, SHA256SUMS, and the README summary from files on disk",
+    )
     rebuild.add_argument("--root", type=Path, default=ROOT)
 
     validate = sub.add_parser("validate", help="fail if manifests or firmware images are inconsistent")
@@ -90,7 +93,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "rebuild":
             written = write_manifests(args.root, load_catalog())
-            print(f"updated {len(written)} manifest files" if written else "manifests already current")
+            print(f"updated {len(written)} files" if written else "feed files already current")
         elif args.command == "validate":
             validate_feed(args.root, load_catalog())
             print("feed ok")
