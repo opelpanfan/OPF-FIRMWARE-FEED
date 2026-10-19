@@ -65,26 +65,26 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-10-08
-- Source commit: `cac0af0e23fa8b208717e79fc92d497b48494d15` (opelpanfan/OPF-STORAGE-DASH)
+- Date: 2026-10-19
+- Source commit: `a58c429487409ab9e243a869ede6f220264932b3` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1575664 bytes, 1.50 MiB)
-  - `OPF_ATOM_S3R.bin` (1774032 bytes, 1.69 MiB)
-  - `OPF_T2CAN.bin` (1612560 bytes, 1.54 MiB)
-  - `OPF_WS.bin` (1607792 bytes, 1.53 MiB)
-  - `OPF_WS_DASH.bin` (2315088 bytes, 2.21 MiB)
-  - `OPF_WS_NO_TEMP.bin` (1607632 bytes, 1.53 MiB)
-  - `RELEASE_NOTES.md` (1100 bytes, 1.1 KiB)
+  - `OPF_ATOM_S3.bin` (1598928 bytes, 1.52 MiB)
+  - `OPF_ATOM_S3R.bin` (1799056 bytes, 1.72 MiB)
+  - `OPF_T2CAN.bin` (1635776 bytes, 1.56 MiB)
+  - `OPF_WS.bin` (1632256 bytes, 1.56 MiB)
+  - `OPF_WS_DASH.bin` (2341088 bytes, 2.23 MiB)
+  - `OPF_WS_NO_TEMP.bin` (1632096 bytes, 1.56 MiB)
+  - `RELEASE_NOTES.md` (981 bytes)
   - `SHA256SUMS` (489 bytes)
-  - `index.json` (5008 bytes, 4.9 KiB)
+  - `index.json` (4864 bytes, 4.8 KiB)
 - Summary:
-  - Source: `opelpanfan/OPF-STORAGE-DASH` branch `master-grok` tip **`cac0af0`** (`cac0af0e23fa8b208717e79fc92d497b48494d15`).
-  - **Restored the working `master_ws` 0x334 decoder**: 4 cells per mux (`mux * 4`, mux 0–23) so the pack fills **96/96** cells again.
-  - **Reverted the bad `×4` on v2/v4** from `3340aa9` (those fields were already scaled; applying `×4` again pushed voltages to ~16 kV and the sanity window dropped half the pack → 48/96).
+  - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
+  - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
+  - SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.
 
 #### `v0.0.2`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Source commit: `e945fd827f88fd324f0f8fcccbf5cdb1b4d84277` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1581904 bytes, 1.51 MiB)
@@ -103,22 +103,22 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-10-14
-- Source commit: `e945fd827f88fd324f0f8fcccbf5cdb1b4d84277` (opelpanfan/OPF-STORAGE-DASH)
+- Date: 2026-10-19
+- Source commit: `a58c429487409ab9e243a869ede6f220264932b3` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1581904 bytes, 1.51 MiB)
-  - `OPF_ATOM_S3R.bin` (1781280 bytes, 1.70 MiB)
-  - `OPF_T2CAN.bin` (1618768 bytes, 1.54 MiB)
-  - `OPF_WS.bin` (1614496 bytes, 1.54 MiB)
-  - `OPF_WS_DASH.bin` (2323168 bytes, 2.22 MiB)
-  - `OPF_WS_NO_TEMP.bin` (1614368 bytes, 1.54 MiB)
-  - `RELEASE_NOTES.md` (446 bytes)
+  - `OPF_ATOM_S3.bin` (1598928 bytes, 1.52 MiB)
+  - `OPF_ATOM_S3R.bin` (1799056 bytes, 1.72 MiB)
+  - `OPF_T2CAN.bin` (1635776 bytes, 1.56 MiB)
+  - `OPF_WS.bin` (1632256 bytes, 1.56 MiB)
+  - `OPF_WS_DASH.bin` (2341088 bytes, 2.23 MiB)
+  - `OPF_WS_NO_TEMP.bin` (1632096 bytes, 1.56 MiB)
+  - `RELEASE_NOTES.md` (981 bytes)
   - `SHA256SUMS` (489 bytes)
-  - `index.json` (4326 bytes, 4.2 KiB)
+  - `index.json` (4862 bytes, 4.7 KiB)
 - Summary:
-  - Stability: OTA task-watchdog fix; pack control, UV failsafe, and CAN keep running during OTA; prefs mutex; fixed OTA URL and IP buffers; deferred `WiFi.mode`; PSA2 mux caps.
-  - Coredump capture, plus `/coredump` download and erase.
-  - Dash Type: dash-only type 100 on display builds.
+  - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
+  - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
+  - SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.
 
 ### BRIDGE
 
@@ -160,7 +160,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-10-08
+- Date: 2026-10-19
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -174,7 +174,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.2`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -188,7 +188,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `latest`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
