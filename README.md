@@ -65,7 +65,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Source commit: `cac0af0e23fa8b208717e79fc92d497b48494d15` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1575664 bytes, 1.50 MiB)
@@ -84,7 +84,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.2`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Source commit: `e945fd827f88fd324f0f8fcccbf5cdb1b4d84277` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1581904 bytes, 1.51 MiB)
@@ -103,7 +103,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Source commit: `e945fd827f88fd324f0f8fcccbf5cdb1b4d84277` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1581904 bytes, 1.51 MiB)
@@ -126,22 +126,22 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.1`
 
-- Date: 2026-10-14
-- Source commit: `519546a6e2f845e20ae0ed71c25e7159220f6fad` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Date: 2026-10-19
+- Source commit: `837cad0b06cc06a6a5ba2748553b302dffe4a7f4` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1912784 bytes, 1.82 MiB)
-  - `ATOM_S3_R.bin` (1958640 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (7604 bytes, 7.4 KiB)
+  - `ATOM_S3.bin` (1914080 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1959824 bytes, 1.87 MiB)
+  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (9275 bytes, 9.1 KiB)
+  - `index.json` (10830 bytes, 10.6 KiB)
 - Summary:
-  - DTU link is split into two indicators. `dtu_rf_link` (`up` / `degraded` / `down`) is the radio: any CRC-good v4 frame in the last 10 s (`degraded` when the gap is over 3 s). `dtu_p1_data` (`valid` / `invalid` / `none`) is the last fast frame's flags bit0, so a live radio with…
-  - DTU (P1 over LoRa) retuned for OPF-P1 (v4 dual-cadence protocol): 869.525 MHz (EU868 g3), SF7/BW125/CR4/5, preamble 8, sync 0x1424; fast frame every 1 s, slow ~30 s. Units on the old 868.0 MHz default move to 869.525 MHz automatically (custom frequencies kept). **Run current…
-  - BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.
+  - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
+  - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
+  - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
 
 #### `v0.0.2`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Source commit: `abbfa47d22c46d1c3841a88ee18b70dc256e314c` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1914080 bytes, 1.83 MiB)
@@ -156,18 +156,18 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `latest`
 
-- Date: 2026-10-14
-- Source commit: `abbfa47d22c46d1c3841a88ee18b70dc256e314c` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Date: 2026-10-19
+- Source commit: `837cad0b06cc06a6a5ba2748553b302dffe4a7f4` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1914080 bytes, 1.83 MiB)
   - `ATOM_S3_R.bin` (1959824 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (9015 bytes, 8.8 KiB)
+  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (10680 bytes, 10.4 KiB)
+  - `index.json` (10829 bytes, 10.6 KiB)
 - Summary:
-  - Feed publish target is `BRIDGE/v0.0.2` (`FEED_FIXED_VERSION`), still with `FEED_ALLOW_OVERWRITE`, and `latest` follows that folder.
+  - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
+  - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
   - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
-  - `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.
 
 ### P1
 
@@ -175,7 +175,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -189,7 +189,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.2`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -203,7 +203,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `latest`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)

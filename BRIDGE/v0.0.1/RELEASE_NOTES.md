@@ -1,5 +1,19 @@
 # BRIDGE v0.0.1
 
+- Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
+- Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
+
+
+- RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
+- `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.
+- LoRa UART: a line that overflows the buffer is dropped until the next newline. The tail is not parsed as a new frame, and the overflow counter increments once per line.
+- Atom Base and device role are cached after boot (and when Settings or BLE saves the role). `loop()` no longer opens NVS on every pass.
+- `/diag` and BLE `telem_get` include `min_free_heap` and per-task stack high-water marks (`stack_hwm_comms`, `stack_hwm_telem`, `stack_hwm_atom`, `stack_hwm_ota`, `stack_hwm_loop`, `stack_hwm_lcd`, minimum free bytes). The System tab shows the stack marks.
+- Dashboard websocket refresh uses a stack buffer instead of a temporary `String`.
+- Web console and AtomS3R LCD layout restored to the v0.0.1 look (same page structure, gauges, settings, header, and LCD pages as 519546a). The System tab still shows the stack marks.
+
+## v0.0.1
+
 - DTU link is split into two indicators. `dtu_rf_link` (`up` / `degraded` / `down`) is the radio: any CRC-good v4 frame in the last 10 s (`degraded` when the gap is over 3 s). `dtu_p1_data` (`valid` / `invalid` / `none`) is the last fast frame's flags bit0, so a live radio with `dataInvalid=1` shows `rf_up_p1_invalid` instead of hiding the link. Same keys on `/api/lora`, `/values`, `/diag` and BLE `telem_get` (`dtu_rf_link`, `dtu_rf_rssi`, `dtu_rf_snr`, `dtu_rf_seq`, `dtu_rf_age_ms`, `dtu_p1_data`). `dtu_link` stays `ok` / `stale` / `down` / `off` (ok while the radio is up, even if P1 is invalid). The smartmeter 0x0B gate is unchanged (valid fast data within 3 s). LoRa tab shows two status pills.
 - DTU (P1 over LoRa) retuned for OPF-P1 (v4 dual-cadence protocol): 869.525 MHz (EU868 g3), SF7/BW125/CR4/5, preamble 8, sync 0x1424; fast frame every 1 s, slow ~30 s. Units on the old 868.0 MHz default move to 869.525 MHz automatically (custom frequencies kept). **Run current OPF-P1 v0.0.1 (fw9, 46eecff or later) on the transmitter**; older P1 builds stay on 868.0 MHz or send only dataInvalid frames. Radio link goes degraded after 3 s and down after 10 s without a CRC-good frame. Smartmeter emulator safety: meter reads get Modbus exception 0x0B when P1 data is older than 3 s (or none yet) instead of frozen values, and recover on the next good frame. New diagnostics in `/api/lora` and BLE telem: frame rate / period / gap / burst stats, last rejected frame (length + hex), ignored P1 ACK/command frames (`rx_other_type`). See `docs/OPF_P1_LORA.md`.
 - BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.
