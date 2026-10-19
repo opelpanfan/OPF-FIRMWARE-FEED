@@ -1,6 +1,6 @@
 # BRIDGE v0.0.1
 
-- Settings is a stack of section cards (Device & Network, Device mode, MQTT, Inverter, Meter, Maintenance), using the existing section headers. Save and Reload sit above Maintenance; Factory Reset is last on the danger card. Meter shows the smartmeter fields, the LoRa settings when the Atom base is DTU, or an RS485 hint, following the existing Bridge/Smartmeter rules. SoftAP and Bluetooth are one-line hints (Bluetooth is always on). Save still posts the same full payload.
+- Settings uses the BMS section cards (`details.settings-card`: accent left border, gradient header, chevron). Save and Reload sit above Maintenance; Factory Reset is last on the danger card. Meter shows the smartmeter fields, the LoRa settings when the Atom base is DTU, or an RS485 hint, following the existing Bridge/Smartmeter rules. SoftAP and Bluetooth are one-line hints (Bluetooth is always on). Save still posts the same full payload.
 - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
 - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
 
