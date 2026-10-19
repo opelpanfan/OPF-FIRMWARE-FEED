@@ -141,7 +141,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-10-19
+- Date: 2026-10-08
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -155,7 +155,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.2`
 
-- Date: 2026-10-19
+- Date: 2026-10-14
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -169,7 +169,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `latest`
 
-- Date: 2026-10-19
+- Date: 2026-10-14
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
