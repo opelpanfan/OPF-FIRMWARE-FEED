@@ -108,30 +108,30 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.1`
 
 - Date: 2026-10-19
-- Source commit: `549b0c0fbd07cfcb938a08cd2162e955dbd6bf9a` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `049ee2ffd68a1540f97f22842bcfb3e704d6564e` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1914816 bytes, 1.83 MiB)
-  - `ATOM_S3_R.bin` (1960576 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (9589 bytes, 9.4 KiB)
+  - `ATOM_S3.bin` (1913984 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1959728 bytes, 1.87 MiB)
+  - `RELEASE_NOTES.md` (9303 bytes, 9.1 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (11275 bytes, 11.0 KiB)
+  - `index.json` (10989 bytes, 10.7 KiB)
 - Summary:
-  - Settings uses the BMS section cards (`details.settings-card`: accent left border, gradient header, chevron). Save and Reload sit above Maintenance; Factory Reset is last on the danger card. Meter shows the smartmeter fields, the LoRa settings when the Atom base is DTU, or an…
+  - Settings is the flat v0.0.1 layout again: fields sit under the original underline section headers. No section cards, boxes, or collapsible settings groups.
   - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
   - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
 
 #### `latest`
 
 - Date: 2026-10-19
-- Source commit: `549b0c0fbd07cfcb938a08cd2162e955dbd6bf9a` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `049ee2ffd68a1540f97f22842bcfb3e704d6564e` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1914816 bytes, 1.83 MiB)
-  - `ATOM_S3_R.bin` (1960576 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (9589 bytes, 9.4 KiB)
+  - `ATOM_S3.bin` (1913984 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1959728 bytes, 1.87 MiB)
+  - `RELEASE_NOTES.md` (9303 bytes, 9.1 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (11274 bytes, 11.0 KiB)
+  - `index.json` (10988 bytes, 10.7 KiB)
 - Summary:
-  - Settings uses the BMS section cards (`details.settings-card`: accent left border, gradient header, chevron). Save and Reload sit above Maintenance; Factory Reset is last on the danger card. Meter shows the smartmeter fields, the LoRa settings when the Atom base is DTU, or an…
+  - Settings is the flat v0.0.1 layout again: fields sit under the original underline section headers. No section cards, boxes, or collapsible settings groups.
   - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
   - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
 
