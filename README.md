@@ -108,13 +108,13 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.1`
 
 - Date: 2026-10-19
-- Source commit: `f611fe0a7fcaabc6acb24ff9e8516b85db5bb5c6` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `c098239ffba7b8fe91c51aac1a39622b08f26f3d` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1914080 bytes, 1.83 MiB)
-  - `ATOM_S3_R.bin` (1959824 bytes, 1.87 MiB)
+  - `ATOM_S3.bin` (1914400 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1960160 bytes, 1.87 MiB)
   - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (10830 bytes, 10.6 KiB)
+  - `index.json` (10814 bytes, 10.6 KiB)
 - Summary:
   - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
   - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
@@ -123,13 +123,13 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `latest`
 
 - Date: 2026-10-19
-- Source commit: `f611fe0a7fcaabc6acb24ff9e8516b85db5bb5c6` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `c098239ffba7b8fe91c51aac1a39622b08f26f3d` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1914080 bytes, 1.83 MiB)
-  - `ATOM_S3_R.bin` (1959824 bytes, 1.87 MiB)
+  - `ATOM_S3.bin` (1914400 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1960160 bytes, 1.87 MiB)
   - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (10829 bytes, 10.6 KiB)
+  - `index.json` (10813 bytes, 10.6 KiB)
 - Summary:
   - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
   - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
