@@ -108,32 +108,32 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.1`
 
 - Date: 2026-10-19
-- Source commit: `837cad0b06cc06a6a5ba2748553b302dffe4a7f4` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `2f0319450dcc2cdc5afb3b94289c143cdbc7c55a` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1914080 bytes, 1.83 MiB)
-  - `ATOM_S3_R.bin` (1959824 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
+  - `ATOM_S3.bin` (1914528 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1960272 bytes, 1.87 MiB)
+  - `RELEASE_NOTES.md` (9622 bytes, 9.4 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (10830 bytes, 10.6 KiB)
+  - `index.json` (11308 bytes, 11.0 KiB)
 - Summary:
+  - Settings is a stack of section cards (Device & Network, Device mode, MQTT, Inverter, Meter, Maintenance), using the existing section headers. Save and Reload sit above Maintenance; Factory Reset is last on the danger card. Meter shows the smartmeter fields, the LoRa settings…
   - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
   - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
-  - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
 
 #### `latest`
 
 - Date: 2026-10-19
-- Source commit: `837cad0b06cc06a6a5ba2748553b302dffe4a7f4` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `2f0319450dcc2cdc5afb3b94289c143cdbc7c55a` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1914080 bytes, 1.83 MiB)
-  - `ATOM_S3_R.bin` (1959824 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
+  - `ATOM_S3.bin` (1914528 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1960272 bytes, 1.87 MiB)
+  - `RELEASE_NOTES.md` (9622 bytes, 9.4 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (10829 bytes, 10.6 KiB)
+  - `index.json` (11307 bytes, 11.0 KiB)
 - Summary:
+  - Settings is a stack of section cards (Device & Network, Device mode, MQTT, Inverter, Meter, Maintenance), using the existing section headers. Save and Reload sit above Maintenance; Factory Reset is last on the danger card. Meter shows the smartmeter fields, the LoRa settings…
   - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
   - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
-  - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
 
 ### P1
 
@@ -141,7 +141,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-10-08
+- Date: 2026-10-19
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -155,7 +155,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.2`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -169,7 +169,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `latest`
 
-- Date: 2026-10-14
+- Date: 2026-10-19
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
