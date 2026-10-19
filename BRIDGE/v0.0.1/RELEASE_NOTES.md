@@ -1,6 +1,5 @@
 # BRIDGE v0.0.1
 
-- Settings is the v0.0.1 boxed groups again (Device, WiFi, MQTT, Device mode, Smartmeter emulator, Inverter), matching 837cad0. The later collapsible section cards are gone.
 - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
 - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
 

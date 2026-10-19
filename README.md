@@ -108,32 +108,32 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.1`
 
 - Date: 2026-10-19
-- Source commit: `18a6f0a82ce50433c456000b6c1367cfdfa89662` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `f611fe0a7fcaabc6acb24ff9e8516b85db5bb5c6` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1914080 bytes, 1.83 MiB)
   - `ATOM_S3_R.bin` (1959824 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (9319 bytes, 9.1 KiB)
+  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (10989 bytes, 10.7 KiB)
+  - `index.json` (10830 bytes, 10.6 KiB)
 - Summary:
-  - Settings is the v0.0.1 boxed groups again (Device, WiFi, MQTT, Device mode, Smartmeter emulator, Inverter), matching 837cad0. The later collapsible section cards are gone.
   - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
   - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
+  - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
 
 #### `latest`
 
 - Date: 2026-10-19
-- Source commit: `18a6f0a82ce50433c456000b6c1367cfdfa89662` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `f611fe0a7fcaabc6acb24ff9e8516b85db5bb5c6` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1914080 bytes, 1.83 MiB)
   - `ATOM_S3_R.bin` (1959824 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (9319 bytes, 9.1 KiB)
+  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (10988 bytes, 10.7 KiB)
+  - `index.json` (10829 bytes, 10.6 KiB)
 - Summary:
-  - Settings is the v0.0.1 boxed groups again (Device, WiFi, MQTT, Device mode, Smartmeter emulator, Inverter), matching 837cad0. The later collapsible section cards are gone.
   - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
   - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
+  - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
 
 ### P1
 
