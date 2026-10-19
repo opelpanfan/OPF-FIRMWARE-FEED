@@ -82,25 +82,6 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
   - SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.
 
-#### `v0.0.2`
-
-- Date: 2026-10-19
-- Source commit: `e945fd827f88fd324f0f8fcccbf5cdb1b4d84277` (opelpanfan/OPF-STORAGE-DASH)
-- Files:
-  - `OPF_ATOM_S3.bin` (1581904 bytes, 1.51 MiB)
-  - `OPF_ATOM_S3R.bin` (1781280 bytes, 1.70 MiB)
-  - `OPF_T2CAN.bin` (1618768 bytes, 1.54 MiB)
-  - `OPF_WS.bin` (1614496 bytes, 1.54 MiB)
-  - `OPF_WS_DASH.bin` (2323168 bytes, 2.22 MiB)
-  - `OPF_WS_NO_TEMP.bin` (1614368 bytes, 1.54 MiB)
-  - `RELEASE_NOTES.md` (446 bytes)
-  - `SHA256SUMS` (489 bytes)
-  - `index.json` (4328 bytes, 4.2 KiB)
-- Summary:
-  - Stability: OTA task-watchdog fix; pack control, UV failsafe, and CAN keep running during OTA; prefs mutex; fixed OTA URL and IP buffers; deferred `WiFi.mode`; PSA2 mux caps.
-  - Coredump capture, plus `/coredump` download and erase.
-  - Dash Type: dash-only type 100 on display builds.
-
 #### `latest`
 
 - Date: 2026-10-19
