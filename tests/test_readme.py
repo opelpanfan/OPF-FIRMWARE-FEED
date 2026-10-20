@@ -137,6 +137,8 @@ class ReadmeSummaryTests(unittest.TestCase):
             self.assertIn(f"### {product}", section)
         self.assertIn("#### `v0.0.1`", section)
         self.assertIn("#### `latest`", section)
+        self.assertIn("- Full-install files: `ATOM_S3` no, `ATOM_S3_R` no", section)
+        self.assertIn("`OPF_WS` no", section)
 
     def test_workflow_regenerates_on_main_without_pulling_sources(self) -> None:
         workflow = (ROOT / ".github/workflows/feed-readme.yml").read_text(encoding="utf-8")
