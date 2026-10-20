@@ -169,22 +169,48 @@
     },
     "P1": {
       "product": "P1",
-      "available": false,
-      "semver": null,
-      "version": null,
-      "matched_folder": null,
-      "matches_folders": [],
-      "highest_semver_folder": null,
-      "highest_semver_is_latest": false,
-      "index_url": null,
-      "boards": [],
-      "artifacts": [],
-      "sha256": {},
+      "available": true,
+      "semver": "0.0.1",
+      "version": "v0.0.1",
+      "matched_folder": "v0.0.1",
+      "matches_folders": [
+        "v0.0.1"
+      ],
+      "highest_semver_folder": "v0.0.1",
+      "highest_semver_is_latest": true,
+      "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
+      "boards": [
+        "RAK3172_RX",
+        "RAK3172_TX"
+      ],
+      "sha256": {
+        "RAK3172_RX": "3c8490063d17b2e368b01a68b876c74cb994ae5d14788f549f7ace8bf28f8062",
+        "RAK3172_TX": "8ec95f90f44434793163dd45854b558cd822054a8aeb9009ba202ea81c3d66b5"
+      },
+      "artifacts": [
+        {
+          "board": "RAK3172_RX",
+          "filename": "RAK3172_RX.bin",
+          "sha256": "3c8490063d17b2e368b01a68b876c74cb994ae5d14788f549f7ace8bf28f8062",
+          "size": 69836,
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin",
+          "source_filename": "RAK3172_RX.bin"
+        },
+        {
+          "board": "RAK3172_TX",
+          "filename": "RAK3172_TX.bin",
+          "sha256": "8ec95f90f44434793163dd45854b558cd822054a8aeb9009ba202ea81c3d66b5",
+          "size": 92508,
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin",
+          "source_filename": "RAK3172_TX.bin"
+        }
+      ],
       "flash_as_pair": [
         "RAK3172_TX",
         "RAK3172_RX"
       ],
-      "note": "No matched TX/RX release is in the feed yet."
+      "release_notes": "# P1 v0.0.1\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- P1 is read above the LoRa task again, and a telegram already in the UART ring is drained before the reader yields. This is the scheduling from the build that parsed the ESO meter.\n- P1 CRC is not required, matching the field build that read this ESO meter. A telegram from `/` to `!` is published when L1 voltage or import power is present and any voltage is between 150 V and 280 V. Fixed buffer, watchdog, and that scheduling stay.\n- `FW_ITERATION_ID` 10.\n",
+      "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RELEASE_NOTES.md"
     },
     "CONFIG_APP": {
       "product": "CONFIG_APP",
@@ -564,30 +590,91 @@
       "source_repository": "opelpanfan/OPF-P1",
       "latest": {
         "product": "P1",
-        "available": false,
-        "semver": null,
-        "version": null,
-        "matched_folder": null,
-        "matches_folders": [],
-        "highest_semver_folder": null,
-        "highest_semver_is_latest": false,
-        "index_url": null,
-        "boards": [],
-        "artifacts": [],
-        "sha256": {},
+        "available": true,
+        "semver": "0.0.1",
+        "version": "v0.0.1",
+        "matched_folder": "v0.0.1",
+        "matches_folders": [
+          "v0.0.1"
+        ],
+        "highest_semver_folder": "v0.0.1",
+        "highest_semver_is_latest": true,
+        "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
+        "boards": [
+          "RAK3172_RX",
+          "RAK3172_TX"
+        ],
+        "sha256": {
+          "RAK3172_RX": "3c8490063d17b2e368b01a68b876c74cb994ae5d14788f549f7ace8bf28f8062",
+          "RAK3172_TX": "8ec95f90f44434793163dd45854b558cd822054a8aeb9009ba202ea81c3d66b5"
+        },
+        "artifacts": [
+          {
+            "board": "RAK3172_RX",
+            "filename": "RAK3172_RX.bin",
+            "sha256": "3c8490063d17b2e368b01a68b876c74cb994ae5d14788f549f7ace8bf28f8062",
+            "size": 69836,
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin",
+            "source_filename": "RAK3172_RX.bin"
+          },
+          {
+            "board": "RAK3172_TX",
+            "filename": "RAK3172_TX.bin",
+            "sha256": "8ec95f90f44434793163dd45854b558cd822054a8aeb9009ba202ea81c3d66b5",
+            "size": 92508,
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin",
+            "source_filename": "RAK3172_TX.bin"
+          }
+        ],
         "flash_as_pair": [
           "RAK3172_TX",
           "RAK3172_RX"
         ],
-        "note": "No matched TX/RX release is in the feed yet."
+        "release_notes": "# P1 v0.0.1\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- P1 is read above the LoRa task again, and a telegram already in the UART ring is drained before the reader yields. This is the scheduling from the build that parsed the ESO meter.\n- P1 CRC is not required, matching the field build that read this ESO meter. A telegram from `/` to `!` is published when L1 voltage or import power is present and any voltage is between 150 V and 280 V. Fixed buffer, watchdog, and that scheduling stay.\n- `FW_ITERATION_ID` 10.\n",
+        "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RELEASE_NOTES.md"
       },
-      "versions": [],
+      "versions": [
+        {
+          "folder": "v0.0.1",
+          "semver": "0.0.1",
+          "layout": "canonical",
+          "channel": "version",
+          "boards": [
+            "RAK3172_RX",
+            "RAK3172_TX"
+          ],
+          "sha256": {
+            "RAK3172_RX": "3c8490063d17b2e368b01a68b876c74cb994ae5d14788f549f7ace8bf28f8062",
+            "RAK3172_TX": "8ec95f90f44434793163dd45854b558cd822054a8aeb9009ba202ea81c3d66b5"
+          },
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/index.json",
+          "artifacts": [
+            {
+              "board": "RAK3172_RX",
+              "filename": "RAK3172_RX.bin",
+              "sha256": "3c8490063d17b2e368b01a68b876c74cb994ae5d14788f549f7ace8bf28f8062",
+              "size": 69836,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RAK3172_RX.bin",
+              "source_filename": "RAK3172_RX.bin"
+            },
+            {
+              "board": "RAK3172_TX",
+              "filename": "RAK3172_TX.bin",
+              "sha256": "8ec95f90f44434793163dd45854b558cd822054a8aeb9009ba202ea81c3d66b5",
+              "size": 92508,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RAK3172_TX.bin",
+              "source_filename": "RAK3172_TX.bin"
+            }
+          ],
+          "release_notes": "# P1 v0.0.1\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- P1 is read above the LoRa task again, and a telegram already in the UART ring is drained before the reader yields. This is the scheduling from the build that parsed the ESO meter.\n- P1 CRC is not required, matching the field build that read this ESO meter. A telegram from `/` to `!` is published when L1 voltage or import power is present and any voltage is between 150 V and 280 V. Fixed buffer, watchdog, and that scheduling stay.\n- `FW_ITERATION_ID` 10.\n",
+          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RELEASE_NOTES.md"
+        }
+      ],
       "source_ref": "master-grok",
       "flash_as_pair": [
         "RAK3172_TX",
         "RAK3172_RX"
-      ],
-      "note": "OPF-P1 pushes a matched pair. Store opf-p1-rak3172_transmiter-fw*.bin as RAK3172_TX.bin and opf-p1-rak3172_receiver-fw*.bin as RAK3172_RX.bin under P1/vX.Y.Z/ (first published tag v1.0.1). This feed does not download the private release."
+      ]
     },
     {
       "id": "CONFIG_APP",
