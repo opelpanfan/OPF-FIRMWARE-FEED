@@ -136,7 +136,6 @@ class ReadmeSummaryTests(unittest.TestCase):
         for product in ("BMS", "BRIDGE", "P1", "METER"):
             self.assertIn(f"### {product}", section)
         self.assertIn("#### `v0.0.1`", section)
-        self.assertIn("#### `v0.0.2`", section)
         self.assertIn("#### `latest`", section)
 
     def test_workflow_regenerates_on_main_without_pulling_sources(self) -> None:

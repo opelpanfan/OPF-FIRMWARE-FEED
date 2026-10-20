@@ -107,33 +107,33 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.1`
 
-- Date: 2026-10-19
+- Date: 2026-10-20
 - Source commit: `23634dc9f7ef2fc2077762374abed1078bf54189` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916320 bytes, 1.83 MiB)
   - `ATOM_S3_R.bin` (1962048 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
+  - `RELEASE_NOTES.md` (8881 bytes, 8.7 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (10814 bytes, 10.6 KiB)
+  - `index.json` (10546 bytes, 10.3 KiB)
 - Summary:
-  - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
-  - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
   - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
+  - `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.
+  - LoRa UART: a line that overflows the buffer is dropped until the next newline. The tail is not parsed as a new frame, and the overflow counter increments once per line.
 
 #### `latest`
 
-- Date: 2026-10-19
+- Date: 2026-10-20
 - Source commit: `23634dc9f7ef2fc2077762374abed1078bf54189` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916320 bytes, 1.83 MiB)
   - `ATOM_S3_R.bin` (1962048 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
+  - `RELEASE_NOTES.md` (8881 bytes, 8.7 KiB)
   - `SHA256SUMS` (158 bytes)
-  - `index.json` (10813 bytes, 10.6 KiB)
+  - `index.json` (10545 bytes, 10.3 KiB)
 - Summary:
-  - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
-  - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
   - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
+  - `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.
+  - LoRa UART: a line that overflows the buffer is dropped until the next newline. The tail is not parsed as a new frame, and the overflow counter increments once per line.
 
 ### P1
 
@@ -141,21 +141,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-10-19
-- Files:
-  - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
-  - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
-  - `RELEASE_NOTES.md` (1093 bytes, 1.1 KiB)
-  - `SHA256SUMS` (162 bytes)
-  - `index.json` (2641 bytes, 2.6 KiB)
-- Summary:
-  - **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.
-  - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.
-  - Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.
-
-#### `v0.0.2`
-
-- Date: 2026-10-19
+- Date: 2026-10-08
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -169,7 +155,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `latest`
 
-- Date: 2026-10-19
+- Date: 2026-10-14
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
