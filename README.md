@@ -85,7 +85,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-10-19
+- Date: 2026-10-20
 - Source commit: `a58c429487409ab9e243a869ede6f220264932b3` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1598928 bytes, 1.52 MiB)
@@ -105,7 +105,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-10-19
+- Date: 2026-10-20
 - Source commit: `a58c429487409ab9e243a869ede6f220264932b3` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1598928 bytes, 1.52 MiB)
@@ -130,7 +130,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.1`
 
 - Date: 2026-10-20
-- Source commit: `5c4711e9b87b8a8626fcb38da824af750219a2d5` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `75c160f1b1bd14aa432513e3b2673a3152dcb29f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916320 bytes, 1.83 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
@@ -140,19 +140,19 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
+  - `RELEASE_NOTES.md` (9721 bytes, 9.5 KiB)
   - `SHA256SUMS` (696 bytes)
-  - `index.json` (12186 bytes, 11.9 KiB)
+  - `index.json` (12764 bytes, 12.5 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes
 - Summary:
-  - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
-  - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
-  - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
+  - **8 MB partition table** (`partitions_8mb_bridge.csv`, 3.75 MB OTA slots; NVS and otadata unchanged). Needs one USB flash per device (bootloader + partitions + boot_app0 + app; the feed now ships all three companions per board). Devices on the old table keep OTA while the app…
+  - Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages. System section headers use the same bars.
+  - Smartmeter emulator: RS485 RX capture of the inverter's meter probes (off at boot; Start/Stop/Clear on the System tab, `POST /api/smartmeter?cap=on|off|clear`, `sm_rx` in `GET /api/smartmeter`, `[SM-RX]` serial lines). Emulator replies unchanged.
 
 #### `latest`
 
 - Date: 2026-10-20
-- Source commit: `5c4711e9b87b8a8626fcb38da824af750219a2d5` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `75c160f1b1bd14aa432513e3b2673a3152dcb29f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916320 bytes, 1.83 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
@@ -162,14 +162,14 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
+  - `RELEASE_NOTES.md` (9721 bytes, 9.5 KiB)
   - `SHA256SUMS` (696 bytes)
-  - `index.json` (12185 bytes, 11.9 KiB)
+  - `index.json` (12763 bytes, 12.5 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes
 - Summary:
-  - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
-  - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
-  - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
+  - **8 MB partition table** (`partitions_8mb_bridge.csv`, 3.75 MB OTA slots; NVS and otadata unchanged). Needs one USB flash per device (bootloader + partitions + boot_app0 + app; the feed now ships all three companions per board). Devices on the old table keep OTA while the app…
+  - Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages. System section headers use the same bars.
+  - Smartmeter emulator: RS485 RX capture of the inverter's meter probes (off at boot; Start/Stop/Clear on the System tab, `POST /api/smartmeter?cap=on|off|clear`, `sm_rx` in `GET /api/smartmeter`, `[SM-RX]` serial lines). Emulator replies unchanged.
 
 ### P1
 
