@@ -3,9 +3,7 @@
   "repository": "opelpanfan/OPF-FIRMWARE-FEED",
   "branch": "main",
   "raw_base": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main",
-  "aliases": {
-    "METER": "P1"
-  },
+  "aliases": {},
   "products": {
     "BMS": {
       "family": "esp32",
@@ -159,14 +157,56 @@
       }
     },
     "METER": {
-      "family": "reserved",
-      "ingest": "none",
-      "alias_of": "P1",
+      "family": "esp32",
+      "ingest": "push",
       "version_label": "prefixed",
-      "source_repository": null,
+      "source_repository": "opelpanfan/OPF-LORA-METER",
       "source_ref": null,
       "workflow_file": null,
-      "boards": {}
+      "chip": "esp32-s3",
+      "flash_mode": "qio",
+      "partition_csv": "partitions/ota_8MB.csv",
+      "targets": [
+        "AtomS3",
+        "AtomS3R"
+      ],
+      "note": "ESP32-S3 firmware for AtomS3 and AtomS3R. Images are stored under METER/.",
+      "required_boards": [
+        "transmitter",
+        "receiver",
+        "transmitter_lcd",
+        "receiver_lcd"
+      ],
+      "boards": {
+        "transmitter": {
+          "filename": "transmitter.bin",
+          "envs": [
+            "transmitter"
+          ],
+          "required": true
+        },
+        "receiver": {
+          "filename": "receiver.bin",
+          "envs": [
+            "receiver"
+          ],
+          "required": true
+        },
+        "transmitter_lcd": {
+          "filename": "transmitter_lcd.bin",
+          "envs": [
+            "transmitter_lcd"
+          ],
+          "required": true
+        },
+        "receiver_lcd": {
+          "filename": "receiver_lcd.bin",
+          "envs": [
+            "receiver_lcd"
+          ],
+          "required": true
+        }
+      }
     },
     "FLASHER": {
       "family": "package",

@@ -20,7 +20,26 @@ When the file is present, that folder's ``index.json`` and the root catalog
 - ``release_notes_url``: raw URL of ``RELEASE_NOTES.md`` in that same folder
 
 Both fields are omitted when the file is absent. ``SHA256SUMS`` lists payload
-files only (``.bin`` firmware images, ``.apk`` for android, or ``.exe``/``.deb`` packages).
+files only (``.bin`` firmware images, optional ESP32 install companions,
+``.apk`` for android, or ``.exe``/``.deb`` packages).
+
+ESP32 install companions
+------------------------
+An ESP32 product (BMS, BRIDGE, METER) may publish three optional files next
+to a board's app image. P1 is STM32 and does not use them. The set is
+per board: all three files, or none. A partial set is refused. Folders that
+omit the set stay valid.
+
+- ``<BOARD>.bootloader.bin`` at ``0x0``
+- ``<BOARD>.partitions.bin`` at ``0x8000``
+- ``<BOARD>.boot_app0.bin`` at ``0xe000``
+
+When the set is present, that board's ``artifacts[]`` object includes
+``install.bootloader``, ``install.partitions``, and ``install.boot_app0``.
+Each object has ``path`` (filename in that folder), ``sha256``, ``size``,
+and ``offset`` (``0x0``, ``0x8000``, or ``0xe000``). The same filenames are
+lines in the folder ``SHA256SUMS`` and the root ``SHA256SUMS``. The
+``install`` field is omitted when the board has no companions.
 
 ``.bin`` bytes in a version folder are immutable. Notes are written by the
 publish that creates the folder (``apply_publish(..., release_notes=...`` or
@@ -68,6 +87,12 @@ ESP_MAGIC = 0xE9
 MIN_ESP = 64 * 1024
 MIN_STM = 1024
 MAX_BIN = 8 * 1024 * 1024
+INSTALL_ROLES = ("bootloader", "partitions", "boot_app0")
+INSTALL_OFFSETS = {
+    "bootloader": "0x0",
+    "partitions": "0x8000",
+    "boot_app0": "0xe000",
+}
 MAX_PACKAGE = 512 * 1024 * 1024
 MAX_APK = 80 * 1024 * 1024
 PACKAGE_FILE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+-]{0,120}$")
@@ -203,6 +228,77 @@ def _payload_sha_map(folder: Path, spec: dict) -> dict[str, str]:
     return {path.name: sha256_file(path) for path in _iter_payloads(folder, spec)}
 
 
+def install_filename(board: str, role: str) -> str:
+    if role not in INSTALL_OFFSETS:
+        raise FeedError(f"unknown install role {role}")
+    if not BOARD_RE.fullmatch(board):
+        raise FeedError(f"invalid board id {board!r}")
+    return f"{board}.{role}.bin"
+
+
+def match_install_companion(filename: str, boards: dict) -> tuple[str, str] | None:
+    """Return ``(board, role)`` when ``filename`` is ``<BOARD>.<role>.bin``."""
+
+    if not filename.endswith(".bin"):
+        return None
+    stem = filename[: -len(".bin")]
+    for role in INSTALL_ROLES:
+        suffix = f".{role}"
+        if not stem.endswith(suffix):
+            continue
+        board = stem[: -len(suffix)]
+        if board in boards:
+            return board, role
+    return None
+
+
+def _require_full_install(label: str, roles: set[str]) -> None:
+    missing = [role for role in INSTALL_ROLES if role not in roles]
+    unknown = sorted(roles - set(INSTALL_ROLES))
+    if not missing and not unknown:
+        return
+    parts = []
+    if missing:
+        parts.append("missing " + ", ".join(missing))
+    if unknown:
+        parts.append("unknown " + ", ".join(unknown))
+    raise FeedError(
+        f"{label} install set is incomplete ({'; '.join(parts)}). "
+        "Publish bootloader, partitions, and boot_app0 together, or omit all three."
+    )
+
+
+def _reject_not_firmware_bytes(data: bytes, label: str) -> None:
+    if data.startswith(b"\x7fELF"):
+        raise FeedError(f"{label} is an ELF file; the feed stores raw .bin images")
+    if data.startswith(b"PK\x03\x04"):
+        raise FeedError(f"{label} is a zip archive, not a firmware image")
+    stripped = data.lstrip()
+    if stripped.startswith((b"<", b"{", b"Not Found", b"404")):
+        raise FeedError(f"{label} looks like an error page, not firmware")
+
+
+def validate_install_companion(role: str, data: bytes, label: str) -> None:
+    if role not in INSTALL_OFFSETS:
+        raise FeedError(f"{label} has unknown install role {role}")
+    if not data:
+        raise FeedError(f"{label} is empty")
+    if len(data) > MAX_BIN:
+        raise FeedError(f"{label} is {len(data)} bytes; limit is {MAX_BIN}")
+    _reject_not_firmware_bytes(data, label)
+    if role == "bootloader" and data[0] != ESP_MAGIC:
+        raise FeedError(f"{label} is missing the ESP32 image header 0xE9")
+
+
+def _install_record(filename: str, data: bytes, role: str) -> dict:
+    return {
+        "path": filename,
+        "sha256": sha256_bytes(data),
+        "size": len(data),
+        "offset": INSTALL_OFFSETS[role],
+    }
+
+
 def validate_image(family: str, data: bytes, label: str) -> None:
     if not data:
         raise FeedError(f"{label} is empty")
@@ -221,13 +317,7 @@ def validate_image(family: str, data: bytes, label: str) -> None:
         if len(data) < 1024:
             raise FeedError(f"{label} is {len(data)} bytes; packages must be at least 1024")
         return
-    if data.startswith(b"\x7fELF"):
-        raise FeedError(f"{label} is an ELF file; the feed stores raw .bin images")
-    if data.startswith(b"PK\x03\x04"):
-        raise FeedError(f"{label} is a zip archive, not a firmware image")
-    stripped = data.lstrip()
-    if stripped.startswith((b"<", b"{", b"Not Found", b"404")):
-        raise FeedError(f"{label} looks like an error page, not firmware")
+    _reject_not_firmware_bytes(data, label)
     if family == "esp32":
         if len(data) < MIN_ESP:
             raise FeedError(f"{label} is {len(data)} bytes; ESP32 images must be at least {MIN_ESP}")
@@ -255,10 +345,7 @@ def product_spec(catalog: dict, product: str) -> dict:
 def require_publishable(spec: dict, product: str) -> dict:
     boards = spec.get("boards") or {}
     if spec.get("ingest") == "none" or spec.get("family") == "reserved" or not boards:
-        raise FeedError(
-            f"{product} does not accept firmware publishes"
-            + ("; P1 transmitter/receiver binaries belong under P1/" if product == "METER" else "")
-        )
+        raise FeedError(f"{product} does not accept firmware publishes")
     return boards
 
 
@@ -513,32 +600,47 @@ def _folder_documents(
         RELEASE_NOTES_NAME,
         FEED_RELEASE_NOTES_NAME,
     }
-    bins = []
+    apps: list[Path] = []
+    companions: dict[str, dict[str, Path]] = {}
+    esp32 = spec.get("family") == "esp32"
     for path in folder.iterdir():
         if path.is_dir() or path.name.startswith("."):
             raise FeedError(f"unexpected path {path.relative_to(folder.parent.parent)}")
+        if esp32:
+            matched = match_install_companion(path.name, boards)
+            if matched:
+                board, role = matched
+                companions.setdefault(board, {})[role] = path
+                continue
         if path.suffix.lower() in suffixes:
-            bins.append(path)
+            apps.append(path)
             continue
         if path.name not in allowed_names:
             raise FeedError(f"unexpected file {path.relative_to(folder.parent.parent)}")
-    bins.sort()
-    if not bins:
+    apps.sort()
+    if not apps:
         kind = ("packages" if spec.get("family") == "package" else "android packages" if spec.get("family") == "android" else "firmware binaries")
         raise FeedError(f"{folder} has no {kind}")
 
     files: dict[str, str] = {}
     digests: dict[str, str] = {}
     artifacts = []
-    sums = []
+    sum_entries: list[tuple[str, str]] = []
     preserved_names = {
         item.get("board"): item.get("source_filename")
         for item in existing.get("artifacts") or []
         if isinstance(item, dict) and item.get("source_filename")
     }
     preserved_names.update(source_filenames)
+    app_boards = {path.stem for path in apps}
+    for board, roles in companions.items():
+        if board not in app_boards:
+            raise FeedError(
+                f"{product}/{folder.name} has install files for {board} without {boards[board]['filename']}"
+            )
+        _require_full_install(f"{product}/{folder.name}/{board}", set(roles))
 
-    for path in bins:
+    for path in apps:
         board = path.stem
         if board not in boards:
             known = ", ".join(sorted(boards)) or "(none)"
@@ -551,10 +653,22 @@ def _folder_documents(
         url = raw_url(catalog, product, folder.name, path.name)
         files[board] = url
         digests[board] = data_sha
-        artifacts.append(
-            _artifact(board, path.name, data_sha, size, url, preserved_names.get(board))
-        )
-        sums.append(f"{data_sha}  {path.name}")
+        item = _artifact(board, path.name, data_sha, size, url, preserved_names.get(board))
+        role_paths = companions.get(board)
+        if role_paths:
+            install_doc = {}
+            for role in INSTALL_ROLES:
+                companion = role_paths[role]
+                blob = companion.read_bytes()
+                validate_install_companion(role, blob, f"{product}/{folder.name}/{companion.name}")
+                record = _install_record(companion.name, blob, role)
+                install_doc[role] = record
+                sum_entries.append((record["path"], record["sha256"]))
+            item["install"] = install_doc
+        artifacts.append(item)
+        sum_entries.append((path.name, data_sha))
+    sum_entries.sort()
+    sums = [f"{digest}  {name}" for name, digest in sum_entries]
 
     semver = parse_semver(folder.name)
     if folder.name == "latest":
@@ -694,6 +808,7 @@ def _empty_product(catalog: dict, product: str, spec: dict) -> dict:
         )
     if spec.get("alias_of"):
         entry["alias_of"] = spec["alias_of"]
+    _copy_product_fields(entry, spec)
     return entry
 
 
@@ -740,6 +855,14 @@ def render_manifests(
                 root_sums.append(
                     f"{artifact['sha256']}  {product}/{folder.name}/{artifact['filename']}"
                 )
+                install = artifact.get("install") or {}
+                for role in INSTALL_ROLES:
+                    record = install.get(role)
+                    if not isinstance(record, dict):
+                        continue
+                    root_sums.append(
+                        f"{record['sha256']}  {product}/{folder.name}/{record['path']}"
+                    )
 
         latest_doc = folder_indexes.get("latest")
         matches = _exact_folder_matches(root, product, base / "latest", spec) if latest_doc else []
@@ -809,9 +932,8 @@ def render_manifests(
             entry["flash_as_pair"] = list(spec["flash_as_pair"])
         if spec.get("alias_of"):
             entry["alias_of"] = spec["alias_of"]
-        if product == "METER":
-            entry["note"] = "Alias of P1. Transmitter and receiver bytes are stored under P1/."
-        elif product == "P1" and not latest_entry.get("available"):
+        _copy_product_fields(entry, spec)
+        if product == "P1" and not latest_entry.get("available") and "note" not in entry:
             entry["note"] = (
                 "OPF-P1 pushes a matched pair. Store opf-p1-rak3172_transmiter-fw*.bin "
                 "as RAK3172_TX.bin and opf-p1-rak3172_receiver-fw*.bin as RAK3172_RX.bin "
@@ -820,22 +942,13 @@ def render_manifests(
             )
         root_products.append(entry)
 
-    by_id = {entry["id"]: entry for entry in root_products}
-    if "P1" in by_id and "METER" in by_id:
-        meter_latest = dict(by_id["P1"]["latest"])
-        meter_latest["alias_of"] = "P1"
-        by_id["METER"]["latest"] = meter_latest
-        by_id["METER"]["flash_as_pair"] = list(by_id["P1"].get("flash_as_pair") or [])
-        by_id["METER"]["versions"] = []
-
     latest_map = {entry["id"]: entry["latest"] for entry in root_products}
     root_doc = {
         "schema": 1,
         "repository": catalog["repository"],
         "branch": catalog["branch"],
         "latest_selection": (
-            "Read latest.BMS, latest.BRIDGE, latest.P1, latest.CONFIG_APP, and latest.FLASHER. "
-            "latest.METER aliases latest.P1. "
+            "Read latest.BMS, latest.BRIDGE, latest.P1, latest.METER, latest.CONFIG_APP, and latest.FLASHER. "
             "Do not choose the highest semver folder: historical version numbers were not published in order."
         ),
         "aliases": catalog.get("aliases") or {},
@@ -845,6 +958,15 @@ def render_manifests(
     documents["index.json"] = _dump(root_doc)
     documents["SHA256SUMS"] = ("\n".join(sorted(root_sums)) + "\n") if root_sums else ""
     return documents
+
+
+def _copy_product_fields(entry: dict, spec: dict) -> None:
+    for key in ("chip", "flash_mode", "partition_csv", "targets"):
+        value = spec.get(key)
+        if value not in (None, "", [], {}):
+            entry[key] = value
+    if spec.get("note") and "note" not in entry:
+        entry["note"] = spec["note"]
 
 
 def _prefer_match(matches: list[str], current: str | None) -> str:
@@ -1033,7 +1155,25 @@ def _folder_files(folder: Path) -> list[Path]:
     return files
 
 
-def _render_folder_summary(root: Path, folder: Path) -> list[str]:
+def _full_install_line(folder: Path, spec: dict) -> str | None:
+    """One README line: whether each published ESP32 board has all three companions."""
+
+    if spec.get("family") != "esp32":
+        return None
+    names = {path.name for path in _folder_files(folder)}
+    parts = []
+    for board, info in (spec.get("boards") or {}).items():
+        filename = info.get("filename")
+        if not isinstance(filename, str) or filename not in names:
+            continue
+        full = all(f"{board}.{role}.bin" in names for role in INSTALL_ROLES)
+        parts.append(f"`{board}` {'yes' if full else 'no'}")
+    if not parts:
+        return None
+    return "- Full-install files: " + ", ".join(parts)
+
+
+def _render_folder_summary(root: Path, folder: Path, spec: dict) -> list[str]:
     lines = [f"#### `{folder.name}`", ""]
     lines.append(f"- Date: {_git_folder_date(root, folder) or 'unknown'}")
     commit = _source_commit(folder)
@@ -1046,6 +1186,9 @@ def _render_folder_summary(root: Path, folder: Path) -> list[str]:
             lines.append(f"  - `{path.name}` ({_format_bytes(path.stat().st_size)})")
     else:
         lines.append("- Files: none")
+    install_line = _full_install_line(folder, spec)
+    if install_line:
+        lines.append(install_line)
     summary = _summary_lines(_summary_notes(folder))
     if summary:
         lines.append("- Summary:")
@@ -1063,6 +1206,7 @@ def _render_feed_summary(root: Path, catalog: dict) -> str:
         "Each product below is one this feed knows. Version folders are listed from oldest to newest, then `latest`.",
         "The date is the feed commit that last changed that folder. A source commit is shown when that folder's `index.json` metadata has `source.sha`.",
         "The summary is the first lines of `FEED_RELEASE_NOTES.md` in that folder, or of `RELEASE_NOTES.md` when that is the notes file present.",
+        "ESP32 folders also list full-install files: `yes` when that board has bootloader, partitions, and boot_app0, `no` when it has the app image only.",
         "",
     ]
     for product, spec in catalog["products"].items():
@@ -1078,7 +1222,7 @@ def _render_feed_summary(root: Path, catalog: dict) -> str:
             lines.append("")
             continue
         for folder in folders:
-            lines.extend(_render_folder_summary(root, folder))
+            lines.extend(_render_folder_summary(root, folder, spec))
             lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 
@@ -1166,8 +1310,15 @@ def validate_feed(root: Path, catalog: dict | None = None) -> None:
         for folder in base.iterdir():
             if not folder.is_dir():
                 continue
+            boards = spec.get("boards") or {}
             for path in _iter_payloads(folder, spec):
-                validate_image(spec["family"], path.read_bytes(), f"{product}/{folder.name}/{path.name}")
+                label = f"{product}/{folder.name}/{path.name}"
+                matched = match_install_companion(path.name, boards) if spec.get("family") == "esp32" else None
+                data = path.read_bytes()
+                if matched:
+                    validate_install_companion(matched[1], data, label)
+                else:
+                    validate_image(spec["family"], data, label)
 
 
 def _check_same_bytes(incoming: list[tuple[str, bytes]]) -> None:
@@ -1236,6 +1387,43 @@ def _replace_tree(directory: Path, files: dict[str, bytes], suffixes: set[str] |
         raise FeedError(f"incomplete write in {directory}")
 
 
+def read_publish_directory(
+    spec: dict,
+    directory: Path,
+) -> tuple[dict[str, tuple[bytes, str]], dict[str, dict[str, bytes]]]:
+    """Read app images and optional ESP32 install companions from ``directory``.
+
+    Returns ``(binaries, install)``. ``binaries`` maps board id to
+    ``(data, source_filename)``. ``install`` maps board id to
+    ``{role: data}`` for ``bootloader``, ``partitions``, and ``boot_app0``.
+    """
+
+    if not directory.is_dir():
+        raise FeedError(f"publish directory does not exist: {directory}")
+    family = spec.get("family")
+    boards = spec.get("boards") or {}
+    binaries: dict[str, tuple[bytes, str]] = {}
+    install: dict[str, dict[str, bytes]] = {}
+    if family == "package":
+        for board, info in boards.items():
+            path = directory / info["filename"]
+            if path.is_file():
+                binaries[board] = (path.read_bytes(), path.name)
+        return binaries, install
+    suffix = ".apk" if family == "android" else ".bin"
+    for path in sorted(directory.iterdir()):
+        if not path.is_file() or path.suffix.lower() != suffix:
+            continue
+        if family == "esp32":
+            matched = match_install_companion(path.name, boards)
+            if matched:
+                board, role = matched
+                install.setdefault(board, {})[role] = path.read_bytes()
+                continue
+        binaries[path.stem] = (path.read_bytes(), path.name)
+    return binaries, install
+
+
 def apply_publish(
     root: Path,
     catalog: dict,
@@ -1248,10 +1436,15 @@ def apply_publish(
     source: dict | None = None,
     release_notes: str | None = None,
     release_notes_path: str | Path | None = None,
+    install: dict[str, dict[str, bytes]] | None = None,
 ) -> str:
     """Place a complete release. Firmware version folders are immutable. Returns the folder name.
 
     ``binaries`` maps board id to ``(data, source_filename)``.
+
+    ``install`` maps board id to ``{role: bytes}`` for the optional ESP32
+    companions ``bootloader``, ``partitions``, and ``boot_app0``. Pass all
+    three roles for a board, or omit that board. ESP32 products only.
 
     Optional ``release_notes`` or ``release_notes_path`` is UTF-8 markdown.
     Pass one, not both. On the publish that creates the folder, notes are
@@ -1291,6 +1484,7 @@ def apply_publish(
         planned[boards[board]["filename"]] = data
         incoming.append((board, data))
     _check_same_bytes(incoming)
+    _stage_install(product, spec, boards, binaries, install or {}, planned)
 
     suffixes = _payload_suffixes(spec)
     folder_name = version_folder(semver)
@@ -1352,6 +1546,38 @@ def apply_publish(
 
     write_manifests(root, catalog, provenance, names)
     return folder_name
+
+
+def _stage_install(
+    product: str,
+    spec: dict,
+    boards: dict,
+    binaries: dict,
+    install: dict[str, dict[str, bytes]],
+    planned: dict[str, bytes],
+) -> None:
+    if not install:
+        return
+    if spec.get("family") != "esp32":
+        raise FeedError(f"{product} does not accept ESP32 install companions")
+    for board, roles in install.items():
+        if board not in boards:
+            raise FeedError(f"unknown boards for {product}: {board}")
+        if board not in binaries:
+            raise FeedError(
+                f"{product}/{board} install files require {boards[board]['filename']}"
+            )
+        if not isinstance(roles, dict):
+            raise FeedError(f"{product}/{board} install files must be role bytes")
+        _require_full_install(f"{product}/{board}", set(roles))
+        for role in INSTALL_ROLES:
+            blob = roles[role]
+            if not isinstance(blob, (bytes, bytearray)):
+                raise FeedError(f"{product}/{board} {role} must be bytes")
+            data = bytes(blob)
+            filename = install_filename(board, role)
+            validate_install_companion(role, data, f"{product}/{filename}")
+            planned[filename] = data
 
 
 def attach_release_notes(
@@ -1430,13 +1656,27 @@ def rollback_latest(root: Path, catalog: dict, product: str, folder: str) -> str
     boards = spec.get("boards") or {}
     present = []
     files: dict[str, bytes] = {}
+    companion_roles: dict[str, set[str]] = {}
     for path in bins:
+        matched = match_install_companion(path.name, boards) if spec.get("family") == "esp32" else None
+        data = path.read_bytes()
+        if matched:
+            board, role = matched
+            validate_install_companion(role, data, f"{product}/{folder_name}/{path.name}")
+            files[path.name] = data
+            companion_roles.setdefault(board, set()).add(role)
+            continue
         if path.stem not in boards:
             raise FeedError(f"{path.name} is not a known {product} board")
-        data = path.read_bytes()
         validate_image(spec["family"], data, f"{product}/{folder_name}/{path.name}")
         files[path.name] = data
         present.append(path.stem)
+    for board, roles in companion_roles.items():
+        if board not in present:
+            raise FeedError(
+                f"{product}/{folder_name} has install files for {board} without {boards[board]['filename']}"
+            )
+        _require_full_install(f"{product}/{folder_name}/{board}", roles)
     missing = [board for board in required_board_ids(spec) if board not in present]
     if missing:
         raise FeedError(f"cannot point latest at {folder_name}; missing {', '.join(missing)}")

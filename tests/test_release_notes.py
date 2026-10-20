@@ -373,7 +373,7 @@ class ReleaseNotesTests(unittest.TestCase):
         self.assertEqual(latest_doc["release_notes"], "old channel\n")
         self.assertTrue(latest_doc["release_notes_url"].endswith("/BRIDGE/latest/RELEASE_NOTES.md"))
 
-    def test_p1_notes_are_visible_on_meter_alias(self) -> None:
+    def test_p1_notes_stay_on_p1_when_meter_is_its_own_product(self) -> None:
         binaries = {
             "RAK3172_TX": (_stm(2), "tx.bin"),
             "RAK3172_RX": (_stm(3), "rx.bin"),
@@ -391,8 +391,11 @@ class ReleaseNotesTests(unittest.TestCase):
         validate_feed(self.root, self.catalog)
         root_doc = json.loads((self.root / "index.json").read_text())
         self.assertEqual(root_doc["latest"]["P1"]["release_notes"], "pair notes\n")
-        self.assertEqual(root_doc["latest"]["METER"]["release_notes"], "pair notes\n")
-        self.assertTrue(root_doc["latest"]["METER"]["release_notes_url"].endswith("/P1/latest/RELEASE_NOTES.md"))
+        meter = root_doc["latest"]["METER"]
+        self.assertFalse(meter["available"])
+        self.assertNotIn("release_notes", meter)
+        self.assertNotIn("alias_of", meter)
+        self.assertNotIn("alias_of", _product(root_doc, "METER"))
 
     def test_invalid_notes_are_refused(self) -> None:
         binaries = _bridge_bins(61)

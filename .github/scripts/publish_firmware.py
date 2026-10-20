@@ -21,6 +21,7 @@ from feedlib import (
     attach_release_notes,
     load_catalog,
     normalize_version,
+    read_publish_directory,
     rollback_latest,
     validate_feed,
     version_folder,
@@ -103,18 +104,7 @@ def main(argv: list[str] | None = None) -> int:
                 known = ", ".join(catalog["products"])
                 raise FeedError(f"unknown product {args.product!r}; known products: {known}")
             spec = catalog["products"][args.product]
-            binaries = {}
-            if spec.get("family") == "package":
-                for board, info in (spec.get("boards") or {}).items():
-                    path = args.from_dir / info["filename"]
-                    if path.is_file():
-                        binaries[board] = (path.read_bytes(), path.name)
-            elif spec.get("family") == "android":
-                for path in sorted(args.from_dir.glob("*.apk")):
-                    binaries[path.stem] = (path.read_bytes(), path.name)
-            else:
-                for path in sorted(args.from_dir.glob("*.bin")):
-                    binaries[path.stem] = (path.read_bytes(), path.name)
+            binaries, install = read_publish_directory(spec, args.from_dir)
             source = {
                 "kind": "directory",
                 "repository": spec.get("source_repository"),
@@ -141,6 +131,7 @@ def main(argv: list[str] | None = None) -> int:
                 source=source,
                 release_notes=args.release_notes,
                 release_notes_path=args.release_notes_file,
+                install=install,
             )
             validate_feed(args.root, catalog)
             print(f"published {folder}")
