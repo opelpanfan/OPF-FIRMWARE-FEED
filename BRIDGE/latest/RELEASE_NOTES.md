@@ -1,7 +1,7 @@
 # BRIDGE v0.0.1
 
 - **8 MB partition table** (`partitions_8mb_bridge.csv`, 3.75 MB OTA slots; NVS and otadata unchanged). Needs one USB flash per device (bootloader + partitions + boot_app0 + app; the feed now ships all three companions per board). Devices on the old table keep OTA while the app is under 1.875 MB.
-- Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages. System section headers use the same bars.
+- Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages.
 - Smartmeter emulator: RS485 RX capture of the inverter's meter probes (off at boot; Start/Stop/Clear on the System tab, `POST /api/smartmeter?cap=on|off|clear`, `sm_rx` in `GET /api/smartmeter`, `[SM-RX]` serial lines). Emulator replies unchanged.
 - Feed: `BRIDGE/v0.0.1` is the only version folder; `latest` follows it.
 
