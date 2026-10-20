@@ -108,10 +108,10 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.1`
 
 - Date: 2026-10-19
-- Source commit: `2ed79bd56277ea2e479bd15a70365a739fca2232` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `23634dc9f7ef2fc2077762374abed1078bf54189` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1916288 bytes, 1.83 MiB)
-  - `ATOM_S3_R.bin` (1962032 bytes, 1.87 MiB)
+  - `ATOM_S3.bin` (1916320 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1962048 bytes, 1.87 MiB)
   - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
   - `SHA256SUMS` (158 bytes)
   - `index.json` (10814 bytes, 10.6 KiB)
@@ -123,10 +123,10 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `latest`
 
 - Date: 2026-10-19
-- Source commit: `2ed79bd56277ea2e479bd15a70365a739fca2232` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `23634dc9f7ef2fc2077762374abed1078bf54189` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1916288 bytes, 1.83 MiB)
-  - `ATOM_S3_R.bin` (1962032 bytes, 1.87 MiB)
+  - `ATOM_S3.bin` (1916320 bytes, 1.83 MiB)
+  - `ATOM_S3_R.bin` (1962048 bytes, 1.87 MiB)
   - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
   - `SHA256SUMS` (158 bytes)
   - `index.json` (10813 bytes, 10.6 KiB)
