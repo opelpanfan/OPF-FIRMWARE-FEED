@@ -85,15 +85,15 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-10-19
-- Source commit: `a58c429487409ab9e243a869ede6f220264932b3` (opelpanfan/OPF-STORAGE-DASH)
+- Date: 2026-10-20
+- Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1598928 bytes, 1.52 MiB)
-  - `OPF_ATOM_S3R.bin` (1799056 bytes, 1.72 MiB)
-  - `OPF_T2CAN.bin` (1635776 bytes, 1.56 MiB)
-  - `OPF_WS.bin` (1632256 bytes, 1.56 MiB)
-  - `OPF_WS_DASH.bin` (2341088 bytes, 2.23 MiB)
-  - `OPF_WS_NO_TEMP.bin` (1632096 bytes, 1.56 MiB)
+  - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
+  - `OPF_ATOM_S3R.bin` (1865392 bytes, 1.78 MiB)
+  - `OPF_T2CAN.bin` (1701696 bytes, 1.62 MiB)
+  - `OPF_WS.bin` (1699776 bytes, 1.62 MiB)
+  - `OPF_WS_DASH.bin` (2403456 bytes, 2.29 MiB)
+  - `OPF_WS_NO_TEMP.bin` (1699632 bytes, 1.62 MiB)
   - `RELEASE_NOTES.md` (981 bytes)
   - `SHA256SUMS` (489 bytes)
   - `index.json` (4864 bytes, 4.8 KiB)
@@ -105,15 +105,15 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-10-19
-- Source commit: `a58c429487409ab9e243a869ede6f220264932b3` (opelpanfan/OPF-STORAGE-DASH)
+- Date: 2026-10-20
+- Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1598928 bytes, 1.52 MiB)
-  - `OPF_ATOM_S3R.bin` (1799056 bytes, 1.72 MiB)
-  - `OPF_T2CAN.bin` (1635776 bytes, 1.56 MiB)
-  - `OPF_WS.bin` (1632256 bytes, 1.56 MiB)
-  - `OPF_WS_DASH.bin` (2341088 bytes, 2.23 MiB)
-  - `OPF_WS_NO_TEMP.bin` (1632096 bytes, 1.56 MiB)
+  - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
+  - `OPF_ATOM_S3R.bin` (1865392 bytes, 1.78 MiB)
+  - `OPF_T2CAN.bin` (1701696 bytes, 1.62 MiB)
+  - `OPF_WS.bin` (1699776 bytes, 1.62 MiB)
+  - `OPF_WS_DASH.bin` (2403456 bytes, 2.29 MiB)
+  - `OPF_WS_NO_TEMP.bin` (1699632 bytes, 1.62 MiB)
   - `RELEASE_NOTES.md` (981 bytes)
   - `SHA256SUMS` (489 bytes)
   - `index.json` (4862 bytes, 4.7 KiB)
