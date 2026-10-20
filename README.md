@@ -85,7 +85,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-10-20
+- Date: 2026-10-19
 - Source commit: `a58c429487409ab9e243a869ede6f220264932b3` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1598928 bytes, 1.52 MiB)
@@ -105,7 +105,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-10-20
+- Date: 2026-10-19
 - Source commit: `a58c429487409ab9e243a869ede6f220264932b3` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1598928 bytes, 1.52 MiB)
@@ -175,33 +175,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 Source repository: `opelpanfan/OPF-P1`
 
-#### `v0.0.1`
-
-- Date: 2026-10-20
-- Files:
-  - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
-  - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
-  - `RELEASE_NOTES.md` (1093 bytes, 1.1 KiB)
-  - `SHA256SUMS` (162 bytes)
-  - `index.json` (2641 bytes, 2.6 KiB)
-- Summary:
-  - **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.
-  - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.
-  - Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.
-
-#### `latest`
-
-- Date: 2026-10-20
-- Files:
-  - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
-  - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
-  - `RELEASE_NOTES.md` (1093 bytes, 1.1 KiB)
-  - `SHA256SUMS` (162 bytes)
-  - `index.json` (2640 bytes, 2.6 KiB)
-- Summary:
-  - **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.
-  - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.
-  - Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.
+No version folders.
 
 ### CONFIG_APP
 
