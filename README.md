@@ -85,7 +85,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-10-19
+- Date: 2026-10-20
 - Source commit: `a58c429487409ab9e243a869ede6f220264932b3` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1598928 bytes, 1.52 MiB)
@@ -105,7 +105,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-10-19
+- Date: 2026-10-20
 - Source commit: `a58c429487409ab9e243a869ede6f220264932b3` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1598928 bytes, 1.52 MiB)
@@ -130,34 +130,46 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.1`
 
 - Date: 2026-10-20
-- Source commit: `23634dc9f7ef2fc2077762374abed1078bf54189` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `5c4711e9b87b8a8626fcb38da824af750219a2d5` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916320 bytes, 1.83 MiB)
+  - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
   - `ATOM_S3_R.bin` (1962048 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (8881 bytes, 8.7 KiB)
-  - `SHA256SUMS` (158 bytes)
-  - `index.json` (10546 bytes, 10.3 KiB)
-- Full-install files: `ATOM_S3` no, `ATOM_S3_R` no
+  - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
+  - `SHA256SUMS` (696 bytes)
+  - `index.json` (12186 bytes, 11.9 KiB)
+- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes
 - Summary:
+  - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
+  - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
   - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
-  - `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.
-  - LoRa UART: a line that overflows the buffer is dropped until the next newline. The tail is not parsed as a new frame, and the overflow counter increments once per line.
 
 #### `latest`
 
 - Date: 2026-10-20
-- Source commit: `23634dc9f7ef2fc2077762374abed1078bf54189` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `5c4711e9b87b8a8626fcb38da824af750219a2d5` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916320 bytes, 1.83 MiB)
+  - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
   - `ATOM_S3_R.bin` (1962048 bytes, 1.87 MiB)
-  - `RELEASE_NOTES.md` (8881 bytes, 8.7 KiB)
-  - `SHA256SUMS` (158 bytes)
-  - `index.json` (10545 bytes, 10.3 KiB)
-- Full-install files: `ATOM_S3` no, `ATOM_S3_R` no
+  - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (9145 bytes, 8.9 KiB)
+  - `SHA256SUMS` (696 bytes)
+  - `index.json` (12185 bytes, 11.9 KiB)
+- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes
 - Summary:
+  - Console and AtomS3R LCD layout restored to the v0.0.1 look (v0.0.2 shared-UX layout removed). Non-UI firmware fixes kept.
+  - Feed publish target is again `BRIDGE/v0.0.1` (`FEED_FIXED_VERSION`); `BRIDGE/v0.0.2` is removed from the feed. `latest` follows v0.0.1.
   - RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
-  - `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.
-  - LoRa UART: a line that overflows the buffer is dropped until the next newline. The tail is not parsed as a new frame, and the overflow counter increments once per line.
 
 ### P1
 
@@ -165,7 +177,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-10-08
+- Date: 2026-10-20
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
