@@ -149,27 +149,49 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
   - Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages.
   - Smartmeter emulator: RS485 RX capture of the inverter's meter probes (off at boot; Start/Stop/Clear on the System tab, `POST /api/smartmeter?cap=on|off|clear`, `sm_rx` in `GET /api/smartmeter`, `[SM-RX]` serial lines). Emulator replies unchanged.
 
-#### `latest`
+#### `v0.0.2`
 
-- Date: 2026-10-20
-- Source commit: `2ed79bd56277ea2e479bd15a70365a739fca2232` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Date: unknown
+- Source commit: `9e0b0fb42aabb10c6210984e1a97c0c792e75b5c` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1916752 bytes, 1.83 MiB)
+  - `ATOM_S3.bin` (2097072 bytes, 2.00 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (1962464 bytes, 1.87 MiB)
+  - `ATOM_S3_R.bin` (2142736 bytes, 2.04 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (9679 bytes, 9.5 KiB)
+  - `RELEASE_NOTES.md` (10544 bytes, 10.3 KiB)
   - `SHA256SUMS` (696 bytes)
-  - `index.json` (12737 bytes, 12.4 KiB)
+  - `index.json` (13622 bytes, 13.3 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes
 - Summary:
-  - **8 MB partition table** (`partitions_8mb_bridge.csv`, 3.75 MB OTA slots; NVS and otadata unchanged). Needs one USB flash per device (bootloader + partitions + boot_app0 + app; the feed now ships all three companions per board). Devices on the old table keep OTA while the app…
-  - Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages.
-  - Smartmeter emulator: RS485 RX capture of the inverter's meter probes (off at boot; Start/Stop/Clear on the System tab, `POST /api/smartmeter?cap=on|off|clear`, `sm_rx` in `GET /api/smartmeter`, `[SM-RX]` serial lines). Emulator replies unchanged.
+  - Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.
+  - OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).
+  - Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).
+
+#### `latest`
+
+- Date: 2026-10-20
+- Source commit: `9e0b0fb42aabb10c6210984e1a97c0c792e75b5c` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Files:
+  - `ATOM_S3.bin` (2097072 bytes, 2.00 MiB)
+  - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `ATOM_S3_R.bin` (2142736 bytes, 2.04 MiB)
+  - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (10544 bytes, 10.3 KiB)
+  - `SHA256SUMS` (696 bytes)
+  - `index.json` (13621 bytes, 13.3 KiB)
+- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes
+- Summary:
+  - Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.
+  - OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).
+  - Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).
 
 ### P1
 
