@@ -69,13 +69,14 @@
       "version_label": "prefixed",
       "source_repository": "opelpanfan/OPF-STORAGE-M5-BRIDGE",
       "source_ref": "master-grok",
-      "board_contract_sha": "d9ca7a0",
+      "board_contract_sha": "7d6d1a7",
       "workflow_file": "build-firmware.yml",
       "required_boards": [
         "ATOM_S3_R",
-        "ATOM_S3"
+        "ATOM_S3",
+        "ESP32"
       ],
-      "runtime_config": "DTU vs RS485 is selected on the device after flash. The feed publishes only ATOM_S3_R.bin and ATOM_S3.bin.",
+      "runtime_config": "PlatformIO builds ESP32_S3 (published as ATOM_S3_R.bin and ATOM_S3.bin; runtime NVS hw_board selects Atom S3 / Atom S3R / Waveshare OPF_WS) and ESP32 (ESP32.bin = LilyGO T-CAN485 only). DTU vs RS485 is a device setting. v0.0.2 hardware soak proven on Atom S3R (.110) only; WS and T-CAN485 are built for feed but not hardware-proven.",
       "ignored_envs": [
         "ATOM_S3_DTU",
         "ATOM_S3_R_DTU"
@@ -84,14 +85,21 @@
         "ATOM_S3": {
           "filename": "ATOM_S3.bin",
           "envs": [
-            "ATOM_S3"
+            "ESP32_S3"
           ],
           "required": true
         },
         "ATOM_S3_R": {
           "filename": "ATOM_S3_R.bin",
           "envs": [
-            "ATOM_S3_R"
+            "ESP32_S3"
+          ],
+          "required": true
+        },
+        "ESP32": {
+          "filename": "ESP32.bin",
+          "envs": [
+            "ESP32"
           ],
           "required": true
         }

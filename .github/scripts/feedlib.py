@@ -1321,12 +1321,35 @@ def validate_feed(root: Path, catalog: dict | None = None) -> None:
                     validate_image(spec["family"], data, label)
 
 
-def _check_same_bytes(incoming: list[tuple[str, bytes]]) -> None:
+def _shared_mcu_envs(boards_spec: dict, left: str, right: str) -> bool:
+    """True when both boards are built from the same PlatformIO env list."""
+
+    a = boards_spec.get(left) or {}
+    b = boards_spec.get(right) or {}
+    envs_a = a.get("envs")
+    envs_b = b.get("envs")
+    return (
+        isinstance(envs_a, list)
+        and isinstance(envs_b, list)
+        and bool(envs_a)
+        and envs_a == envs_b
+    )
+
+
+def _check_same_bytes(
+    incoming: list[tuple[str, bytes]],
+    boards_spec: dict | None = None,
+) -> None:
     seen: dict[str, str] = {}
     for board, data in incoming:
         digest = sha256_bytes(data)
         if digest in seen:
-            raise FeedError(f"{board} and {seen[digest]} are byte-identical; refusing the publish")
+            other = seen[digest]
+            if boards_spec and _shared_mcu_envs(boards_spec, board, other):
+                # Shared MCU image published under legacy board aliases
+                # (e.g. BRIDGE ATOM_S3 + ATOM_S3_R from ESP32_S3).
+                continue
+            raise FeedError(f"{board} and {other} are byte-identical; refusing the publish")
         seen[digest] = board
 
 
@@ -1483,7 +1506,7 @@ def apply_publish(
             raise FeedError(f"unsafe source filename for {board}")
         planned[boards[board]["filename"]] = data
         incoming.append((board, data))
-    _check_same_bytes(incoming)
+    _check_same_bytes(incoming, boards)
     _stage_install(product, spec, boards, binaries, install or {}, planned)
 
     suffixes = _payload_suffixes(spec)

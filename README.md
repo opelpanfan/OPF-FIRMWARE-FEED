@@ -65,7 +65,7 @@ The same three files are lines in the folder `SHA256SUMS` and the root `SHA256SU
 Board filenames are in `.github/feed-catalog.json`.
 
 - `P1/`: `RAK3172_TX.bin` and `RAK3172_RX.bin`, published together.
-- `BRIDGE/`: `ATOM_S3_R.bin` and `ATOM_S3.bin`.
+- `BRIDGE/`: `ATOM_S3_R.bin` and `ATOM_S3.bin` (shared ESP32_S3 MCU image; runtime `hw_board`) plus `ESP32.bin` (LilyGO T-CAN485).
 - `BMS/`: catalog boards, including `OPF_WS.bin`.
 - `METER/`: `transmitter.bin`, `receiver.bin`, `transmitter_lcd.bin`, and `receiver_lcd.bin`, published together under `METER/vX.Y.Z/` and `METER/latest/`. ESP32-S3 images for AtomS3 and AtomS3R from OPF-LORA-METER, built with `partitions/ota_8MB.csv` and qio flash mode. Optional companions use the filenames above.
 - `FLASHER/`: `OPF-FLASHER-win-x64.exe` and `OPF-FLASHER-linux-amd64.deb`. Not a board image. Until the first real app release the version folder stays `v0.0.1` and may be replaced in place.
