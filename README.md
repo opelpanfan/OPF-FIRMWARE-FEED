@@ -151,7 +151,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.2`
 
-- Date: unknown
+- Date: 2026-11-05
 - Source commit: `9e0b0fb42aabb10c6210984e1a97c0c792e75b5c` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (2097072 bytes, 2.00 MiB)
@@ -173,7 +173,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `latest`
 
-- Date: 2026-10-20
+- Date: 2026-11-05
 - Source commit: `9e0b0fb42aabb10c6210984e1a97c0c792e75b5c` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (2097072 bytes, 2.00 MiB)
