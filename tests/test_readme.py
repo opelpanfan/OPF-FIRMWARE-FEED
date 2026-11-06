@@ -140,10 +140,13 @@ class ReadmeSummaryTests(unittest.TestCase):
         self.assertIn("- Full-install files: `ATOM_S3` no, `ATOM_S3_R` no", section)
         self.assertIn("`OPF_WS` no", section)
 
-    def test_workflow_regenerates_on_main_without_pulling_sources(self) -> None:
+    def test_workflow_regenerates_on_master_grok_without_pulling_sources(self) -> None:
         workflow = (ROOT / ".github/workflows/feed-readme.yml").read_text(encoding="utf-8")
-        self.assertIn("- main", workflow)
         self.assertIn("- master-grok", workflow)
+        self.assertNotIn("- main\n", workflow)
+        self.assertNotIn("- master\n", workflow)
+        self.assertNotIn("HEAD:main", workflow)
+        self.assertNotIn("HEAD:master", workflow)
         self.assertIn("paths-ignore:", workflow)
         self.assertIn("README.md", workflow)
         self.assertIn("index.json", workflow)

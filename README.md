@@ -1,10 +1,10 @@
 # OPF Firmware Feed
 
-Public firmware catalog for OPF-FLASHER and device OTA. Binaries live on the `main` branch.
+Public firmware catalog for OPF-FLASHER and device OTA. Binaries live on the `master-grok` branch.
 
 Fetch one file:
 
-`https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/index.json`
+`https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/index.json`
 
 Read `latest.BMS`, `latest.BRIDGE`, `latest.P1`, `latest.METER`, `latest.CONFIG_APP`, and `latest.FLASHER`.
 
@@ -12,7 +12,7 @@ Use a product only when `available` is true. Download each object in `artifacts[
 
 `products[].versions[]` lists every immutable version folder. `latest.*` is the channel.
 
-CONFIG_APP, FLASHER, and METER stay empty until sources publish a version folder. Until then `available` is false and `versions` is `[]`.
+CONFIG_APP and METER stay empty until sources publish a version folder. Until then `available` is false and `versions` is `[]`.
 
 This repository is a passive catalog. Sources push `P1/`, `BRIDGE/`, `BMS/`, `METER/`, `CONFIG_APP/`, and `FLASHER/` themselves. There is no ingest workflow and no Action that downloads private releases. This repository does not need `SOURCE_READ_TOKEN`.
 
@@ -68,7 +68,7 @@ Board filenames are in `.github/feed-catalog.json`.
 - `BRIDGE/`: `ATOM_S3_R.bin` and `ATOM_S3.bin` (shared ESP32_S3 MCU image; runtime `hw_board`) plus `ESP32.bin` (LilyGO T-CAN485).
 - `BMS/`: catalog boards, including `OPF_WS.bin`.
 - `METER/`: `transmitter.bin`, `receiver.bin`, `transmitter_lcd.bin`, and `receiver_lcd.bin`, published together under `METER/vX.Y.Z/` and `METER/latest/`. ESP32-S3 images for AtomS3 and AtomS3R from OPF-LORA-METER, built with `partitions/ota_8MB.csv` and qio flash mode. Optional companions use the filenames above.
-- `FLASHER/`: `OPF-FLASHER-win-x64.exe` and `OPF-FLASHER-linux-amd64.deb`. Not a board image. Until the first real app release the version folder stays `v0.0.1` and may be replaced in place.
+- `FLASHER/`: `OPF-FLASHER-win-x64.exe` and `OPF-FLASHER-linux-amd64.deb`. Not a board image. Publish an immutable `FLASHER/vX.Y.Z/` and mirror `FLASHER/latest/`. Do not replace an existing version folder, including historical `v0.0.1`.
 - `CONFIG_APP/`: `opf-config-app.apk`.
 
 <!-- FEED-SUMMARY:START -->
