@@ -85,7 +85,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-10-20
+- Date: 2026-11-06
 - Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
@@ -105,7 +105,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-10-20
+- Date: 2026-11-06
 - Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
@@ -129,7 +129,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.1`
 
-- Date: 2026-10-20
+- Date: 2026-11-06
 - Source commit: `2ed79bd56277ea2e479bd15a70365a739fca2232` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916752 bytes, 1.83 MiB)
@@ -207,7 +207,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-10-20
+- Date: 2026-11-06
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -221,7 +221,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `latest`
 
-- Date: 2026-10-20
+- Date: 2026-11-06
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
