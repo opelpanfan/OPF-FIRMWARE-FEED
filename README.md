@@ -85,7 +85,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-11-06
+- Date: 2026-10-20
 - Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
@@ -96,7 +96,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - `OPF_WS_NO_TEMP.bin` (1699632 bytes, 1.62 MiB)
   - `RELEASE_NOTES.md` (981 bytes)
   - `SHA256SUMS` (489 bytes)
-  - `index.json` (4864 bytes, 4.8 KiB)
+  - `index.json` (4955 bytes, 4.8 KiB)
 - Full-install files: `OPF_WS` no, `OPF_WS_NO_TEMP` no, `OPF_T2CAN` no, `OPF_ATOM_S3` no, `OPF_ATOM_S3R` no, `OPF_WS_DASH` no
 - Summary:
   - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
@@ -105,7 +105,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-11-06
+- Date: 2026-10-20
 - Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
@@ -116,7 +116,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - `OPF_WS_NO_TEMP.bin` (1699632 bytes, 1.62 MiB)
   - `RELEASE_NOTES.md` (981 bytes)
   - `SHA256SUMS` (489 bytes)
-  - `index.json` (4862 bytes, 4.7 KiB)
+  - `index.json` (4953 bytes, 4.8 KiB)
 - Full-install files: `OPF_WS` no, `OPF_WS_NO_TEMP` no, `OPF_T2CAN` no, `OPF_ATOM_S3` no, `OPF_ATOM_S3R` no, `OPF_WS_DASH` no
 - Summary:
   - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
@@ -129,7 +129,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.1`
 
-- Date: 2026-11-06
+- Date: 2026-10-20
 - Source commit: `2ed79bd56277ea2e479bd15a70365a739fca2232` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916752 bytes, 1.83 MiB)
@@ -142,7 +142,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
   - `RELEASE_NOTES.md` (9679 bytes, 9.5 KiB)
   - `SHA256SUMS` (696 bytes)
-  - `index.json` (12738 bytes, 12.4 KiB)
+  - `index.json` (12773 bytes, 12.5 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes
 - Summary:
   - **8 MB partition table** (`partitions_8mb_bridge.csv`, 3.75 MB OTA slots; NVS and otadata unchanged). Needs one USB flash per device (bootloader + partitions + boot_app0 + app; the feed now ships all three companions per board). Devices on the old table keep OTA while the app…
@@ -168,7 +168,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
   - `RELEASE_NOTES.md` (11029 bytes, 10.8 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (15260 bytes, 14.9 KiB)
+  - `index.json` (15309 bytes, 15.0 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
   - **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
@@ -194,7 +194,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
   - `RELEASE_NOTES.md` (11029 bytes, 10.8 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (15259 bytes, 14.9 KiB)
+  - `index.json` (15308 bytes, 14.9 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
   - **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
@@ -207,13 +207,13 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-11-06
+- Date: 2026-10-20
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
   - `RELEASE_NOTES.md` (1093 bytes, 1.1 KiB)
   - `SHA256SUMS` (162 bytes)
-  - `index.json` (2641 bytes, 2.6 KiB)
+  - `index.json` (2676 bytes, 2.6 KiB)
 - Summary:
   - **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.
   - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.
@@ -221,13 +221,13 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `latest`
 
-- Date: 2026-11-06
+- Date: 2026-10-20
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
   - `RELEASE_NOTES.md` (1093 bytes, 1.1 KiB)
   - `SHA256SUMS` (162 bytes)
-  - `index.json` (2640 bytes, 2.6 KiB)
+  - `index.json` (2675 bytes, 2.6 KiB)
 - Summary:
   - **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.
   - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.

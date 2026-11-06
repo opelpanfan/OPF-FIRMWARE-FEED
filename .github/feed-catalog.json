@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "repository": "opelpanfan/OPF-FIRMWARE-FEED",
-  "branch": "main",
-  "raw_base": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main",
+  "branch": "master-grok",
+  "raw_base": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok",
   "aliases": {},
   "products": {
     "BMS": {

@@ -1,7 +1,7 @@
 """Fail-closed firmware feed catalog and manifest rendering.
 
 This repository stores folders that source repos push. It does not download
-private releases or workflow artifacts. Binaries already on ``main`` stay
+private releases or workflow artifacts. Binaries already on ``master-grok`` stay
 where they are. A local publish adds an immutable ``vX.Y.Z`` folder and, when
 requested, refreshes ``latest/`` from that release. Existing version folders
 are never deleted. ``latest/`` is not a substitute for those folders.
@@ -128,6 +128,17 @@ def load_catalog(path: Path | None = None) -> dict:
         raise FeedError(f"cannot read feed catalog: {exc}") from exc
     if catalog.get("schema") != 1:
         raise FeedError("feed catalog schema must be 1")
+    branch = catalog.get("branch")
+    raw_base = str(catalog.get("raw_base") or "")
+    if branch != "master-grok":
+        raise FeedError(
+            f"feed catalog branch must be master-grok (got {branch!r}); "
+            "main/master are not publish targets"
+        )
+    if "/master-grok" not in raw_base or raw_base.rstrip("/").endswith(("/main", "/master")):
+        raise FeedError(
+            f"feed catalog raw_base must target the master-grok branch (got {raw_base!r})"
+        )
     products = catalog.get("products")
     if not isinstance(products, dict) or not products:
         raise FeedError("feed catalog has no products")

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "repository": "opelpanfan/OPF-FIRMWARE-FEED",
-  "branch": "main",
+  "branch": "master-grok",
   "latest_selection": "Read latest.BMS, latest.BRIDGE, latest.P1, latest.METER, latest.CONFIG_APP, and latest.FLASHER. Do not choose the highest semver folder: historical version numbers were not published in order.",
   "aliases": {},
   "latest": {
@@ -16,7 +16,7 @@
       ],
       "highest_semver_folder": "v0.0.1",
       "highest_semver_is_latest": true,
-      "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/index.json",
+      "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/index.json",
       "boards": [
         "OPF_ATOM_S3",
         "OPF_ATOM_S3R",
@@ -39,7 +39,7 @@
           "filename": "OPF_ATOM_S3.bin",
           "sha256": "221dab8e58a1669a16466dc761807198908b05e5cf3636b7be25b27ed4cfa1a7",
           "size": 1664816,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3.bin",
           "source_filename": "OPF_ATOM_S3.bin"
         },
         {
@@ -47,7 +47,7 @@
           "filename": "OPF_ATOM_S3R.bin",
           "sha256": "deddaedf8553daefe6a8ecb74eda04bbebd6912924a075d7d2328f100fecd06c",
           "size": 1865392,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3R.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3R.bin",
           "source_filename": "OPF_ATOM_S3R.bin"
         },
         {
@@ -55,7 +55,7 @@
           "filename": "OPF_T2CAN.bin",
           "sha256": "24bb83487dcadd22f5c6584a47e85d4af5b6c7eeb125f83be9b08a279f957ee8",
           "size": 1701696,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_T2CAN.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_T2CAN.bin",
           "source_filename": "OPF_T2CAN.bin"
         },
         {
@@ -63,7 +63,7 @@
           "filename": "OPF_WS.bin",
           "sha256": "6256965645ba5af13a271ee81875d4fbb3e1352bdc7b0b5590b137a81c6bf334",
           "size": 1699776,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS.bin",
           "source_filename": "OPF_WS.bin"
         },
         {
@@ -71,7 +71,7 @@
           "filename": "OPF_WS_DASH.bin",
           "sha256": "4687b5318c0b8e7c1b0892588fe87f3912f25439cf0b00b98e371da15dfd9b06",
           "size": 2403456,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_DASH.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_DASH.bin",
           "source_filename": "OPF_WS_DASH.bin"
         },
         {
@@ -79,12 +79,12 @@
           "filename": "OPF_WS_NO_TEMP.bin",
           "sha256": "cfbec5b38e9f93abbc6b764491dea6392894dec27a25d2e0ff7fe7cb6013fc78",
           "size": 1699632,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_NO_TEMP.bin",
           "source_filename": "OPF_WS_NO_TEMP.bin"
         }
       ],
       "release_notes": "# BMS v0.0.1\n\n- Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.\n- Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.\n- SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.\n- Low-SoC fix: SoC follows IVT Ah counting (charge raises it), seeded from the real reading once cells are valid, with spike rejection and hysteresis. Stops the 5%/7% charge/discharge loop.\n- Soft stop: OTA and other requested reboots ramp current down first, then reboot.\n- Crash fix: `logs_loop` panic (JSON allocator double-free, unlocked console print, MQTT publish race).\n- Settings: keys over 15 characters renamed so they save.\n- `/health`: ramp, taper, SoC and last restart reason fields.\n- Stability from earlier on this line: OTA watchdog fix, coredump capture and `/coredump`, PSA2 96-cell decode, IVT support, UV failsafe.\n",
-      "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/RELEASE_NOTES.md"
+      "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/RELEASE_NOTES.md"
     },
     "BRIDGE": {
       "product": "BRIDGE",
@@ -97,7 +97,7 @@
       ],
       "highest_semver_folder": "v0.0.2",
       "highest_semver_is_latest": true,
-      "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/index.json",
+      "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/latest/index.json",
       "boards": [
         "ATOM_S3",
         "ATOM_S3_R",
@@ -114,7 +114,7 @@
           "filename": "ATOM_S3.bin",
           "sha256": "92a52b0c35a4d595d26026aeeba30d6733a1c9d27bc87805152626614254cc8e",
           "size": 2231376,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/latest/ATOM_S3.bin",
           "install": {
             "bootloader": {
               "path": "ATOM_S3.bootloader.bin",
@@ -141,7 +141,7 @@
           "filename": "ATOM_S3_R.bin",
           "sha256": "92a52b0c35a4d595d26026aeeba30d6733a1c9d27bc87805152626614254cc8e",
           "size": 2231376,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/latest/ATOM_S3_R.bin",
           "install": {
             "bootloader": {
               "path": "ATOM_S3_R.bootloader.bin",
@@ -168,7 +168,7 @@
           "filename": "ESP32.bin",
           "sha256": "3b4576b68e79b8323af3fde293522dc0698c17bf0dc8380bcedc9cc55056a0ed",
           "size": 1841296,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ESP32.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/latest/ESP32.bin",
           "install": {
             "bootloader": {
               "path": "ESP32.bootloader.bin",
@@ -194,7 +194,7 @@
       "runtime_config": "PlatformIO builds ESP32_S3 (published as ATOM_S3_R.bin and ATOM_S3.bin; runtime NVS hw_board selects Atom S3 / Atom S3R / Waveshare OPF_WS) and ESP32 (ESP32.bin = LilyGO T-CAN485 only). DTU vs RS485 is a device setting. v0.0.2 hardware soak proven on Atom S3R (.110) only; WS and T-CAN485 are built for feed but not hardware-proven.",
       "board_contract_sha": "7d6d1a7",
       "release_notes": "# BRIDGE v0.0.2\n\n- **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only \u2014 not T-2CAN).\n- **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.\n- **Hardware validation:** Atom S3R `.110` non-DTU (`hw_board=ATOM_S3_R`, `atom_base=rs485`) soak on `7d6d1a7`. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.\n- Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.\n- OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).\n- Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).\n- Concurrency: telemetry slot lock + snapshot reads; staged `/device` `chip_id` override applied by `comms_loop`.\n- LCD: `lvgl_loop` stack 4 KB \u2192 8 KB.\n- Host lint: MQTT owner + telemetry writers (`test/host/run_all.sh`).\n- PSRAM phases 1\u20133: diag watermarks, large cold buffers, mid-size JSON in PSRAM when present.\n- Feed: tag `v0.0.2` on `master-grok` @ `7d6d1a7`; publish via Actions only.\n\n\n# BRIDGE v0.0.1\n\n- **8 MB partition table** (`partitions_8mb_bridge.csv`, 3.75 MB OTA slots; NVS and otadata unchanged). Needs one USB flash per device (bootloader + partitions + boot_app0 + app; the feed now ships all three companions per board). Devices on the old table keep OTA while the app is under 1.875 MB.\n- Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages. System section headers use the same bars.\n- Smartmeter emulator: RS485 RX capture of the inverter's meter probes (off at boot; Start/Stop/Clear on the System tab, `POST /api/smartmeter?cap=on|off|clear`, `sm_rx` in `GET /api/smartmeter`, `[SM-RX]` serial lines). Emulator replies unchanged.\n- Feed: `BRIDGE/v0.0.1` is the only version folder; `latest` follows it.\n\n\n- RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).\n- `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.\n- LoRa UART: a line that overflows the buffer is dropped until the next newline. The tail is not parsed as a new frame, and the overflow counter increments once per line.\n- Atom Base and device role are cached after boot (and when Settings or BLE saves the role). `loop()` no longer opens NVS on every pass.\n- `/diag` and BLE `telem_get` include `min_free_heap` and per-task stack high-water marks (`stack_hwm_comms`, `stack_hwm_telem`, `stack_hwm_atom`, `stack_hwm_ota`, `stack_hwm_loop`, `stack_hwm_lcd`, minimum free bytes). The System tab shows the stack marks.\n- Dashboard websocket refresh uses a stack buffer instead of a temporary `String`.\n- Web console and AtomS3R LCD layout restored to the v0.0.1 look (same page structure, gauges, settings, header, and LCD pages as 519546a). The System tab still shows the stack marks.\n\n## v0.0.1\n\n- DTU link is split into two indicators. `dtu_rf_link` (`up` / `degraded` / `down`) is the radio: any CRC-good v4 frame in the last 10 s (`degraded` when the gap is over 3 s). `dtu_p1_data` (`valid` / `invalid` / `none`) is the last fast frame's flags bit0, so a live radio with `dataInvalid=1` shows `rf_up_p1_invalid` instead of hiding the link. Same keys on `/api/lora`, `/values`, `/diag` and BLE `telem_get` (`dtu_rf_link`, `dtu_rf_rssi`, `dtu_rf_snr`, `dtu_rf_seq`, `dtu_rf_age_ms`, `dtu_p1_data`). `dtu_link` stays `ok` / `stale` / `down` / `off` (ok while the radio is up, even if P1 is invalid). The smartmeter 0x0B gate is unchanged (valid fast data within 3 s). LoRa tab shows two status pills.\n- DTU (P1 over LoRa) retuned for OPF-P1 (v4 dual-cadence protocol): 869.525 MHz (EU868 g3), SF7/BW125/CR4/5, preamble 8, sync 0x1424; fast frame every 1 s, slow ~30 s. Units on the old 868.0 MHz default move to 869.525 MHz automatically (custom frequencies kept). **Run current OPF-P1 v0.0.1 (fw9, 46eecff or later) on the transmitter**; older P1 builds stay on 868.0 MHz or send only dataInvalid frames. Radio link goes degraded after 3 s and down after 10 s without a CRC-good frame. Smartmeter emulator safety: meter reads get Modbus exception 0x0B when P1 data is older than 3 s (or none yet) instead of frozen values, and recover on the next good frame. New diagnostics in `/api/lora` and BLE telem: frame rate / period / gap / burst stats, last rejected frame (length + hex), ignored P1 ACK/command frames (`rx_other_type`). See `docs/OPF_P1_LORA.md`.\n- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.\n- LCD OTA screen (AtomS3R, BMS twin look): full-screen progress (% + bar + KB), source (via Bluetooth / via Web) and result (failed / aborted / updated + build) during updates; ATOM_S3 uses the RGB LED.\n- BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.\n- BLE Wi-Fi/BLE info keys: `wifi_state`, `wifi_ssid`, `wifi_rssi`, `wifi_ip`, `ap_on`, `ble_conn`, `ble_peer`, `ble_conn_s`\u2026 in `telem_get`, `GET /health` and `/diag` (plus `wifi_mode_str` for the header badge).\n- BLE name = the Device Name exactly as typed (UTF-8, no prefix, no 8-char slug); unnamed devices keep `OPF-BRIDGE-<ID>`. Device Name max 29 bytes UTF-8 (web field with byte counter + warning, BLE `cfg_set` and `/device` reject longer new names). Advert = Flags + service UUID + Manufacturer Data `FFFF \"OP\" 02 01` (type 0x02 = Bridge, 0x01 = BMS; protocol v1), 29 B; scan response = Complete Local Name; GAP 0x2A00 = full name; a longer legacy name is advertised shortened. The device_id is no longer in the advert (use cfg_get/ota_info).\n- BLE robustness: keeps advertising while a free connection slot exists, so a dead app whose OS keeps the link open no longer hides the device; silent older links are dropped when a new app connects.\n- RS485 over BLE: `rs485_info`, `rs485_read`, `rs485_write` (confirm required), `rs485_raw`, `rs485_scan`, `rs485_sniff`, `rs485_set` (session-only baud/parity/stop/slave), `rs485_pause` / `rs485_resume`, `rs485_reinit`, `rs485_stats_reset`. Polling pauses with owner tracking and resumes automatically 60 s after the last command or on BLE disconnect. See `manuals/BLE_COMMANDS_RS485.md`.\n- fix: torn 32-bit Deye power reads causing \u00b165 kW spikes (grid_p, grid_ctp, load_p, backup_p now read both words atomically \u2014 one span request, or hi/lo/hi with matching hi; never published torn).\n- fix(Solis S6, both profiles): grid_p / grid_ctp sign was inverted (field: +15.3 kW while exporting). 33151 is + export on Solis, so it is now negated to the Deye convention (+ import / \u2212 export). load_p stays 33147 (a real register, which reads 0 when there is no house load) and backup_p stays 33148. fix(MQTT, all units): heartbeat/diag (~4.1 KB) exceeded the 4096 B MQTT buffer and was silently dropped after a few messages. The TX buffer is now 8 KB, and an oversize publish is logged as an error (`mqtt_oversize_count` in diag) without triggering publish backoff. fix(OTA): after a successful MQTT/web OTA the app tasks stay suspended and Wi-Fi is stopped before `esp_restart()`, instead of resuming the tasks 250 ms before the reboot (the likely cause of reset_reason=PANIC). There is a 15 s safety resume if no reboot happens.\n- Solis S6 (both profiles): the dashboard now gets PV and battery temperature like Deye. MQTT `pv_p` = sum of the new `pv1_p`..`pv4_p` (string V \u00d7 I, 33049..33056; Solis has no per-string power register; 33057 only as fallback, and it is published as diagnostic `pv_power_reg` because in the field it reads ~0.86\u00d7 the real PV power), and `battery1_t` = BMS battery temperature 33043 (s16 \u00d7 0.1 \u00b0C; some batteries report 0). The 30-50 kW 342xx \"battery 2\" block (battery2_t / battery2_v) is still unverified. Deye output is unchanged.\n- Solis S6 control parity with Deye (6-20 kW and 30-50 kW): import / export / idle with `[power_W, soc]` work the same on web, BLE, the MQTT cmd topic and the dispatcher's legacy MQTT `reg` payload (`grid_charge` / `grid_sell` / `grid_power` / `battery_soc`; that payload used to be ignored on Solis). **Breaking:** Solis preset power is now W (was A). It is converted to battery current with the live battery voltage (capped at 100 A), and refused with no write if the voltage is unknown. Every preset now also sets 43110 self-use + time-of-use (the Deye `tou_enable` equivalent; TOU slots are ignored without it). fix(6-20 kW): export no longer stays blocked after an import, idle clears the TOU slot bits, and the TOU slot current is in the correct 0.1 A unit (it was 1/10). Web UI shows W for Solis. Register map: `manuals/BLE_COMMANDS_S6.md`. Not yet tested on a live inverter.\n- Solis S6 (6-20 kW and 30-50 kW) telemetry fixed and brought to Deye parity \u2014 **every Solis Bridge in the fleet needs this update**: load_p = household load 33147 (was a free-running counter that kept increasing), grid_p = AC grid port power 33151 (was inverter active power), load_e_today = 33179 (was a power register), pv_e_today = 33035 (read 0), grid buy today 33171, battery power 33149 s32 (30-50 kW was V\u00d7I garbage), battery voltage/current from 33133/33134, backup_p = 33148; Deye sign conventions (grid + import, battery + discharge); new keys grid_sell_e_today, bat_buy/sell_e_today and lifetime *_e_tot totals. `s6_*` BLE commands now work on the 30-50 kW profile, and Deye control names (battery_shutdown, battery_low, charge_max_power, discharge_max_power) are accepted on Solis. See `manuals/BLE_COMMANDS_S6.md`.\n- Deye HV: grid/load voltage and current, battery 2 absent gate, derived totals, and `device_id`.\n- Read-only `board` identity (`ATOM_S3_R` / `ATOM_S3`, equals the FEED artifact name) in BLE `ota_info` / `cfg_get` / `telem_get` and `GET /health` + `/diag`.\n- Credentials: NVS is the source of truth for Wi\u2011Fi, MQTT and OTA login; build-time values are seeded only once into empty keys, so FEED images keep stored settings. `cfg_get`, `telem_get` and `/diag` report credential source/presence (never the values).\n- UI header: Wi-Fi badge (SSID + RSSI / connecting / no creds / AP only) and BLE badge (advertising / app connected) in the theme-chip row, identical to BMS; 4 themes; wraps on mobile.\n- Build reports `fw_version` from the release tag; commit info is in each manifest's `source.sha` / `source.fw_build`.\n",
-      "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
+      "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/latest/RELEASE_NOTES.md"
     },
     "P1": {
       "product": "P1",
@@ -207,7 +207,7 @@
       ],
       "highest_semver_folder": "v0.0.1",
       "highest_semver_is_latest": true,
-      "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
+      "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/index.json",
       "boards": [
         "RAK3172_RX",
         "RAK3172_TX"
@@ -222,7 +222,7 @@
           "filename": "RAK3172_RX.bin",
           "sha256": "e4d0e2edb20686aa04589edbdda0814767d384b26b1a56cf44cd391e5addd9b8",
           "size": 69836,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/RAK3172_RX.bin",
           "source_filename": "RAK3172_RX.bin"
         },
         {
@@ -230,7 +230,7 @@
           "filename": "RAK3172_TX.bin",
           "sha256": "7a01dde9e2eda47141060016a61ed2d8cdec5bca0b526b4abc61748e73f1846a",
           "size": 92508,
-          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin",
+          "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/RAK3172_TX.bin",
           "source_filename": "RAK3172_TX.bin"
         }
       ],
@@ -239,7 +239,7 @@
         "RAK3172_RX"
       ],
       "release_notes": "# P1 v0.0.1\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- P1 is read above the LoRa task again, and a telegram already in the UART ring is drained before the reader yields. This is the scheduling from the build that parsed the ESO meter.\n- P1 CRC is not required, matching the field build that read this ESO meter. A telegram from `/` to `!` is published when L1 voltage or import power is present and any voltage is between 150 V and 280 V. Fixed buffer, watchdog, and that scheduling stay.\n- `FW_ITERATION_ID` 10.\n",
-      "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RELEASE_NOTES.md"
+      "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/RELEASE_NOTES.md"
     },
     "CONFIG_APP": {
       "product": "CONFIG_APP",
@@ -300,7 +300,7 @@
         ],
         "highest_semver_folder": "v0.0.1",
         "highest_semver_is_latest": true,
-        "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/index.json",
+        "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/index.json",
         "boards": [
           "OPF_ATOM_S3",
           "OPF_ATOM_S3R",
@@ -323,7 +323,7 @@
             "filename": "OPF_ATOM_S3.bin",
             "sha256": "221dab8e58a1669a16466dc761807198908b05e5cf3636b7be25b27ed4cfa1a7",
             "size": 1664816,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3.bin",
             "source_filename": "OPF_ATOM_S3.bin"
           },
           {
@@ -331,7 +331,7 @@
             "filename": "OPF_ATOM_S3R.bin",
             "sha256": "deddaedf8553daefe6a8ecb74eda04bbebd6912924a075d7d2328f100fecd06c",
             "size": 1865392,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_ATOM_S3R.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3R.bin",
             "source_filename": "OPF_ATOM_S3R.bin"
           },
           {
@@ -339,7 +339,7 @@
             "filename": "OPF_T2CAN.bin",
             "sha256": "24bb83487dcadd22f5c6584a47e85d4af5b6c7eeb125f83be9b08a279f957ee8",
             "size": 1701696,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_T2CAN.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_T2CAN.bin",
             "source_filename": "OPF_T2CAN.bin"
           },
           {
@@ -347,7 +347,7 @@
             "filename": "OPF_WS.bin",
             "sha256": "6256965645ba5af13a271ee81875d4fbb3e1352bdc7b0b5590b137a81c6bf334",
             "size": 1699776,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS.bin",
             "source_filename": "OPF_WS.bin"
           },
           {
@@ -355,7 +355,7 @@
             "filename": "OPF_WS_DASH.bin",
             "sha256": "4687b5318c0b8e7c1b0892588fe87f3912f25439cf0b00b98e371da15dfd9b06",
             "size": 2403456,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_DASH.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_DASH.bin",
             "source_filename": "OPF_WS_DASH.bin"
           },
           {
@@ -363,12 +363,12 @@
             "filename": "OPF_WS_NO_TEMP.bin",
             "sha256": "cfbec5b38e9f93abbc6b764491dea6392894dec27a25d2e0ff7fe7cb6013fc78",
             "size": 1699632,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/OPF_WS_NO_TEMP.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_NO_TEMP.bin",
             "source_filename": "OPF_WS_NO_TEMP.bin"
           }
         ],
         "release_notes": "# BMS v0.0.1\n\n- Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.\n- Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.\n- SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.\n- Low-SoC fix: SoC follows IVT Ah counting (charge raises it), seeded from the real reading once cells are valid, with spike rejection and hysteresis. Stops the 5%/7% charge/discharge loop.\n- Soft stop: OTA and other requested reboots ramp current down first, then reboot.\n- Crash fix: `logs_loop` panic (JSON allocator double-free, unlocked console print, MQTT publish race).\n- Settings: keys over 15 characters renamed so they save.\n- `/health`: ramp, taper, SoC and last restart reason fields.\n- Stability from earlier on this line: OTA watchdog fix, coredump capture and `/coredump`, PSA2 96-cell decode, IVT support, UV failsafe.\n",
-        "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/latest/RELEASE_NOTES.md"
+        "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/RELEASE_NOTES.md"
       },
       "versions": [
         {
@@ -392,14 +392,14 @@
             "OPF_WS_DASH": "4687b5318c0b8e7c1b0892588fe87f3912f25439cf0b00b98e371da15dfd9b06",
             "OPF_WS_NO_TEMP": "cfbec5b38e9f93abbc6b764491dea6392894dec27a25d2e0ff7fe7cb6013fc78"
           },
-          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/index.json",
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.1/index.json",
           "artifacts": [
             {
               "board": "OPF_ATOM_S3",
               "filename": "OPF_ATOM_S3.bin",
               "sha256": "221dab8e58a1669a16466dc761807198908b05e5cf3636b7be25b27ed4cfa1a7",
               "size": 1664816,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_ATOM_S3.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.1/OPF_ATOM_S3.bin",
               "source_filename": "OPF_ATOM_S3.bin"
             },
             {
@@ -407,7 +407,7 @@
               "filename": "OPF_ATOM_S3R.bin",
               "sha256": "deddaedf8553daefe6a8ecb74eda04bbebd6912924a075d7d2328f100fecd06c",
               "size": 1865392,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_ATOM_S3R.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.1/OPF_ATOM_S3R.bin",
               "source_filename": "OPF_ATOM_S3R.bin"
             },
             {
@@ -415,7 +415,7 @@
               "filename": "OPF_T2CAN.bin",
               "sha256": "24bb83487dcadd22f5c6584a47e85d4af5b6c7eeb125f83be9b08a279f957ee8",
               "size": 1701696,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_T2CAN.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.1/OPF_T2CAN.bin",
               "source_filename": "OPF_T2CAN.bin"
             },
             {
@@ -423,7 +423,7 @@
               "filename": "OPF_WS.bin",
               "sha256": "6256965645ba5af13a271ee81875d4fbb3e1352bdc7b0b5590b137a81c6bf334",
               "size": 1699776,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_WS.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.1/OPF_WS.bin",
               "source_filename": "OPF_WS.bin"
             },
             {
@@ -431,7 +431,7 @@
               "filename": "OPF_WS_DASH.bin",
               "sha256": "4687b5318c0b8e7c1b0892588fe87f3912f25439cf0b00b98e371da15dfd9b06",
               "size": 2403456,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_WS_DASH.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.1/OPF_WS_DASH.bin",
               "source_filename": "OPF_WS_DASH.bin"
             },
             {
@@ -439,12 +439,12 @@
               "filename": "OPF_WS_NO_TEMP.bin",
               "sha256": "cfbec5b38e9f93abbc6b764491dea6392894dec27a25d2e0ff7fe7cb6013fc78",
               "size": 1699632,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/OPF_WS_NO_TEMP.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.1/OPF_WS_NO_TEMP.bin",
               "source_filename": "OPF_WS_NO_TEMP.bin"
             }
           ],
           "release_notes": "# BMS v0.0.1\n\n- Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.\n- Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.\n- SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.\n- Low-SoC fix: SoC follows IVT Ah counting (charge raises it), seeded from the real reading once cells are valid, with spike rejection and hysteresis. Stops the 5%/7% charge/discharge loop.\n- Soft stop: OTA and other requested reboots ramp current down first, then reboot.\n- Crash fix: `logs_loop` panic (JSON allocator double-free, unlocked console print, MQTT publish race).\n- Settings: keys over 15 characters renamed so they save.\n- `/health`: ramp, taper, SoC and last restart reason fields.\n- Stability from earlier on this line: OTA watchdog fix, coredump capture and `/coredump`, PSA2 96-cell decode, IVT support, UV failsafe.\n",
-          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BMS/v0.0.1/RELEASE_NOTES.md"
+          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.1/RELEASE_NOTES.md"
         }
       ],
       "source_ref": "master-grok"
@@ -464,7 +464,7 @@
         ],
         "highest_semver_folder": "v0.0.2",
         "highest_semver_is_latest": true,
-        "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/index.json",
+        "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/latest/index.json",
         "boards": [
           "ATOM_S3",
           "ATOM_S3_R",
@@ -481,7 +481,7 @@
             "filename": "ATOM_S3.bin",
             "sha256": "92a52b0c35a4d595d26026aeeba30d6733a1c9d27bc87805152626614254cc8e",
             "size": 2231376,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/latest/ATOM_S3.bin",
             "install": {
               "bootloader": {
                 "path": "ATOM_S3.bootloader.bin",
@@ -508,7 +508,7 @@
             "filename": "ATOM_S3_R.bin",
             "sha256": "92a52b0c35a4d595d26026aeeba30d6733a1c9d27bc87805152626614254cc8e",
             "size": 2231376,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ATOM_S3_R.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/latest/ATOM_S3_R.bin",
             "install": {
               "bootloader": {
                 "path": "ATOM_S3_R.bootloader.bin",
@@ -535,7 +535,7 @@
             "filename": "ESP32.bin",
             "sha256": "3b4576b68e79b8323af3fde293522dc0698c17bf0dc8380bcedc9cc55056a0ed",
             "size": 1841296,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/ESP32.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/latest/ESP32.bin",
             "install": {
               "bootloader": {
                 "path": "ESP32.bootloader.bin",
@@ -561,7 +561,7 @@
         "runtime_config": "PlatformIO builds ESP32_S3 (published as ATOM_S3_R.bin and ATOM_S3.bin; runtime NVS hw_board selects Atom S3 / Atom S3R / Waveshare OPF_WS) and ESP32 (ESP32.bin = LilyGO T-CAN485 only). DTU vs RS485 is a device setting. v0.0.2 hardware soak proven on Atom S3R (.110) only; WS and T-CAN485 are built for feed but not hardware-proven.",
         "board_contract_sha": "7d6d1a7",
         "release_notes": "# BRIDGE v0.0.2\n\n- **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only \u2014 not T-2CAN).\n- **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.\n- **Hardware validation:** Atom S3R `.110` non-DTU (`hw_board=ATOM_S3_R`, `atom_base=rs485`) soak on `7d6d1a7`. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.\n- Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.\n- OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).\n- Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).\n- Concurrency: telemetry slot lock + snapshot reads; staged `/device` `chip_id` override applied by `comms_loop`.\n- LCD: `lvgl_loop` stack 4 KB \u2192 8 KB.\n- Host lint: MQTT owner + telemetry writers (`test/host/run_all.sh`).\n- PSRAM phases 1\u20133: diag watermarks, large cold buffers, mid-size JSON in PSRAM when present.\n- Feed: tag `v0.0.2` on `master-grok` @ `7d6d1a7`; publish via Actions only.\n\n\n# BRIDGE v0.0.1\n\n- **8 MB partition table** (`partitions_8mb_bridge.csv`, 3.75 MB OTA slots; NVS and otadata unchanged). Needs one USB flash per device (bootloader + partitions + boot_app0 + app; the feed now ships all three companions per board). Devices on the old table keep OTA while the app is under 1.875 MB.\n- Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages. System section headers use the same bars.\n- Smartmeter emulator: RS485 RX capture of the inverter's meter probes (off at boot; Start/Stop/Clear on the System tab, `POST /api/smartmeter?cap=on|off|clear`, `sm_rx` in `GET /api/smartmeter`, `[SM-RX]` serial lines). Emulator replies unchanged.\n- Feed: `BRIDGE/v0.0.1` is the only version folder; `latest` follows it.\n\n\n- RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).\n- `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.\n- LoRa UART: a line that overflows the buffer is dropped until the next newline. The tail is not parsed as a new frame, and the overflow counter increments once per line.\n- Atom Base and device role are cached after boot (and when Settings or BLE saves the role). `loop()` no longer opens NVS on every pass.\n- `/diag` and BLE `telem_get` include `min_free_heap` and per-task stack high-water marks (`stack_hwm_comms`, `stack_hwm_telem`, `stack_hwm_atom`, `stack_hwm_ota`, `stack_hwm_loop`, `stack_hwm_lcd`, minimum free bytes). The System tab shows the stack marks.\n- Dashboard websocket refresh uses a stack buffer instead of a temporary `String`.\n- Web console and AtomS3R LCD layout restored to the v0.0.1 look (same page structure, gauges, settings, header, and LCD pages as 519546a). The System tab still shows the stack marks.\n\n## v0.0.1\n\n- DTU link is split into two indicators. `dtu_rf_link` (`up` / `degraded` / `down`) is the radio: any CRC-good v4 frame in the last 10 s (`degraded` when the gap is over 3 s). `dtu_p1_data` (`valid` / `invalid` / `none`) is the last fast frame's flags bit0, so a live radio with `dataInvalid=1` shows `rf_up_p1_invalid` instead of hiding the link. Same keys on `/api/lora`, `/values`, `/diag` and BLE `telem_get` (`dtu_rf_link`, `dtu_rf_rssi`, `dtu_rf_snr`, `dtu_rf_seq`, `dtu_rf_age_ms`, `dtu_p1_data`). `dtu_link` stays `ok` / `stale` / `down` / `off` (ok while the radio is up, even if P1 is invalid). The smartmeter 0x0B gate is unchanged (valid fast data within 3 s). LoRa tab shows two status pills.\n- DTU (P1 over LoRa) retuned for OPF-P1 (v4 dual-cadence protocol): 869.525 MHz (EU868 g3), SF7/BW125/CR4/5, preamble 8, sync 0x1424; fast frame every 1 s, slow ~30 s. Units on the old 868.0 MHz default move to 869.525 MHz automatically (custom frequencies kept). **Run current OPF-P1 v0.0.1 (fw9, 46eecff or later) on the transmitter**; older P1 builds stay on 868.0 MHz or send only dataInvalid frames. Radio link goes degraded after 3 s and down after 10 s without a CRC-good frame. Smartmeter emulator safety: meter reads get Modbus exception 0x0B when P1 data is older than 3 s (or none yet) instead of frozen values, and recover on the next good frame. New diagnostics in `/api/lora` and BLE telem: frame rate / period / gap / burst stats, last rejected frame (length + hex), ignored P1 ACK/command frames (`rx_other_type`). See `docs/OPF_P1_LORA.md`.\n- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.\n- LCD OTA screen (AtomS3R, BMS twin look): full-screen progress (% + bar + KB), source (via Bluetooth / via Web) and result (failed / aborted / updated + build) during updates; ATOM_S3 uses the RGB LED.\n- BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.\n- BLE Wi-Fi/BLE info keys: `wifi_state`, `wifi_ssid`, `wifi_rssi`, `wifi_ip`, `ap_on`, `ble_conn`, `ble_peer`, `ble_conn_s`\u2026 in `telem_get`, `GET /health` and `/diag` (plus `wifi_mode_str` for the header badge).\n- BLE name = the Device Name exactly as typed (UTF-8, no prefix, no 8-char slug); unnamed devices keep `OPF-BRIDGE-<ID>`. Device Name max 29 bytes UTF-8 (web field with byte counter + warning, BLE `cfg_set` and `/device` reject longer new names). Advert = Flags + service UUID + Manufacturer Data `FFFF \"OP\" 02 01` (type 0x02 = Bridge, 0x01 = BMS; protocol v1), 29 B; scan response = Complete Local Name; GAP 0x2A00 = full name; a longer legacy name is advertised shortened. The device_id is no longer in the advert (use cfg_get/ota_info).\n- BLE robustness: keeps advertising while a free connection slot exists, so a dead app whose OS keeps the link open no longer hides the device; silent older links are dropped when a new app connects.\n- RS485 over BLE: `rs485_info`, `rs485_read`, `rs485_write` (confirm required), `rs485_raw`, `rs485_scan`, `rs485_sniff`, `rs485_set` (session-only baud/parity/stop/slave), `rs485_pause` / `rs485_resume`, `rs485_reinit`, `rs485_stats_reset`. Polling pauses with owner tracking and resumes automatically 60 s after the last command or on BLE disconnect. See `manuals/BLE_COMMANDS_RS485.md`.\n- fix: torn 32-bit Deye power reads causing \u00b165 kW spikes (grid_p, grid_ctp, load_p, backup_p now read both words atomically \u2014 one span request, or hi/lo/hi with matching hi; never published torn).\n- fix(Solis S6, both profiles): grid_p / grid_ctp sign was inverted (field: +15.3 kW while exporting). 33151 is + export on Solis, so it is now negated to the Deye convention (+ import / \u2212 export). load_p stays 33147 (a real register, which reads 0 when there is no house load) and backup_p stays 33148. fix(MQTT, all units): heartbeat/diag (~4.1 KB) exceeded the 4096 B MQTT buffer and was silently dropped after a few messages. The TX buffer is now 8 KB, and an oversize publish is logged as an error (`mqtt_oversize_count` in diag) without triggering publish backoff. fix(OTA): after a successful MQTT/web OTA the app tasks stay suspended and Wi-Fi is stopped before `esp_restart()`, instead of resuming the tasks 250 ms before the reboot (the likely cause of reset_reason=PANIC). There is a 15 s safety resume if no reboot happens.\n- Solis S6 (both profiles): the dashboard now gets PV and battery temperature like Deye. MQTT `pv_p` = sum of the new `pv1_p`..`pv4_p` (string V \u00d7 I, 33049..33056; Solis has no per-string power register; 33057 only as fallback, and it is published as diagnostic `pv_power_reg` because in the field it reads ~0.86\u00d7 the real PV power), and `battery1_t` = BMS battery temperature 33043 (s16 \u00d7 0.1 \u00b0C; some batteries report 0). The 30-50 kW 342xx \"battery 2\" block (battery2_t / battery2_v) is still unverified. Deye output is unchanged.\n- Solis S6 control parity with Deye (6-20 kW and 30-50 kW): import / export / idle with `[power_W, soc]` work the same on web, BLE, the MQTT cmd topic and the dispatcher's legacy MQTT `reg` payload (`grid_charge` / `grid_sell` / `grid_power` / `battery_soc`; that payload used to be ignored on Solis). **Breaking:** Solis preset power is now W (was A). It is converted to battery current with the live battery voltage (capped at 100 A), and refused with no write if the voltage is unknown. Every preset now also sets 43110 self-use + time-of-use (the Deye `tou_enable` equivalent; TOU slots are ignored without it). fix(6-20 kW): export no longer stays blocked after an import, idle clears the TOU slot bits, and the TOU slot current is in the correct 0.1 A unit (it was 1/10). Web UI shows W for Solis. Register map: `manuals/BLE_COMMANDS_S6.md`. Not yet tested on a live inverter.\n- Solis S6 (6-20 kW and 30-50 kW) telemetry fixed and brought to Deye parity \u2014 **every Solis Bridge in the fleet needs this update**: load_p = household load 33147 (was a free-running counter that kept increasing), grid_p = AC grid port power 33151 (was inverter active power), load_e_today = 33179 (was a power register), pv_e_today = 33035 (read 0), grid buy today 33171, battery power 33149 s32 (30-50 kW was V\u00d7I garbage), battery voltage/current from 33133/33134, backup_p = 33148; Deye sign conventions (grid + import, battery + discharge); new keys grid_sell_e_today, bat_buy/sell_e_today and lifetime *_e_tot totals. `s6_*` BLE commands now work on the 30-50 kW profile, and Deye control names (battery_shutdown, battery_low, charge_max_power, discharge_max_power) are accepted on Solis. See `manuals/BLE_COMMANDS_S6.md`.\n- Deye HV: grid/load voltage and current, battery 2 absent gate, derived totals, and `device_id`.\n- Read-only `board` identity (`ATOM_S3_R` / `ATOM_S3`, equals the FEED artifact name) in BLE `ota_info` / `cfg_get` / `telem_get` and `GET /health` + `/diag`.\n- Credentials: NVS is the source of truth for Wi\u2011Fi, MQTT and OTA login; build-time values are seeded only once into empty keys, so FEED images keep stored settings. `cfg_get`, `telem_get` and `/diag` report credential source/presence (never the values).\n- UI header: Wi-Fi badge (SSID + RSSI / connecting / no creds / AP only) and BLE badge (advertising / app connected) in the theme-chip row, identical to BMS; 4 themes; wraps on mobile.\n- Build reports `fw_version` from the release tag; commit info is in each manifest's `source.sha` / `source.fw_build`.\n",
-        "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/latest/RELEASE_NOTES.md"
+        "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/latest/RELEASE_NOTES.md"
       },
       "versions": [
         {
@@ -579,14 +579,14 @@
             "ATOM_S3_R": "92a52b0c35a4d595d26026aeeba30d6733a1c9d27bc87805152626614254cc8e",
             "ESP32": "3b4576b68e79b8323af3fde293522dc0698c17bf0dc8380bcedc9cc55056a0ed"
           },
-          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.2/index.json",
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/v0.0.2/index.json",
           "artifacts": [
             {
               "board": "ATOM_S3",
               "filename": "ATOM_S3.bin",
               "sha256": "92a52b0c35a4d595d26026aeeba30d6733a1c9d27bc87805152626614254cc8e",
               "size": 2231376,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.2/ATOM_S3.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/v0.0.2/ATOM_S3.bin",
               "install": {
                 "bootloader": {
                   "path": "ATOM_S3.bootloader.bin",
@@ -613,7 +613,7 @@
               "filename": "ATOM_S3_R.bin",
               "sha256": "92a52b0c35a4d595d26026aeeba30d6733a1c9d27bc87805152626614254cc8e",
               "size": 2231376,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.2/ATOM_S3_R.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/v0.0.2/ATOM_S3_R.bin",
               "install": {
                 "bootloader": {
                   "path": "ATOM_S3_R.bootloader.bin",
@@ -640,7 +640,7 @@
               "filename": "ESP32.bin",
               "sha256": "3b4576b68e79b8323af3fde293522dc0698c17bf0dc8380bcedc9cc55056a0ed",
               "size": 1841296,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.2/ESP32.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/v0.0.2/ESP32.bin",
               "install": {
                 "bootloader": {
                   "path": "ESP32.bootloader.bin",
@@ -664,7 +664,7 @@
             }
           ],
           "release_notes": "# BRIDGE v0.0.2\n\n- **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only \u2014 not T-2CAN).\n- **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.\n- **Hardware validation:** Atom S3R `.110` non-DTU (`hw_board=ATOM_S3_R`, `atom_base=rs485`) soak on `7d6d1a7`. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.\n- Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.\n- OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).\n- Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).\n- Concurrency: telemetry slot lock + snapshot reads; staged `/device` `chip_id` override applied by `comms_loop`.\n- LCD: `lvgl_loop` stack 4 KB \u2192 8 KB.\n- Host lint: MQTT owner + telemetry writers (`test/host/run_all.sh`).\n- PSRAM phases 1\u20133: diag watermarks, large cold buffers, mid-size JSON in PSRAM when present.\n- Feed: tag `v0.0.2` on `master-grok` @ `7d6d1a7`; publish via Actions only.\n\n\n# BRIDGE v0.0.1\n\n- **8 MB partition table** (`partitions_8mb_bridge.csv`, 3.75 MB OTA slots; NVS and otadata unchanged). Needs one USB flash per device (bootloader + partitions + boot_app0 + app; the feed now ships all three companions per board). Devices on the old table keep OTA while the app is under 1.875 MB.\n- Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages. System section headers use the same bars.\n- Smartmeter emulator: RS485 RX capture of the inverter's meter probes (off at boot; Start/Stop/Clear on the System tab, `POST /api/smartmeter?cap=on|off|clear`, `sm_rx` in `GET /api/smartmeter`, `[SM-RX]` serial lines). Emulator replies unchanged.\n- Feed: `BRIDGE/v0.0.1` is the only version folder; `latest` follows it.\n\n\n- RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).\n- `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.\n- LoRa UART: a line that overflows the buffer is dropped until the next newline. The tail is not parsed as a new frame, and the overflow counter increments once per line.\n- Atom Base and device role are cached after boot (and when Settings or BLE saves the role). `loop()` no longer opens NVS on every pass.\n- `/diag` and BLE `telem_get` include `min_free_heap` and per-task stack high-water marks (`stack_hwm_comms`, `stack_hwm_telem`, `stack_hwm_atom`, `stack_hwm_ota`, `stack_hwm_loop`, `stack_hwm_lcd`, minimum free bytes). The System tab shows the stack marks.\n- Dashboard websocket refresh uses a stack buffer instead of a temporary `String`.\n- Web console and AtomS3R LCD layout restored to the v0.0.1 look (same page structure, gauges, settings, header, and LCD pages as 519546a). The System tab still shows the stack marks.\n\n## v0.0.1\n\n- DTU link is split into two indicators. `dtu_rf_link` (`up` / `degraded` / `down`) is the radio: any CRC-good v4 frame in the last 10 s (`degraded` when the gap is over 3 s). `dtu_p1_data` (`valid` / `invalid` / `none`) is the last fast frame's flags bit0, so a live radio with `dataInvalid=1` shows `rf_up_p1_invalid` instead of hiding the link. Same keys on `/api/lora`, `/values`, `/diag` and BLE `telem_get` (`dtu_rf_link`, `dtu_rf_rssi`, `dtu_rf_snr`, `dtu_rf_seq`, `dtu_rf_age_ms`, `dtu_p1_data`). `dtu_link` stays `ok` / `stale` / `down` / `off` (ok while the radio is up, even if P1 is invalid). The smartmeter 0x0B gate is unchanged (valid fast data within 3 s). LoRa tab shows two status pills.\n- DTU (P1 over LoRa) retuned for OPF-P1 (v4 dual-cadence protocol): 869.525 MHz (EU868 g3), SF7/BW125/CR4/5, preamble 8, sync 0x1424; fast frame every 1 s, slow ~30 s. Units on the old 868.0 MHz default move to 869.525 MHz automatically (custom frequencies kept). **Run current OPF-P1 v0.0.1 (fw9, 46eecff or later) on the transmitter**; older P1 builds stay on 868.0 MHz or send only dataInvalid frames. Radio link goes degraded after 3 s and down after 10 s without a CRC-good frame. Smartmeter emulator safety: meter reads get Modbus exception 0x0B when P1 data is older than 3 s (or none yet) instead of frozen values, and recover on the next good frame. New diagnostics in `/api/lora` and BLE telem: frame rate / period / gap / burst stats, last rejected frame (length + hex), ignored P1 ACK/command frames (`rx_other_type`). See `docs/OPF_P1_LORA.md`.\n- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.\n- LCD OTA screen (AtomS3R, BMS twin look): full-screen progress (% + bar + KB), source (via Bluetooth / via Web) and result (failed / aborted / updated + build) during updates; ATOM_S3 uses the RGB LED.\n- BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.\n- BLE Wi-Fi/BLE info keys: `wifi_state`, `wifi_ssid`, `wifi_rssi`, `wifi_ip`, `ap_on`, `ble_conn`, `ble_peer`, `ble_conn_s`\u2026 in `telem_get`, `GET /health` and `/diag` (plus `wifi_mode_str` for the header badge).\n- BLE name = the Device Name exactly as typed (UTF-8, no prefix, no 8-char slug); unnamed devices keep `OPF-BRIDGE-<ID>`. Device Name max 29 bytes UTF-8 (web field with byte counter + warning, BLE `cfg_set` and `/device` reject longer new names). Advert = Flags + service UUID + Manufacturer Data `FFFF \"OP\" 02 01` (type 0x02 = Bridge, 0x01 = BMS; protocol v1), 29 B; scan response = Complete Local Name; GAP 0x2A00 = full name; a longer legacy name is advertised shortened. The device_id is no longer in the advert (use cfg_get/ota_info).\n- BLE robustness: keeps advertising while a free connection slot exists, so a dead app whose OS keeps the link open no longer hides the device; silent older links are dropped when a new app connects.\n- RS485 over BLE: `rs485_info`, `rs485_read`, `rs485_write` (confirm required), `rs485_raw`, `rs485_scan`, `rs485_sniff`, `rs485_set` (session-only baud/parity/stop/slave), `rs485_pause` / `rs485_resume`, `rs485_reinit`, `rs485_stats_reset`. Polling pauses with owner tracking and resumes automatically 60 s after the last command or on BLE disconnect. See `manuals/BLE_COMMANDS_RS485.md`.\n- fix: torn 32-bit Deye power reads causing \u00b165 kW spikes (grid_p, grid_ctp, load_p, backup_p now read both words atomically \u2014 one span request, or hi/lo/hi with matching hi; never published torn).\n- fix(Solis S6, both profiles): grid_p / grid_ctp sign was inverted (field: +15.3 kW while exporting). 33151 is + export on Solis, so it is now negated to the Deye convention (+ import / \u2212 export). load_p stays 33147 (a real register, which reads 0 when there is no house load) and backup_p stays 33148. fix(MQTT, all units): heartbeat/diag (~4.1 KB) exceeded the 4096 B MQTT buffer and was silently dropped after a few messages. The TX buffer is now 8 KB, and an oversize publish is logged as an error (`mqtt_oversize_count` in diag) without triggering publish backoff. fix(OTA): after a successful MQTT/web OTA the app tasks stay suspended and Wi-Fi is stopped before `esp_restart()`, instead of resuming the tasks 250 ms before the reboot (the likely cause of reset_reason=PANIC). There is a 15 s safety resume if no reboot happens.\n- Solis S6 (both profiles): the dashboard now gets PV and battery temperature like Deye. MQTT `pv_p` = sum of the new `pv1_p`..`pv4_p` (string V \u00d7 I, 33049..33056; Solis has no per-string power register; 33057 only as fallback, and it is published as diagnostic `pv_power_reg` because in the field it reads ~0.86\u00d7 the real PV power), and `battery1_t` = BMS battery temperature 33043 (s16 \u00d7 0.1 \u00b0C; some batteries report 0). The 30-50 kW 342xx \"battery 2\" block (battery2_t / battery2_v) is still unverified. Deye output is unchanged.\n- Solis S6 control parity with Deye (6-20 kW and 30-50 kW): import / export / idle with `[power_W, soc]` work the same on web, BLE, the MQTT cmd topic and the dispatcher's legacy MQTT `reg` payload (`grid_charge` / `grid_sell` / `grid_power` / `battery_soc`; that payload used to be ignored on Solis). **Breaking:** Solis preset power is now W (was A). It is converted to battery current with the live battery voltage (capped at 100 A), and refused with no write if the voltage is unknown. Every preset now also sets 43110 self-use + time-of-use (the Deye `tou_enable` equivalent; TOU slots are ignored without it). fix(6-20 kW): export no longer stays blocked after an import, idle clears the TOU slot bits, and the TOU slot current is in the correct 0.1 A unit (it was 1/10). Web UI shows W for Solis. Register map: `manuals/BLE_COMMANDS_S6.md`. Not yet tested on a live inverter.\n- Solis S6 (6-20 kW and 30-50 kW) telemetry fixed and brought to Deye parity \u2014 **every Solis Bridge in the fleet needs this update**: load_p = household load 33147 (was a free-running counter that kept increasing), grid_p = AC grid port power 33151 (was inverter active power), load_e_today = 33179 (was a power register), pv_e_today = 33035 (read 0), grid buy today 33171, battery power 33149 s32 (30-50 kW was V\u00d7I garbage), battery voltage/current from 33133/33134, backup_p = 33148; Deye sign conventions (grid + import, battery + discharge); new keys grid_sell_e_today, bat_buy/sell_e_today and lifetime *_e_tot totals. `s6_*` BLE commands now work on the 30-50 kW profile, and Deye control names (battery_shutdown, battery_low, charge_max_power, discharge_max_power) are accepted on Solis. See `manuals/BLE_COMMANDS_S6.md`.\n- Deye HV: grid/load voltage and current, battery 2 absent gate, derived totals, and `device_id`.\n- Read-only `board` identity (`ATOM_S3_R` / `ATOM_S3`, equals the FEED artifact name) in BLE `ota_info` / `cfg_get` / `telem_get` and `GET /health` + `/diag`.\n- Credentials: NVS is the source of truth for Wi\u2011Fi, MQTT and OTA login; build-time values are seeded only once into empty keys, so FEED images keep stored settings. `cfg_get`, `telem_get` and `/diag` report credential source/presence (never the values).\n- UI header: Wi-Fi badge (SSID + RSSI / connecting / no creds / AP only) and BLE badge (advertising / app connected) in the theme-chip row, identical to BMS; 4 themes; wraps on mobile.\n- Build reports `fw_version` from the release tag; commit info is in each manifest's `source.sha` / `source.fw_build`.\n",
-          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.2/RELEASE_NOTES.md"
+          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/v0.0.2/RELEASE_NOTES.md"
         },
         {
           "folder": "v0.0.1",
@@ -679,14 +679,14 @@
             "ATOM_S3": "f1dfdd3aa71bb3b08bc4f98e3a0b88e547ebb7cd7e4593b17c7fe9022d229f3a",
             "ATOM_S3_R": "8f9532acee3577c01d39aea63f8205bd54b86a3fdaa547f5e0b3796dba242fd3"
           },
-          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.1/index.json",
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/v0.0.1/index.json",
           "artifacts": [
             {
               "board": "ATOM_S3",
               "filename": "ATOM_S3.bin",
               "sha256": "f1dfdd3aa71bb3b08bc4f98e3a0b88e547ebb7cd7e4593b17c7fe9022d229f3a",
               "size": 1916752,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.1/ATOM_S3.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/v0.0.1/ATOM_S3.bin",
               "install": {
                 "bootloader": {
                   "path": "ATOM_S3.bootloader.bin",
@@ -713,7 +713,7 @@
               "filename": "ATOM_S3_R.bin",
               "sha256": "8f9532acee3577c01d39aea63f8205bd54b86a3fdaa547f5e0b3796dba242fd3",
               "size": 1962464,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.1/ATOM_S3_R.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/v0.0.1/ATOM_S3_R.bin",
               "install": {
                 "bootloader": {
                   "path": "ATOM_S3_R.bootloader.bin",
@@ -737,7 +737,7 @@
             }
           ],
           "release_notes": "# BRIDGE v0.0.1\n\n- **8 MB partition table** (`partitions_8mb_bridge.csv`, 3.75 MB OTA slots; NVS and otadata unchanged). Needs one USB flash per device (bootloader + partitions + boot_app0 + app; the feed now ships all three companions per board). Devices on the old table keep OTA while the app is under 1.875 MB.\n- Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages.\n- Smartmeter emulator: RS485 RX capture of the inverter's meter probes (off at boot; Start/Stop/Clear on the System tab, `POST /api/smartmeter?cap=on|off|clear`, `sm_rx` in `GET /api/smartmeter`, `[SM-RX]` serial lines). Emulator replies unchanged.\n- Feed: `BRIDGE/v0.0.1` is the only version folder; `latest` follows it.\n\n\n- RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).\n- `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.\n- LoRa UART: a line that overflows the buffer is dropped until the next newline. The tail is not parsed as a new frame, and the overflow counter increments once per line.\n- Atom Base and device role are cached after boot (and when Settings or BLE saves the role). `loop()` no longer opens NVS on every pass.\n- `/diag` and BLE `telem_get` include `min_free_heap` and per-task stack high-water marks (`stack_hwm_comms`, `stack_hwm_telem`, `stack_hwm_atom`, `stack_hwm_ota`, `stack_hwm_loop`, `stack_hwm_lcd`, minimum free bytes). The System tab shows the stack marks.\n- Dashboard websocket refresh uses a stack buffer instead of a temporary `String`.\n- Web console and AtomS3R LCD layout restored to the v0.0.1 look (same page structure, gauges, settings, header, and LCD pages as 519546a). The System tab still shows the stack marks.\n\n## v0.0.1\n\n- DTU link is split into two indicators. `dtu_rf_link` (`up` / `degraded` / `down`) is the radio: any CRC-good v4 frame in the last 10 s (`degraded` when the gap is over 3 s). `dtu_p1_data` (`valid` / `invalid` / `none`) is the last fast frame's flags bit0, so a live radio with `dataInvalid=1` shows `rf_up_p1_invalid` instead of hiding the link. Same keys on `/api/lora`, `/values`, `/diag` and BLE `telem_get` (`dtu_rf_link`, `dtu_rf_rssi`, `dtu_rf_snr`, `dtu_rf_seq`, `dtu_rf_age_ms`, `dtu_p1_data`). `dtu_link` stays `ok` / `stale` / `down` / `off` (ok while the radio is up, even if P1 is invalid). The smartmeter 0x0B gate is unchanged (valid fast data within 3 s). LoRa tab shows two status pills.\n- DTU (P1 over LoRa) retuned for OPF-P1 (v4 dual-cadence protocol): 869.525 MHz (EU868 g3), SF7/BW125/CR4/5, preamble 8, sync 0x1424; fast frame every 1 s, slow ~30 s. Units on the old 868.0 MHz default move to 869.525 MHz automatically (custom frequencies kept). **Run current OPF-P1 v0.0.1 (fw9, 46eecff or later) on the transmitter**; older P1 builds stay on 868.0 MHz or send only dataInvalid frames. Radio link goes degraded after 3 s and down after 10 s without a CRC-good frame. Smartmeter emulator safety: meter reads get Modbus exception 0x0B when P1 data is older than 3 s (or none yet) instead of frozen values, and recover on the next good frame. New diagnostics in `/api/lora` and BLE telem: frame rate / period / gap / burst stats, last rejected frame (length + hex), ignored P1 ACK/command frames (`rx_other_type`). See `docs/OPF_P1_LORA.md`.\n- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.\n- LCD OTA screen (AtomS3R, BMS twin look): full-screen progress (% + bar + KB), source (via Bluetooth / via Web) and result (failed / aborted / updated + build) during updates; ATOM_S3 uses the RGB LED.\n- BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.\n- BLE Wi-Fi/BLE info keys: `wifi_state`, `wifi_ssid`, `wifi_rssi`, `wifi_ip`, `ap_on`, `ble_conn`, `ble_peer`, `ble_conn_s`\u2026 in `telem_get`, `GET /health` and `/diag` (plus `wifi_mode_str` for the header badge).\n- BLE name = the Device Name exactly as typed (UTF-8, no prefix, no 8-char slug); unnamed devices keep `OPF-BRIDGE-<ID>`. Device Name max 29 bytes UTF-8 (web field with byte counter + warning, BLE `cfg_set` and `/device` reject longer new names). Advert = Flags + service UUID + Manufacturer Data `FFFF \"OP\" 02 01` (type 0x02 = Bridge, 0x01 = BMS; protocol v1), 29 B; scan response = Complete Local Name; GAP 0x2A00 = full name; a longer legacy name is advertised shortened. The device_id is no longer in the advert (use cfg_get/ota_info).\n- BLE robustness: keeps advertising while a free connection slot exists, so a dead app whose OS keeps the link open no longer hides the device; silent older links are dropped when a new app connects.\n- RS485 over BLE: `rs485_info`, `rs485_read`, `rs485_write` (confirm required), `rs485_raw`, `rs485_scan`, `rs485_sniff`, `rs485_set` (session-only baud/parity/stop/slave), `rs485_pause` / `rs485_resume`, `rs485_reinit`, `rs485_stats_reset`. Polling pauses with owner tracking and resumes automatically 60 s after the last command or on BLE disconnect. See `manuals/BLE_COMMANDS_RS485.md`.\n- fix: torn 32-bit Deye power reads causing \u00b165 kW spikes (grid_p, grid_ctp, load_p, backup_p now read both words atomically \u2014 one span request, or hi/lo/hi with matching hi; never published torn).\n- fix(Solis S6, both profiles): grid_p / grid_ctp sign was inverted (field: +15.3 kW while exporting). 33151 is + export on Solis, so it is now negated to the Deye convention (+ import / \u2212 export). load_p stays 33147 (a real register, which reads 0 when there is no house load) and backup_p stays 33148. fix(MQTT, all units): heartbeat/diag (~4.1 KB) exceeded the 4096 B MQTT buffer and was silently dropped after a few messages. The TX buffer is now 8 KB, and an oversize publish is logged as an error (`mqtt_oversize_count` in diag) without triggering publish backoff. fix(OTA): after a successful MQTT/web OTA the app tasks stay suspended and Wi-Fi is stopped before `esp_restart()`, instead of resuming the tasks 250 ms before the reboot (the likely cause of reset_reason=PANIC). There is a 15 s safety resume if no reboot happens.\n- Solis S6 (both profiles): the dashboard now gets PV and battery temperature like Deye. MQTT `pv_p` = sum of the new `pv1_p`..`pv4_p` (string V \u00d7 I, 33049..33056; Solis has no per-string power register; 33057 only as fallback, and it is published as diagnostic `pv_power_reg` because in the field it reads ~0.86\u00d7 the real PV power), and `battery1_t` = BMS battery temperature 33043 (s16 \u00d7 0.1 \u00b0C; some batteries report 0). The 30-50 kW 342xx \"battery 2\" block (battery2_t / battery2_v) is still unverified. Deye output is unchanged.\n- Solis S6 control parity with Deye (6-20 kW and 30-50 kW): import / export / idle with `[power_W, soc]` work the same on web, BLE, the MQTT cmd topic and the dispatcher's legacy MQTT `reg` payload (`grid_charge` / `grid_sell` / `grid_power` / `battery_soc`; that payload used to be ignored on Solis). **Breaking:** Solis preset power is now W (was A). It is converted to battery current with the live battery voltage (capped at 100 A), and refused with no write if the voltage is unknown. Every preset now also sets 43110 self-use + time-of-use (the Deye `tou_enable` equivalent; TOU slots are ignored without it). fix(6-20 kW): export no longer stays blocked after an import, idle clears the TOU slot bits, and the TOU slot current is in the correct 0.1 A unit (it was 1/10). Web UI shows W for Solis. Register map: `manuals/BLE_COMMANDS_S6.md`. Not yet tested on a live inverter.\n- Solis S6 (6-20 kW and 30-50 kW) telemetry fixed and brought to Deye parity \u2014 **every Solis Bridge in the fleet needs this update**: load_p = household load 33147 (was a free-running counter that kept increasing), grid_p = AC grid port power 33151 (was inverter active power), load_e_today = 33179 (was a power register), pv_e_today = 33035 (read 0), grid buy today 33171, battery power 33149 s32 (30-50 kW was V\u00d7I garbage), battery voltage/current from 33133/33134, backup_p = 33148; Deye sign conventions (grid + import, battery + discharge); new keys grid_sell_e_today, bat_buy/sell_e_today and lifetime *_e_tot totals. `s6_*` BLE commands now work on the 30-50 kW profile, and Deye control names (battery_shutdown, battery_low, charge_max_power, discharge_max_power) are accepted on Solis. See `manuals/BLE_COMMANDS_S6.md`.\n- Deye HV: grid/load voltage and current, battery 2 absent gate, derived totals, and `device_id`.\n- Read-only `board` identity (`ATOM_S3_R` / `ATOM_S3`, equals the FEED artifact name) in BLE `ota_info` / `cfg_get` / `telem_get` and `GET /health` + `/diag`.\n- Credentials: NVS is the source of truth for Wi\u2011Fi, MQTT and OTA login; build-time values are seeded only once into empty keys, so FEED images keep stored settings. `cfg_get`, `telem_get` and `/diag` report credential source/presence (never the values).\n- UI header: Wi-Fi badge (SSID + RSSI / connecting / no creds / AP only) and BLE badge (advertising / app connected) in the theme-chip row, identical to BMS; 4 themes; wraps on mobile.\n- Build reports `fw_version` from the release tag; commit info is in each manifest's `source.sha` / `source.fw_build`.\n",
-          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/BRIDGE/v0.0.1/RELEASE_NOTES.md"
+          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BRIDGE/v0.0.1/RELEASE_NOTES.md"
         }
       ],
       "source_ref": "master-grok",
@@ -759,7 +759,7 @@
         ],
         "highest_semver_folder": "v0.0.1",
         "highest_semver_is_latest": true,
-        "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/index.json",
+        "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/index.json",
         "boards": [
           "RAK3172_RX",
           "RAK3172_TX"
@@ -774,7 +774,7 @@
             "filename": "RAK3172_RX.bin",
             "sha256": "e4d0e2edb20686aa04589edbdda0814767d384b26b1a56cf44cd391e5addd9b8",
             "size": 69836,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_RX.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/RAK3172_RX.bin",
             "source_filename": "RAK3172_RX.bin"
           },
           {
@@ -782,7 +782,7 @@
             "filename": "RAK3172_TX.bin",
             "sha256": "7a01dde9e2eda47141060016a61ed2d8cdec5bca0b526b4abc61748e73f1846a",
             "size": 92508,
-            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RAK3172_TX.bin",
+            "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/RAK3172_TX.bin",
             "source_filename": "RAK3172_TX.bin"
           }
         ],
@@ -791,7 +791,7 @@
           "RAK3172_RX"
         ],
         "release_notes": "# P1 v0.0.1\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- P1 is read above the LoRa task again, and a telegram already in the UART ring is drained before the reader yields. This is the scheduling from the build that parsed the ESO meter.\n- P1 CRC is not required, matching the field build that read this ESO meter. A telegram from `/` to `!` is published when L1 voltage or import power is present and any voltage is between 150 V and 280 V. Fixed buffer, watchdog, and that scheduling stay.\n- `FW_ITERATION_ID` 10.\n",
-        "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/latest/RELEASE_NOTES.md"
+        "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/RELEASE_NOTES.md"
       },
       "versions": [
         {
@@ -807,14 +807,14 @@
             "RAK3172_RX": "e4d0e2edb20686aa04589edbdda0814767d384b26b1a56cf44cd391e5addd9b8",
             "RAK3172_TX": "7a01dde9e2eda47141060016a61ed2d8cdec5bca0b526b4abc61748e73f1846a"
           },
-          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/index.json",
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/v0.0.1/index.json",
           "artifacts": [
             {
               "board": "RAK3172_RX",
               "filename": "RAK3172_RX.bin",
               "sha256": "e4d0e2edb20686aa04589edbdda0814767d384b26b1a56cf44cd391e5addd9b8",
               "size": 69836,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RAK3172_RX.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/v0.0.1/RAK3172_RX.bin",
               "source_filename": "RAK3172_RX.bin"
             },
             {
@@ -822,12 +822,12 @@
               "filename": "RAK3172_TX.bin",
               "sha256": "7a01dde9e2eda47141060016a61ed2d8cdec5bca0b526b4abc61748e73f1846a",
               "size": 92508,
-              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RAK3172_TX.bin",
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/v0.0.1/RAK3172_TX.bin",
               "source_filename": "RAK3172_TX.bin"
             }
           ],
           "release_notes": "# P1 v0.0.1\n\n**Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.\n- Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.\n- Optional authenticated command downlink (reboot, P1 UART reinit, radio reinit) after each uplink. It is off in this image unless the build had `P1_CMD_KEY_HEX` set. Uplink format is unchanged either way.\n- P1 is read above the LoRa task again, and a telegram already in the UART ring is drained before the reader yields. This is the scheduling from the build that parsed the ESO meter.\n- P1 CRC is not required, matching the field build that read this ESO meter. A telegram from `/` to `!` is published when L1 voltage or import power is present and any voltage is between 150 V and 280 V. Fixed buffer, watchdog, and that scheduling stay.\n- `FW_ITERATION_ID` 10.\n",
-          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/main/P1/v0.0.1/RELEASE_NOTES.md"
+          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/v0.0.1/RELEASE_NOTES.md"
         }
       ],
       "source_ref": "master-grok",
