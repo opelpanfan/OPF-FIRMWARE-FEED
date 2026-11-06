@@ -1,5 +1,8 @@
 # BRIDGE v0.0.2
 
+- **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
+- **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.
+- **Hardware validation:** Atom S3R `.110` non-DTU (`hw_board=ATOM_S3_R`, `atom_base=rs485`) soak on `7d6d1a7`. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
 - Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.
 - OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).
 - Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).
@@ -7,8 +10,7 @@
 - LCD: `lvgl_loop` stack 4 KB → 8 KB.
 - Host lint: MQTT owner + telemetry writers (`test/host/run_all.sh`).
 - PSRAM phases 1–3: diag watermarks, large cold buffers, mid-size JSON in PSRAM when present.
-- Boards: `ATOM_S3_R` / `ATOM_S3` only (no T-CAN485 env). Web UI unchanged.
-- Feed: tag `v0.0.2` on `master-grok`; publish FEED only when explicitly requested.
+- Feed: tag `v0.0.2` on `master-grok` @ `7d6d1a7`; publish via Actions only.
 
 
 # BRIDGE v0.0.1

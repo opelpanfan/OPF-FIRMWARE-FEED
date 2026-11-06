@@ -85,7 +85,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-10-20
+- Date: 2026-11-06
 - Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
@@ -105,7 +105,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-10-20
+- Date: 2026-11-06
 - Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
@@ -129,7 +129,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.1`
 
-- Date: 2026-10-20
+- Date: 2026-11-06
 - Source commit: `2ed79bd56277ea2e479bd15a70365a739fca2232` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916752 bytes, 1.83 MiB)
@@ -151,47 +151,55 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.2`
 
-- Date: 2026-11-05
-- Source commit: `9e0b0fb42aabb10c6210984e1a97c0c792e75b5c` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Date: 2026-11-06
+- Source commit: `7d6d1a7a26003f203fc7f473c9a876b3ea343ce8` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (2097072 bytes, 2.00 MiB)
+  - `ATOM_S3.bin` (2231376 bytes, 2.13 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (2142736 bytes, 2.04 MiB)
+  - `ATOM_S3_R.bin` (2231376 bytes, 2.13 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (10544 bytes, 10.3 KiB)
-  - `SHA256SUMS` (696 bytes)
-  - `index.json` (13622 bytes, 13.3 KiB)
-- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes
+  - `ESP32.bin` (1841296 bytes, 1.76 MiB)
+  - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
+  - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (11029 bytes, 10.8 KiB)
+  - `SHA256SUMS` (1032 bytes, 1.0 KiB)
+  - `index.json` (15260 bytes, 14.9 KiB)
+- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
-  - Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.
-  - OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).
-  - Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).
+  - **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
+  - **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.
+  - **Hardware validation:** Atom S3R `.110` non-DTU (`hw_board=ATOM_S3_R`, `atom_base=rs485`) soak on `7d6d1a7`. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
 
 #### `latest`
 
-- Date: 2026-11-05
-- Source commit: `9e0b0fb42aabb10c6210984e1a97c0c792e75b5c` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Date: 2026-11-06
+- Source commit: `7d6d1a7a26003f203fc7f473c9a876b3ea343ce8` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (2097072 bytes, 2.00 MiB)
+  - `ATOM_S3.bin` (2231376 bytes, 2.13 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (2142736 bytes, 2.04 MiB)
+  - `ATOM_S3_R.bin` (2231376 bytes, 2.13 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (10544 bytes, 10.3 KiB)
-  - `SHA256SUMS` (696 bytes)
-  - `index.json` (13621 bytes, 13.3 KiB)
-- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes
+  - `ESP32.bin` (1841296 bytes, 1.76 MiB)
+  - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
+  - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (11029 bytes, 10.8 KiB)
+  - `SHA256SUMS` (1032 bytes, 1.0 KiB)
+  - `index.json` (15259 bytes, 14.9 KiB)
+- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
-  - Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.
-  - OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).
-  - Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).
+  - **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
+  - **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.
+  - **Hardware validation:** Atom S3R `.110` non-DTU (`hw_board=ATOM_S3_R`, `atom_base=rs485`) soak on `7d6d1a7`. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
 
 ### P1
 
@@ -199,7 +207,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-10-20
+- Date: 2026-11-06
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -213,7 +221,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `latest`
 
-- Date: 2026-10-20
+- Date: 2026-11-06
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
