@@ -152,54 +152,54 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.2`
 
 - Date: 2026-11-09
-- Source commit: `dda309c2d3e56a284d8a5b36079ebbb57fe4e829` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `27feafb825cf6bc97443da415a76a9eac5f01145` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (2269152 bytes, 2.16 MiB)
+  - `ATOM_S3.bin` (1994320 bytes, 1.90 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (2269152 bytes, 2.16 MiB)
+  - `ATOM_S3_R.bin` (1994320 bytes, 1.90 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ESP32.bin` (1832640 bytes, 1.75 MiB)
+  - `ESP32.bin` (1834496 bytes, 1.75 MiB)
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (13686 bytes, 13.4 KiB)
+  - `RELEASE_NOTES.md` (14434 bytes, 14.1 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (17992 bytes, 17.6 KiB)
+  - `index.json` (18757 bytes, 18.3 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
+  - **Heap pass 2 (Atom S3R):** task stacks trimmed from measured high-water marks (comms 16→8 KB, ota 10→9 KB, telem 8→6 KB, async_tcp 16→8 KB). NimBLE msys1 blocks 24→12 (BMS default). ESP32_S3 is now a `release` `-Os` build (ELF still has `-g2` for panic decode). Idle internal…
+  - **SoftAP auto-close:** the maintenance portal stays up until 60 s after home Wi-Fi has an IP, then closes. It reopens if STA stays down for more than 15 s, or immediately when there are no Wi-Fi credentials. Manual `AP OPEN` / `POST /api/ap/window` and the OTA window are…
   - **Deye TOU restore fix:** idle / end / lease fail-safe restores grid charge current (reg 128) and grid charge enable (130) only if that control session wrote them. A value changed on the dashboard or inverter during a session (e.g. 50 A) is no longer put back to the…
-  - **Internal-heap fix (Atom S3R):** runtime allocations of 1 KB and more go to PSRAM, the web server caps unacknowledged data per response, `ev_loop` stack 4 → 6 KB. Worst case (BLE app + SoftAP + dashboard loads) went from about 20 KB to 40–60 KB free internal RAM. New…
-  - **Settings Save fix:** the telemetry interval NVS key was longer than the 15-character limit, so Save failed and skipped the Wi-Fi / MQTT fields after it. Key renamed (`telem_read_ms`); Save now stores every other field and names any key that failed.
 
 #### `latest`
 
 - Date: 2026-11-09
-- Source commit: `dda309c2d3e56a284d8a5b36079ebbb57fe4e829` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `27feafb825cf6bc97443da415a76a9eac5f01145` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (2269152 bytes, 2.16 MiB)
+  - `ATOM_S3.bin` (1994320 bytes, 1.90 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (2269152 bytes, 2.16 MiB)
+  - `ATOM_S3_R.bin` (1994320 bytes, 1.90 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ESP32.bin` (1832640 bytes, 1.75 MiB)
+  - `ESP32.bin` (1834496 bytes, 1.75 MiB)
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (13686 bytes, 13.4 KiB)
+  - `RELEASE_NOTES.md` (14434 bytes, 14.1 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (17991 bytes, 17.6 KiB)
+  - `index.json` (18756 bytes, 18.3 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
+  - **Heap pass 2 (Atom S3R):** task stacks trimmed from measured high-water marks (comms 16→8 KB, ota 10→9 KB, telem 8→6 KB, async_tcp 16→8 KB). NimBLE msys1 blocks 24→12 (BMS default). ESP32_S3 is now a `release` `-Os` build (ELF still has `-g2` for panic decode). Idle internal…
+  - **SoftAP auto-close:** the maintenance portal stays up until 60 s after home Wi-Fi has an IP, then closes. It reopens if STA stays down for more than 15 s, or immediately when there are no Wi-Fi credentials. Manual `AP OPEN` / `POST /api/ap/window` and the OTA window are…
   - **Deye TOU restore fix:** idle / end / lease fail-safe restores grid charge current (reg 128) and grid charge enable (130) only if that control session wrote them. A value changed on the dashboard or inverter during a session (e.g. 50 A) is no longer put back to the…
-  - **Internal-heap fix (Atom S3R):** runtime allocations of 1 KB and more go to PSRAM, the web server caps unacknowledged data per response, `ev_loop` stack 4 → 6 KB. Worst case (BLE app + SoftAP + dashboard loads) went from about 20 KB to 40–60 KB free internal RAM. New…
-  - **Settings Save fix:** the telemetry interval NVS key was longer than the 15-character limit, so Save failed and skipped the Wi-Fi / MQTT fields after it. Key renamed (`telem_read_ms`); Save now stores every other field and names any key that failed.
 
 ### P1
 

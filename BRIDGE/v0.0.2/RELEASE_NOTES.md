@@ -1,5 +1,7 @@
 # BRIDGE v0.0.2
 
+- **Heap pass 2 (Atom S3R):** task stacks trimmed from measured high-water marks (comms 16→8 KB, ota 10→9 KB, telem 8→6 KB, async_tcp 16→8 KB). NimBLE msys1 blocks 24→12 (BMS default). ESP32_S3 is now a `release` `-Os` build (ELF still has `-g2` for panic decode). Idle internal heap about 95 KB; boot worst case (BLE + SoftAP + page loads) about 79 KB; 10-min soak about 80 KB on `.236` and 71 KB on `.110` (was 41 KB).
+- **SoftAP auto-close:** the maintenance portal stays up until 60 s after home Wi-Fi has an IP, then closes. It reopens if STA stays down for more than 15 s, or immediately when there are no Wi-Fi credentials. Manual `AP OPEN` / `POST /api/ap/window` and the OTA window are unchanged.
 - **Deye TOU restore fix:** idle / end / lease fail-safe restores grid charge current (reg 128) and grid charge enable (130) only if that control session wrote them. A value changed on the dashboard or inverter during a session (e.g. 50 A) is no longer put back to the session-start snapshot (it reverted 50 A to 1 A). All other restored registers unchanged.
 - **Internal-heap fix (Atom S3R):** runtime allocations of 1 KB and more go to PSRAM, the web server caps unacknowledged data per response, `ev_loop` stack 4 → 6 KB. Worst case (BLE app + SoftAP + dashboard loads) went from about 20 KB to 40–60 KB free internal RAM. New read-only `GET /api/heap` (low-water mark with activity context, per-task stack free). Atom S3 (no PSRAM) unchanged.
 - **Settings Save fix:** the telemetry interval NVS key was longer than the 15-character limit, so Save failed and skipped the Wi-Fi / MQTT fields after it. Key renamed (`telem_read_ms`); Save now stores every other field and names any key that failed.
@@ -13,7 +15,7 @@
 - **Dashboard:** P1 Meter card moved between Live and Instant Control.
 - **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
 - **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.
-- **Hardware validation:** Atom S3R `.110` and `.236` (DTU base) on the OTA-fix build. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
+- **Hardware validation:** Atom S3R `.110` and `.236` (DTU base) on heap pass 2 (`829d01c`). Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
 - Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.
 - OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).
 - Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).
@@ -21,7 +23,7 @@
 - LCD: `lvgl_loop` stack 4 KB → 8 KB.
 - Host lint: MQTT owner + telemetry writers (`test/host/run_all.sh`).
 - PSRAM phases 1–3: diag watermarks, large cold buffers, mid-size JSON in PSRAM when present.
-- Feed: tag `v0.0.2` on `master-grok` (retagged with the OTA fix, built from `378fad4` lineage); publish via Actions only.
+- Feed: tag `v0.0.2` on `master-grok` (retagged with heap pass 2 / SoftAP auto-close / release `-Os`, firmware `829d01c`); publish via Actions only.
 
 
 # BRIDGE v0.0.1
