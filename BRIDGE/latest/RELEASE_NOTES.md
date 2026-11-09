@@ -1,5 +1,7 @@
 # BRIDGE v0.0.2
 
+- **nimble_host stack:** raised from 4 KB to 5 KB. High-water free was about 824–888 B; under a BLE connection plus GATT discovery it is about 2040 B. Heap stays well above the 41 KB warn level.
+- **Dashboard load + smaller UI:** first-page API fetches are sequential (`GET /device` finishes before the live poll chain). Unused CSS/JS dropped and CSS minify tightened; gzipped UI 62,805 → 59,513 B. No visual change.
 - **Heap pass 2 (Atom S3R):** task stacks trimmed from measured high-water marks (comms 16→8 KB, ota 10→9 KB, telem 8→6 KB, async_tcp 16→8 KB). NimBLE msys1 blocks 24→12 (BMS default). ESP32_S3 is now a `release` `-Os` build (ELF still has `-g2` for panic decode). Idle internal heap about 95 KB; boot worst case (BLE + SoftAP + page loads) about 79 KB; 10-min soak about 80 KB on `.236` and 71 KB on `.110` (was 41 KB).
 - **SoftAP auto-close:** the maintenance portal stays up until 60 s after home Wi-Fi has an IP, then closes. It reopens if STA stays down for more than 15 s, or immediately when there are no Wi-Fi credentials. Manual `AP OPEN` / `POST /api/ap/window` and the OTA window are unchanged.
 - **Deye TOU restore fix:** idle / end / lease fail-safe restores grid charge current (reg 128) and grid charge enable (130) only if that control session wrote them. A value changed on the dashboard or inverter during a session (e.g. 50 A) is no longer put back to the session-start snapshot (it reverted 50 A to 1 A). All other restored registers unchanged.
@@ -15,7 +17,7 @@
 - **Dashboard:** P1 Meter card moved between Live and Instant Control.
 - **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
 - **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.
-- **Hardware validation:** Atom S3R `.110` and `.236` (DTU base) on heap pass 2 (`829d01c`). Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
+- **Hardware validation:** Atom S3R `.110` and `.236` (DTU base) on `dd43363` (nimble_host 5 KB, staggered first-page fetches, gzipped UI 59,513 B). Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
 - Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.
 - OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).
 - Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).
@@ -23,7 +25,7 @@
 - LCD: `lvgl_loop` stack 4 KB → 8 KB.
 - Host lint: MQTT owner + telemetry writers (`test/host/run_all.sh`).
 - PSRAM phases 1–3: diag watermarks, large cold buffers, mid-size JSON in PSRAM when present.
-- Feed: tag `v0.0.2` on `master-grok` (retagged with heap pass 2 / SoftAP auto-close / release `-Os`, firmware `829d01c`); publish via Actions only.
+- Feed: tag `v0.0.2` on `master-grok` (retagged with nimble_host 5 KB / staggered first-page fetches / UI gzip 59,513 B, firmware `dd43363`); publish via Actions only.
 
 
 # BRIDGE v0.0.1
