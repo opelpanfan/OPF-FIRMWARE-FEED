@@ -1,8 +1,19 @@
 # BRIDGE v0.0.2
 
+- **Deye TOU restore fix:** idle / end / lease fail-safe restores grid charge current (reg 128) and grid charge enable (130) only if that control session wrote them. A value changed on the dashboard or inverter during a session (e.g. 50 A) is no longer put back to the session-start snapshot (it reverted 50 A to 1 A). All other restored registers unchanged.
+- **Internal-heap fix (Atom S3R):** runtime allocations of 1 KB and more go to PSRAM, the web server caps unacknowledged data per response, `ev_loop` stack 4 → 6 KB. Worst case (BLE app + SoftAP + dashboard loads) went from about 20 KB to 40–60 KB free internal RAM. New read-only `GET /api/heap` (low-water mark with activity context, per-task stack free). Atom S3 (no PSRAM) unchanged.
+- **Settings Save fix:** the telemetry interval NVS key was longer than the 15-character limit, so Save failed and skipped the Wi-Fi / MQTT fields after it. Key renamed (`telem_read_ms`); Save now stores every other field and names any key that failed.
+- **Settings layout:** BMS-style grid, 3 columns on desktop and 1 on mobile. Device Settings: Name / Type, Board, Atom base / Screen rotation, EV charger, EV IP; MQTT Server and Port one column each. LoRa page section headers match the other pages.
+- **Device Settings move + dashboard collapse:** device mode fields (Type, Board, Atom base, rotation, EV charger) moved from the Inverter tab into Settings → Device Settings; dashboard Instant control, Storage mode and Battery sections load collapsed.
+- **OTA crash fix (Atom S3R / Waveshare OPF_WS):** OTA no longer drives the status LED on GPIO35 (a PSRAM line on these boards), which corrupted memory and crashed the device seconds after every OTA. Status-LED writes are gated on the runtime board. Proven: 3 OTAs on S3R `.236`, OTA + soak on S3R `.110`.
+- **Atom S3R LCD rotation:** 0/90/180/270° (default 180) next to the Base selector in Device settings.
+- **Solis S6:** BMS cell voltage and cell temperature min/max (BMS1 + BMS2) from the Ver3.5 register map.
+- **P1 data in MQTT (DTU base):** the telemetry topic now carries `dtu_link`, `dtu_p1_data`, `p1_valid` and the `p1_*` meter values (energies as exact Wh integers) when the Atom base is DTU. Other bases unchanged.
+- **V2C EV charger (read-only):** pick "V2C Trydan" and its IP in Device settings; status and charge power go to MQTT (`ev_type`, `ev_link`, `ev_state`, `ev_paused`, `ev_power_w`, `ev_energy_kwh`), the full set to BLE and a Dashboard EV Charger card below P1 Meter. P1 Meter and EV Charger headers show their last-update time.
+- **Dashboard:** P1 Meter card moved between Live and Instant Control.
 - **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
 - **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.
-- **Hardware validation:** Atom S3R `.110` non-DTU (`hw_board=ATOM_S3_R`, `atom_base=rs485`) soak on `7d6d1a7`. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
+- **Hardware validation:** Atom S3R `.110` and `.236` (DTU base) on the OTA-fix build. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
 - Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.
 - OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).
 - Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).
@@ -10,7 +21,7 @@
 - LCD: `lvgl_loop` stack 4 KB → 8 KB.
 - Host lint: MQTT owner + telemetry writers (`test/host/run_all.sh`).
 - PSRAM phases 1–3: diag watermarks, large cold buffers, mid-size JSON in PSRAM when present.
-- Feed: tag `v0.0.2` on `master-grok` @ `7d6d1a7`; publish via Actions only.
+- Feed: tag `v0.0.2` on `master-grok` (retagged with the OTA fix, built from `378fad4` lineage); publish via Actions only.
 
 
 # BRIDGE v0.0.1

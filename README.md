@@ -85,7 +85,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-11-06
+- Date: 2026-11-09
 - Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
@@ -105,7 +105,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-11-06
+- Date: 2026-11-09
 - Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
@@ -129,7 +129,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.1`
 
-- Date: 2026-11-06
+- Date: 2026-11-09
 - Source commit: `2ed79bd56277ea2e479bd15a70365a739fca2232` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916752 bytes, 1.83 MiB)
@@ -151,55 +151,55 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.2`
 
-- Date: 2026-11-06
-- Source commit: `7d6d1a7a26003f203fc7f473c9a876b3ea343ce8` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Date: 2026-11-09
+- Source commit: `dda309c2d3e56a284d8a5b36079ebbb57fe4e829` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (2231376 bytes, 2.13 MiB)
+  - `ATOM_S3.bin` (2269152 bytes, 2.16 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (2231376 bytes, 2.13 MiB)
+  - `ATOM_S3_R.bin` (2269152 bytes, 2.16 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ESP32.bin` (1841296 bytes, 1.76 MiB)
+  - `ESP32.bin` (1832640 bytes, 1.75 MiB)
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (11029 bytes, 10.8 KiB)
+  - `RELEASE_NOTES.md` (13686 bytes, 13.4 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (15309 bytes, 15.0 KiB)
+  - `index.json` (17992 bytes, 17.6 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
-  - **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
-  - **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.
-  - **Hardware validation:** Atom S3R `.110` non-DTU (`hw_board=ATOM_S3_R`, `atom_base=rs485`) soak on `7d6d1a7`. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
+  - **Deye TOU restore fix:** idle / end / lease fail-safe restores grid charge current (reg 128) and grid charge enable (130) only if that control session wrote them. A value changed on the dashboard or inverter during a session (e.g. 50 A) is no longer put back to the…
+  - **Internal-heap fix (Atom S3R):** runtime allocations of 1 KB and more go to PSRAM, the web server caps unacknowledged data per response, `ev_loop` stack 4 → 6 KB. Worst case (BLE app + SoftAP + dashboard loads) went from about 20 KB to 40–60 KB free internal RAM. New…
+  - **Settings Save fix:** the telemetry interval NVS key was longer than the 15-character limit, so Save failed and skipped the Wi-Fi / MQTT fields after it. Key renamed (`telem_read_ms`); Save now stores every other field and names any key that failed.
 
 #### `latest`
 
-- Date: 2026-11-06
-- Source commit: `7d6d1a7a26003f203fc7f473c9a876b3ea343ce8` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Date: 2026-11-09
+- Source commit: `dda309c2d3e56a284d8a5b36079ebbb57fe4e829` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (2231376 bytes, 2.13 MiB)
+  - `ATOM_S3.bin` (2269152 bytes, 2.16 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (2231376 bytes, 2.13 MiB)
+  - `ATOM_S3_R.bin` (2269152 bytes, 2.16 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ESP32.bin` (1841296 bytes, 1.76 MiB)
+  - `ESP32.bin` (1832640 bytes, 1.75 MiB)
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (11029 bytes, 10.8 KiB)
+  - `RELEASE_NOTES.md` (13686 bytes, 13.4 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (15308 bytes, 14.9 KiB)
+  - `index.json` (17991 bytes, 17.6 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
-  - **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
-  - **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.
-  - **Hardware validation:** Atom S3R `.110` non-DTU (`hw_board=ATOM_S3_R`, `atom_base=rs485`) soak on `7d6d1a7`. Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
+  - **Deye TOU restore fix:** idle / end / lease fail-safe restores grid charge current (reg 128) and grid charge enable (130) only if that control session wrote them. A value changed on the dashboard or inverter during a session (e.g. 50 A) is no longer put back to the…
+  - **Internal-heap fix (Atom S3R):** runtime allocations of 1 KB and more go to PSRAM, the web server caps unacknowledged data per response, `ev_loop` stack 4 → 6 KB. Worst case (BLE app + SoftAP + dashboard loads) went from about 20 KB to 40–60 KB free internal RAM. New…
+  - **Settings Save fix:** the telemetry interval NVS key was longer than the 15-character limit, so Save failed and skipped the Wi-Fi / MQTT fields after it. Key renamed (`telem_read_ms`); Save now stores every other field and names any key that failed.
 
 ### P1
 
@@ -207,7 +207,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-11-06
+- Date: 2026-11-09
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
@@ -219,19 +219,33 @@ Source repository: `opelpanfan/OPF-P1`
   - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.
   - Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.
 
+#### `v0.0.2`
+
+- Date: 2026-11-09
+- Files:
+  - `RAK3172_RX.bin` (70004 bytes, 68.4 KiB)
+  - `RAK3172_TX.bin` (93140 bytes, 91.0 KiB)
+  - `RELEASE_NOTES.md` (1812 bytes, 1.8 KiB)
+  - `SHA256SUMS` (162 bytes)
+  - `index.json` (3401 bytes, 3.3 KiB)
+- Summary:
+  - **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. The radio settings and uplink format are the same as v0.0.1.
+  - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm. Rolling 1-hour transmit cap stays under 10% duty.
+  - P1 telegram sanity check: a telegram is published only when it carries U1-3, I1-3 and import power, voltages are 0 V or 150-280 V, currents are at most 100 A, every power is at most `P1_MAX_POWER_W` (50 kW), and frequency, when sent, is 45-55 Hz.
+
 #### `latest`
 
-- Date: 2026-11-06
+- Date: 2026-11-09
 - Files:
-  - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
-  - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
-  - `RELEASE_NOTES.md` (1093 bytes, 1.1 KiB)
+  - `RAK3172_RX.bin` (70004 bytes, 68.4 KiB)
+  - `RAK3172_TX.bin` (93140 bytes, 91.0 KiB)
+  - `RELEASE_NOTES.md` (1812 bytes, 1.8 KiB)
   - `SHA256SUMS` (162 bytes)
-  - `index.json` (2675 bytes, 2.6 KiB)
+  - `index.json` (3400 bytes, 3.3 KiB)
 - Summary:
-  - **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.
-  - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.
-  - Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.
+  - **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. The radio settings and uplink format are the same as v0.0.1.
+  - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm. Rolling 1-hour transmit cap stays under 10% duty.
+  - P1 telegram sanity check: a telegram is published only when it carries U1-3, I1-3 and import power, voltages are 0 V or 150-280 V, currents are at most 100 A, every power is at most `P1_MAX_POWER_W` (50 kW), and frequency, when sent, is 45-55 Hz.
 
 ### CONFIG_APP
 
