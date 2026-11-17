@@ -85,7 +85,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `v0.0.1`
 
-- Date: 2026-11-09
+- Date: 2026-11-06
 - Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
@@ -103,25 +103,81 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
   - SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.
 
+#### `v0.0.2`
+
+- Date: unknown
+- Source commit: `375efe158b6ebfe809289690d2d418d802b8cc20` (opelpanfan/OPF-STORAGE-DASH)
+- Files:
+  - `OPF_ATOM_S3.bin` (1865232 bytes, 1.78 MiB)
+  - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_ATOM_S3R.bin` (2063968 bytes, 1.97 MiB)
+  - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_T2CAN.bin` (1927392 bytes, 1.84 MiB)
+  - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS.bin` (1909888 bytes, 1.82 MiB)
+  - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS_DASH.bin` (2599360 bytes, 2.48 MiB)
+  - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS_NO_TEMP.bin` (1909712 bytes, 1.82 MiB)
+  - `OPF_WS_NO_TEMP.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS_NO_TEMP.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS_NO_TEMP.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (1285 bytes, 1.3 KiB)
+  - `SHA256SUMS` (2148 bytes, 2.1 KiB)
+  - `index.json` (9332 bytes, 9.1 KiB)
+- Full-install files: `OPF_WS` yes, `OPF_WS_NO_TEMP` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
+- Summary:
+  - Built from `opelpanfan/OPF-STORAGE-DASH` `master-grok` commit `375efe1` (`375efe158b6ebfe809289690d2d418d802b8cc20`). Live pack `.158` is running this `OPF_WS` image.
+  - Close under current: if IVT current is still flowing (contactors already physically closed), `/contactors/close` clears latches and restores pos/neg commanded closed directly. It does not start a precharge that would fail `current_not_decaying` or raise…
+  - Manual Open is no longer a fake success: the API returns `outcome: pending` / `opened: false`, and `/health` reports `contactor_open_outcome`. If current does not decay to ~0 A within 3 s, status is `open not achieved` and outputs are auto-restored closed (no fault loop, no…
+
 #### `latest`
 
-- Date: 2026-11-09
-- Source commit: `ee504953212207b65fa3cfd13f3d0eadf50bdd76` (opelpanfan/OPF-STORAGE-DASH)
+- Date: 2026-11-06
+- Source commit: `375efe158b6ebfe809289690d2d418d802b8cc20` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1664816 bytes, 1.59 MiB)
-  - `OPF_ATOM_S3R.bin` (1865392 bytes, 1.78 MiB)
-  - `OPF_T2CAN.bin` (1701696 bytes, 1.62 MiB)
-  - `OPF_WS.bin` (1699776 bytes, 1.62 MiB)
-  - `OPF_WS_DASH.bin` (2403456 bytes, 2.29 MiB)
-  - `OPF_WS_NO_TEMP.bin` (1699632 bytes, 1.62 MiB)
-  - `RELEASE_NOTES.md` (981 bytes)
-  - `SHA256SUMS` (489 bytes)
-  - `index.json` (4953 bytes, 4.8 KiB)
-- Full-install files: `OPF_WS` no, `OPF_WS_NO_TEMP` no, `OPF_T2CAN` no, `OPF_ATOM_S3` no, `OPF_ATOM_S3R` no, `OPF_WS_DASH` no
+  - `OPF_ATOM_S3.bin` (1865232 bytes, 1.78 MiB)
+  - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_ATOM_S3R.bin` (2063968 bytes, 1.97 MiB)
+  - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_T2CAN.bin` (1927392 bytes, 1.84 MiB)
+  - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS.bin` (1909888 bytes, 1.82 MiB)
+  - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS_DASH.bin` (2599360 bytes, 2.48 MiB)
+  - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS_NO_TEMP.bin` (1909712 bytes, 1.82 MiB)
+  - `OPF_WS_NO_TEMP.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS_NO_TEMP.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS_NO_TEMP.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (1285 bytes, 1.3 KiB)
+  - `SHA256SUMS` (2148 bytes, 2.1 KiB)
+  - `index.json` (9330 bytes, 9.1 KiB)
+- Full-install files: `OPF_WS` yes, `OPF_WS_NO_TEMP` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
-  - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
-  - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
-  - SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.
+  - Built from `opelpanfan/OPF-STORAGE-DASH` `master-grok` commit `375efe1` (`375efe158b6ebfe809289690d2d418d802b8cc20`). Live pack `.158` is running this `OPF_WS` image.
+  - Close under current: if IVT current is still flowing (contactors already physically closed), `/contactors/close` clears latches and restores pos/neg commanded closed directly. It does not start a precharge that would fail `current_not_decaying` or raise…
+  - Manual Open is no longer a fake success: the API returns `outcome: pending` / `opened: false`, and `/health` reports `contactor_open_outcome`. If current does not decay to ~0 A within 3 s, status is `open not achieved` and outputs are auto-restored closed (no fault loop, no…
 
 ### BRIDGE
 
@@ -129,7 +185,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.1`
 
-- Date: 2026-11-09
+- Date: 2026-11-06
 - Source commit: `2ed79bd56277ea2e479bd15a70365a739fca2232` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1916752 bytes, 1.83 MiB)
@@ -207,7 +263,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.1`
 
-- Date: 2026-11-09
+- Date: 2026-11-06
 - Files:
   - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
   - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
