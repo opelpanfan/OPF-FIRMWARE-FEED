@@ -26,19 +26,19 @@
         "OPF_WS_NO_TEMP"
       ],
       "sha256": {
-        "OPF_ATOM_S3": "e872a33148bd4deaa2c1d72af8f9c5cb38fa69034ce512cd1989c991c5d0dc73",
-        "OPF_ATOM_S3R": "c082d0cac0e081b4431f95144c445b83239187b1ba612ba9d1fc0dda57b45825",
-        "OPF_T2CAN": "3e19c728a5c4d728bb3cd39a6a8135f8184f999d9e0a5b4b15733cd34c2d0080",
-        "OPF_WS": "71fb02e7d2dea4cf1d687512d1087f158a1787895b2fb2d817eaa2d9fae4cb86",
-        "OPF_WS_DASH": "461de612d69bbf5d119214b2cf657a8c87d6abc0d83accc4dad979f7ac55357c",
-        "OPF_WS_NO_TEMP": "31cf3b211af916f1008fa60189ac9cd5cefd309d4b1d3cab059320b38da5570f"
+        "OPF_ATOM_S3": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
+        "OPF_ATOM_S3R": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
+        "OPF_T2CAN": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
+        "OPF_WS": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
+        "OPF_WS_DASH": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6",
+        "OPF_WS_NO_TEMP": "5a3e613960224018d97feb3fd9d9cef92000cf71d763558d7b0c0c0858deba89"
       },
       "artifacts": [
         {
           "board": "OPF_ATOM_S3",
           "filename": "OPF_ATOM_S3.bin",
-          "sha256": "e872a33148bd4deaa2c1d72af8f9c5cb38fa69034ce512cd1989c991c5d0dc73",
-          "size": 1865232,
+          "sha256": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
+          "size": 1865776,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3.bin",
           "source_filename": "OPF_ATOM_S3.bin",
           "install": {
@@ -65,8 +65,8 @@
         {
           "board": "OPF_ATOM_S3R",
           "filename": "OPF_ATOM_S3R.bin",
-          "sha256": "c082d0cac0e081b4431f95144c445b83239187b1ba612ba9d1fc0dda57b45825",
-          "size": 2063968,
+          "sha256": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
+          "size": 2065216,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3R.bin",
           "source_filename": "OPF_ATOM_S3R.bin",
           "install": {
@@ -93,8 +93,8 @@
         {
           "board": "OPF_T2CAN",
           "filename": "OPF_T2CAN.bin",
-          "sha256": "3e19c728a5c4d728bb3cd39a6a8135f8184f999d9e0a5b4b15733cd34c2d0080",
-          "size": 1927392,
+          "sha256": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
+          "size": 1927920,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_T2CAN.bin",
           "source_filename": "OPF_T2CAN.bin",
           "install": {
@@ -121,8 +121,8 @@
         {
           "board": "OPF_WS",
           "filename": "OPF_WS.bin",
-          "sha256": "71fb02e7d2dea4cf1d687512d1087f158a1787895b2fb2d817eaa2d9fae4cb86",
-          "size": 1909888,
+          "sha256": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
+          "size": 1910432,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS.bin",
           "source_filename": "OPF_WS.bin",
           "install": {
@@ -149,8 +149,8 @@
         {
           "board": "OPF_WS_DASH",
           "filename": "OPF_WS_DASH.bin",
-          "sha256": "461de612d69bbf5d119214b2cf657a8c87d6abc0d83accc4dad979f7ac55357c",
-          "size": 2599360,
+          "sha256": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6",
+          "size": 2599920,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_DASH.bin",
           "source_filename": "OPF_WS_DASH.bin",
           "install": {
@@ -177,8 +177,8 @@
         {
           "board": "OPF_WS_NO_TEMP",
           "filename": "OPF_WS_NO_TEMP.bin",
-          "sha256": "31cf3b211af916f1008fa60189ac9cd5cefd309d4b1d3cab059320b38da5570f",
-          "size": 1909712,
+          "sha256": "5a3e613960224018d97feb3fd9d9cef92000cf71d763558d7b0c0c0858deba89",
+          "size": 1910272,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_NO_TEMP.bin",
           "source_filename": "OPF_WS_NO_TEMP.bin",
           "install": {
@@ -203,7 +203,7 @@
           }
         }
       ],
-      "release_notes": "# BMS v0.0.2\n\nBuilt from `opelpanfan/OPF-STORAGE-DASH` `master-grok` commit `375efe1` (`375efe158b6ebfe809289690d2d418d802b8cc20`). Live pack `.158` is running this `OPF_WS` image.\n\n- Close under current: if IVT current is still flowing (contactors already physically closed), `/contactors/close` clears latches and restores pos/neg commanded closed directly. It does not start a precharge that would fail `current_not_decaying` or raise `contactor_unexpected_open`.\n- Manual Open is no longer a fake success: the API returns `outcome: pending` / `opened: false`, and `/health` reports `contactor_open_outcome`. If current does not decay to ~0 A within 3 s, status is `open not achieved` and outputs are auto-restored closed (no fault loop, no manual reset).\n- Stock+IVT Close resume from `f892b22` is included: a leftover IVT RAM open latch cannot survive a manual Close when current has already decayed; re-close then goes through precharge.\n- `.100DC` / `opf-ws-dc` is not in this catalog.\n\nProven: host tests (including 223 contactor-policy checks); USB `.180` configured PSA_82+IVT for the zero-current open\u2192close-with-precharge path (no pack current on the bench); authorized OTA to `.158` with a 10-minute Healthy watch. No Open/Close retest on the live pack in this release.\n",
+      "release_notes": "# BMS v0.0.1\n\n- Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.\n- Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.\n- SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.\n- Low-SoC fix: SoC follows IVT Ah counting (charge raises it), seeded from the real reading once cells are valid, with spike rejection and hysteresis. Stops the 5%/7% charge/discharge loop.\n- Soft stop: OTA and other requested reboots ramp current down first, then reboot.\n- Crash fix: `logs_loop` panic (JSON allocator double-free, unlocked console print, MQTT publish race).\n- Settings: keys over 15 characters renamed so they save.\n- `/health`: ramp, taper, SoC and last restart reason fields.\n- Stability from earlier on this line: OTA watchdog fix, coredump capture and `/coredump`, PSA2 96-cell decode, IVT support, UV failsafe.\n",
       "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/RELEASE_NOTES.md"
     },
     "BRIDGE": {
@@ -430,19 +430,19 @@
           "OPF_WS_NO_TEMP"
         ],
         "sha256": {
-          "OPF_ATOM_S3": "e872a33148bd4deaa2c1d72af8f9c5cb38fa69034ce512cd1989c991c5d0dc73",
-          "OPF_ATOM_S3R": "c082d0cac0e081b4431f95144c445b83239187b1ba612ba9d1fc0dda57b45825",
-          "OPF_T2CAN": "3e19c728a5c4d728bb3cd39a6a8135f8184f999d9e0a5b4b15733cd34c2d0080",
-          "OPF_WS": "71fb02e7d2dea4cf1d687512d1087f158a1787895b2fb2d817eaa2d9fae4cb86",
-          "OPF_WS_DASH": "461de612d69bbf5d119214b2cf657a8c87d6abc0d83accc4dad979f7ac55357c",
-          "OPF_WS_NO_TEMP": "31cf3b211af916f1008fa60189ac9cd5cefd309d4b1d3cab059320b38da5570f"
+          "OPF_ATOM_S3": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
+          "OPF_ATOM_S3R": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
+          "OPF_T2CAN": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
+          "OPF_WS": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
+          "OPF_WS_DASH": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6",
+          "OPF_WS_NO_TEMP": "5a3e613960224018d97feb3fd9d9cef92000cf71d763558d7b0c0c0858deba89"
         },
         "artifacts": [
           {
             "board": "OPF_ATOM_S3",
             "filename": "OPF_ATOM_S3.bin",
-            "sha256": "e872a33148bd4deaa2c1d72af8f9c5cb38fa69034ce512cd1989c991c5d0dc73",
-            "size": 1865232,
+            "sha256": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
+            "size": 1865776,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3.bin",
             "source_filename": "OPF_ATOM_S3.bin",
             "install": {
@@ -469,8 +469,8 @@
           {
             "board": "OPF_ATOM_S3R",
             "filename": "OPF_ATOM_S3R.bin",
-            "sha256": "c082d0cac0e081b4431f95144c445b83239187b1ba612ba9d1fc0dda57b45825",
-            "size": 2063968,
+            "sha256": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
+            "size": 2065216,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3R.bin",
             "source_filename": "OPF_ATOM_S3R.bin",
             "install": {
@@ -497,8 +497,8 @@
           {
             "board": "OPF_T2CAN",
             "filename": "OPF_T2CAN.bin",
-            "sha256": "3e19c728a5c4d728bb3cd39a6a8135f8184f999d9e0a5b4b15733cd34c2d0080",
-            "size": 1927392,
+            "sha256": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
+            "size": 1927920,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_T2CAN.bin",
             "source_filename": "OPF_T2CAN.bin",
             "install": {
@@ -525,8 +525,8 @@
           {
             "board": "OPF_WS",
             "filename": "OPF_WS.bin",
-            "sha256": "71fb02e7d2dea4cf1d687512d1087f158a1787895b2fb2d817eaa2d9fae4cb86",
-            "size": 1909888,
+            "sha256": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
+            "size": 1910432,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS.bin",
             "source_filename": "OPF_WS.bin",
             "install": {
@@ -553,8 +553,8 @@
           {
             "board": "OPF_WS_DASH",
             "filename": "OPF_WS_DASH.bin",
-            "sha256": "461de612d69bbf5d119214b2cf657a8c87d6abc0d83accc4dad979f7ac55357c",
-            "size": 2599360,
+            "sha256": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6",
+            "size": 2599920,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_DASH.bin",
             "source_filename": "OPF_WS_DASH.bin",
             "install": {
@@ -581,8 +581,8 @@
           {
             "board": "OPF_WS_NO_TEMP",
             "filename": "OPF_WS_NO_TEMP.bin",
-            "sha256": "31cf3b211af916f1008fa60189ac9cd5cefd309d4b1d3cab059320b38da5570f",
-            "size": 1909712,
+            "sha256": "5a3e613960224018d97feb3fd9d9cef92000cf71d763558d7b0c0c0858deba89",
+            "size": 1910272,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_NO_TEMP.bin",
             "source_filename": "OPF_WS_NO_TEMP.bin",
             "install": {
@@ -607,7 +607,7 @@
             }
           }
         ],
-        "release_notes": "# BMS v0.0.2\n\nBuilt from `opelpanfan/OPF-STORAGE-DASH` `master-grok` commit `375efe1` (`375efe158b6ebfe809289690d2d418d802b8cc20`). Live pack `.158` is running this `OPF_WS` image.\n\n- Close under current: if IVT current is still flowing (contactors already physically closed), `/contactors/close` clears latches and restores pos/neg commanded closed directly. It does not start a precharge that would fail `current_not_decaying` or raise `contactor_unexpected_open`.\n- Manual Open is no longer a fake success: the API returns `outcome: pending` / `opened: false`, and `/health` reports `contactor_open_outcome`. If current does not decay to ~0 A within 3 s, status is `open not achieved` and outputs are auto-restored closed (no fault loop, no manual reset).\n- Stock+IVT Close resume from `f892b22` is included: a leftover IVT RAM open latch cannot survive a manual Close when current has already decayed; re-close then goes through precharge.\n- `.100DC` / `opf-ws-dc` is not in this catalog.\n\nProven: host tests (including 223 contactor-policy checks); USB `.180` configured PSA_82+IVT for the zero-current open\u2192close-with-precharge path (no pack current on the bench); authorized OTA to `.158` with a 10-minute Healthy watch. No Open/Close retest on the live pack in this release.\n",
+        "release_notes": "# BMS v0.0.1\n\n- Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.\n- Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.\n- SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.\n- Low-SoC fix: SoC follows IVT Ah counting (charge raises it), seeded from the real reading once cells are valid, with spike rejection and hysteresis. Stops the 5%/7% charge/discharge loop.\n- Soft stop: OTA and other requested reboots ramp current down first, then reboot.\n- Crash fix: `logs_loop` panic (JSON allocator double-free, unlocked console print, MQTT publish race).\n- Settings: keys over 15 characters renamed so they save.\n- `/health`: ramp, taper, SoC and last restart reason fields.\n- Stability from earlier on this line: OTA watchdog fix, coredump capture and `/coredump`, PSA2 96-cell decode, IVT support, UV failsafe.\n",
         "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/RELEASE_NOTES.md"
       },
       "versions": [
@@ -625,20 +625,20 @@
             "OPF_WS_NO_TEMP"
           ],
           "sha256": {
-            "OPF_ATOM_S3": "e872a33148bd4deaa2c1d72af8f9c5cb38fa69034ce512cd1989c991c5d0dc73",
-            "OPF_ATOM_S3R": "c082d0cac0e081b4431f95144c445b83239187b1ba612ba9d1fc0dda57b45825",
-            "OPF_T2CAN": "3e19c728a5c4d728bb3cd39a6a8135f8184f999d9e0a5b4b15733cd34c2d0080",
-            "OPF_WS": "71fb02e7d2dea4cf1d687512d1087f158a1787895b2fb2d817eaa2d9fae4cb86",
-            "OPF_WS_DASH": "461de612d69bbf5d119214b2cf657a8c87d6abc0d83accc4dad979f7ac55357c",
-            "OPF_WS_NO_TEMP": "31cf3b211af916f1008fa60189ac9cd5cefd309d4b1d3cab059320b38da5570f"
+            "OPF_ATOM_S3": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
+            "OPF_ATOM_S3R": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
+            "OPF_T2CAN": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
+            "OPF_WS": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
+            "OPF_WS_DASH": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6",
+            "OPF_WS_NO_TEMP": "5a3e613960224018d97feb3fd9d9cef92000cf71d763558d7b0c0c0858deba89"
           },
           "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/index.json",
           "artifacts": [
             {
               "board": "OPF_ATOM_S3",
               "filename": "OPF_ATOM_S3.bin",
-              "sha256": "e872a33148bd4deaa2c1d72af8f9c5cb38fa69034ce512cd1989c991c5d0dc73",
-              "size": 1865232,
+              "sha256": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
+              "size": 1865776,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_ATOM_S3.bin",
               "source_filename": "OPF_ATOM_S3.bin",
               "install": {
@@ -665,8 +665,8 @@
             {
               "board": "OPF_ATOM_S3R",
               "filename": "OPF_ATOM_S3R.bin",
-              "sha256": "c082d0cac0e081b4431f95144c445b83239187b1ba612ba9d1fc0dda57b45825",
-              "size": 2063968,
+              "sha256": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
+              "size": 2065216,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_ATOM_S3R.bin",
               "source_filename": "OPF_ATOM_S3R.bin",
               "install": {
@@ -693,8 +693,8 @@
             {
               "board": "OPF_T2CAN",
               "filename": "OPF_T2CAN.bin",
-              "sha256": "3e19c728a5c4d728bb3cd39a6a8135f8184f999d9e0a5b4b15733cd34c2d0080",
-              "size": 1927392,
+              "sha256": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
+              "size": 1927920,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_T2CAN.bin",
               "source_filename": "OPF_T2CAN.bin",
               "install": {
@@ -721,8 +721,8 @@
             {
               "board": "OPF_WS",
               "filename": "OPF_WS.bin",
-              "sha256": "71fb02e7d2dea4cf1d687512d1087f158a1787895b2fb2d817eaa2d9fae4cb86",
-              "size": 1909888,
+              "sha256": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
+              "size": 1910432,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_WS.bin",
               "source_filename": "OPF_WS.bin",
               "install": {
@@ -749,8 +749,8 @@
             {
               "board": "OPF_WS_DASH",
               "filename": "OPF_WS_DASH.bin",
-              "sha256": "461de612d69bbf5d119214b2cf657a8c87d6abc0d83accc4dad979f7ac55357c",
-              "size": 2599360,
+              "sha256": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6",
+              "size": 2599920,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_WS_DASH.bin",
               "source_filename": "OPF_WS_DASH.bin",
               "install": {
@@ -777,8 +777,8 @@
             {
               "board": "OPF_WS_NO_TEMP",
               "filename": "OPF_WS_NO_TEMP.bin",
-              "sha256": "31cf3b211af916f1008fa60189ac9cd5cefd309d4b1d3cab059320b38da5570f",
-              "size": 1909712,
+              "sha256": "5a3e613960224018d97feb3fd9d9cef92000cf71d763558d7b0c0c0858deba89",
+              "size": 1910272,
               "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_WS_NO_TEMP.bin",
               "source_filename": "OPF_WS_NO_TEMP.bin",
               "install": {
@@ -803,7 +803,7 @@
               }
             }
           ],
-          "release_notes": "# BMS v0.0.2\n\nBuilt from `opelpanfan/OPF-STORAGE-DASH` `master-grok` commit `375efe1` (`375efe158b6ebfe809289690d2d418d802b8cc20`). Live pack `.158` is running this `OPF_WS` image.\n\n- Close under current: if IVT current is still flowing (contactors already physically closed), `/contactors/close` clears latches and restores pos/neg commanded closed directly. It does not start a precharge that would fail `current_not_decaying` or raise `contactor_unexpected_open`.\n- Manual Open is no longer a fake success: the API returns `outcome: pending` / `opened: false`, and `/health` reports `contactor_open_outcome`. If current does not decay to ~0 A within 3 s, status is `open not achieved` and outputs are auto-restored closed (no fault loop, no manual reset).\n- Stock+IVT Close resume from `f892b22` is included: a leftover IVT RAM open latch cannot survive a manual Close when current has already decayed; re-close then goes through precharge.\n- `.100DC` / `opf-ws-dc` is not in this catalog.\n\nProven: host tests (including 223 contactor-policy checks); USB `.180` configured PSA_82+IVT for the zero-current open\u2192close-with-precharge path (no pack current on the bench); authorized OTA to `.158` with a 10-minute Healthy watch. No Open/Close retest on the live pack in this release.\n",
+          "release_notes": "# BMS v0.0.1\n\n- Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.\n- Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.\n- SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.\n- Low-SoC fix: SoC follows IVT Ah counting (charge raises it), seeded from the real reading once cells are valid, with spike rejection and hysteresis. Stops the 5%/7% charge/discharge loop.\n- Soft stop: OTA and other requested reboots ramp current down first, then reboot.\n- Crash fix: `logs_loop` panic (JSON allocator double-free, unlocked console print, MQTT publish race).\n- Settings: keys over 15 characters renamed so they save.\n- `/health`: ramp, taper, SoC and last restart reason fields.\n- Stability from earlier on this line: OTA watchdog fix, coredump capture and `/coredump`, PSA2 96-cell decode, IVT support, UV failsafe.\n",
           "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/RELEASE_NOTES.md"
         },
         {
