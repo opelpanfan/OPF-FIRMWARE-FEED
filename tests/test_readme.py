@@ -32,6 +32,7 @@ def _bridge_bins(marker: int) -> dict[str, tuple[bytes, str]]:
     return {
         "ATOM_S3": (_esp(marker), "ATOM_S3.bin"),
         "ATOM_S3_R": (_esp(marker + 1), "ATOM_S3_R.bin"),
+        "ESP32": (_esp(marker + 2), "ESP32.bin"),
     }
 
 
@@ -133,12 +134,14 @@ class ReadmeSummaryTests(unittest.TestCase):
         self.assertLess(text.index("## Release notes"), text.index(FEED_SUMMARY_START))
         self.assertLess(text.index(FEED_SUMMARY_START), text.index(FEED_SUMMARY_END))
         section = text.split(FEED_SUMMARY_START, 1)[1].split(FEED_SUMMARY_END, 1)[0]
-        for product in ("BMS", "BRIDGE", "P1", "METER"):
+        for product in ("BMS", "BRIDGE", "P1", "METER", "SCREEN"):
             self.assertIn(f"### {product}", section)
-        self.assertIn("#### `v0.0.1`", section)
+        self.assertIn("#### `v0.0.2`", section)
         self.assertIn("#### `latest`", section)
-        self.assertIn("- Full-install files: `ATOM_S3` no, `ATOM_S3_R` no", section)
-        self.assertIn("`OPF_WS` no", section)
+        self.assertNotIn("#### `v0.0.1`", section)
+        self.assertIn("- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes", section)
+        self.assertIn("`OPF_WS` yes", section)
+        self.assertIn("Full flash is required.", section)
 
     def test_workflow_regenerates_on_master_grok_without_pulling_sources(self) -> None:
         workflow = (ROOT / ".github/workflows/feed-readme.yml").read_text(encoding="utf-8")

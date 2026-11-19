@@ -2,7 +2,7 @@
   "schema": 1,
   "repository": "opelpanfan/OPF-FIRMWARE-FEED",
   "branch": "master-grok",
-  "latest_selection": "Read latest.BMS, latest.BRIDGE, latest.P1, latest.METER, latest.CONFIG_APP, and latest.FLASHER. Do not choose the highest semver folder: historical version numbers were not published in order.",
+  "latest_selection": "Read latest.BMS, latest.BRIDGE, latest.P1, latest.METER, latest.CONFIG_APP, latest.FLASHER, and latest.SCREEN. Do not choose the highest semver folder: historical version numbers were not published in order.",
   "aliases": {},
   "latest": {
     "BMS": {
@@ -372,6 +372,22 @@
       "boards": [],
       "artifacts": [],
       "sha256": {}
+    },
+    "SCREEN": {
+      "product": "SCREEN",
+      "available": false,
+      "semver": null,
+      "version": null,
+      "matched_folder": null,
+      "matches_folders": [],
+      "highest_semver_folder": null,
+      "highest_semver_is_latest": false,
+      "index_url": null,
+      "boards": [],
+      "artifacts": [],
+      "sha256": {},
+      "full_flash_required": true,
+      "app_offset": "0x10000"
     }
   },
   "products": [
@@ -1102,6 +1118,88 @@
       },
       "versions": [],
       "source_ref": "master-grok"
+    },
+    {
+      "id": "SCREEN",
+      "family": "esp32",
+      "source_repository": "opelpanfan/OPF-STORAGE-DASH",
+      "latest": {
+        "product": "SCREEN",
+        "available": false,
+        "semver": null,
+        "version": null,
+        "matched_folder": null,
+        "matches_folders": [],
+        "highest_semver_folder": null,
+        "highest_semver_is_latest": false,
+        "index_url": null,
+        "boards": [],
+        "artifacts": [],
+        "sha256": {},
+        "full_flash_required": true,
+        "app_offset": "0x10000"
+      },
+      "versions": [],
+      "source_ref": "master-grok",
+      "chip": "ESP32-S3",
+      "full_flash_required": true,
+      "app_offset": "0x10000",
+      "catalog_boards": [
+        {
+          "id": "ws-4-480",
+          "filename": "ws-4-480.bin",
+          "env": "OPF_WS_CAN_DASH_4",
+          "label": "Waveshare Touch-LCD-4 480x480"
+        },
+        {
+          "id": "ws-43-800",
+          "filename": "ws-43-800.bin",
+          "env": "OPF_WS_CAN_DASH_43",
+          "label": "Touch-LCD-4.3B 800x480"
+        },
+        {
+          "id": "ws-5-800",
+          "filename": "ws-5-800.bin",
+          "env": "OPF_WS_CAN_DASH_5",
+          "build_flags": [
+            "-D OPF_CAN_DASH_RES=800"
+          ],
+          "label": "Touch-LCD-5 800x480"
+        },
+        {
+          "id": "ws-5b-1024",
+          "filename": "ws-5b-1024.bin",
+          "env": "OPF_WS_CAN_DASH_5",
+          "build_flags": [
+            "-D OPF_CAN_DASH_RES=1024"
+          ],
+          "label": "Touch-LCD-5B 1024x600",
+          "experimental": true
+        },
+        {
+          "id": "ws-7-800",
+          "filename": "ws-7-800.bin",
+          "env": "OPF_WS_CAN_DASH_7",
+          "build_flags": [
+            "-D OPF_CAN_DASH_RES=800"
+          ],
+          "label": "Touch-LCD-7 800x480",
+          "uart_only": true,
+          "note": "UART/download-mode flash only"
+        },
+        {
+          "id": "ws-7b-1024",
+          "filename": "ws-7b-1024.bin",
+          "env": "OPF_WS_CAN_DASH_7",
+          "build_flags": [
+            "-D OPF_CAN_DASH_RES=1024"
+          ],
+          "label": "LCD-7B 1024x600",
+          "uart_only": true,
+          "note": "UART-only"
+        }
+      ],
+      "note": "OPF CAN dashboard for Waveshare ESP32-S3 LCD boards. Images come from OPF-STORAGE-DASH master-grok builds. The firmware build id looks like vX.Y.Z+N; feed folders and tags stay plain vX.Y.Z. Full flash is required because an upcoming partition change makes OTA across layouts unsafe. Optional <id>.factory.bin is a merged image at 0x0."
     }
   ]
 }

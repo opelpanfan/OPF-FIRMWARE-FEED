@@ -4,6 +4,16 @@
 Source repositories push product folders themselves. These commands read and
 write the checkout only. They do not download private releases or workflow
 artifacts.
+
+Products are BMS, BRIDGE, P1, CONFIG_APP, METER, FLASHER, and SCREEN.
+SCREEN is the OPF CAN dashboard (ESP32-S3, Waveshare Touch-LCD boards).
+It uses the BMS install set: ``<id>.bin`` at ``0x10000``,
+``<id>.bootloader.bin`` at ``0x0``, ``<id>.partitions.bin`` at ``0x8000``,
+and ``<id>.boot_app0.bin`` at ``0xe000``, plus an optional ``<id>.factory.bin``
+merged image at ``0x0``. SCREEN is full-flash-required. Its firmware comes
+from OPF-STORAGE-DASH ``master-grok`` builds, never ``main`` or ``master``.
+A firmware build id looks like ``v0.0.2+N``. Feed folders and tags stay
+plain ``vX.Y.Z``.
 """
 
 from __future__ import annotations
@@ -46,7 +56,12 @@ def _notes_folder(folder: str | None, version: str | None) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="OPF firmware feed local tools")
+    parser = argparse.ArgumentParser(
+        description=(
+            "OPF firmware feed local tools "
+            "(BMS, BRIDGE, P1, SCREEN, CONFIG_APP, METER, FLASHER)"
+        )
+    )
     sub = parser.add_subparsers(dest="command", required=True)
 
     rebuild = sub.add_parser(

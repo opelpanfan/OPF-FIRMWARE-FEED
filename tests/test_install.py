@@ -58,6 +58,7 @@ def _bridge_bins(marker: int) -> dict[str, tuple[bytes, str]]:
     return {
         "ATOM_S3": (_esp(marker), "ATOM_S3.bin"),
         "ATOM_S3_R": (_esp(marker + 1), "ATOM_S3_R.bin"),
+        "ESP32": (_esp(marker + 2), "ESP32.bin"),
     }
 
 
@@ -113,7 +114,7 @@ class InstallCompanionTests(unittest.TestCase):
         self.assertIn("ATOM_S3.bin", sums)
         self.assertNotIn("bootloader", sums)
         readme = (self.root / "README.md").read_text(encoding="utf-8")
-        self.assertIn("- Full-install files: `ATOM_S3` no, `ATOM_S3_R` no", readme)
+        self.assertIn("- Full-install files: `ATOM_S3` no, `ATOM_S3_R` no, `ESP32` no", readme)
 
     def test_publish_with_companions_records_install_and_checksums(self) -> None:
         install = _install_for(("ATOM_S3", "ATOM_S3_R"), 20)
@@ -151,6 +152,7 @@ class InstallCompanionTests(unittest.TestCase):
                 "ATOM_S3_R.boot_app0.bin",
                 "ATOM_S3_R.bootloader.bin",
                 "ATOM_S3_R.partitions.bin",
+                "ESP32.bin",
             ],
         )
         root_sums = (self.root / "SHA256SUMS").read_text()
@@ -158,7 +160,7 @@ class InstallCompanionTests(unittest.TestCase):
             self.assertIn(f"BRIDGE/v1.3.0/{name}", root_sums)
             self.assertIn(f"BRIDGE/latest/{name}", root_sums)
         readme = (self.root / "README.md").read_text(encoding="utf-8")
-        self.assertIn("- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes", readme)
+        self.assertIn("- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` no", readme)
 
     def test_one_board_may_omit_companions(self) -> None:
         install = _install_for(("ATOM_S3",), 30)
@@ -177,7 +179,7 @@ class InstallCompanionTests(unittest.TestCase):
         self.assertIn("install", by_board["ATOM_S3"])
         self.assertNotIn("install", by_board["ATOM_S3_R"])
         readme = (self.root / "README.md").read_text(encoding="utf-8")
-        self.assertIn("- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` no", readme)
+        self.assertIn("- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` no, `ESP32` no", readme)
 
     def test_partial_install_set_is_refused(self) -> None:
         install = {
@@ -213,8 +215,8 @@ class InstallCompanionTests(unittest.TestCase):
         )
         validate_feed(self.root, self.catalog)
         doc = json.loads((self.root / "BRIDGE" / "v1.3.3" / "index.json").read_text())
-        digests = [item["install"]["boot_app0"]["sha256"] for item in doc["artifacts"]]
-        self.assertEqual(digests[0], digests[1])
+        digests = [item["install"]["boot_app0"]["sha256"] for item in doc["artifacts"] if "install" in item]
+        self.assertEqual(digests, [digests[0], digests[0]])
 
     def test_stm32_refuses_install_companions(self) -> None:
         binaries = {
@@ -283,7 +285,7 @@ class InstallCompanionTests(unittest.TestCase):
     def test_cli_apply_picks_up_companion_filenames(self) -> None:
         from_dir = self.root / "in"
         from_dir.mkdir()
-        for name, marker in (("ATOM_S3.bin", 5), ("ATOM_S3_R.bin", 6)):
+        for name, marker in (("ATOM_S3.bin", 5), ("ATOM_S3_R.bin", 6), ("ESP32.bin", 7)):
             (from_dir / name).write_bytes(_esp(marker))
         install = _install_for(("ATOM_S3", "ATOM_S3_R"), 70)
         for board, roles in install.items():
@@ -317,7 +319,7 @@ class InstallCompanionTests(unittest.TestCase):
     def test_cli_partial_companion_set_fails(self) -> None:
         from_dir = self.root / "in"
         from_dir.mkdir()
-        for name, marker in (("ATOM_S3.bin", 5), ("ATOM_S3_R.bin", 6)):
+        for name, marker in (("ATOM_S3.bin", 5), ("ATOM_S3_R.bin", 6), ("ESP32.bin", 7)):
             (from_dir / name).write_bytes(_esp(marker))
         (from_dir / "ATOM_S3.bootloader.bin").write_bytes(_companion("bootloader", 1))
         feed = self.root / "feed"
@@ -405,7 +407,7 @@ class InstallCompanionTests(unittest.TestCase):
         with self.assertRaises(FeedError):
             validate_feed(self.root, self.catalog)
 
-    def test_checked_in_feed_stays_valid_without_companions(self) -> None:
+    def test_checked_in_feed_stays_valid(self) -> None:
         validate_feed(ROOT, load_catalog())
         root_doc = json.loads((ROOT / "index.json").read_text())
         self.assertEqual(root_doc["aliases"], {})
@@ -414,11 +416,16 @@ class InstallCompanionTests(unittest.TestCase):
         self.assertFalse(meter["latest"]["available"])
         self.assertEqual(meter["versions"], [])
         self.assertNotIn("alias_of", meter)
-        self.assertNotIn('"install"', json.dumps(root_doc))
+        screen = _product(root_doc, "SCREEN")
+        self.assertEqual(screen["chip"], "ESP32-S3")
+        self.assertTrue(screen["full_flash_required"])
+        self.assertFalse(screen["latest"]["available"])
+        self.assertEqual(screen["versions"], [])
+        self.assertEqual(list((ROOT / "SCREEN").rglob("*.bin")), [])
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn("- Full-install files:", readme)
-        self.assertIn("`ATOM_S3` no", readme)
-        self.assertIn("`OPF_WS` no", readme)
+        self.assertIn("`ATOM_S3` yes", readme)
+        self.assertIn("`OPF_WS` yes", readme)
 
     def _assert_install(self, document: dict, install: dict) -> None:
         by_board = {item["board"]: item for item in document["artifacts"]}

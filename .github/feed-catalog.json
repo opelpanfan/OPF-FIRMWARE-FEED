@@ -230,6 +230,93 @@
           "required": true
         }
       }
+    },
+    "SCREEN": {
+      "family": "esp32",
+      "ingest": "push",
+      "version_label": "plain",
+      "source_repository": "opelpanfan/OPF-STORAGE-DASH",
+      "source_ref": "master-grok",
+      "workflow_file": null,
+      "chip": "ESP32-S3",
+      "full_flash_required": true,
+      "app_offset": "0x10000",
+      "note": "OPF CAN dashboard for Waveshare ESP32-S3 LCD boards. Images come from OPF-STORAGE-DASH master-grok builds. The firmware build id looks like vX.Y.Z+N; feed folders and tags stay plain vX.Y.Z. Full flash is required because an upcoming partition change makes OTA across layouts unsafe. Optional <id>.factory.bin is a merged image at 0x0.",
+      "required_boards": [
+        "ws-4-480",
+        "ws-43-800",
+        "ws-5-800",
+        "ws-5b-1024",
+        "ws-7-800",
+        "ws-7b-1024"
+      ],
+      "boards": {
+        "ws-4-480": {
+          "filename": "ws-4-480.bin",
+          "envs": [
+            "OPF_WS_CAN_DASH_4"
+          ],
+          "label": "Waveshare Touch-LCD-4 480x480",
+          "required": true
+        },
+        "ws-43-800": {
+          "filename": "ws-43-800.bin",
+          "envs": [
+            "OPF_WS_CAN_DASH_43"
+          ],
+          "label": "Touch-LCD-4.3B 800x480",
+          "required": true
+        },
+        "ws-5-800": {
+          "filename": "ws-5-800.bin",
+          "envs": [
+            "OPF_WS_CAN_DASH_5"
+          ],
+          "build_flags": [
+            "-D OPF_CAN_DASH_RES=800"
+          ],
+          "label": "Touch-LCD-5 800x480",
+          "required": true
+        },
+        "ws-5b-1024": {
+          "filename": "ws-5b-1024.bin",
+          "envs": [
+            "OPF_WS_CAN_DASH_5"
+          ],
+          "build_flags": [
+            "-D OPF_CAN_DASH_RES=1024"
+          ],
+          "label": "Touch-LCD-5B 1024x600",
+          "experimental": true,
+          "required": true
+        },
+        "ws-7-800": {
+          "filename": "ws-7-800.bin",
+          "envs": [
+            "OPF_WS_CAN_DASH_7"
+          ],
+          "build_flags": [
+            "-D OPF_CAN_DASH_RES=800"
+          ],
+          "label": "Touch-LCD-7 800x480",
+          "uart_only": true,
+          "note": "UART/download-mode flash only",
+          "required": true
+        },
+        "ws-7b-1024": {
+          "filename": "ws-7b-1024.bin",
+          "envs": [
+            "OPF_WS_CAN_DASH_7"
+          ],
+          "build_flags": [
+            "-D OPF_CAN_DASH_RES=1024"
+          ],
+          "label": "LCD-7B 1024x600",
+          "uart_only": true,
+          "note": "UART-only",
+          "required": true
+        }
+      }
     }
   }
 }

@@ -25,21 +25,31 @@ files only (``.bin`` firmware images, optional ESP32 install companions,
 
 ESP32 install companions
 ------------------------
-An ESP32 product (BMS, BRIDGE, METER) may publish three optional files next
-to a board's app image. P1 is STM32 and does not use them. The set is
-per board: all three files, or none. A partial set is refused. Folders that
-omit the set stay valid.
+An ESP32 product (BMS, BRIDGE, METER, SCREEN) may publish three optional
+files next to a board's app image. P1 is STM32 and does not use them. The
+set is per board: all three files, or none. A partial set is refused.
+Folders that omit the set stay valid.
 
 - ``<BOARD>.bootloader.bin`` at ``0x0``
 - ``<BOARD>.partitions.bin`` at ``0x8000``
 - ``<BOARD>.boot_app0.bin`` at ``0xe000``
 
-When the set is present, that board's ``artifacts[]`` object includes
-``install.bootloader``, ``install.partitions``, and ``install.boot_app0``.
-Each object has ``path`` (filename in that folder), ``sha256``, ``size``,
-and ``offset`` (``0x0``, ``0x8000``, or ``0xe000``). The same filenames are
-lines in the folder ``SHA256SUMS`` and the root ``SHA256SUMS``. The
-``install`` field is omitted when the board has no companions.
+The app image ``<BOARD>.bin`` is flashed at ``0x10000``. SCREEN records that
+offset on the artifact. When the set is present, that board's ``artifacts[]``
+object includes ``install.bootloader``, ``install.partitions``, and
+``install.boot_app0``. Each object has ``path`` (filename in that folder),
+``sha256``, ``size``, and ``offset`` (``0x0``, ``0x8000``, or ``0xe000``).
+The same filenames are lines in the folder ``SHA256SUMS`` and the root
+``SHA256SUMS``. The ``install`` field is omitted when the board has no
+companions.
+
+SCREEN may also publish an optional ``<BOARD>.factory.bin`` merged image at
+``0x0``. It is not part of the three-file set. SCREEN is
+``full_flash_required``: an upcoming partition change makes OTA across
+layouts unsafe, so consumers full-flash the board instead of applying an
+app-only OTA. Firmware build ids look like ``vX.Y.Z+N``. Folders and tags
+stay plain ``vX.Y.Z``. SCREEN images come from OPF-STORAGE-DASH
+``master-grok``, never ``main`` or ``master``.
 
 ``.bin`` bytes in a version folder are immutable. Notes are written by the
 publish that creates the folder (``apply_publish(..., release_notes=...`` or
@@ -88,10 +98,30 @@ MIN_ESP = 64 * 1024
 MIN_STM = 1024
 MAX_BIN = 8 * 1024 * 1024
 INSTALL_ROLES = ("bootloader", "partitions", "boot_app0")
+OPTIONAL_INSTALL_ROLES = ("factory",)
+INSTALL_MATCH_ROLES = INSTALL_ROLES + OPTIONAL_INSTALL_ROLES
 INSTALL_OFFSETS = {
     "bootloader": "0x0",
     "partitions": "0x8000",
     "boot_app0": "0xe000",
+    "factory": "0x0",
+}
+APP_OFFSET = "0x10000"
+SCREEN_BOARDS = (
+    "ws-4-480",
+    "ws-43-800",
+    "ws-5-800",
+    "ws-5b-1024",
+    "ws-7-800",
+    "ws-7b-1024",
+)
+SCREEN_ENVS = {
+    "ws-4-480": "OPF_WS_CAN_DASH_4",
+    "ws-43-800": "OPF_WS_CAN_DASH_43",
+    "ws-5-800": "OPF_WS_CAN_DASH_5",
+    "ws-5b-1024": "OPF_WS_CAN_DASH_5",
+    "ws-7-800": "OPF_WS_CAN_DASH_7",
+    "ws-7b-1024": "OPF_WS_CAN_DASH_7",
 }
 MAX_PACKAGE = 512 * 1024 * 1024
 MAX_APK = 80 * 1024 * 1024
@@ -174,11 +204,88 @@ def load_catalog(path: Path | None = None) -> dict:
                     raise FeedError(f"{product}/{board} .apk requires family android")
                 if filename == expected_bin and spec.get("family") == "android":
                     raise FeedError(f"{product}/{board} android products publish {expected_apk}")
+        _validate_product_policy(product, spec)
     return catalog
+
+
+def _validate_product_policy(product: str, spec: dict) -> None:
+    """Refuse a catalog that would publish SCREEN off master-grok or without a full flash."""
+
+    if "full_flash_required" in spec and spec.get("full_flash_required") is not True:
+        raise FeedError(f"{product} full_flash_required must be true when it is set")
+    if spec.get("full_flash_required") and spec.get("family") != "esp32":
+        raise FeedError(f"{product} full_flash_required applies to ESP32 images")
+    offset = spec.get("app_offset")
+    if offset is not None and offset != APP_OFFSET:
+        raise FeedError(f"{product} app_offset must be {APP_OFFSET}")
+    if spec.get("full_flash_required") and offset != APP_OFFSET:
+        raise FeedError(f"{product} full-flash images record the app at {APP_OFFSET}")
+    chip = spec.get("chip")
+    if chip is not None and not isinstance(chip, str):
+        raise FeedError(f"{product} chip must be a string")
+    source_ref = spec.get("source_ref")
+    if isinstance(source_ref, str) and source_ref.strip() in ("main", "master"):
+        raise FeedError(f"{product} source_ref must not be {source_ref}; main/master are not publish sources")
+    for board, info in (spec.get("boards") or {}).items():
+        if not isinstance(info, dict):
+            continue
+        for key in ("experimental", "uart_only"):
+            if key in info and not isinstance(info[key], bool):
+                raise FeedError(f"{product}/{board} {key} must be a boolean")
+        label = info.get("label")
+        if label is not None and (not isinstance(label, str) or not label.strip()):
+            raise FeedError(f"{product}/{board} label must be text")
+        note = info.get("note")
+        if note is not None and (not isinstance(note, str) or not note.strip()):
+            raise FeedError(f"{product}/{board} note must be text")
+        flags = info.get("build_flags")
+        if flags is not None:
+            if (
+                not isinstance(flags, list)
+                or not flags
+                or not all(isinstance(item, str) and item.strip() for item in flags)
+            ):
+                raise FeedError(f"{product}/{board} build_flags must be a list of strings")
+    if product != "SCREEN":
+        return
+    if spec.get("family") != "esp32":
+        raise FeedError("SCREEN family must be esp32")
+    if spec.get("chip") != "ESP32-S3":
+        raise FeedError("SCREEN chip must be ESP32-S3")
+    if spec.get("source_repository") != "opelpanfan/OPF-STORAGE-DASH":
+        raise FeedError("SCREEN firmware must come from opelpanfan/OPF-STORAGE-DASH")
+    if spec.get("source_ref") != "master-grok":
+        raise FeedError("SCREEN firmware must come from master-grok, never main/master")
+    if spec.get("full_flash_required") is not True:
+        raise FeedError("SCREEN is full-flash-required")
+    boards = spec.get("boards") or {}
+    if list(boards) != list(SCREEN_BOARDS):
+        raise FeedError("SCREEN boards must be " + ", ".join(SCREEN_BOARDS))
+    for board, env in SCREEN_ENVS.items():
+        info = boards[board]
+        if info.get("envs") != [env]:
+            raise FeedError(f"SCREEN {board} PlatformIO env must be {env}")
+        if not str(info.get("label") or "").strip():
+            raise FeedError(f"SCREEN {board} needs a label")
+    if boards["ws-5b-1024"].get("experimental") is not True:
+        raise FeedError("SCREEN ws-5b-1024 must be flagged experimental")
+    if boards["ws-5b-1024"].get("build_flags") != ["-D OPF_CAN_DASH_RES=1024"]:
+        raise FeedError("SCREEN ws-5b-1024 must build OPF_WS_CAN_DASH_5 with -D OPF_CAN_DASH_RES=1024")
+    if boards["ws-7b-1024"].get("build_flags") != ["-D OPF_CAN_DASH_RES=1024"]:
+        raise FeedError("SCREEN ws-7b-1024 must build OPF_WS_CAN_DASH_7 with -D OPF_CAN_DASH_RES=1024")
+    if boards["ws-7-800"].get("uart_only") is not True or boards["ws-7b-1024"].get("uart_only") is not True:
+        raise FeedError("SCREEN 7-inch boards must be flagged UART-only")
+    if "download-mode" not in str(boards["ws-7-800"].get("note") or ""):
+        raise FeedError("SCREEN ws-7-800 must be flagged UART/download-mode flash only")
 
 
 def normalize_version(value: str) -> str:
     text = str(value or "").strip()
+    if "+" in text:
+        raise FeedError(
+            f"version {value!r} carries build metadata. "
+            "Folders and tags stay plain vX.Y.Z; vX.Y.Z+N is the firmware build id, not a feed folder."
+        )
     match = SEMVER_RE.fullmatch(text)
     if not match:
         raise FeedError(
@@ -253,7 +360,7 @@ def match_install_companion(filename: str, boards: dict) -> tuple[str, str] | No
     if not filename.endswith(".bin"):
         return None
     stem = filename[: -len(".bin")]
-    for role in INSTALL_ROLES:
+    for role in INSTALL_MATCH_ROLES:
         suffix = f".{role}"
         if not stem.endswith(suffix):
             continue
@@ -264,12 +371,23 @@ def match_install_companion(filename: str, boards: dict) -> tuple[str, str] | No
 
 
 def _require_full_install(label: str, roles: set[str]) -> None:
-    missing = [role for role in INSTALL_ROLES if role not in roles]
-    unknown = sorted(roles - set(INSTALL_ROLES))
-    if not missing and not unknown:
+    """Require the bootloader trio when any of it is present.
+
+    ``factory`` is optional and is not part of that trio. A factory file
+    alone is a merged image. A partial trio is still refused.
+    """
+
+    unknown = sorted(set(roles) - set(INSTALL_MATCH_ROLES))
+    trio = [role for role in INSTALL_ROLES if role in roles]
+    partial = not trio or len(trio) != len(INSTALL_ROLES)
+    factory_only = set(roles) <= set(OPTIONAL_INSTALL_ROLES) and bool(roles)
+    if factory_only:
+        partial = False
+    if not unknown and not partial:
         return
     parts = []
-    if missing:
+    if partial:
+        missing = [role for role in INSTALL_ROLES if role not in roles]
         parts.append("missing " + ", ".join(missing))
     if unknown:
         parts.append("unknown " + ", ".join(unknown))
@@ -297,8 +415,10 @@ def validate_install_companion(role: str, data: bytes, label: str) -> None:
     if len(data) > MAX_BIN:
         raise FeedError(f"{label} is {len(data)} bytes; limit is {MAX_BIN}")
     _reject_not_firmware_bytes(data, label)
-    if role == "bootloader" and data[0] != ESP_MAGIC:
+    if role in ("bootloader", "factory") and data[0] != ESP_MAGIC:
         raise FeedError(f"{label} is missing the ESP32 image header 0xE9")
+    if role == "factory" and len(data) < MIN_ESP:
+        raise FeedError(f"{label} is {len(data)} bytes; a factory image must be at least {MIN_ESP}")
 
 
 def _install_record(filename: str, data: bytes, role: str) -> dict:
@@ -665,17 +785,28 @@ def _folder_documents(
         files[board] = url
         digests[board] = data_sha
         item = _artifact(board, path.name, data_sha, size, url, preserved_names.get(board))
+        _stamp_artifact_policy(item, spec, boards.get(board) or {})
         role_paths = companions.get(board)
         if role_paths:
             install_doc = {}
             for role in INSTALL_ROLES:
-                companion = role_paths[role]
+                companion = role_paths.get(role)
+                if companion is None:
+                    continue
                 blob = companion.read_bytes()
                 validate_install_companion(role, blob, f"{product}/{folder.name}/{companion.name}")
                 record = _install_record(companion.name, blob, role)
                 install_doc[role] = record
                 sum_entries.append((record["path"], record["sha256"]))
-            item["install"] = install_doc
+            factory = role_paths.get("factory")
+            if factory is not None:
+                blob = factory.read_bytes()
+                validate_install_companion("factory", blob, f"{product}/{folder.name}/{factory.name}")
+                record = _install_record(factory.name, blob, "factory")
+                install_doc["factory"] = record
+                sum_entries.append((record["path"], record["sha256"]))
+            if install_doc:
+                item["install"] = install_doc
         artifacts.append(item)
         sum_entries.append((path.name, data_sha))
     sum_entries.sort()
@@ -716,6 +847,7 @@ def _folder_documents(
         "sha256": digests,
         "artifacts": artifacts,
     }
+    _stamp_flash_policy(document, spec)
     if spec.get("flash_as_pair"):
         document["flash_as_pair"] = list(spec["flash_as_pair"])
     if source:
@@ -776,6 +908,7 @@ def _available_latest(catalog, product, spec, latest_doc, matches, highest_semve
         if missing:
             entry["available"] = False
             entry["note"] = f"incomplete pair, missing {', '.join(missing)}"
+    _stamp_flash_policy(entry, spec)
     _include_release_notes(entry, latest_doc)
     return entry
 
@@ -797,6 +930,7 @@ def _unavailable_latest(product: str, spec: dict, highest_semver_folder: str | N
     }
     if spec.get("flash_as_pair"):
         entry["flash_as_pair"] = list(spec["flash_as_pair"])
+    _stamp_flash_policy(entry, spec)
     if product == "P1":
         entry["note"] = "No matched TX/RX release is in the feed yet."
     return entry
@@ -819,6 +953,8 @@ def _empty_product(catalog: dict, product: str, spec: dict) -> dict:
         )
     if spec.get("alias_of"):
         entry["alias_of"] = spec["alias_of"]
+    if spec.get("source_ref"):
+        entry["source_ref"] = spec["source_ref"]
     _copy_product_fields(entry, spec)
     return entry
 
@@ -867,7 +1003,7 @@ def render_manifests(
                     f"{artifact['sha256']}  {product}/{folder.name}/{artifact['filename']}"
                 )
                 install = artifact.get("install") or {}
-                for role in INSTALL_ROLES:
+                for role in INSTALL_MATCH_ROLES:
                     record = install.get(role)
                     if not isinstance(record, dict):
                         continue
@@ -912,6 +1048,7 @@ def render_manifests(
                 "index_url": raw_url(catalog, product, folder_name, "index.json"),
                 "artifacts": document["artifacts"],
             }
+            _stamp_flash_policy(version_entry, spec)
             _include_release_notes(version_entry, document)
             versions.append(version_entry)
 
@@ -959,7 +1096,7 @@ def render_manifests(
         "repository": catalog["repository"],
         "branch": catalog["branch"],
         "latest_selection": (
-            "Read latest.BMS, latest.BRIDGE, latest.P1, latest.METER, latest.CONFIG_APP, and latest.FLASHER. "
+            "Read latest.BMS, latest.BRIDGE, latest.P1, latest.METER, latest.CONFIG_APP, latest.FLASHER, and latest.SCREEN. "
             "Do not choose the highest semver folder: historical version numbers were not published in order."
         ),
         "aliases": catalog.get("aliases") or {},
@@ -971,11 +1108,84 @@ def render_manifests(
     return documents
 
 
+def _stamp_flash_policy(entry: dict, spec: dict) -> None:
+    """Copy the full-flash flag and the app offset onto a manifest object."""
+
+    if spec.get("full_flash_required") is True:
+        entry["full_flash_required"] = True
+    offset = spec.get("app_offset")
+    if isinstance(offset, str) and offset:
+        entry["app_offset"] = offset
+
+
+def _stamp_artifact_policy(item: dict, spec: dict, board_spec: dict) -> None:
+    """Record SCREEN flash metadata on one artifact. Other products stay as they were."""
+
+    offset = spec.get("app_offset")
+    if isinstance(offset, str) and offset:
+        item["offset"] = offset
+    if not isinstance(board_spec, dict):
+        return
+    if not any(board_spec.get(key) for key in ("label", "experimental", "uart_only", "build_flags", "note")):
+        return
+    label = board_spec.get("label")
+    if isinstance(label, str) and label.strip():
+        item["label"] = label.strip()
+    envs = board_spec.get("envs") or []
+    if isinstance(envs, list) and envs:
+        item["env"] = envs[0]
+    flags = board_spec.get("build_flags") or []
+    if isinstance(flags, list) and flags:
+        item["build_flags"] = list(flags)
+    if board_spec.get("experimental") is True:
+        item["experimental"] = True
+    if board_spec.get("uart_only") is True:
+        item["uart_only"] = True
+    note = board_spec.get("note")
+    if isinstance(note, str) and note.strip():
+        item["note"] = note.strip()
+
+
+def _public_board_catalog(spec: dict) -> list[dict] | None:
+    """Board labels and flags for a product that publishes them. Omitted otherwise."""
+
+    boards = spec.get("boards") or {}
+    if not any(isinstance(info, dict) and info.get("label") for info in boards.values()):
+        return None
+    rows = []
+    for board, info in boards.items():
+        if not isinstance(info, dict):
+            continue
+        row: dict = {"id": board, "filename": info.get("filename")}
+        envs = info.get("envs") or []
+        if isinstance(envs, list) and envs:
+            row["env"] = envs[0]
+        flags = info.get("build_flags") or []
+        if isinstance(flags, list) and flags:
+            row["build_flags"] = list(flags)
+        label = info.get("label")
+        if isinstance(label, str) and label.strip():
+            row["label"] = label.strip()
+        if info.get("experimental") is True:
+            row["experimental"] = True
+        if info.get("uart_only") is True:
+            row["uart_only"] = True
+        note = info.get("note")
+        if isinstance(note, str) and note.strip():
+            row["note"] = note.strip()
+        rows.append(row)
+    return rows or None
+
+
 def _copy_product_fields(entry: dict, spec: dict) -> None:
     for key in ("chip", "flash_mode", "partition_csv", "targets"):
         value = spec.get(key)
         if value not in (None, "", [], {}):
             entry[key] = value
+    _stamp_flash_policy(entry, spec)
+    catalog_boards = _public_board_catalog(spec)
+    if catalog_boards:
+        entry["catalog_boards"] = catalog_boards
     if spec.get("note") and "note" not in entry:
         entry["note"] = spec["note"]
 
@@ -1227,6 +1437,11 @@ def _render_feed_summary(root: Path, catalog: dict) -> str:
         if isinstance(repository, str) and repository.strip():
             lines.append(f"Source repository: `{repository.strip()}`")
             lines.append("")
+        if spec.get("full_flash_required") is True:
+            lines.append(
+                "Full flash is required. OTA of the app image alone is unsafe across partition layouts."
+            )
+            lines.append("")
         folders = _version_folders(root / product)
         if not folders:
             lines.append("No version folders.")
@@ -1332,8 +1547,20 @@ def validate_feed(root: Path, catalog: dict | None = None) -> None:
                     validate_image(spec["family"], data, label)
 
 
+def _build_flags(info: dict) -> list[str]:
+    flags = info.get("build_flags") or []
+    if not isinstance(flags, list):
+        return []
+    return [str(item) for item in flags]
+
+
 def _shared_mcu_envs(boards_spec: dict, left: str, right: str) -> bool:
-    """True when both boards are built from the same PlatformIO env list."""
+    """True when both boards are the same PlatformIO image, flags included.
+
+    BRIDGE publishes one ESP32-S3 image as ATOM_S3 and ATOM_S3_R. SCREEN
+    ws-5-800 and ws-5b-1024 share an env name and differ by
+    ``-D OPF_CAN_DASH_RES=``, so identical bytes are still refused.
+    """
 
     a = boards_spec.get(left) or {}
     b = boards_spec.get(right) or {}
@@ -1344,6 +1571,7 @@ def _shared_mcu_envs(boards_spec: dict, left: str, right: str) -> bool:
         and isinstance(envs_b, list)
         and bool(envs_a)
         and envs_a == envs_b
+        and _build_flags(a) == _build_flags(b)
     )
 
 
@@ -1382,6 +1610,52 @@ def required_board_ids(spec: dict) -> list[str]:
     if isinstance(explicit, list) and explicit:
         return list(explicit)
     return [board for board, info in (spec.get("boards") or {}).items() if info.get("required")]
+
+
+def _branch_of(value: str) -> str | None:
+    text = value.strip()
+    if text.startswith("refs/heads/"):
+        return text[len("refs/heads/") :]
+    if text in ("main", "master"):
+        return text
+    return None
+
+
+def assert_publish_source(product: str, spec: dict, source: dict | None) -> None:
+    """Refuse main/master builds. SCREEN stays on OPF-STORAGE-DASH master-grok.
+
+    A plain ``vX.Y.Z`` tag is allowed. ``vX.Y.Z+N`` is the firmware build id
+    baked from VERSION, not a feed folder or tag.
+    """
+
+    source = source or {}
+    for key in ("ref", "tag"):
+        value = source.get(key)
+        if not isinstance(value, str) or not value.strip():
+            continue
+        branch = _branch_of(value)
+        if branch in ("main", "master"):
+            expected = spec.get("source_ref") or "master-grok"
+            raise FeedError(f"{product} firmware must come from {expected} builds, never {branch}")
+    if product != "SCREEN":
+        return
+    expected_repo = str(spec.get("source_repository") or "")
+    repo = source.get("repository")
+    if isinstance(repo, str) and repo.strip() and repo.strip() != expected_repo:
+        raise FeedError(
+            f"SCREEN firmware must come from {expected_repo} master-grok, never {repo.strip()}"
+        )
+    ref = source.get("ref")
+    if isinstance(ref, str) and ref.strip().startswith("refs/heads/"):
+        branch = ref.strip()[len("refs/heads/") :]
+        if branch != "master-grok":
+            raise FeedError(f"SCREEN firmware must come from master-grok builds, never {branch}")
+    tag = source.get("tag")
+    if isinstance(tag, str) and tag.strip() and SEMVER_RE.fullmatch(tag.strip()) is None:
+        extra = ""
+        if "+" in tag:
+            extra = " Folders and tags stay plain vX.Y.Z; vX.Y.Z+N is the firmware build id."
+        raise FeedError(f"SCREEN tag {tag.strip()!r} is not plain vX.Y.Z.{extra}")
 
 
 def assert_complete_publish(spec: dict, binaries: dict) -> None:
@@ -1478,7 +1752,11 @@ def apply_publish(
 
     ``install`` maps board id to ``{role: bytes}`` for the optional ESP32
     companions ``bootloader``, ``partitions``, and ``boot_app0``. Pass all
-    three roles for a board, or omit that board. ESP32 products only.
+    three roles for a board, or omit that board. ``factory`` is an optional
+    merged image (``<board>.factory.bin`` at ``0x0``) and may be included
+    with or without the trio. ESP32 products only. SCREEN publishes must
+    not name ``main`` or ``master``, or a repository other than
+    OPF-STORAGE-DASH.
 
     Optional ``release_notes`` or ``release_notes_path`` is UTF-8 markdown.
     Pass one, not both. On the publish that creates the folder, notes are
@@ -1494,6 +1772,7 @@ def apply_publish(
 
     notes_provided, notes_bytes = resolve_release_notes(release_notes, release_notes_path)
     spec = product_spec(catalog, product)
+    assert_publish_source(product, spec, source)
     package = spec.get("family") == "package"
     if overwrite and not package:
         raise FeedError(
@@ -1604,7 +1883,10 @@ def _stage_install(
         if not isinstance(roles, dict):
             raise FeedError(f"{product}/{board} install files must be role bytes")
         _require_full_install(f"{product}/{board}", set(roles))
-        for role in INSTALL_ROLES:
+        roles_to_write = [role for role in INSTALL_ROLES if role in roles]
+        if "factory" in roles:
+            roles_to_write.append("factory")
+        for role in roles_to_write:
             blob = roles[role]
             if not isinstance(blob, (bytes, bytearray)):
                 raise FeedError(f"{product}/{board} {role} must be bytes")
