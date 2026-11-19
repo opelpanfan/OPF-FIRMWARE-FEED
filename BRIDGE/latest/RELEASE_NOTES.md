@@ -1,67 +1,132 @@
-# BRIDGE v0.0.2
+Tag `v0.0.2` → `3cf5c04` (firmware `0.0.2+VC33`, proven on Atom S3R .110). Feed: OPF-FIRMWARE-FEED `master-grok` (BRIDGE/v0.0.2 + latest; commit sha filled after publish).
 
-- **nimble_host stack:** raised from 4 KB to 5 KB. High-water free was about 824–888 B; under a BLE connection plus GATT discovery it is about 2040 B. Heap stays well above the 41 KB warn level.
-- **Dashboard load + smaller UI:** first-page API fetches are sequential (`GET /device` finishes before the live poll chain). Unused CSS/JS dropped and CSS minify tightened; gzipped UI 62,805 → 59,513 B. No visual change.
-- **Heap pass 2 (Atom S3R):** task stacks trimmed from measured high-water marks (comms 16→8 KB, ota 10→9 KB, telem 8→6 KB, async_tcp 16→8 KB). NimBLE msys1 blocks 24→12 (BMS default). ESP32_S3 is now a `release` `-Os` build (ELF still has `-g2` for panic decode). Idle internal heap about 95 KB; boot worst case (BLE + SoftAP + page loads) about 79 KB; 10-min soak about 80 KB on `.236` and 71 KB on `.110` (was 41 KB).
-- **SoftAP auto-close:** the maintenance portal stays up until 60 s after home Wi-Fi has an IP, then closes. It reopens if STA stays down for more than 15 s, or immediately when there are no Wi-Fi credentials. Manual `AP OPEN` / `POST /api/ap/window` and the OTA window are unchanged.
-- **Deye TOU restore fix:** idle / end / lease fail-safe restores grid charge current (reg 128) and grid charge enable (130) only if that control session wrote them. A value changed on the dashboard or inverter during a session (e.g. 50 A) is no longer put back to the session-start snapshot (it reverted 50 A to 1 A). All other restored registers unchanged.
-- **Internal-heap fix (Atom S3R):** runtime allocations of 1 KB and more go to PSRAM, the web server caps unacknowledged data per response, `ev_loop` stack 4 → 6 KB. Worst case (BLE app + SoftAP + dashboard loads) went from about 20 KB to 40–60 KB free internal RAM. New read-only `GET /api/heap` (low-water mark with activity context, per-task stack free). Atom S3 (no PSRAM) unchanged.
-- **Settings Save fix:** the telemetry interval NVS key was longer than the 15-character limit, so Save failed and skipped the Wi-Fi / MQTT fields after it. Key renamed (`telem_read_ms`); Save now stores every other field and names any key that failed.
-- **Settings layout:** BMS-style grid, 3 columns on desktop and 1 on mobile. Device Settings: Name / Type, Board, Atom base / Screen rotation, EV charger, EV IP; MQTT Server and Port one column each. LoRa page section headers match the other pages.
-- **Device Settings move + dashboard collapse:** device mode fields (Type, Board, Atom base, rotation, EV charger) moved from the Inverter tab into Settings → Device Settings; dashboard Instant control, Storage mode and Battery sections load collapsed.
-- **OTA crash fix (Atom S3R / Waveshare OPF_WS):** OTA no longer drives the status LED on GPIO35 (a PSRAM line on these boards), which corrupted memory and crashed the device seconds after every OTA. Status-LED writes are gated on the runtime board. Proven: 3 OTAs on S3R `.236`, OTA + soak on S3R `.110`.
-- **Atom S3R LCD rotation:** 0/90/180/270° (default 180) next to the Base selector in Device settings.
-- **Solis S6:** BMS cell voltage and cell temperature min/max (BMS1 + BMS2) from the Ver3.5 register map.
-- **P1 data in MQTT (DTU base):** the telemetry topic now carries `dtu_link`, `dtu_p1_data`, `p1_valid` and the `p1_*` meter values (energies as exact Wh integers) when the Atom base is DTU. Other bases unchanged.
-- **V2C EV charger (read-only):** pick "V2C Trydan" and its IP in Device settings; status and charge power go to MQTT (`ev_type`, `ev_link`, `ev_state`, `ev_paused`, `ev_power_w`, `ev_energy_kwh`), the full set to BLE and a Dashboard EV Charger card below P1 Meter. P1 Meter and EV Charger headers show their last-update time.
-- **Dashboard:** P1 Meter card moved between Live and Instant Control.
-- **Two MCU PlatformIO envs:** `ESP32_S3` (8MB partition; Atom S3 / Atom S3R / Waveshare OPF_WS via runtime `hw_board`) and `ESP32` (4MB; LilyGO T-CAN485 wiki pins only — not T-2CAN).
-- **Feed artifacts:** `ATOM_S3_R.bin` and `ATOM_S3.bin` are the same `ESP32_S3` image (legacy Atom names; board selected on device). `ESP32.bin` is the classic-ESP32 / T-CAN485 image.
-- **Hardware validation:** Atom S3R `.110` and `.236` (DTU base) on `dd43363` (nimble_host 5 KB, staggered first-page fetches, gzipped UI 59,513 B). Waveshare and T-CAN485 images are built for the feed but **not** hardware-proven yet.
-- Stability: MQTT single-owner (`comms_loop` only; publish queue; cached connected state) after field PANIC from multi-task `PubSubClient`/`WiFiClient`.
-- OTA: quiesce handshake parks `comms_loop` (no `vTaskSuspend` of the MQTT owner).
-- Read-only coredump HTTP: `GET /api/coredump/summary`, `GET /api/coredump` (no erase).
-- Concurrency: telemetry slot lock + snapshot reads; staged `/device` `chip_id` override applied by `comms_loop`.
-- LCD: `lvgl_loop` stack 4 KB → 8 KB.
-- Host lint: MQTT owner + telemetry writers (`test/host/run_all.sh`).
-- PSRAM phases 1–3: diag watermarks, large cold buffers, mid-size JSON in PSRAM when present.
-- Feed: tag `v0.0.2` on `master-grok` (retagged with nimble_host 5 KB / staggered first-page fetches / UI gzip 59,513 B, firmware `dd43363`); publish via Actions only.
+GitHub Actions artifact storage is still full at the account level, so FEED was published locally with `scripts/publish_firmware_feed.py` using Arduino-ESP32 3.20016, without `platformio.local.ini` secrets.
 
+# Release Notes - v0.0.2
 
-# BRIDGE v0.0.1
+Release type: Stability, diagnostics, and versioning
+Status: Retagged on `master-grok` as `v0.0.2` at `3cf5c04` (`0.0.2+VC33`) on 19 Nov 2026 (Europe/Vilnius)
 
-- **8 MB partition table** (`partitions_8mb_bridge.csv`, 3.75 MB OTA slots; NVS and otadata unchanged). Needs one USB flash per device (bootloader + partitions + boot_app0 + app; the feed now ships all three companions per board). Devices on the old table keep OTA while the app is under 1.875 MB.
-- Web console: Settings (Device Name, WiFi, MQTT) and Inverter (device mode, profile, control, storage, battery) are separate tabs, styled like the BMS Settings/Battery pages. System section headers use the same bars.
-- Smartmeter emulator: RS485 RX capture of the inverter's meter probes (off at boot; Start/Stop/Clear on the System tab, `POST /api/smartmeter?cap=on|off|clear`, `sm_rx` in `GET /api/smartmeter`, `[SM-RX]` serial lines). Emulator replies unchanged.
-- Feed: `BRIDGE/v0.0.1` is the only version folder; `latest` follows it.
+## Retag 19 Nov 2026 — 0.0.2+VC33 (`3cf5c04`)
 
+This tag now points at `master-grok` `3cf5c04`. Firmware reports `0.0.2+VC33` (`version_code` 33). Previous tag target was `646543a` (firmware `0.0.2+VC30`).
 
-- RS485 read and write waits yield instead of spinning. A dead bus was a priority-2 busy loop and could starve the watchdog tasks (`atom_loop`, LCD).
-- `telemetry_loop` is on the task watchdog and resets it between Modbus attempts. It is removed from the watchdog while suspended for OTA (web and BLE) and subscribed again on resume. `comms_loop` stays off the watchdog: broker connect is allowed to block for the ~10 s TCP budget.
-- LoRa UART: a line that overflows the buffer is dropped until the next newline. The tail is not parsed as a new frame, and the overflow counter increments once per line.
-- Atom Base and device role are cached after boot (and when Settings or BLE saves the role). `loop()` no longer opens NVS on every pass.
-- `/diag` and BLE `telem_get` include `min_free_heap` and per-task stack high-water marks (`stack_hwm_comms`, `stack_hwm_telem`, `stack_hwm_atom`, `stack_hwm_ota`, `stack_hwm_loop`, `stack_hwm_lcd`, minimum free bytes). The System tab shows the stack marks.
-- Dashboard websocket refresh uses a stack buffer instead of a temporary `String`.
-- Web console and AtomS3R LCD layout restored to the v0.0.1 look (same page structure, gauges, settings, header, and LCD pages as 519546a). The System tab still shows the stack marks.
+### Since the previous v0.0.2 tag (VC31–VC33)
 
-## v0.0.1
+- **VC31 BLE and ESP32 size:** BLE TX backpressure (at most 4 notifies in flight, 400 ms per-part budget) and a `C|ERR|ble_tx|incomplete` line when a part cannot be sent. The ESP32 (T-CAN485) env no longer includes NimBLE, which frees flash. `/diag` adds `heap_largest` and `heap_largest_min`. `telemetry_read_ms` default is 5000 (`8209006`).
+- **VC32 RS485, LoRa UART, SoftAP, short id:** RS485 lock is taken per key, with fast values every cycle and slow values every 30 s; `/diag` adds `rs485_cycle_ms` and `rs485_cycle_max_ms`. The LoRa UART has a single recursive-lock owner. SoftAP is configurable (`ap_enable`, `ap_ssid`, write-only `ap_password`); `short_id` can be derived or set (6 chars 0-9A-Z). `ui_theme` and `ui_language` are BLE-only and are no longer on the web settings schema (`a71dcd9`).
+- **VC33 MQTT-outage resilience:** a loop watchdog keeps local inverter, RS485 and LoRa control running through MQTT or internet outages instead of rebooting; flash writes are reduced; T-CAN485 gets a log buffer. The 5 s / 10 s `grid_p` cadence on the dashboard was display-only: the timestamp now advances on every successful read, not only when the value changes (`3cf5c04`).
+- Deye register 80 remains read-only. AUTOMATIC_MODE is unchanged.
 
-- DTU link is split into two indicators. `dtu_rf_link` (`up` / `degraded` / `down`) is the radio: any CRC-good v4 frame in the last 10 s (`degraded` when the gap is over 3 s). `dtu_p1_data` (`valid` / `invalid` / `none`) is the last fast frame's flags bit0, so a live radio with `dataInvalid=1` shows `rf_up_p1_invalid` instead of hiding the link. Same keys on `/api/lora`, `/values`, `/diag` and BLE `telem_get` (`dtu_rf_link`, `dtu_rf_rssi`, `dtu_rf_snr`, `dtu_rf_seq`, `dtu_rf_age_ms`, `dtu_p1_data`). `dtu_link` stays `ok` / `stale` / `down` / `off` (ok while the radio is up, even if P1 is invalid). The smartmeter 0x0B gate is unchanged (valid fast data within 3 s). LoRa tab shows two status pills.
-- DTU (P1 over LoRa) retuned for OPF-P1 (v4 dual-cadence protocol): 869.525 MHz (EU868 g3), SF7/BW125/CR4/5, preamble 8, sync 0x1424; fast frame every 1 s, slow ~30 s. Units on the old 868.0 MHz default move to 869.525 MHz automatically (custom frequencies kept). **Run current OPF-P1 v0.0.1 (fw9, 46eecff or later) on the transmitter**; older P1 builds stay on 868.0 MHz or send only dataInvalid frames. Radio link goes degraded after 3 s and down after 10 s without a CRC-good frame. Smartmeter emulator safety: meter reads get Modbus exception 0x0B when P1 data is older than 3 s (or none yet) instead of frozen values, and recover on the next good frame. New diagnostics in `/api/lora` and BLE telem: frame rate / period / gap / burst stats, last rejected frame (length + hex), ignored P1 ACK/command frames (`rx_other_type`). See `docs/OPF_P1_LORA.md`.
-- BLE OTA hardened (BMS twin): resume via `next_seq`, read-back SHA256 check, and rollback if the new image fails. Notifications (e.g. `ota_ack`) are now retried when the BLE host buffer pool is full instead of being silently dropped, and the pool is larger.
-- LCD OTA screen (AtomS3R, BMS twin look): full-screen progress (% + bar + KB), source (via Bluetooth / via Web) and result (failed / aborted / updated + build) during updates; ATOM_S3 uses the RGB LED.
-- BLE telemetry: `telem_get` (BMS twin), plus P1-over-LoRa `dtu_*` / `p1_*` values in TELEM and `/values`.
-- BLE Wi-Fi/BLE info keys: `wifi_state`, `wifi_ssid`, `wifi_rssi`, `wifi_ip`, `ap_on`, `ble_conn`, `ble_peer`, `ble_conn_s`… in `telem_get`, `GET /health` and `/diag` (plus `wifi_mode_str` for the header badge).
-- BLE name = the Device Name exactly as typed (UTF-8, no prefix, no 8-char slug); unnamed devices keep `OPF-BRIDGE-<ID>`. Device Name max 29 bytes UTF-8 (web field with byte counter + warning, BLE `cfg_set` and `/device` reject longer new names). Advert = Flags + service UUID + Manufacturer Data `FFFF "OP" 02 01` (type 0x02 = Bridge, 0x01 = BMS; protocol v1), 29 B; scan response = Complete Local Name; GAP 0x2A00 = full name; a longer legacy name is advertised shortened. The device_id is no longer in the advert (use cfg_get/ota_info).
-- BLE robustness: keeps advertising while a free connection slot exists, so a dead app whose OS keeps the link open no longer hides the device; silent older links are dropped when a new app connects.
-- RS485 over BLE: `rs485_info`, `rs485_read`, `rs485_write` (confirm required), `rs485_raw`, `rs485_scan`, `rs485_sniff`, `rs485_set` (session-only baud/parity/stop/slave), `rs485_pause` / `rs485_resume`, `rs485_reinit`, `rs485_stats_reset`. Polling pauses with owner tracking and resumes automatically 60 s after the last command or on BLE disconnect. See `manuals/BLE_COMMANDS_RS485.md`.
-- fix: torn 32-bit Deye power reads causing ±65 kW spikes (grid_p, grid_ctp, load_p, backup_p now read both words atomically — one span request, or hi/lo/hi with matching hi; never published torn).
-- fix(Solis S6, both profiles): grid_p / grid_ctp sign was inverted (field: +15.3 kW while exporting). 33151 is + export on Solis, so it is now negated to the Deye convention (+ import / − export). load_p stays 33147 (a real register, which reads 0 when there is no house load) and backup_p stays 33148. fix(MQTT, all units): heartbeat/diag (~4.1 KB) exceeded the 4096 B MQTT buffer and was silently dropped after a few messages. The TX buffer is now 8 KB, and an oversize publish is logged as an error (`mqtt_oversize_count` in diag) without triggering publish backoff. fix(OTA): after a successful MQTT/web OTA the app tasks stay suspended and Wi-Fi is stopped before `esp_restart()`, instead of resuming the tasks 250 ms before the reboot (the likely cause of reset_reason=PANIC). There is a 15 s safety resume if no reboot happens.
-- Solis S6 (both profiles): the dashboard now gets PV and battery temperature like Deye. MQTT `pv_p` = sum of the new `pv1_p`..`pv4_p` (string V × I, 33049..33056; Solis has no per-string power register; 33057 only as fallback, and it is published as diagnostic `pv_power_reg` because in the field it reads ~0.86× the real PV power), and `battery1_t` = BMS battery temperature 33043 (s16 × 0.1 °C; some batteries report 0). The 30-50 kW 342xx "battery 2" block (battery2_t / battery2_v) is still unverified. Deye output is unchanged.
-- Solis S6 control parity with Deye (6-20 kW and 30-50 kW): import / export / idle with `[power_W, soc]` work the same on web, BLE, the MQTT cmd topic and the dispatcher's legacy MQTT `reg` payload (`grid_charge` / `grid_sell` / `grid_power` / `battery_soc`; that payload used to be ignored on Solis). **Breaking:** Solis preset power is now W (was A). It is converted to battery current with the live battery voltage (capped at 100 A), and refused with no write if the voltage is unknown. Every preset now also sets 43110 self-use + time-of-use (the Deye `tou_enable` equivalent; TOU slots are ignored without it). fix(6-20 kW): export no longer stays blocked after an import, idle clears the TOU slot bits, and the TOU slot current is in the correct 0.1 A unit (it was 1/10). Web UI shows W for Solis. Register map: `manuals/BLE_COMMANDS_S6.md`. Not yet tested on a live inverter.
-- Solis S6 (6-20 kW and 30-50 kW) telemetry fixed and brought to Deye parity — **every Solis Bridge in the fleet needs this update**: load_p = household load 33147 (was a free-running counter that kept increasing), grid_p = AC grid port power 33151 (was inverter active power), load_e_today = 33179 (was a power register), pv_e_today = 33035 (read 0), grid buy today 33171, battery power 33149 s32 (30-50 kW was V×I garbage), battery voltage/current from 33133/33134, backup_p = 33148; Deye sign conventions (grid + import, battery + discharge); new keys grid_sell_e_today, bat_buy/sell_e_today and lifetime *_e_tot totals. `s6_*` BLE commands now work on the 30-50 kW profile, and Deye control names (battery_shutdown, battery_low, charge_max_power, discharge_max_power) are accepted on Solis. See `manuals/BLE_COMMANDS_S6.md`.
-- Deye HV: grid/load voltage and current, battery 2 absent gate, derived totals, and `device_id`.
-- Read-only `board` identity (`ATOM_S3_R` / `ATOM_S3`, equals the FEED artifact name) in BLE `ota_info` / `cfg_get` / `telem_get` and `GET /health` + `/diag`.
-- Credentials: NVS is the source of truth for Wi‑Fi, MQTT and OTA login; build-time values are seeded only once into empty keys, so FEED images keep stored settings. `cfg_get`, `telem_get` and `/diag` report credential source/presence (never the values).
-- UI header: Wi-Fi badge (SSID + RSSI / connecting / no creds / AP only) and BLE badge (advertising / app connected) in the theme-chip row, identical to BMS; 4 themes; wraps on mobile.
-- Build reports `fw_version` as `<semver>+VC<N>` (semver from the release tag, `N` from `version_code.txt`). Commit info stays in each manifest's `source.sha` / `source.fw_build`. `source.fw_version` and numeric `source.version_code` are recorded beside them. Feed folders stay `vX.Y.Z` and file names stay `<BOARD>.bin`.
+### Hardware validation for this retag
+
+- Atom S3R `.110` is on VC33 (`3cf5c04`, boot 564, MQTT 3/3, `short_id_effective` I9DYA8, reg 128=50 / 130=1, `telemetry_read_ms` 5000). Waveshare and T-CAN485 images are built for the feed; T-CAN485 site flash is held until on-site rollback is possible.
+
+## Summary
+
+v0.0.2 hardens MQTT and concurrent access after a field PANIC on Atom Bridge (lwIP `pbuf_free` double-free from multi-task `PubSubClient` / `WiFiClient` use), adds read-only coredump HTTP access, finishes the PSRAM heap phases, and raises LCD task stack headroom. Web UI layout is unchanged (P1 Meter card moved only).
+
+Retagged on `3cf5c04`: `0.0.2+VC33` (BLE chunk retry, ESP32 without NimBLE, RS485 cadence, SoftAP and short id, MQTT-outage local-control hold).
+
+## Retag 19 Nov 2026 — 0.0.2+VC30 (`646543a`)
+
+This tag now points at `master-grok` `646543a`. Firmware reports `0.0.2+VC30` (`version_code` 30). Previous tag target was `82a71fc` (firmware `dd43363`).
+
+### Since the previous v0.0.2 tag
+
+- **VC28 versioning:** firmware reports `0.0.2+VC<N>`; numeric `version_code` is on `/health`, `/diag`, `/device`, `/values`, BLE, MQTT, and FEED `source.version_code`. Semver stays on the `v0.0.2` tag; `N` lives in `version_code.txt` and is bumped on each firmware commit (`748fe74`).
+- **VC29 Deye HV per-phase grid power:** signed INT32 `grid_p_l1..3` from register pairs {616,705}, {617,706}, {618,707} (same decode as `grid_ctp`). The existing 616..708 span is used, so there are no extra Modbus requests. Also on BLE `telem_get` (`8c419d8`, `fea48c3`).
+- **VC30 lazy PSRAM rings:** large static rings moved to first-use heap allocation; blocks of 1 KB or more go to PSRAM on the S3R (`646543a`).
+- **Stack fix:** S3 task stacks sized from field high-water marks (net about −3 KB internal heap) (`ed6ac77`).
+- **Unified settings registry:** one settings list for BLE, web (`GET /api/settings-schema`), and the Flasher; BLE `cfg_schema` / `cfg_set` also expose former web-only keys (`lcd_rotation`, `chip_id_string`, `mqtt_ca`, `lora_*`). Unknown `hw_board` tokens are rejected on web and BLE save (`4388cf4`, `51e84ed`, `2a54bf9`).
+- **BLE:** only one central at a time; `telem_get` includes held P1-over-LoRa readings when `atom_base=dtu`; P1 command state keys and reboot / P1 UART-restart commands.
+- **Site mode (T-CAN485):** BLE off by default on the PSRAM-less ESP32 site build (NVS `site_ble=1` re-enables); Bluetooth controller RAM released when BLE is off; 1.0.4 MQTT identity/commands, NVS first-boot migration, Deye HV default profile; `rs485_pulse` option. Hardware flash of site Bridges waits until someone is on site to roll back.
+- **CI:** the build/feed workflow runs only on `v*` tags and manual dispatch (`af6a859`).
+- Other post-tag work still in this build: LoRa RX watchdog and faster RX re-arm after P1 command TX; MQTT SUBACK confirmation; Sungrow SH6.0RS profile (not hardware-proven); Deye register 80 remains read-only.
+
+### Hardware validation for this retag
+
+- Atom S3R `.110` is on VC30 (`646543a`). Waveshare and T-CAN485 images are built for the feed; T-CAN485 site flash is held until on-site rollback is possible.
+
+## Summary
+
+v0.0.2 hardens MQTT and concurrent access after a field PANIC on Atom Bridge (lwIP `pbuf_free` double-free from multi-task `PubSubClient` / `WiFiClient` use), adds read-only coredump HTTP access, finishes the PSRAM heap phases, and raises LCD task stack headroom. Web UI layout is unchanged (P1 Meter card moved only).
+
+Retagged on `646543a`: `0.0.2+VC30` (versioning, Deye per-phase grid power, lazy PSRAM rings, unified settings, site mode, stack trim).
+
+Earlier retag on `dd43363`: nimble_host task stack 4→5 KB, staggered first-page fetches, gzipped web UI 62,805→59,513 B.
+
+Earlier retag on `829d01c`: heap pass 2 (measured stack trims, NimBLE msys 12, ESP32_S3 release `-Os`), SoftAP closes 60 s after STA is stable, plus the earlier Deye 128/130 restore fix, Settings Save fix, BMS-style layout, and Device Settings move.
+
+Earlier retag on `cf5aaee`: added the Deye reg 128/130 TOU restore fix, the Atom S3R internal-heap fix, the Settings Save (NVS key) fix, the BMS-style Settings layout, and the Device Settings move with collapsed dashboard sections, on top of P1 in MQTT and the V2C EV charger.
+
+Earlier retag on `378fad4`: added the OTA crash fix for Atom S3R / Waveshare OPF_WS, S3R LCD rotation, Solis S6 BMS cell min/max V/T, and the P1 Meter card move.
+
+## Highlights
+
+- MQTT single-owner: only `comms_loop` touches the MQTT client; other tasks publish through a FreeRTOS queue and read a cached connected flag.
+- OTA quiesce handshake parks `comms_loop` cooperatively (semaphore, timeout) instead of `vTaskSuspend`.
+- Read-only coredump HTTP: `GET /api/coredump/summary` and `GET /api/coredump` (no erase).
+- Telemetry slot lock with snapshot reads; staged `/device` `chip_id` override applied by `comms_loop`.
+- LVGL / `lvgl_loop` stack raised 4 KB → 8 KB.
+- Host lint: MQTT client owner allowlist + telemetry writer allowlist (`test/host/run_all.sh`).
+- PSRAM phases 1–3: diag watermarks, large cold buffers, mid-size JSON bodies in PSRAM when present.
+
+## Added
+
+- Read-only `GET /api/heap`: internal / DMA / PSRAM free, window and boot low-water marks with activity context (BLE, SoftAP, web, MQTT, EV, ...), per-task stack free and placement (4a09fc1).
+- Atom S3R LCD rotation setting (`lcd_rotation` 0/90/180/270, default 180, NVS `lcd_rot`) next to the Base selector in Device settings; applied live (6f05233).
+- MQTT telemetry (`rut/<id>/telemetry` + legacy `storage/<chip>/bridge`) includes P1-over-LoRa data when the Atom base is DTU: `dtu_link`, `dtu_state`, `dtu_rf_*`, `dtu_p1_data`, `dtu_p1_fresh`, `p1_valid`, `p1_data_invalid`, and the `p1_*` measurements (same keys/units as BLE `telem_get` and `/values`; `p1_e_imp_wh`/`p1_e_exp_wh` as exact integers). No `dtu_rx_*` debug counters. Non-DTU payloads unchanged.
+- V2C Trydan EV charger (read-only): Device settings "EV charger" (None / V2C Trydan) + IP (NVS `ev_type`/`ev_ip`, live, also BLE `cfg_set`); `ev_loop` polls `GET http://<ip>/RealTimeData` every 5 s (backoff to 60 s). MQTT adds only `ev_type`, `ev_link`, `ev_state`, `ev_paused`, `ev_power_w`, `ev_energy_kwh`; full `ev_*` set on BLE `telem_get`, `/values` (`ev`) and `GET /api/ev`; Dashboard EV Charger card below P1 Meter. P1 Meter / EV Charger headers show last-update time. No charger control.
+- Solis S6: BMS cell voltage min/max (34348/34349, ×0.001 V) and cell temperature min/max (34350/34351, ×0.1 °C), plus BMS2 equivalents (34373–34376), from the Ver3.5 register map (2895186).
+- `src/opf_coredump_http.{h,cpp}` — read-only flash coredump summary and raw dump over HTTP.
+- Host tests: `test_mqtt_owner_lint.cpp`, `test_telemetry_writer_lint.cpp`, `test/host/run_all.sh`.
+- Diag / heap: PSRAM presence and free watermark reporting; cold buffers and mid-size JSON moved to PSRAM when available.
+
+## Changed
+
+- NimBLE host task stack 4→5 KB (`CONFIG_BT_NIMBLE_HOST_TASK_STACK_SIZE=5120`). Under a BLE connection plus GATT discovery the free watermark is about 2040 B (was ~824–888 B) (7f2089f).
+- Web UI: `GET /device` completes before the live poll chain starts so the full `/dashboard-telemetry` no longer overlaps it. Unused CSS/JS removed; CSS token-squeezed in the deterministic gzip -9 / mtime 0 minifier (62,805 → 59,513 B) (dd43363).
+- Heap pass 2: comms 16→8 KB, ota 10→9 KB (URL-OTA used ~6.7 KB, so 5–6 KB was unsafe), telem 8→6 KB, `CONFIG_ASYNC_TCP_STACK_SIZE` 16→8 KB. NimBLE `CONFIG_BT_NIMBLE_MSYS1_BLOCK_COUNT` 24→12. ESP32_S3 `build_type=release` with `-Os` and `-g2` (829d01c / 8e1adfb / c78054a).
+- SoftAP: no 5-minute boot window. The portal stays until 60 s after STA has an IP (`sta_hold`), reopens after STA has been down 15 s (or immediately if there are no credentials). Explicit windows (serial `AP OPEN`, `POST /api/ap/window`, OTA 30 min) unchanged. `/diag` reports `ap_want` / `ap_reason` (c78054a, 1f5254a).
+- Settings: BMS-style form grid (3 columns, 1 column below 640 px). Device Settings rows Name / Type, Board, Atom base / Screen rotation, EV charger, EV IP; MQTT Server + Port (one column each) / Username + Password. LoRa page uses the same section-header markup as the other pages. Ids and NVS keys unchanged (980d257).
+- Device mode fields moved from the Inverter tab to Settings → Device Settings; dashboard Instant control, Storage mode and Battery sections load collapsed (9ae5234).
+- Atom S3R heap: after setup, runtime allocations >= 1 KB use PSRAM (`OPF_EXTMEM_THRESHOLD`), ESPAsyncWebServer in-flight data per response capped at 2872 B (`OPF_ASYNC_MAX_INFLIGHT`, build-time patch `tools/patch_asyncweb_inflight.py`), `ev_loop` stack 6 KB (358a564).
+- Dashboard: P1 Meter card moved between Live and Instant Control (2944d47).
+- MQTT ownership and publish path (queue + cached connected state).
+- OTA start: quiesce handshake with `comms_loop` (no suspend of the MQTT owner task).
+- `/device` `chip_id` override is staged and applied on the comms task.
+- `TELEMETRY[]` writes take a per-slot lock; readers use snapshots.
+- `lvgl_loop` stack (`LVGL_TASK_STACK_BYTES`) 8192.
+
+## Fixed
+
+- Deye TOU restore (idle / end / lease fail-safe) wrote reg 128 (grid charge current) and 130 (grid charge enable) back from the session-start snapshot even when the session never wrote them, reverting a manual change (50 A → 1 A). Now restored only when the session's remote control wrote them; the flags are kept in the NVS snapshot across a reboot (snapshots from older firmware restore neither). Other registers unchanged; reg 80 never touched (cf5aaee).
+- Settings Save: NVS key `telemetry_read_ms` (17 chars) exceeded the 15-char limit; the failed write aborted the save and skipped the following fields. Renamed to `telem_read_ms` (API name unchanged); failures are listed by key and the remaining fields are still saved (d2d6520).
+- Atom S3R internal heap fell to about 20 KB with a BLE app connected, SoftAP open and dashboard loads (heap_warn); see Changed (358a564).
+- OTA crash on Atom S3R / Waveshare OPF_WS: OTA start/end (web, URL, MQTT) and BLE OTA drove the status NeoPixel on GPIO35, an octal-PSRAM line on those boards, corrupting PSRAM/heap (panics seconds after OTA, 0x40404040 patterns). Status-LED writes now go through `statusLedShow()`, gated on the runtime board (378fad4). Atom S3 and T-CAN485 unchanged.
+- Multi-task MQTT / `WiFiClient` use that could double-free lwIP `pbuf`s (field PANIC).
+- OTA path that suspended `comms_loop` while the network stack was still in use.
+
+## Boards / environments
+
+- PlatformIO envs (two MCU builds): `ESP32_S3` (8 MB partitions; runtime `hw_board` = Atom S3 / Atom S3R / Waveshare OPF_WS) and `ESP32` (4 MB; LilyGO T-CAN485 only).
+- Feed still ships legacy names `ATOM_S3_R.bin` / `ATOM_S3.bin` (identical `ESP32_S3` image) plus `ESP32.bin`.
+- Hardware-proven on Atom S3R `.110` for this tag (VC30); `.236` and earlier tags were proven for previous retags. WS and T-CAN485 not hardware-proven on this tag.
+
+## Upgrade Notes
+
+- `fw_version` is taken from the git tag at build time (`version_extractor.py`) and is reported as `0.0.2+VC<N>`; `fw_build` remains the short commit SHA; `version_code` is the integer N.
+- Existing NVS settings (Wi-Fi, MQTT, OTA login) are preserved across OTA.
+- No web UI redesign; FEED publish is separate and only when explicitly requested.
+
+## Validation Notes
+
+- `646543a` (VC30): Atom S3R `.110` flashed and health-checked after merge. Lazy rings use first-use heap / PSRAM. T-CAN485 site rollout is held until on-site rollback is possible.
+- `dd43363`: Atom S3R `.236` URL OTA; BLE connect + GATT discovery, nimble_host free 2040 B; first dashboard-load heap min 86.7 KB, after walking every page 76.6 KB through a 10-min soak (MQTT/P1/EV ok, 0 disconnects). Settings Save 200; collapse-on-load and 3-column Settings intact. URL OTA on Atom S3R `.110`: settings identical, no inverter writes; session 71 still active (lease survived reboot); reg 128 stayed 50 A; 10-min soak heap min 78.8 KB, MQTT 0 disconnects, RS485/P1/EV ok. Host tests (21 suites) pass.
+- `829d01c`: Atom S3R `.236` boot-worst (BLE across reboot + SoftAP + page loads) 78.8 KB internal free; 6× `GET /` 59.1 KB; 10-min soak 80.2 KB, 0 MQTT disconnects, 0 BLE notify drops at MTU 517; 3 consecutive URL OTAs. URL OTA on Atom S3R `.110`: settings identical, no inverter writes, AP closed ~62 s after STA up, MQTT `opf.systems:1883` (TLS off) stayed connected (0 disconnects) for a 10-min status soak; heap min 71.2 KB (was 40.7 KB), `heap_warn` false; EV / P1 / RS485 ok.
+- `cf5aaee`: Atom S3R `.236` worst case (BLE polling across a reboot + SoftAP + dashboard loads) boot low 58–62 KB internal free, 10-min soak low 54.6 KB, 0 MQTT disconnects; Settings Save 200 and values persist across reboot. URL OTA on Atom S3R `.110`: settings identical, no inverter writes, 5-min soak with MQTT / RS485 / EV / P1 ok; internal-heap low 40.7 KB with the BLE app active (was 20 KB). Host tests (21 suites) pass, incl. Deye 128/130 restore cases.
+- OTA fix `378fad4`: three clean OTAs on Atom S3R `.236` (DTU base) and one clean URL OTA plus soak on Atom S3R `.110`; no new coredump.
+- Proven on lab Atom `.110` (`hw_board=ATOM_S3_R`, non-DTU): OTA/soak on `7d6d1a7` (`fw_build=7d6d1a7`) after MQTT single-owner + two-env work.
+- Host lint / host test suite included for MQTT owner and telemetry writers.
+- Waveshare OPF_WS and LilyGO T-CAN485: feed images built; **not** hardware-tested on this tag.

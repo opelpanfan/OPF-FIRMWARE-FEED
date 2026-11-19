@@ -160,55 +160,55 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.2`
 
-- Date: 2026-11-09
-- Source commit: `646543a418af013b841b13abca8558207e76c54f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Date: 2026-11-19
+- Source commit: `3cf5c04fcf17069b0d1bb307dd0beca076bd1bd8` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (2037648 bytes, 1.94 MiB)
+  - `ATOM_S3.bin` (2024896 bytes, 1.93 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (2037648 bytes, 1.94 MiB)
+  - `ATOM_S3_R.bin` (2024896 bytes, 1.93 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ESP32.bin` (1874608 bytes, 1.79 MiB)
+  - `ESP32.bin` (1598176 bytes, 1.52 MiB)
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (15133 bytes, 14.8 KiB)
+  - `RELEASE_NOTES.md` (15642 bytes, 15.3 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (19493 bytes, 19.0 KiB)
+  - `index.json` (20066 bytes, 19.6 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
-  - **nimble_host stack:** raised from 4 KB to 5 KB. High-water free was about 824–888 B; under a BLE connection plus GATT discovery it is about 2040 B. Heap stays well above the 41 KB warn level.
-  - **Dashboard load + smaller UI:** first-page API fetches are sequential (`GET /device` finishes before the live poll chain). Unused CSS/JS dropped and CSS minify tightened; gzipped UI 62,805 → 59,513 B. No visual change.
-  - **Heap pass 2 (Atom S3R):** task stacks trimmed from measured high-water marks (comms 16→8 KB, ota 10→9 KB, telem 8→6 KB, async_tcp 16→8 KB). NimBLE msys1 blocks 24→12 (BMS default). ESP32_S3 is now a `release` `-Os` build (ELF still has `-g2` for panic decode). Idle internal…
+  - Tag `v0.0.2` → `3cf5c04` (firmware `0.0.2+VC33`, proven on Atom S3R .110). Feed: OPF-FIRMWARE-FEED `master-grok` (BRIDGE/v0.0.2 + latest; commit sha filled after publish).
+  - GitHub Actions artifact storage is still full at the account level, so FEED was published locally with `scripts/publish_firmware_feed.py` using Arduino-ESP32 3.20016, without `platformio.local.ini` secrets.
+  - Release type: Stability, diagnostics, and versioning
 
 #### `latest`
 
-- Date: 2026-11-09
-- Source commit: `646543a418af013b841b13abca8558207e76c54f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Date: 2026-11-19
+- Source commit: `3cf5c04fcf17069b0d1bb307dd0beca076bd1bd8` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (2037648 bytes, 1.94 MiB)
+  - `ATOM_S3.bin` (2024896 bytes, 1.93 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (2037648 bytes, 1.94 MiB)
+  - `ATOM_S3_R.bin` (2024896 bytes, 1.93 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ESP32.bin` (1874608 bytes, 1.79 MiB)
+  - `ESP32.bin` (1598176 bytes, 1.52 MiB)
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (15133 bytes, 14.8 KiB)
+  - `RELEASE_NOTES.md` (15642 bytes, 15.3 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (19492 bytes, 19.0 KiB)
+  - `index.json` (20065 bytes, 19.6 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
-  - **nimble_host stack:** raised from 4 KB to 5 KB. High-water free was about 824–888 B; under a BLE connection plus GATT discovery it is about 2040 B. Heap stays well above the 41 KB warn level.
-  - **Dashboard load + smaller UI:** first-page API fetches are sequential (`GET /device` finishes before the live poll chain). Unused CSS/JS dropped and CSS minify tightened; gzipped UI 62,805 → 59,513 B. No visual change.
-  - **Heap pass 2 (Atom S3R):** task stacks trimmed from measured high-water marks (comms 16→8 KB, ota 10→9 KB, telem 8→6 KB, async_tcp 16→8 KB). NimBLE msys1 blocks 24→12 (BMS default). ESP32_S3 is now a `release` `-Os` build (ELF still has `-g2` for panic decode). Idle internal…
+  - Tag `v0.0.2` → `3cf5c04` (firmware `0.0.2+VC33`, proven on Atom S3R .110). Feed: OPF-FIRMWARE-FEED `master-grok` (BRIDGE/v0.0.2 + latest; commit sha filled after publish).
+  - GitHub Actions artifact storage is still full at the account level, so FEED was published locally with `scripts/publish_firmware_feed.py` using Arduino-ESP32 3.20016, without `platformio.local.ini` secrets.
+  - Release type: Stability, diagnostics, and versioning
 
 ### P1
 
@@ -216,10 +216,10 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.2`
 
-- Date: 2026-11-09
+- Date: 2026-11-19
 - Files:
-  - `RAK3172_RX.bin` (70004 bytes, 68.4 KiB)
-  - `RAK3172_TX.bin` (93140 bytes, 91.0 KiB)
+  - `RAK3172_RX.bin` (70356 bytes, 68.7 KiB)
+  - `RAK3172_TX.bin` (94620 bytes, 92.4 KiB)
   - `RELEASE_NOTES.md` (1812 bytes, 1.8 KiB)
   - `SHA256SUMS` (162 bytes)
   - `index.json` (3401 bytes, 3.3 KiB)
@@ -230,10 +230,10 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `latest`
 
-- Date: 2026-11-09
+- Date: 2026-11-19
 - Files:
-  - `RAK3172_RX.bin` (70004 bytes, 68.4 KiB)
-  - `RAK3172_TX.bin` (93140 bytes, 91.0 KiB)
+  - `RAK3172_RX.bin` (70356 bytes, 68.7 KiB)
+  - `RAK3172_TX.bin` (94620 bytes, 92.4 KiB)
   - `RELEASE_NOTES.md` (1812 bytes, 1.8 KiB)
   - `SHA256SUMS` (162 bytes)
   - `index.json` (3400 bytes, 3.3 KiB)
