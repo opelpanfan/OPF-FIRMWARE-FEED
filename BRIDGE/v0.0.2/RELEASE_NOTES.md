@@ -1,11 +1,30 @@
-Tag `v0.0.2` → `3cf5c04` (firmware `0.0.2+VC33`, proven on Atom S3R .110). Feed: OPF-FIRMWARE-FEED `master-grok` (BRIDGE/v0.0.2 + latest; commit sha filled after publish).
+Tag `v0.0.2` → `a1cc2bb` (firmware `0.0.2+VC34`, proven on Atom S3R .110). Feed: OPF-FIRMWARE-FEED `master-grok` (BRIDGE/v0.0.2 + latest; commit sha filled after publish).
 
 GitHub Actions artifact storage is still full at the account level, so FEED was published locally with `scripts/publish_firmware_feed.py` using Arduino-ESP32 3.20016, without `platformio.local.ini` secrets.
 
 # Release Notes - v0.0.2
 
 Release type: Stability, diagnostics, and versioning
-Status: Retagged on `master-grok` as `v0.0.2` at `3cf5c04` (`0.0.2+VC33`) on 19 Nov 2026 (Europe/Vilnius)
+Status: Retagged on `master-grok` as `v0.0.2` at `a1cc2bb` (`0.0.2+VC34`) on 20 Nov 2026 (Europe/Vilnius)
+
+## Retag 20 Nov 2026 — 0.0.2+VC34 (`a1cc2bb`)
+
+This tag now points at `master-grok` `a1cc2bb`. Firmware reports `0.0.2+VC34` (`version_code` 34). Previous tag target was `3cf5c04` (firmware `0.0.2+VC33`).
+
+### Since the previous v0.0.2 tag
+
+- **VC34 LoRa RX drain:** LoRa RX is drained off the UART lock so P1 packets are not dropped while RS485 or MQTT holds the bus. `/diag` adds `lora_uart_rx_overflow`, `lora_reader_gap_ms_max`, `lora_lock_wait_max_ms`, and `lora_rx_stack_free` (`a1cc2bb`).
+- Deye register 80 remains read-only. AUTOMATIC_MODE is unchanged.
+
+### Hardware validation for this retag
+
+- Atom S3R `.110` is on VC34 (`a1cc2bb`, boot 565, MQTT 3/3, `short_id_effective` I9DYA8, reg 128=50 / 130=1, `telemetry_read_ms` 5000). At ~3 min uptime P1/LoRa was `dtu_rx_rate_hz` 0.97, `dtu_rx_fail` 0, `dtu_rx_gap_ms_max` 1054, overflow 0. Waveshare and T-CAN485 images are built for the feed; T-CAN485 site flash is held until on-site rollback is possible.
+
+## Summary
+
+v0.0.2 hardens MQTT and concurrent access after a field PANIC on Atom Bridge (lwIP `pbuf_free` double-free from multi-task `PubSubClient` / `WiFiClient` use), adds read-only coredump HTTP access, finishes the PSRAM heap phases, and raises LCD task stack headroom. Web UI layout is unchanged (P1 Meter card moved only).
+
+Retagged on `a1cc2bb`: `0.0.2+VC34` (LoRa RX drain / P1 reliability, plus VC31–VC33: BLE chunk retry, ESP32 without NimBLE, RS485 cadence, SoftAP and short id, MQTT-outage local-control hold).
 
 ## Retag 19 Nov 2026 — 0.0.2+VC33 (`3cf5c04`)
 

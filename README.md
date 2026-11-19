@@ -161,52 +161,52 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.2`
 
 - Date: 2026-11-19
-- Source commit: `3cf5c04fcf17069b0d1bb307dd0beca076bd1bd8` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `a1cc2bb58d02bcd9a44bedc896484b6c4d62971f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (2024896 bytes, 1.93 MiB)
+  - `ATOM_S3.bin` (2028112 bytes, 1.93 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (2024896 bytes, 1.93 MiB)
+  - `ATOM_S3_R.bin` (2028112 bytes, 1.93 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ESP32.bin` (1598176 bytes, 1.52 MiB)
+  - `ESP32.bin` (1598624 bytes, 1.52 MiB)
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (15642 bytes, 15.3 KiB)
+  - `RELEASE_NOTES.md` (17139 bytes, 16.7 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (20066 bytes, 19.6 KiB)
+  - `index.json` (21588 bytes, 21.1 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
-  - Tag `v0.0.2` → `3cf5c04` (firmware `0.0.2+VC33`, proven on Atom S3R .110). Feed: OPF-FIRMWARE-FEED `master-grok` (BRIDGE/v0.0.2 + latest; commit sha filled after publish).
+  - Tag `v0.0.2` → `a1cc2bb` (firmware `0.0.2+VC34`, proven on Atom S3R .110). Feed: OPF-FIRMWARE-FEED `master-grok` (BRIDGE/v0.0.2 + latest; commit sha filled after publish).
   - GitHub Actions artifact storage is still full at the account level, so FEED was published locally with `scripts/publish_firmware_feed.py` using Arduino-ESP32 3.20016, without `platformio.local.ini` secrets.
   - Release type: Stability, diagnostics, and versioning
 
 #### `latest`
 
 - Date: 2026-11-19
-- Source commit: `3cf5c04fcf17069b0d1bb307dd0beca076bd1bd8` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `a1cc2bb58d02bcd9a44bedc896484b6c4d62971f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (2024896 bytes, 1.93 MiB)
+  - `ATOM_S3.bin` (2028112 bytes, 1.93 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (2024896 bytes, 1.93 MiB)
+  - `ATOM_S3_R.bin` (2028112 bytes, 1.93 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ESP32.bin` (1598176 bytes, 1.52 MiB)
+  - `ESP32.bin` (1598624 bytes, 1.52 MiB)
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (15642 bytes, 15.3 KiB)
+  - `RELEASE_NOTES.md` (17139 bytes, 16.7 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (20065 bytes, 19.6 KiB)
+  - `index.json` (21587 bytes, 21.1 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
-  - Tag `v0.0.2` → `3cf5c04` (firmware `0.0.2+VC33`, proven on Atom S3R .110). Feed: OPF-FIRMWARE-FEED `master-grok` (BRIDGE/v0.0.2 + latest; commit sha filled after publish).
+  - Tag `v0.0.2` → `a1cc2bb` (firmware `0.0.2+VC34`, proven on Atom S3R .110). Feed: OPF-FIRMWARE-FEED `master-grok` (BRIDGE/v0.0.2 + latest; commit sha filled after publish).
   - GitHub Actions artifact storage is still full at the account level, so FEED was published locally with `scripts/publish_firmware_feed.py` using Arduino-ESP32 3.20016, without `platformio.local.ini` secrets.
   - Release type: Stability, diagnostics, and versioning
 
