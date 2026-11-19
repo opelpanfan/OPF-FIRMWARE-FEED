@@ -108,14 +108,10 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS_NO_TEMP.bin` (1910272 bytes, 1.82 MiB)
-  - `OPF_WS_NO_TEMP.boot_app0.bin` (8192 bytes, 8.0 KiB)
-  - `OPF_WS_NO_TEMP.bootloader.bin` (15104 bytes, 14.8 KiB)
-  - `OPF_WS_NO_TEMP.partitions.bin` (3072 bytes, 3.0 KiB)
   - `RELEASE_NOTES.md` (981 bytes)
-  - `SHA256SUMS` (2148 bytes, 2.1 KiB)
-  - `index.json` (9116 bytes, 8.9 KiB)
-- Full-install files: `OPF_WS` yes, `OPF_WS_NO_TEMP` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
+  - `SHA256SUMS` (1776 bytes, 1.7 KiB)
+  - `index.json` (7832 bytes, 7.6 KiB)
+- Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
   - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
   - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
@@ -146,14 +142,10 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS_NO_TEMP.bin` (1910272 bytes, 1.82 MiB)
-  - `OPF_WS_NO_TEMP.boot_app0.bin` (8192 bytes, 8.0 KiB)
-  - `OPF_WS_NO_TEMP.bootloader.bin` (15104 bytes, 14.8 KiB)
-  - `OPF_WS_NO_TEMP.partitions.bin` (3072 bytes, 3.0 KiB)
   - `RELEASE_NOTES.md` (981 bytes)
-  - `SHA256SUMS` (2148 bytes, 2.1 KiB)
-  - `index.json` (9114 bytes, 8.9 KiB)
-- Full-install files: `OPF_WS` yes, `OPF_WS_NO_TEMP` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
+  - `SHA256SUMS` (1776 bytes, 1.7 KiB)
+  - `index.json` (7830 bytes, 7.6 KiB)
+- Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
   - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
   - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.

@@ -24,13 +24,6 @@
           ],
           "required": true
         },
-        "OPF_WS_NO_TEMP": {
-          "filename": "OPF_WS_NO_TEMP.bin",
-          "envs": [
-            "OPF_WS_NO_TEMP",
-            "opf-ws-no-temp"
-          ]
-        },
         "OPF_T2CAN": {
           "filename": "OPF_T2CAN.bin",
           "envs": [

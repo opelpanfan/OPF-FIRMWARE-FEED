@@ -10,16 +10,14 @@
     "OPF_ATOM_S3R": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_ATOM_S3R.bin",
     "OPF_T2CAN": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_T2CAN.bin",
     "OPF_WS": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_WS.bin",
-    "OPF_WS_DASH": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_WS_DASH.bin",
-    "OPF_WS_NO_TEMP": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_WS_NO_TEMP.bin"
+    "OPF_WS_DASH": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_WS_DASH.bin"
   },
   "sha256": {
     "OPF_ATOM_S3": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
     "OPF_ATOM_S3R": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
     "OPF_T2CAN": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
     "OPF_WS": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
-    "OPF_WS_DASH": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6",
-    "OPF_WS_NO_TEMP": "5a3e613960224018d97feb3fd9d9cef92000cf71d763558d7b0c0c0858deba89"
+    "OPF_WS_DASH": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6"
   },
   "artifacts": [
     {
@@ -156,34 +154,6 @@
         },
         "boot_app0": {
           "path": "OPF_WS_DASH.boot_app0.bin",
-          "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0",
-          "size": 8192,
-          "offset": "0xe000"
-        }
-      }
-    },
-    {
-      "board": "OPF_WS_NO_TEMP",
-      "filename": "OPF_WS_NO_TEMP.bin",
-      "sha256": "5a3e613960224018d97feb3fd9d9cef92000cf71d763558d7b0c0c0858deba89",
-      "size": 1910272,
-      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.2/OPF_WS_NO_TEMP.bin",
-      "source_filename": "OPF_WS_NO_TEMP.bin",
-      "install": {
-        "bootloader": {
-          "path": "OPF_WS_NO_TEMP.bootloader.bin",
-          "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363",
-          "size": 15104,
-          "offset": "0x0"
-        },
-        "partitions": {
-          "path": "OPF_WS_NO_TEMP.partitions.bin",
-          "sha256": "334c9553e2799107ed33eb9057f8661c6dd757c662a661edac6c73bb99ae7d5e",
-          "size": 3072,
-          "offset": "0x8000"
-        },
-        "boot_app0": {
-          "path": "OPF_WS_NO_TEMP.boot_app0.bin",
           "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0",
           "size": 8192,
           "offset": "0xe000"
