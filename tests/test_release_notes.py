@@ -47,6 +47,7 @@ def _bridge_bins(marker: int) -> dict[str, tuple[bytes, str]]:
     return {
         "ATOM_S3": (_esp(marker), "ATOM_S3.bin"),
         "ATOM_S3_R": (_esp(marker + 1), "ATOM_S3_R.bin"),
+        "ESP32": (_esp(marker + 2), "ESP32.bin"),
     }
 
 
@@ -116,7 +117,7 @@ class ReleaseNotesTests(unittest.TestCase):
     def test_publish_with_notes_file_and_cli(self) -> None:
         from_dir = self.root / "in"
         from_dir.mkdir()
-        for name, marker in (("ATOM_S3.bin", 5), ("ATOM_S3_R.bin", 6)):
+        for name, marker in (("ATOM_S3.bin", 5), ("ATOM_S3_R.bin", 6), ("ESP32.bin", 7)):
             (from_dir / name).write_bytes(_esp(marker))
         notes_path = self.root / "notes.md"
         notes_path.write_bytes(NOTES.encode("utf-8"))

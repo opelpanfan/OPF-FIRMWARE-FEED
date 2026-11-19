@@ -6,15 +6,15 @@ Fetch one file:
 
 `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/index.json`
 
-Read `latest.BMS`, `latest.BRIDGE`, `latest.P1`, `latest.METER`, `latest.CONFIG_APP`, and `latest.FLASHER`.
+Read `latest.BMS`, `latest.BRIDGE`, `latest.P1`, `latest.METER`, `latest.CONFIG_APP`, `latest.FLASHER`, and `latest.SCREEN`.
 
 Use a product only when `available` is true. Download each object in `artifacts[]`, check `sha256`, then flash. For P1, flash `RAK3172_TX` and `RAK3172_RX` from that same latest object as a pair. If either board is missing, do not flash.
 
 `products[].versions[]` lists every immutable version folder. `latest.*` is the channel.
 
-CONFIG_APP and METER stay empty until sources publish a version folder. Until then `available` is false and `versions` is `[]`.
+CONFIG_APP, METER, and SCREEN stay empty until sources publish a version folder. Until then `available` is false and `versions` is `[]`.
 
-This repository is a passive catalog. Sources push `P1/`, `BRIDGE/`, `BMS/`, `METER/`, `CONFIG_APP/`, and `FLASHER/` themselves. There is no ingest workflow and no Action that downloads private releases. This repository does not need `SOURCE_READ_TOKEN`.
+This repository is a passive catalog. Sources push `P1/`, `BRIDGE/`, `BMS/`, `SCREEN/`, `METER/`, `CONFIG_APP/`, and `FLASHER/` themselves. There is no ingest workflow and no Action that downloads private releases. This repository does not need `SOURCE_READ_TOKEN`.
 
 `FLASHER/` holds the OPF-FLASHER desktop packages (a Windows portable exe and a Linux deb), not device firmware. Do not flash those files onto a board. OPF-FLASHER ignores the `FLASHER` product when it lists Bridge, P1, and BMS.
 
@@ -45,13 +45,15 @@ Source repos pass `--release-notes` or `--release-notes-file` on `apply`. This f
 
 ## ESP32 full install
 
-BMS, BRIDGE, and METER may publish three optional install companions next to each board's app image `<BOARD>.bin`. Publish all three for that board, or none. A partial set is refused. Other boards in the same folder may omit the set. Validation passes when the companions are absent. P1, CONFIG_APP, and FLASHER do not use these files.
+BMS, BRIDGE, METER, and SCREEN may publish three optional install companions next to each board's app image `<BOARD>.bin`. Publish all three for that board, or none. A partial set is refused. Other boards in the same folder may omit the set. Validation passes when the companions are absent. P1, CONFIG_APP, and FLASHER do not use these files.
 
 | File | Flash offset |
 | --- | --- |
+| `<BOARD>.bin` | `0x10000` |
 | `<BOARD>.bootloader.bin` | `0x0` |
 | `<BOARD>.partitions.bin` | `0x8000` |
 | `<BOARD>.boot_app0.bin` | `0xe000` |
+| `<BOARD>.factory.bin` (SCREEN, optional) | `0x0` |
 
 When the set is present, that board's object in `artifacts[]` includes `install` with `bootloader`, `partitions`, and `boot_app0`. Each of those objects has:
 
@@ -60,13 +62,14 @@ When the set is present, that board's object in `artifacts[]` includes `install`
 - `size` — byte length
 - `offset` — `0x0` for bootloader, `0x8000` for partitions, `0xe000` for boot_app0
 
-The same three files are lines in the folder `SHA256SUMS` and the root `SHA256SUMS`. `install` is omitted when the board has no companions. The app image stays `<BOARD>.bin`.
+The same three files are lines in the folder `SHA256SUMS` and the root `SHA256SUMS`. `install` is omitted when the board has no companions. The app image stays `<BOARD>.bin` and is flashed at `0x10000`. SCREEN also sets `full_flash_required` and `app_offset` on the product metadata, and may add optional `install.factory` for `<BOARD>.factory.bin` at `0x0`. A factory file does not replace the three companions.
 
 Board filenames are in `.github/feed-catalog.json`.
 
 - `P1/`: `RAK3172_TX.bin` and `RAK3172_RX.bin`, published together.
 - `BRIDGE/`: `ATOM_S3_R.bin` and `ATOM_S3.bin` (shared ESP32_S3 MCU image; runtime `hw_board`) plus `ESP32.bin` (LilyGO T-CAN485).
 - `BMS/`: catalog boards, including `OPF_WS.bin`.
+- `SCREEN/`: OPF CAN dashboard, ESP32-S3. Boards are `ws-4-480` (`OPF_WS_CAN_DASH_4`, Waveshare Touch-LCD-4 480x480), `ws-43-800` (`OPF_WS_CAN_DASH_43`, Touch-LCD-4.3B 800x480), `ws-5-800` (`OPF_WS_CAN_DASH_5`, Touch-LCD-5 800x480), `ws-5b-1024` (`OPF_WS_CAN_DASH_5` with `-D OPF_CAN_DASH_RES=1024`, Touch-LCD-5B 1024x600, experimental), `ws-7-800` (`OPF_WS_CAN_DASH_7`, Touch-LCD-7 800x480, UART/download-mode flash only), and `ws-7b-1024` (`OPF_WS_CAN_DASH_7` with `-D OPF_CAN_DASH_RES=1024`, LCD-7B 1024x600, UART-only). Each board publishes `<id>.bin`, `<id>.bootloader.bin`, `<id>.partitions.bin`, and `<id>.boot_app0.bin`. `<id>.factory.bin` at `0x0` is optional. `full_flash_required` is true: do not OTA an app image across a partition-layout change. Firmware comes from OPF-STORAGE-DASH `master-grok` only, never `main` or `master`. The build id looks like `v0.0.2+N`. The feed folder and the tag stay plain `vX.Y.Z`. No SCREEN binaries are published until that source pushes a folder.
 - `METER/`: `transmitter.bin`, `receiver.bin`, `transmitter_lcd.bin`, and `receiver_lcd.bin`, published together under `METER/vX.Y.Z/` and `METER/latest/`. ESP32-S3 images for AtomS3 and AtomS3R from OPF-LORA-METER, built with `partitions/ota_8MB.csv` and qio flash mode. Optional companions use the filenames above.
 - `FLASHER/`: `OPF-FLASHER-win-x64.exe` and `OPF-FLASHER-linux-amd64.deb`. Not a board image. Publish an immutable `FLASHER/vX.Y.Z/` and mirror `FLASHER/latest/`. Do not replace an existing version folder, including historical `v0.0.1`.
 - `CONFIG_APP/`: `opf-config-app.apk`.
@@ -254,6 +257,14 @@ No version folders.
 ### FLASHER
 
 Source repository: `opelpanfan/OPF-FLASHER`
+
+No version folders.
+
+### SCREEN
+
+Source repository: `opelpanfan/OPF-STORAGE-DASH`
+
+Full flash is required. OTA of the app image alone is unsafe across partition layouts.
 
 No version folders.
 <!-- FEED-SUMMARY:END -->
