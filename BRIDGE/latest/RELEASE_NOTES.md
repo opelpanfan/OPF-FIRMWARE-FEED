@@ -64,4 +64,4 @@
 - Read-only `board` identity (`ATOM_S3_R` / `ATOM_S3`, equals the FEED artifact name) in BLE `ota_info` / `cfg_get` / `telem_get` and `GET /health` + `/diag`.
 - Credentials: NVS is the source of truth for Wi‑Fi, MQTT and OTA login; build-time values are seeded only once into empty keys, so FEED images keep stored settings. `cfg_get`, `telem_get` and `/diag` report credential source/presence (never the values).
 - UI header: Wi-Fi badge (SSID + RSSI / connecting / no creds / AP only) and BLE badge (advertising / app connected) in the theme-chip row, identical to BMS; 4 themes; wraps on mobile.
-- Build reports `fw_version` from the release tag; commit info is in each manifest's `source.sha` / `source.fw_build`.
+- Build reports `fw_version` as `<semver>+VC<N>` (semver from the release tag, `N` from `version_code.txt`). Commit info stays in each manifest's `source.sha` / `source.fw_build`. `source.fw_version` and numeric `source.version_code` are recorded beside them. Feed folders stay `vX.Y.Z` and file names stay `<BOARD>.bin`.

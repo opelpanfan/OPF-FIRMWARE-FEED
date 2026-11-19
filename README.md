@@ -161,23 +161,23 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.2`
 
 - Date: 2026-11-09
-- Source commit: `82a71fc6777c743d33fd5e904c803e44666f6bff` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `646543a418af013b841b13abca8558207e76c54f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1991024 bytes, 1.90 MiB)
+  - `ATOM_S3.bin` (2037648 bytes, 1.94 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (1991024 bytes, 1.90 MiB)
+  - `ATOM_S3_R.bin` (2037648 bytes, 1.94 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ESP32.bin` (1831200 bytes, 1.75 MiB)
+  - `ESP32.bin` (1874608 bytes, 1.79 MiB)
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (14930 bytes, 14.6 KiB)
+  - `RELEASE_NOTES.md` (15133 bytes, 14.8 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (19261 bytes, 18.8 KiB)
+  - `index.json` (19493 bytes, 19.0 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
   - **nimble_host stack:** raised from 4 KB to 5 KB. High-water free was about 824–888 B; under a BLE connection plus GATT discovery it is about 2040 B. Heap stays well above the 41 KB warn level.
@@ -187,23 +187,23 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `latest`
 
 - Date: 2026-11-09
-- Source commit: `82a71fc6777c743d33fd5e904c803e44666f6bff` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `646543a418af013b841b13abca8558207e76c54f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1991024 bytes, 1.90 MiB)
+  - `ATOM_S3.bin` (2037648 bytes, 1.94 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (1991024 bytes, 1.90 MiB)
+  - `ATOM_S3_R.bin` (2037648 bytes, 1.94 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ESP32.bin` (1831200 bytes, 1.75 MiB)
+  - `ESP32.bin` (1874608 bytes, 1.79 MiB)
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (14930 bytes, 14.6 KiB)
+  - `RELEASE_NOTES.md` (15133 bytes, 14.8 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (19260 bytes, 18.8 KiB)
+  - `index.json` (19492 bytes, 19.0 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
   - **nimble_host stack:** raised from 4 KB to 5 KB. High-water free was about 824–888 B; under a BLE connection plus GATT discovery it is about 2040 B. Heap stays well above the 41 KB warn level.
