@@ -160,7 +160,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.2`
 
-- Date: 2026-11-19
+- Date: 2026-11-20
 - Source commit: `a1cc2bb58d02bcd9a44bedc896484b6c4d62971f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (2028112 bytes, 1.93 MiB)
@@ -186,7 +186,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `latest`
 
-- Date: 2026-11-19
+- Date: 2026-11-20
 - Source commit: `a1cc2bb58d02bcd9a44bedc896484b6c4d62971f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (2028112 bytes, 1.93 MiB)
@@ -220,13 +220,13 @@ Source repository: `opelpanfan/OPF-P1`
 - Files:
   - `RAK3172_RX.bin` (70356 bytes, 68.7 KiB)
   - `RAK3172_TX.bin` (94620 bytes, 92.4 KiB)
-  - `RELEASE_NOTES.md` (1812 bytes, 1.8 KiB)
+  - `RELEASE_NOTES.md` (3039 bytes, 3.0 KiB)
   - `SHA256SUMS` (162 bytes)
-  - `index.json` (3401 bytes, 3.3 KiB)
+  - `index.json` (4631 bytes, 4.5 KiB)
 - Summary:
-  - **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. The radio settings and uplink format are the same as v0.0.1.
+  - **Frequency is 869.525 MHz (EU868 g3).** This is fw16 (`0.0.2+16`, `versionCode` 16). Flash both images from this release together. The radio settings and uplink format are the same as v0.0.1.
   - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm. Rolling 1-hour transmit cap stays under 10% duty.
-  - P1 telegram sanity check: a telegram is published only when it carries U1-3, I1-3 and import power, voltages are 0 V or 150-280 V, currents are at most 100 A, every power is at most `P1_MAX_POWER_W` (50 kW), and frequency, when sent, is 45-55 Hz.
+  - `P1_REQUIRE_CRC=0`. A telegram with a missing or wrong CRC is accepted only if it carries U1-3, I1-3 and import power and passes the plausibility guard. A CRC-matching telegram is accepted without that guard.
 
 #### `latest`
 
@@ -234,13 +234,13 @@ Source repository: `opelpanfan/OPF-P1`
 - Files:
   - `RAK3172_RX.bin` (70356 bytes, 68.7 KiB)
   - `RAK3172_TX.bin` (94620 bytes, 92.4 KiB)
-  - `RELEASE_NOTES.md` (1812 bytes, 1.8 KiB)
+  - `RELEASE_NOTES.md` (3039 bytes, 3.0 KiB)
   - `SHA256SUMS` (162 bytes)
-  - `index.json` (3400 bytes, 3.3 KiB)
+  - `index.json` (4630 bytes, 4.5 KiB)
 - Summary:
-  - **Frequency is 869.525 MHz (EU868 g3).** Flash both images from this release together. The radio settings and uplink format are the same as v0.0.1.
+  - **Frequency is 869.525 MHz (EU868 g3).** This is fw16 (`0.0.2+16`, `versionCode` 16). Flash both images from this release together. The radio settings and uplink format are the same as v0.0.1.
   - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm. Rolling 1-hour transmit cap stays under 10% duty.
-  - P1 telegram sanity check: a telegram is published only when it carries U1-3, I1-3 and import power, voltages are 0 V or 150-280 V, currents are at most 100 A, every power is at most `P1_MAX_POWER_W` (50 kW), and frequency, when sent, is 45-55 Hz.
+  - `P1_REQUIRE_CRC=0`. A telegram with a missing or wrong CRC is accepted only if it carries U1-3, I1-3 and import power and passes the plausibility guard. A CRC-matching telegram is accepted without that guard.
 
 ### CONFIG_APP
 
