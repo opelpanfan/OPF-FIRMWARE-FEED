@@ -8,13 +8,13 @@
     "BMS": {
       "product": "BMS",
       "available": true,
-      "semver": "0.0.2",
-      "version": "0.0.2",
-      "matched_folder": "v0.0.2",
+      "semver": "0.0.3",
+      "version": "0.0.3",
+      "matched_folder": "v0.0.3",
       "matches_folders": [
-        "v0.0.2"
+        "v0.0.3"
       ],
-      "highest_semver_folder": "v0.0.2",
+      "highest_semver_folder": "v0.0.3",
       "highest_semver_is_latest": true,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/index.json",
       "boards": [
@@ -25,18 +25,18 @@
         "OPF_WS_DASH"
       ],
       "sha256": {
-        "OPF_ATOM_S3": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
-        "OPF_ATOM_S3R": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
-        "OPF_T2CAN": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
-        "OPF_WS": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
-        "OPF_WS_DASH": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6"
+        "OPF_ATOM_S3": "698ecfd8d6f19438d6c0b4905d61ab95fc9dc8c5d1cc849c34682b70966beb50",
+        "OPF_ATOM_S3R": "5b5f7a6ec12a65708f1cde2d832668317e2acebb04a9e62d0965874fbb0d9869",
+        "OPF_T2CAN": "791e5afea36534567b0d70a96b15aca79ecc06da1d68dd6a170cc26bb6549a92",
+        "OPF_WS": "6e098137c7185d10b43ff40e7a925e8ecac25ad1aa5bf303681aa782d3c1a004",
+        "OPF_WS_DASH": "f73b8bb7dbf1445bac5d0d99cfda7d833532799ea25fc9ca20a6300bec69ba08"
       },
       "artifacts": [
         {
           "board": "OPF_ATOM_S3",
           "filename": "OPF_ATOM_S3.bin",
-          "sha256": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
-          "size": 1865776,
+          "sha256": "698ecfd8d6f19438d6c0b4905d61ab95fc9dc8c5d1cc849c34682b70966beb50",
+          "size": 1836320,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3.bin",
           "source_filename": "OPF_ATOM_S3.bin",
           "install": {
@@ -63,8 +63,8 @@
         {
           "board": "OPF_ATOM_S3R",
           "filename": "OPF_ATOM_S3R.bin",
-          "sha256": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
-          "size": 2065216,
+          "sha256": "5b5f7a6ec12a65708f1cde2d832668317e2acebb04a9e62d0965874fbb0d9869",
+          "size": 2035808,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3R.bin",
           "source_filename": "OPF_ATOM_S3R.bin",
           "install": {
@@ -91,8 +91,8 @@
         {
           "board": "OPF_T2CAN",
           "filename": "OPF_T2CAN.bin",
-          "sha256": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
-          "size": 1927920,
+          "sha256": "791e5afea36534567b0d70a96b15aca79ecc06da1d68dd6a170cc26bb6549a92",
+          "size": 1894512,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_T2CAN.bin",
           "source_filename": "OPF_T2CAN.bin",
           "install": {
@@ -119,8 +119,8 @@
         {
           "board": "OPF_WS",
           "filename": "OPF_WS.bin",
-          "sha256": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
-          "size": 1910432,
+          "sha256": "6e098137c7185d10b43ff40e7a925e8ecac25ad1aa5bf303681aa782d3c1a004",
+          "size": 1881040,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS.bin",
           "source_filename": "OPF_WS.bin",
           "install": {
@@ -147,8 +147,8 @@
         {
           "board": "OPF_WS_DASH",
           "filename": "OPF_WS_DASH.bin",
-          "sha256": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6",
-          "size": 2599920,
+          "sha256": "f73b8bb7dbf1445bac5d0d99cfda7d833532799ea25fc9ca20a6300bec69ba08",
+          "size": 2570448,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_DASH.bin",
           "source_filename": "OPF_WS_DASH.bin",
           "install": {
@@ -173,7 +173,7 @@
           }
         }
       ],
-      "release_notes": "# BMS v0.0.1\n\n- Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.\n- Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.\n- SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.\n- Low-SoC fix: SoC follows IVT Ah counting (charge raises it), seeded from the real reading once cells are valid, with spike rejection and hysteresis. Stops the 5%/7% charge/discharge loop.\n- Soft stop: OTA and other requested reboots ramp current down first, then reboot.\n- Crash fix: `logs_loop` panic (JSON allocator double-free, unlocked console print, MQTT publish race).\n- Settings: keys over 15 characters renamed so they save.\n- `/health`: ramp, taper, SoC and last restart reason fields.\n- Stability from earlier on this line: OTA watchdog fix, coredump capture and `/coredump`, PSA2 96-cell decode, IVT support, UV failsafe.\n",
+      "release_notes": "# BMS v0.0.3\n\nFirmware tag at d046dd1 (VC63), verified on the live .158 pack.\n\n## VC53\u2013VC63\n\n- VC53: remove Status action sections and their HTTP endpoints\n- VC54: remove Status Health and flatten Device Overview\n- VC55: remove BMS self-test and keep the OTA boot-health gate\n- VC56: remove Dashboard Site summary and keep its values on Status\n- VC57: add ap_hidden so the SoftAP can hide its SSID; drop the Hide SSID control from the Status page\n- VC58: remove the Live data row from the Dashboard\n- VC59: match application HTTP routes exactly\n- VC60: build /diag snapshot off async_tcp; fix slim /health snapshot\n- VC61: remove /health full duplicate and dead code\n- VC62: task watchdog config + heartbeat snapshot in reboot log; fix task heartbeat ages\n- VC63: coalesce soak NVS writes; label async_tcp heartbeat (not_watched, last feed on async_tcp_last_feed_age_ms)\n\n## Also in this release (after v0.0.2, before VC53)\n\n- Drop the web Settings and Battery tabs; settings are BLE-only (`cfg_get` / `cfg_set` / `cfg_schema`)\n- Publish cell and temperature CSV over MQTT (`cell_data`, `temp_data`); `rt` stays compact and adds module geometry\n- Move the standalone CAN dash to OPF-DASH\n- Give every web control a BLE command and drop the USB serial console\n- Expose the cached pack DTC list on the BLE console (`dtc_list` / `DTC|` notify)\n",
       "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/RELEASE_NOTES.md"
     },
     "BRIDGE": {
@@ -398,13 +398,13 @@
       "latest": {
         "product": "BMS",
         "available": true,
-        "semver": "0.0.2",
-        "version": "0.0.2",
-        "matched_folder": "v0.0.2",
+        "semver": "0.0.3",
+        "version": "0.0.3",
+        "matched_folder": "v0.0.3",
         "matches_folders": [
-          "v0.0.2"
+          "v0.0.3"
         ],
-        "highest_semver_folder": "v0.0.2",
+        "highest_semver_folder": "v0.0.3",
         "highest_semver_is_latest": true,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/index.json",
         "boards": [
@@ -415,18 +415,18 @@
           "OPF_WS_DASH"
         ],
         "sha256": {
-          "OPF_ATOM_S3": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
-          "OPF_ATOM_S3R": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
-          "OPF_T2CAN": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
-          "OPF_WS": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
-          "OPF_WS_DASH": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6"
+          "OPF_ATOM_S3": "698ecfd8d6f19438d6c0b4905d61ab95fc9dc8c5d1cc849c34682b70966beb50",
+          "OPF_ATOM_S3R": "5b5f7a6ec12a65708f1cde2d832668317e2acebb04a9e62d0965874fbb0d9869",
+          "OPF_T2CAN": "791e5afea36534567b0d70a96b15aca79ecc06da1d68dd6a170cc26bb6549a92",
+          "OPF_WS": "6e098137c7185d10b43ff40e7a925e8ecac25ad1aa5bf303681aa782d3c1a004",
+          "OPF_WS_DASH": "f73b8bb7dbf1445bac5d0d99cfda7d833532799ea25fc9ca20a6300bec69ba08"
         },
         "artifacts": [
           {
             "board": "OPF_ATOM_S3",
             "filename": "OPF_ATOM_S3.bin",
-            "sha256": "f320220e677b582d25368b88064bdd9881aaf189bcc74e66c16a17e8dd284931",
-            "size": 1865776,
+            "sha256": "698ecfd8d6f19438d6c0b4905d61ab95fc9dc8c5d1cc849c34682b70966beb50",
+            "size": 1836320,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3.bin",
             "source_filename": "OPF_ATOM_S3.bin",
             "install": {
@@ -453,8 +453,8 @@
           {
             "board": "OPF_ATOM_S3R",
             "filename": "OPF_ATOM_S3R.bin",
-            "sha256": "a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a",
-            "size": 2065216,
+            "sha256": "5b5f7a6ec12a65708f1cde2d832668317e2acebb04a9e62d0965874fbb0d9869",
+            "size": 2035808,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3R.bin",
             "source_filename": "OPF_ATOM_S3R.bin",
             "install": {
@@ -481,8 +481,8 @@
           {
             "board": "OPF_T2CAN",
             "filename": "OPF_T2CAN.bin",
-            "sha256": "14f6b29ed6eb51e8cf3b508a8039408ce9c41885fde657bec5f2a2436f3bea36",
-            "size": 1927920,
+            "sha256": "791e5afea36534567b0d70a96b15aca79ecc06da1d68dd6a170cc26bb6549a92",
+            "size": 1894512,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_T2CAN.bin",
             "source_filename": "OPF_T2CAN.bin",
             "install": {
@@ -509,8 +509,8 @@
           {
             "board": "OPF_WS",
             "filename": "OPF_WS.bin",
-            "sha256": "f10427c3b285f1cc32180fdc9bd94fffaecf20673316472e8723ebd427a256ac",
-            "size": 1910432,
+            "sha256": "6e098137c7185d10b43ff40e7a925e8ecac25ad1aa5bf303681aa782d3c1a004",
+            "size": 1881040,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS.bin",
             "source_filename": "OPF_WS.bin",
             "install": {
@@ -537,8 +537,8 @@
           {
             "board": "OPF_WS_DASH",
             "filename": "OPF_WS_DASH.bin",
-            "sha256": "52ffb12a975a8afa05cf42abd3258b00214b0302a64d52e2e74c54da8f995ba6",
-            "size": 2599920,
+            "sha256": "f73b8bb7dbf1445bac5d0d99cfda7d833532799ea25fc9ca20a6300bec69ba08",
+            "size": 2570448,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_DASH.bin",
             "source_filename": "OPF_WS_DASH.bin",
             "install": {
@@ -563,10 +563,175 @@
             }
           }
         ],
-        "release_notes": "# BMS v0.0.1\n\n- Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.\n- Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.\n- SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.\n- Low-SoC fix: SoC follows IVT Ah counting (charge raises it), seeded from the real reading once cells are valid, with spike rejection and hysteresis. Stops the 5%/7% charge/discharge loop.\n- Soft stop: OTA and other requested reboots ramp current down first, then reboot.\n- Crash fix: `logs_loop` panic (JSON allocator double-free, unlocked console print, MQTT publish race).\n- Settings: keys over 15 characters renamed so they save.\n- `/health`: ramp, taper, SoC and last restart reason fields.\n- Stability from earlier on this line: OTA watchdog fix, coredump capture and `/coredump`, PSA2 96-cell decode, IVT support, UV failsafe.\n",
+        "release_notes": "# BMS v0.0.3\n\nFirmware tag at d046dd1 (VC63), verified on the live .158 pack.\n\n## VC53\u2013VC63\n\n- VC53: remove Status action sections and their HTTP endpoints\n- VC54: remove Status Health and flatten Device Overview\n- VC55: remove BMS self-test and keep the OTA boot-health gate\n- VC56: remove Dashboard Site summary and keep its values on Status\n- VC57: add ap_hidden so the SoftAP can hide its SSID; drop the Hide SSID control from the Status page\n- VC58: remove the Live data row from the Dashboard\n- VC59: match application HTTP routes exactly\n- VC60: build /diag snapshot off async_tcp; fix slim /health snapshot\n- VC61: remove /health full duplicate and dead code\n- VC62: task watchdog config + heartbeat snapshot in reboot log; fix task heartbeat ages\n- VC63: coalesce soak NVS writes; label async_tcp heartbeat (not_watched, last feed on async_tcp_last_feed_age_ms)\n\n## Also in this release (after v0.0.2, before VC53)\n\n- Drop the web Settings and Battery tabs; settings are BLE-only (`cfg_get` / `cfg_set` / `cfg_schema`)\n- Publish cell and temperature CSV over MQTT (`cell_data`, `temp_data`); `rt` stays compact and adds module geometry\n- Move the standalone CAN dash to OPF-DASH\n- Give every web control a BLE command and drop the USB serial console\n- Expose the cached pack DTC list on the BLE console (`dtc_list` / `DTC|` notify)\n",
         "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/RELEASE_NOTES.md"
       },
       "versions": [
+        {
+          "folder": "v0.0.3",
+          "semver": "0.0.3",
+          "layout": "canonical",
+          "channel": "version",
+          "boards": [
+            "OPF_ATOM_S3",
+            "OPF_ATOM_S3R",
+            "OPF_T2CAN",
+            "OPF_WS",
+            "OPF_WS_DASH"
+          ],
+          "sha256": {
+            "OPF_ATOM_S3": "698ecfd8d6f19438d6c0b4905d61ab95fc9dc8c5d1cc849c34682b70966beb50",
+            "OPF_ATOM_S3R": "5b5f7a6ec12a65708f1cde2d832668317e2acebb04a9e62d0965874fbb0d9869",
+            "OPF_T2CAN": "791e5afea36534567b0d70a96b15aca79ecc06da1d68dd6a170cc26bb6549a92",
+            "OPF_WS": "6e098137c7185d10b43ff40e7a925e8ecac25ad1aa5bf303681aa782d3c1a004",
+            "OPF_WS_DASH": "f73b8bb7dbf1445bac5d0d99cfda7d833532799ea25fc9ca20a6300bec69ba08"
+          },
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.3/index.json",
+          "artifacts": [
+            {
+              "board": "OPF_ATOM_S3",
+              "filename": "OPF_ATOM_S3.bin",
+              "sha256": "698ecfd8d6f19438d6c0b4905d61ab95fc9dc8c5d1cc849c34682b70966beb50",
+              "size": 1836320,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.3/OPF_ATOM_S3.bin",
+              "source_filename": "OPF_ATOM_S3.bin",
+              "install": {
+                "bootloader": {
+                  "path": "OPF_ATOM_S3.bootloader.bin",
+                  "sha256": "1776e4dd896a69d0a5c2e79957b0e2a88aa4129b1381d6478683515a1f6af343",
+                  "size": 15104,
+                  "offset": "0x0"
+                },
+                "partitions": {
+                  "path": "OPF_ATOM_S3.partitions.bin",
+                  "sha256": "1d9cca96de0fe07ad7fc0648b9878ddecd9ce565e38b589ad20fea698ed4c80c",
+                  "size": 3072,
+                  "offset": "0x8000"
+                },
+                "boot_app0": {
+                  "path": "OPF_ATOM_S3.boot_app0.bin",
+                  "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0",
+                  "size": 8192,
+                  "offset": "0xe000"
+                }
+              }
+            },
+            {
+              "board": "OPF_ATOM_S3R",
+              "filename": "OPF_ATOM_S3R.bin",
+              "sha256": "5b5f7a6ec12a65708f1cde2d832668317e2acebb04a9e62d0965874fbb0d9869",
+              "size": 2035808,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.3/OPF_ATOM_S3R.bin",
+              "source_filename": "OPF_ATOM_S3R.bin",
+              "install": {
+                "bootloader": {
+                  "path": "OPF_ATOM_S3R.bootloader.bin",
+                  "sha256": "1776e4dd896a69d0a5c2e79957b0e2a88aa4129b1381d6478683515a1f6af343",
+                  "size": 15104,
+                  "offset": "0x0"
+                },
+                "partitions": {
+                  "path": "OPF_ATOM_S3R.partitions.bin",
+                  "sha256": "1d9cca96de0fe07ad7fc0648b9878ddecd9ce565e38b589ad20fea698ed4c80c",
+                  "size": 3072,
+                  "offset": "0x8000"
+                },
+                "boot_app0": {
+                  "path": "OPF_ATOM_S3R.boot_app0.bin",
+                  "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0",
+                  "size": 8192,
+                  "offset": "0xe000"
+                }
+              }
+            },
+            {
+              "board": "OPF_T2CAN",
+              "filename": "OPF_T2CAN.bin",
+              "sha256": "791e5afea36534567b0d70a96b15aca79ecc06da1d68dd6a170cc26bb6549a92",
+              "size": 1894512,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.3/OPF_T2CAN.bin",
+              "source_filename": "OPF_T2CAN.bin",
+              "install": {
+                "bootloader": {
+                  "path": "OPF_T2CAN.bootloader.bin",
+                  "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363",
+                  "size": 15104,
+                  "offset": "0x0"
+                },
+                "partitions": {
+                  "path": "OPF_T2CAN.partitions.bin",
+                  "sha256": "334c9553e2799107ed33eb9057f8661c6dd757c662a661edac6c73bb99ae7d5e",
+                  "size": 3072,
+                  "offset": "0x8000"
+                },
+                "boot_app0": {
+                  "path": "OPF_T2CAN.boot_app0.bin",
+                  "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0",
+                  "size": 8192,
+                  "offset": "0xe000"
+                }
+              }
+            },
+            {
+              "board": "OPF_WS",
+              "filename": "OPF_WS.bin",
+              "sha256": "6e098137c7185d10b43ff40e7a925e8ecac25ad1aa5bf303681aa782d3c1a004",
+              "size": 1881040,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.3/OPF_WS.bin",
+              "source_filename": "OPF_WS.bin",
+              "install": {
+                "bootloader": {
+                  "path": "OPF_WS.bootloader.bin",
+                  "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363",
+                  "size": 15104,
+                  "offset": "0x0"
+                },
+                "partitions": {
+                  "path": "OPF_WS.partitions.bin",
+                  "sha256": "334c9553e2799107ed33eb9057f8661c6dd757c662a661edac6c73bb99ae7d5e",
+                  "size": 3072,
+                  "offset": "0x8000"
+                },
+                "boot_app0": {
+                  "path": "OPF_WS.boot_app0.bin",
+                  "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0",
+                  "size": 8192,
+                  "offset": "0xe000"
+                }
+              }
+            },
+            {
+              "board": "OPF_WS_DASH",
+              "filename": "OPF_WS_DASH.bin",
+              "sha256": "f73b8bb7dbf1445bac5d0d99cfda7d833532799ea25fc9ca20a6300bec69ba08",
+              "size": 2570448,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.3/OPF_WS_DASH.bin",
+              "source_filename": "OPF_WS_DASH.bin",
+              "install": {
+                "bootloader": {
+                  "path": "OPF_WS_DASH.bootloader.bin",
+                  "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363",
+                  "size": 15104,
+                  "offset": "0x0"
+                },
+                "partitions": {
+                  "path": "OPF_WS_DASH.partitions.bin",
+                  "sha256": "bd0f7954aca2ef7d925ee21aaa1f3dc8822d1d6ce5cbbd26a135e5886bfff6ce",
+                  "size": 3072,
+                  "offset": "0x8000"
+                },
+                "boot_app0": {
+                  "path": "OPF_WS_DASH.boot_app0.bin",
+                  "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0",
+                  "size": 8192,
+                  "offset": "0xe000"
+                }
+              }
+            }
+          ],
+          "release_notes": "# BMS v0.0.3\n\nFirmware tag at d046dd1 (VC63), verified on the live .158 pack.\n\n## VC53\u2013VC63\n\n- VC53: remove Status action sections and their HTTP endpoints\n- VC54: remove Status Health and flatten Device Overview\n- VC55: remove BMS self-test and keep the OTA boot-health gate\n- VC56: remove Dashboard Site summary and keep its values on Status\n- VC57: add ap_hidden so the SoftAP can hide its SSID; drop the Hide SSID control from the Status page\n- VC58: remove the Live data row from the Dashboard\n- VC59: match application HTTP routes exactly\n- VC60: build /diag snapshot off async_tcp; fix slim /health snapshot\n- VC61: remove /health full duplicate and dead code\n- VC62: task watchdog config + heartbeat snapshot in reboot log; fix task heartbeat ages\n- VC63: coalesce soak NVS writes; label async_tcp heartbeat (not_watched, last feed on async_tcp_last_feed_age_ms)\n\n## Also in this release (after v0.0.2, before VC53)\n\n- Drop the web Settings and Battery tabs; settings are BLE-only (`cfg_get` / `cfg_set` / `cfg_schema`)\n- Publish cell and temperature CSV over MQTT (`cell_data`, `temp_data`); `rt` stays compact and adds module geometry\n- Move the standalone CAN dash to OPF-DASH\n- Give every web control a BLE command and drop the USB serial console\n- Expose the cached pack DTC list on the BLE console (`dtc_list` / `DTC|` notify)\n",
+          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/v0.0.3/RELEASE_NOTES.md"
+        },
         {
           "folder": "v0.0.2",
           "semver": "0.0.2",

@@ -120,39 +120,73 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
   - SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.
 
-#### `latest`
+#### `v0.0.3`
 
-- Date: 2026-11-19
-- Source commit: `e4fd3b3104efc6d39a3f68da094aa294cdb77ba7` (opelpanfan/OPF-STORAGE-DASH)
+- Date: unknown
+- Source commit: `d046dd1b6bdab151b05b9eb5d880a0b0bc02bcb4` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1865776 bytes, 1.78 MiB)
+  - `OPF_ATOM_S3.bin` (1836320 bytes, 1.75 MiB)
   - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_ATOM_S3R.bin` (2065216 bytes, 1.97 MiB)
+  - `OPF_ATOM_S3R.bin` (2035808 bytes, 1.94 MiB)
   - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_T2CAN.bin` (1927920 bytes, 1.84 MiB)
+  - `OPF_T2CAN.bin` (1894512 bytes, 1.81 MiB)
   - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS.bin` (1910432 bytes, 1.82 MiB)
+  - `OPF_WS.bin` (1881040 bytes, 1.79 MiB)
   - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS_DASH.bin` (2599920 bytes, 2.48 MiB)
+  - `OPF_WS_DASH.bin` (2570448 bytes, 2.45 MiB)
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (981 bytes)
+  - `RELEASE_NOTES.md` (1343 bytes, 1.3 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (7830 bytes, 7.6 KiB)
+  - `index.json` (8184 bytes, 8.0 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
-  - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
-  - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
-  - SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.
+  - Firmware tag at d046dd1 (VC63), verified on the live .158 pack.
+  - VC53: remove Status action sections and their HTTP endpoints
+  - VC54: remove Status Health and flatten Device Overview
+
+#### `latest`
+
+- Date: 2026-11-19
+- Source commit: `d046dd1b6bdab151b05b9eb5d880a0b0bc02bcb4` (opelpanfan/OPF-STORAGE-DASH)
+- Files:
+  - `OPF_ATOM_S3.bin` (1836320 bytes, 1.75 MiB)
+  - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_ATOM_S3R.bin` (2035808 bytes, 1.94 MiB)
+  - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_T2CAN.bin` (1894512 bytes, 1.81 MiB)
+  - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS.bin` (1881040 bytes, 1.79 MiB)
+  - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS_DASH.bin` (2570448 bytes, 2.45 MiB)
+  - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (1343 bytes, 1.3 KiB)
+  - `SHA256SUMS` (1776 bytes, 1.7 KiB)
+  - `index.json` (8182 bytes, 8.0 KiB)
+- Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
+- Summary:
+  - Firmware tag at d046dd1 (VC63), verified on the live .158 pack.
+  - VC53: remove Status action sections and their HTTP endpoints
+  - VC54: remove Status Health and flatten Device Overview
 
 ### BRIDGE
 
