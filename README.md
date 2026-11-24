@@ -6,7 +6,7 @@ Fetch one file:
 
 `https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/index.json`
 
-Read `latest.BMS`, `latest.BRIDGE`, `latest.P1`, `latest.METER`, `latest.CONFIG_APP`, `latest.FLASHER`, and `latest.SCREEN`.
+Read `latest.BMS`, `latest.BRIDGE`, `latest.P1`, `latest.METER`, `latest.CONFIG_APP`, `latest.FLASHER`, `latest.SCREEN`, and `latest.RACE`.
 
 Use a product only when `available` is true. Download each object in `artifacts[]`, check `sha256`, then flash. For P1, flash `RAK3172_TX` and `RAK3172_RX` from that same latest object as a pair. If either board is missing, do not flash.
 
@@ -14,7 +14,7 @@ Use a product only when `available` is true. Download each object in `artifacts[
 
 CONFIG_APP, METER, and SCREEN stay empty until sources publish a version folder. Until then `available` is false and `versions` is `[]`.
 
-This repository is a passive catalog. Sources push `P1/`, `BRIDGE/`, `BMS/`, `SCREEN/`, `METER/`, `CONFIG_APP/`, and `FLASHER/` themselves. There is no ingest workflow and no Action that downloads private releases. This repository does not need `SOURCE_READ_TOKEN`.
+This repository is a passive catalog. Sources push `P1/`, `BRIDGE/`, `BMS/`, `SCREEN/`, `METER/`, `CONFIG_APP/`, `FLASHER/`, and `RACE/` themselves. There is no ingest workflow and no Action that downloads private releases. This repository does not need `SOURCE_READ_TOKEN`.
 
 `FLASHER/` holds the OPF-FLASHER desktop packages (a Windows portable exe and a Linux deb), not device firmware. Do not flash those files onto a board. OPF-FLASHER ignores the `FLASHER` product when it lists Bridge, P1, and BMS.
 
@@ -45,7 +45,7 @@ Source repos pass `--release-notes` or `--release-notes-file` on `apply`. This f
 
 ## ESP32 full install
 
-BMS, BRIDGE, METER, and SCREEN may publish three optional install companions next to each board's app image `<BOARD>.bin`. Publish all three for that board, or none. A partial set is refused. Other boards in the same folder may omit the set. Validation passes when the companions are absent. P1, CONFIG_APP, and FLASHER do not use these files.
+BMS, BRIDGE, METER, and SCREEN may publish three optional install companions next to each board's app image `<BOARD>.bin`. Publish all three for that board, or none. A partial set is refused. Other boards in the same folder may omit the set. Validation passes when the companions are absent. P1, CONFIG_APP, and FLASHER do not use these files. RACE also omits the trio: the ESP32-P4 bootloader is at `0x2000`, not the catalog default `0x0`.
 
 | File | Flash offset |
 | --- | --- |
@@ -72,6 +72,7 @@ Board filenames are in `.github/feed-catalog.json`.
 - `SCREEN/`: OPF CAN dashboard, ESP32-S3. Boards are `ws-4-480` (`OPF_WS_CAN_DASH_4`, Waveshare Touch-LCD-4 480x480), `ws-43-800` (`OPF_WS_CAN_DASH_43`, Touch-LCD-4.3B 800x480), `ws-5-800` (`OPF_WS_CAN_DASH_5`, Touch-LCD-5 800x480), `ws-5b-1024` (`OPF_WS_CAN_DASH_5` with `-D OPF_CAN_DASH_RES=1024`, Touch-LCD-5B 1024x600, experimental), `ws-7-800` (`OPF_WS_CAN_DASH_7`, Touch-LCD-7 800x480, UART/download-mode flash only), and `ws-7b-1024` (`OPF_WS_CAN_DASH_7` with `-D OPF_CAN_DASH_RES=1024`, LCD-7B 1024x600, UART-only). Each board publishes `<id>.bin`, `<id>.bootloader.bin`, `<id>.partitions.bin`, and `<id>.boot_app0.bin`. `<id>.factory.bin` at `0x0` is optional. `full_flash_required` is true: do not OTA an app image across a partition-layout change. Firmware comes from OPF-STORAGE-DASH `master-grok` only, never `main` or `master`. The build id looks like `v0.0.2+N`. The feed folder and the tag stay plain `vX.Y.Z`. No SCREEN binaries are published until that source pushes a folder.
 - `METER/`: `transmitter.bin`, `receiver.bin`, `transmitter_lcd.bin`, and `receiver_lcd.bin`, published together under `METER/vX.Y.Z/` and `METER/latest/`. ESP32-S3 images for AtomS3 and AtomS3R from OPF-LORA-METER, built with `partitions/ota_8MB.csv` and qio flash mode. Optional companions use the filenames above.
 - `FLASHER/`: `OPF-FLASHER-win-x64.exe` and `OPF-FLASHER-linux-amd64.deb`. Not a board image. Publish an immutable `FLASHER/vX.Y.Z/` and mirror `FLASHER/latest/`. Do not replace an existing version folder, including historical `v0.0.1`.
+- `RACE/`: `esp32-p4.bin` (Waveshare ESP32-P4-WIFI6-Touch-LCD-7B, PlatformIO env `opf_dash`). App-only flash at `0x10000` is recommended. The standard bootloader trio is not published here because the P4 bootloader is at `0x2000`, not `0x0`. Firmware comes from OPF-RACE-DASH `master-grok`. The image reports `fw_version` such as `0.1.16`; feed metadata is `0.1.16+VC17`.
 - `CONFIG_APP/`: `opf-config-app.apk`.
 
 <!-- FEED-SUMMARY:START -->
@@ -344,4 +345,38 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 Full flash is required. OTA of the app image alone is unsafe across partition layouts.
 
 No version folders.
+
+### RACE
+
+Source repository: `opelpanfan/OPF-RACE-DASH`
+
+#### `v0.1.16`
+
+- Date: unknown
+- Source commit: `945821e7a897883c6dadda80adae347ebf344605` (opelpanfan/OPF-RACE-DASH)
+- Files:
+  - `RELEASE_NOTES.md` (1579 bytes, 1.5 KiB)
+  - `SHA256SUMS` (79 bytes)
+  - `esp32-p4.bin` (1960288 bytes, 1.87 MiB)
+  - `index.json` (2921 bytes, 2.9 KiB)
+- Full-install files: `esp32-p4` no
+- Summary:
+  - Version 0.1.16+VC17, commit 945821e7a897883c6dadda80adae347ebf344605 (master-grok, tag v0.1.16).
+  - OPF Race Dash for the Waveshare ESP32-P4-WIFI6-Touch-LCD-7B (1024x600). This is the first RACE package on the firmware feed.
+  - Tick-driven screen refresh after each CAN update, aiming for a steady 50 FPS
+
+#### `latest`
+
+- Date: unknown
+- Source commit: `945821e7a897883c6dadda80adae347ebf344605` (opelpanfan/OPF-RACE-DASH)
+- Files:
+  - `RELEASE_NOTES.md` (1579 bytes, 1.5 KiB)
+  - `SHA256SUMS` (79 bytes)
+  - `esp32-p4.bin` (1960288 bytes, 1.87 MiB)
+  - `index.json` (2916 bytes, 2.8 KiB)
+- Full-install files: `esp32-p4` no
+- Summary:
+  - Version 0.1.16+VC17, commit 945821e7a897883c6dadda80adae347ebf344605 (master-grok, tag v0.1.16).
+  - OPF Race Dash for the Waveshare ESP32-P4-WIFI6-Touch-LCD-7B (1024x600). This is the first RACE package on the firmware feed.
+  - Tick-driven screen refresh after each CAN update, aiming for a steady 50 FPS
 <!-- FEED-SUMMARY:END -->

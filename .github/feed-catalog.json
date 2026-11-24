@@ -317,6 +317,30 @@
           "required": true
         }
       }
+    },
+    "RACE": {
+      "family": "esp32",
+      "ingest": "push",
+      "version_label": "prefixed",
+      "source_repository": "opelpanfan/OPF-RACE-DASH",
+      "source_ref": "master-grok",
+      "workflow_file": null,
+      "chip": "ESP32-P4",
+      "app_offset": "0x10000",
+      "note": "OPF Race Dash for the Waveshare ESP32-P4-WIFI6-Touch-LCD-7B (1024x600). App-only flash at 0x10000 is recommended and keeps NVS, otadata and LittleFS pages. Do not publish the standard FEED bootloader trio for this board: the P4 bootloader lives at 0x2000, not the catalog default 0x0. Firmware comes from OPF-RACE-DASH master-grok. The image reports a plain fw_version such as 0.1.16; feed metadata uses X.Y.Z+VCnn and integer version_code.",
+      "required_boards": [
+        "esp32-p4"
+      ],
+      "boards": {
+        "esp32-p4": {
+          "filename": "esp32-p4.bin",
+          "envs": [
+            "opf_dash"
+          ],
+          "label": "Waveshare ESP32-P4-WIFI6-Touch-LCD-7B 1024x600",
+          "required": true
+        }
+      }
     }
   }
 }

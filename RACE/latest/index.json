@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "product": "RACE",
+  "version": "v0.1.16",
+  "semver": "0.1.16",
+  "channel": "latest",
+  "folder": "latest",
+  "files": {
+    "esp32-p4": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/RACE/latest/esp32-p4.bin"
+  },
+  "sha256": {
+    "esp32-p4": "a25a709fcb46069959656d9e2a373f6a4611f7877fe78755f7601c652f0c6c07"
+  },
+  "artifacts": [
+    {
+      "board": "esp32-p4",
+      "filename": "esp32-p4.bin",
+      "sha256": "a25a709fcb46069959656d9e2a373f6a4611f7877fe78755f7601c652f0c6c07",
+      "size": 1960288,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/RACE/latest/esp32-p4.bin",
+      "source_filename": "esp32-p4.bin",
+      "offset": "0x10000",
+      "label": "Waveshare ESP32-P4-WIFI6-Touch-LCD-7B 1024x600",
+      "env": "opf_dash"
+    }
+  ],
+  "app_offset": "0x10000",
+  "source": {
+    "kind": "release",
+    "repository": "opelpanfan/OPF-RACE-DASH",
+    "ref": "master-grok",
+    "sha": "945821e7a897883c6dadda80adae347ebf344605",
+    "tag": "v0.1.16",
+    "fw_build": "945821e",
+    "fw_version": "0.1.16+VC17",
+    "version_code": 17
+  },
+  "release_notes": "# RACE v0.1.16\n\nVersion 0.1.16+VC17, commit 945821e7a897883c6dadda80adae347ebf344605 (master-grok, tag v0.1.16).\n\nOPF Race Dash for the Waveshare ESP32-P4-WIFI6-Touch-LCD-7B (1024x600). This is the first RACE package on the firmware feed.\n\n## This release\n\n- Tick-driven screen refresh after each CAN update, aiming for a steady 50 FPS\n- Faster LVGL refresh (10 ms) and shorter pause before a page slide\n- Partial digit invalidation so only changed digits are redrawn\n- USB `perf` command for FPS and CPU measurements\n- Page-name badge for 10 seconds after a page change (from 0.1.15)\n- Pages on the image: JDM Fuji, UC-10 Retro, Rothmans\n\n## Flash (esptool, USB, ESP32-P4)\n\nRecommended: app only, at `0x10000`. This keeps NVS, otadata and LittleFS (`/pages`, `/canmap`, `/assets`).\n\n    esptool --chip esp32p4 --baud 921600 write-flash 0x10000 esp32-p4.bin\n\nOTA (HTTP `/fw` or BLE `ota_*`) also takes the app image only.\n\nFull flash (only if the bootloader or partition table must change). The P4 bootloader is at `0x2000`, not `0x0`:\n\n    esptool --chip esp32p4 --baud 921600 write-flash \\\n      0x2000 bootloader.bin \\\n      0x8000 partitions.bin \\\n      0xe000 boot_app0.bin \\\n      0x10000 firmware.bin\n\nA LittleFS image may be written at `0x1010000`. That erases every page, canmap and asset on the device. Prefer USB `put` / `get` / `ls` for individual files.\n\nThe ESP32-C6 coprocessor is never flashed from this package.\n\nThe firmware itself reports `fw_version=0.1.16` (no `+VCnn` and no `version_code` in the image). Feed metadata is `0.1.16+VC17` / `version_code` 17.\n",
+  "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/RACE/latest/RELEASE_NOTES.md"
+}
