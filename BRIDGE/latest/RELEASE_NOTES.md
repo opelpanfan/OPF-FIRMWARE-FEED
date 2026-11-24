@@ -1,8 +1,8 @@
 # BRIDGE v0.0.3
 
-Firmware **0.0.3+VC43** (`ad9dc39`, `version_code` 43). Tag `v0.0.3` on `master-grok`, 20 Nov 2026 (Europe/Vilnius).
+Firmware **0.0.3+VC47** (`12551a4`, `version_code` 47). Tag `v0.0.3` on `master-grok`, retagged 24 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC43 (`ad9dc39`).
 
-v0.0.3 moves all device settings to BLE (`cfg_schema` / `cfg_get` / `cfg_set`), leaves the web UI as a dashboard plus a read-only Status page, removes inverter auto-detect, and hardens the firmware for 24/7 operation.
+v0.0.3 moves all device settings to BLE (`cfg_schema` / `cfg_get` / `cfg_set`), leaves the web UI as a dashboard plus a read-only Status page, removes inverter auto-detect, hardens the firmware for 24/7 operation, adds BLE PIN pairing and a crash summary, and lists Sungrow SH6.0RS.
 
 ## Changes since v0.0.2 (0.0.2+VC34)
 
@@ -15,14 +15,19 @@ v0.0.3 moves all device settings to BLE (`cfg_schema` / `cfg_get` / `cfg_set`), 
 - **VC41:** `ap_hidden` SoftAP setting (NVS, default 0), reported on `/diag` and `/health`, cleared by factory reset.
 - **VC42:** unused dashboard WebSocket and dead web JS removed. MQTT TX buffer raised to 12288 so the ~8.3 KB heartbeat and diag publish. Health and diag buffers are reused, BLE notifies are paced, and `lora_rx` is on the task watchdog.
 - **VC43:** the Storage and Battery confirm popup is replaced by an apply review page. Back (button, Esc, browser back) returns to the previous tab and keeps edits; Apply posts the same `/api/profile-command` batch.
+- **VC44:** `/diag` reports `cdump_present` and, when a panic image is stored, a compact `cdump` summary (reason, cause, task, pc, backtrace, fw, ELF sha; max 288 B). Size map in `docs/SIZE_VC44.md`, LVGL trimmed, unused features compiled out on ESP32.
+- **VC45:** BLE SMP passkey pairing with bonding (MITM, display-only, static passkey); TX/RX need an encrypted, authenticated link. New BLE keys `ble_auth` (default 1) and `ble_pin` (4-6 digits), `ble_pin_reset` over BLE (`confirm=1`) and USB, `auth:` command; `/diag` adds `ble_pin_set`, `ble_auth`, `ble_bonds`, `ble_encrypted`. Factory reset restores the default PIN and clears bonds. See `docs/BLE_PAIRING.md`.
+- **VC46:** default BLE PIN is **123456**. A stored 1234 is removed once at boot and bonds are cleared.
+- **VC47:** Sungrow SH6.0RS (profile `20`) is listed on the BLE `profile` schema (`0,1,10,11,20`, locked by a host test) and in the manuals; on profile 20 the Dashboard shows import / export / idle (max 5000 W), max export and max charge / discharge current. Review notes in `docs/SUNGROW_SH6RS.md`. No web profile picker (model selection stays in the Flasher and BLE app).
 
 Remaining write-capable web endpoints: `POST /api/profile-command` (Dashboard controls), `POST /api/ota-preflight`, `POST /api/ota-url` and ElegantOTA `/update`. Deye register 80 remains read-only. AUTOMATIC_MODE is unchanged.
 
 ## Hardware validation
 
-- Atom S3R `.110` runs VC43 (`ad9dc39`, boot 574, MQTT 3/3, P1 OK, `inv_writes`=1, Deye HV confirmed). Waveshare (ATOM_S3) and T-CAN485 (ESP32) images are built for the feed; T-CAN485 site flash is held until on-site rollback is possible.
+- Atom S3R `.110` runs VC47 (`12551a4`, boot 577, 35 h+ uptime with no unexpected reboot, MQTT 3/3 SUBACK-confirmed, P1 OK, `inv_writes`=1, Deye HV). VC44/VC46/VC47 soak since 20 Nov: free heap 88-97 KB, no new panic. Waveshare (ATOM_S3) and T-CAN485 (ESP32) images are built for the feed; T-CAN485 site flash is held until on-site rollback is possible.
+- Sungrow SH6.0RS is code-reviewed and host-tested only; no Sungrow unit has been tested.
 - T-CAN485 has no BLE and no serial commands, so its Wi-Fi/MQTT keys stay at the NVS values or the one-time build-flag seed.
 
 ## Build
 
-Built locally with Arduino-ESP32 3.20016 (espressif32@6.7.0), without `platformio.local.ini` secrets. GitHub Actions artifact storage is full at the account level, so tag CI is expected to fail at artifact upload and the FEED was published locally with `scripts/publish_firmware_feed.py`.
+Built locally from a clean `12551a4` worktree with Arduino-ESP32 3.20016 (espressif32@6.7.0), without `platformio.local.ini` secrets, and published to the FEED with `scripts/publish_firmware_feed.py`.
