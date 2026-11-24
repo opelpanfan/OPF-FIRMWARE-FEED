@@ -138,7 +138,13 @@ class ReadmeSummaryTests(unittest.TestCase):
             self.assertIn(f"### {product}", section)
         self.assertIn("#### `v0.0.2`", section)
         self.assertIn("#### `latest`", section)
-        self.assertNotIn("#### `v0.0.1`", section)
+        # P1 v0.0.1 (0.0.1+VC10) was re-published on 2026-11-24 at Benas's request;
+        # the other products' v0.0.1 folders stay removed.
+        products = {part.split("\n", 1)[0]: part for part in section.split("\n### ")[1:]}
+        self.assertIn("#### `v0.0.1`", products["P1"])
+        for name, body in products.items():
+            if name != "P1":
+                self.assertNotIn("#### `v0.0.1`", body, name)
         self.assertIn("- Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes", section)
         self.assertIn("`OPF_WS` yes", section)
         self.assertIn("Full flash is required.", section)

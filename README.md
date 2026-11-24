@@ -274,6 +274,21 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 Source repository: `opelpanfan/OPF-P1`
 
+#### `v0.0.1`
+
+- Date: 2026-11-19
+- Source commit: `f8e1f424e00651a51f0815848465564cd467502d` (opelpanfan/OPF-P1)
+- Files:
+  - `RAK3172_RX.bin` (69836 bytes, 68.2 KiB)
+  - `RAK3172_TX.bin` (92508 bytes, 90.3 KiB)
+  - `RELEASE_NOTES.md` (1194 bytes, 1.2 KiB)
+  - `SHA256SUMS` (162 bytes)
+  - `index.json` (2960 bytes, 2.9 KiB)
+- Summary:
+  - **Frequency is 869.525 MHz (EU868 g3).** This is fw10: firmware **0.0.1+VC10** (`f8e1f42`, `version_code` 10). Tag `v0.0.1` on `master-grok`. Flash both images from this release together. A Bridge DTU still tuned to 868.000 MHz will not hear these frames.
+  - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm.
+  - Rolling 1-hour transmit cap stays under 10% duty, including command ACKs.
+
 #### `v0.0.2`
 
 - Date: 2026-11-24
