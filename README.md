@@ -156,7 +156,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 
 #### `latest`
 
-- Date: 2026-11-20
+- Date: 2026-11-24
 - Source commit: `bfb4db446eaa1ab00fa78501e058548eb612e942` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
   - `OPF_ATOM_S3.bin` (1855088 bytes, 1.77 MiB)
