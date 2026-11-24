@@ -353,7 +353,7 @@ Source repository: `opelpanfan/OPF-FLASHER`
 
 #### `v0.0.3`
 
-- Date: unknown
+- Date: 2026-11-24
 - Source commit: `f361e2220a27795cc91073dd92f63e2e5b3c5290` (opelpanfan/OPF-FLASHER)
 - Files:
   - `OPF-FLASHER-linux-amd64.deb` (53844520 bytes, 51.35 MiB)
