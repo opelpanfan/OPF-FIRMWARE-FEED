@@ -277,28 +277,30 @@ Source repository: `opelpanfan/OPF-P1`
 #### `v0.0.2`
 
 - Date: 2026-11-20
+- Source commit: `1196aeefe2a98952b070a90ab3c41ca8371eb9ea` (opelpanfan/OPF-P1)
 - Files:
   - `RAK3172_RX.bin` (70356 bytes, 68.7 KiB)
   - `RAK3172_TX.bin` (94620 bytes, 92.4 KiB)
-  - `RELEASE_NOTES.md` (3039 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (3143 bytes, 3.1 KiB)
   - `SHA256SUMS` (162 bytes)
-  - `index.json` (4631 bytes, 4.5 KiB)
+  - `index.json` (4918 bytes, 4.8 KiB)
 - Summary:
-  - **Frequency is 869.525 MHz (EU868 g3).** This is fw16 (`0.0.2+16`, `versionCode` 16). Flash both images from this release together. The radio settings and uplink format are the same as v0.0.1.
+  - **Frequency is 869.525 MHz (EU868 g3).** This is fw16: firmware **0.0.2+VC16** (`1196aee`, `version_code` 16; the device's own version text reads `0.0.2+16`). Tag `v0.0.2` on `master-grok`. Flash both images from this release together. The radio settings and uplink format are…
   - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm. Rolling 1-hour transmit cap stays under 10% duty.
   - `P1_REQUIRE_CRC=0`. A telegram with a missing or wrong CRC is accepted only if it carries U1-3, I1-3 and import power and passes the plausibility guard. A CRC-matching telegram is accepted without that guard.
 
 #### `latest`
 
 - Date: 2026-11-20
+- Source commit: `1196aeefe2a98952b070a90ab3c41ca8371eb9ea` (opelpanfan/OPF-P1)
 - Files:
   - `RAK3172_RX.bin` (70356 bytes, 68.7 KiB)
   - `RAK3172_TX.bin` (94620 bytes, 92.4 KiB)
-  - `RELEASE_NOTES.md` (3039 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (3143 bytes, 3.1 KiB)
   - `SHA256SUMS` (162 bytes)
-  - `index.json` (4630 bytes, 4.5 KiB)
+  - `index.json` (4917 bytes, 4.8 KiB)
 - Summary:
-  - **Frequency is 869.525 MHz (EU868 g3).** This is fw16 (`0.0.2+16`, `versionCode` 16). Flash both images from this release together. The radio settings and uplink format are the same as v0.0.1.
+  - **Frequency is 869.525 MHz (EU868 g3).** This is fw16: firmware **0.0.2+VC16** (`1196aee`, `version_code` 16; the device's own version text reads `0.0.2+16`). Tag `v0.0.2` on `master-grok`. Flash both images from this release together. The radio settings and uplink format are…
   - Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm. Rolling 1-hour transmit cap stays under 10% duty.
   - `P1_REQUIRE_CRC=0`. A telegram with a missing or wrong CRC is accepted only if it carries U1-3, I1-3 and import power and passes the plausibility guard. A CRC-matching telegram is accepted without that guard.
 
