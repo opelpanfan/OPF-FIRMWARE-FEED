@@ -120,39 +120,73 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
   - SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.
 
-#### `latest`
+#### `v0.0.3`
 
-- Date: 2026-11-20
-- Source commit: `d046dd1b6bdab151b05b9eb5d880a0b0bc02bcb4` (opelpanfan/OPF-STORAGE-DASH)
+- Date: 2026-11-24
+- Source commit: `bfb4db446eaa1ab00fa78501e058548eb612e942` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1836320 bytes, 1.75 MiB)
+  - `OPF_ATOM_S3.bin` (1855088 bytes, 1.77 MiB)
   - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_ATOM_S3R.bin` (2035808 bytes, 1.94 MiB)
+  - `OPF_ATOM_S3R.bin` (2055008 bytes, 1.96 MiB)
   - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_T2CAN.bin` (1894512 bytes, 1.81 MiB)
+  - `OPF_T2CAN.bin` (1913504 bytes, 1.82 MiB)
   - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS.bin` (1881040 bytes, 1.79 MiB)
+  - `OPF_WS.bin` (1900112 bytes, 1.81 MiB)
   - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS_DASH.bin` (2570448 bytes, 2.45 MiB)
+  - `OPF_WS_DASH.bin` (2589760 bytes, 2.47 MiB)
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (1343 bytes, 1.3 KiB)
+  - `RELEASE_NOTES.md` (1859 bytes, 1.8 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (8182 bytes, 8.0 KiB)
+  - `index.json` (8709 bytes, 8.5 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
-  - Firmware tag at d046dd1 (VC63), verified on the live .158 pack.
-  - VC53: remove Status action sections and their HTTP endpoints
-  - VC54: remove Status Health and flatten Device Overview
+  - Firmware tag at bfb4db4 (VC73), overwriting the previous v0.0.3 at d046dd1 (VC63). Verified on the live .158 pack.
+  - VC65: BLE coredump_info and coredump_get
+  - VC66: BLE passkey pairing, bonding, and PIN reset
+
+#### `latest`
+
+- Date: 2026-11-20
+- Source commit: `bfb4db446eaa1ab00fa78501e058548eb612e942` (opelpanfan/OPF-STORAGE-DASH)
+- Files:
+  - `OPF_ATOM_S3.bin` (1855088 bytes, 1.77 MiB)
+  - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_ATOM_S3R.bin` (2055008 bytes, 1.96 MiB)
+  - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_T2CAN.bin` (1913504 bytes, 1.82 MiB)
+  - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS.bin` (1900112 bytes, 1.81 MiB)
+  - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS_DASH.bin` (2589760 bytes, 2.47 MiB)
+  - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (1859 bytes, 1.8 KiB)
+  - `SHA256SUMS` (1776 bytes, 1.7 KiB)
+  - `index.json` (8707 bytes, 8.5 KiB)
+- Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
+- Summary:
+  - Firmware tag at bfb4db4 (VC73), overwriting the previous v0.0.3 at d046dd1 (VC63). Verified on the live .158 pack.
+  - VC65: BLE coredump_info and coredump_get
+  - VC66: BLE passkey pairing, bonding, and PIN reset
 
 ### BRIDGE
 
@@ -186,7 +220,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.3`
 
-- Date: 2026-11-20
+- Date: 2026-11-24
 - Source commit: `12551a4c91910bb5a221f6bf2473e64677831e3b` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1925568 bytes, 1.84 MiB)
@@ -212,7 +246,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `latest`
 
-- Date: 2026-11-20
+- Date: 2026-11-24
 - Source commit: `12551a4c91910bb5a221f6bf2473e64677831e3b` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1925568 bytes, 1.84 MiB)
