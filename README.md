@@ -111,14 +111,14 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (981 bytes)
+  - `RELEASE_NOTES.md` (1256 bytes, 1.2 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (7832 bytes, 7.6 KiB)
+  - `index.json` (8165 bytes, 8.0 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
+  - Firmware **0.0.2+VC48** (`version_code` 48). Tag `v0.0.2` points at `970de34`, where VERSION is `0.0.2+48`. The FEED binaries were built from `e4fd3b3` (the v0.0.2 feed publish). `+48` maps to `VC48` because VCnn continues the same counter (VC53 came right after 0.0.3+52).
   - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
   - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
-  - SoC taper: charge and discharge limits ramp from 5 A at the low and high SoC ends and near cell voltage limits.
 
 #### `v0.0.3`
 
@@ -145,12 +145,12 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (1859 bytes, 1.8 KiB)
+  - `RELEASE_NOTES.md` (1950 bytes, 1.9 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (8709 bytes, 8.5 KiB)
+  - `index.json` (8856 bytes, 8.6 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
-  - Firmware tag at bfb4db4 (VC73), overwriting the previous v0.0.3 at d046dd1 (VC63). Verified on the live .158 pack.
+  - Firmware **0.0.3+VC73** (`bfb4db4`, `version_code` 73). Tag `v0.0.3` on `master-grok`, published 24 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC63 (`d046dd1`). Verified on the live .158 pack.
   - VC65: BLE coredump_info and coredump_get
   - VC66: BLE passkey pairing, bonding, and PIN reset
 
@@ -179,12 +179,12 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (1859 bytes, 1.8 KiB)
+  - `RELEASE_NOTES.md` (1950 bytes, 1.9 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (8707 bytes, 8.5 KiB)
+  - `index.json` (8854 bytes, 8.6 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
-  - Firmware tag at bfb4db4 (VC73), overwriting the previous v0.0.3 at d046dd1 (VC63). Verified on the live .158 pack.
+  - Firmware **0.0.3+VC73** (`bfb4db4`, `version_code` 73). Tag `v0.0.3` on `master-grok`, published 24 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC63 (`d046dd1`). Verified on the live .158 pack.
   - VC65: BLE coredump_info and coredump_get
   - VC66: BLE passkey pairing, bonding, and PIN reset
 

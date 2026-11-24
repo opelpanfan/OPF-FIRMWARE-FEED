@@ -1,6 +1,6 @@
 # BMS v0.0.3
 
-Firmware tag at bfb4db4 (VC73), overwriting the previous v0.0.3 at d046dd1 (VC63). Verified on the live .158 pack.
+Firmware **0.0.3+VC73** (`bfb4db4`, `version_code` 73). Tag `v0.0.3` on `master-grok`, published 24 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC63 (`d046dd1`). Verified on the live .158 pack.
 
 ## VC65–VC73
 
