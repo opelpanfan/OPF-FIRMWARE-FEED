@@ -276,7 +276,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `v0.0.2`
 
-- Date: 2026-11-20
+- Date: 2026-11-24
 - Source commit: `1196aeefe2a98952b070a90ab3c41ca8371eb9ea` (opelpanfan/OPF-P1)
 - Files:
   - `RAK3172_RX.bin` (70356 bytes, 68.7 KiB)
@@ -291,7 +291,7 @@ Source repository: `opelpanfan/OPF-P1`
 
 #### `latest`
 
-- Date: 2026-11-20
+- Date: 2026-11-24
 - Source commit: `1196aeefe2a98952b070a90ab3c41ca8371eb9ea` (opelpanfan/OPF-P1)
 - Files:
   - `RAK3172_RX.bin` (70356 bytes, 68.7 KiB)
