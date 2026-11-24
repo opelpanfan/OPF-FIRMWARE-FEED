@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "product": "FLASHER",
+  "version": "v0.0.2",
+  "semver": "0.0.2",
+  "channel": "latest",
+  "folder": "latest",
+  "files": {
+    "OPF-FLASHER-linux-amd64": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/OPF-FLASHER-linux-amd64.deb",
+    "OPF-FLASHER-win-x64": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/OPF-FLASHER-win-x64.exe"
+  },
+  "sha256": {
+    "OPF-FLASHER-linux-amd64": "954ad2ee823f74d555a65f091d018e8f89a9eac720173192dd772376957e005c",
+    "OPF-FLASHER-win-x64": "d0b56507b2bbdeb1136531605885c761b3d9d7599fc843c79a424dbe3d5d79ee"
+  },
+  "artifacts": [
+    {
+      "board": "OPF-FLASHER-linux-amd64",
+      "filename": "OPF-FLASHER-linux-amd64.deb",
+      "sha256": "954ad2ee823f74d555a65f091d018e8f89a9eac720173192dd772376957e005c",
+      "size": 53819944,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/OPF-FLASHER-linux-amd64.deb",
+      "source_filename": "OPF-FLASHER-linux-amd64.deb"
+    },
+    {
+      "board": "OPF-FLASHER-win-x64",
+      "filename": "OPF-FLASHER-win-x64.exe",
+      "sha256": "d0b56507b2bbdeb1136531605885c761b3d9d7599fc843c79a424dbe3d5d79ee",
+      "size": 87030472,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/OPF-FLASHER-win-x64.exe",
+      "source_filename": "OPF-FLASHER-win-x64.exe"
+    }
+  ],
+  "source": {
+    "kind": "local",
+    "repository": "opelpanfan/OPF-FLASHER",
+    "ref": "refs/heads/master-grok",
+    "sha": "a61c1576602429fbd1e55fe00e583cef53ea4864"
+  },
+  "release_notes": "# OPF-FLASHER v0.0.2 (VC42)\n\nBuilt on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `a61c1576602429fbd1e55fe00e583cef53ea4864` on `master-grok` (version 0.0.2+VC42).\n\n- **Linux:** `OPF-FLASHER-linux-amd64.deb` \u2014 amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.\n- **Windows:** `OPF-FLASHER-win-x64.exe` \u2014 portable self-extracting package (Qt 6.8.3, llvm-mingw). Running it unpacks `OPF-FLASHER-qt-win64` next to the exe and launches `OPF-FLASHER.exe`. esptool and OpenOCD are bundled.\n\nmacOS is not included.\n\nThis package includes the VC42 MQTT Telemetry work and the earlier VC33\u2013VC41 desktop fixes.\n",
+  "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/RELEASE_NOTES.md"
+}

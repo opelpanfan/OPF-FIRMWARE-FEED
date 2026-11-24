@@ -336,7 +336,35 @@ No version folders.
 
 Source repository: `opelpanfan/OPF-FLASHER`
 
-No version folders.
+#### `v0.0.2`
+
+- Date: 2026-11-24
+- Source commit: `a61c1576602429fbd1e55fe00e583cef53ea4864` (opelpanfan/OPF-FLASHER)
+- Files:
+  - `OPF-FLASHER-linux-amd64.deb` (53819944 bytes, 51.33 MiB)
+  - `OPF-FLASHER-win-x64.exe` (87030472 bytes, 83.00 MiB)
+  - `RELEASE_NOTES.md` (761 bytes)
+  - `SHA256SUMS` (184 bytes)
+  - `index.json` (2575 bytes, 2.5 KiB)
+- Summary:
+  - Built on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `a61c1576602429fbd1e55fe00e583cef53ea4864` on `master-grok` (version 0.0.2+VC42).
+  - **Linux:** `OPF-FLASHER-linux-amd64.deb` — amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.
+  - **Windows:** `OPF-FLASHER-win-x64.exe` — portable self-extracting package (Qt 6.8.3, llvm-mingw). Running it unpacks `OPF-FLASHER-qt-win64` next to the exe and launches `OPF-FLASHER.exe`. esptool and OpenOCD are bundled.
+
+#### `latest`
+
+- Date: 2026-11-24
+- Source commit: `a61c1576602429fbd1e55fe00e583cef53ea4864` (opelpanfan/OPF-FLASHER)
+- Files:
+  - `OPF-FLASHER-linux-amd64.deb` (53819944 bytes, 51.33 MiB)
+  - `OPF-FLASHER-win-x64.exe` (87030472 bytes, 83.00 MiB)
+  - `RELEASE_NOTES.md` (761 bytes)
+  - `SHA256SUMS` (184 bytes)
+  - `index.json` (2574 bytes, 2.5 KiB)
+- Summary:
+  - Built on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `a61c1576602429fbd1e55fe00e583cef53ea4864` on `master-grok` (version 0.0.2+VC42).
+  - **Linux:** `OPF-FLASHER-linux-amd64.deb` — amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.
+  - **Windows:** `OPF-FLASHER-win-x64.exe` — portable self-extracting package (Qt 6.8.3, llvm-mingw). Running it unpacks `OPF-FLASHER-qt-win64` next to the exe and launches `OPF-FLASHER.exe`. esptool and OpenOCD are bundled.
 
 ### SCREEN
 
