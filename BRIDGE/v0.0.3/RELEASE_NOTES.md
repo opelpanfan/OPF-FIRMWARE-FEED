@@ -1,6 +1,6 @@
 # BRIDGE v0.0.3
 
-Firmware **0.0.3+VC47** (`12551a4`, `version_code` 47). Tag `v0.0.3` on `master-grok`, retagged 24 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC43 (`ad9dc39`).
+Firmware **0.0.3+VC48** (`8af90a2`, `version_code` 48). Tag `v0.0.3` on `master-grok`, retagged 24 Nov 2026 (Europe/Vilnius); earlier v0.0.3 tags were 0.0.3+VC47 (`12551a4`) and 0.0.3+VC43 (`ad9dc39`).
 
 v0.0.3 moves all device settings to BLE (`cfg_schema` / `cfg_get` / `cfg_set`), leaves the web UI as a dashboard plus a read-only Status page, removes inverter auto-detect, hardens the firmware for 24/7 operation, adds BLE PIN pairing and a crash summary, and lists Sungrow SH6.0RS.
 
@@ -19,15 +19,16 @@ v0.0.3 moves all device settings to BLE (`cfg_schema` / `cfg_get` / `cfg_set`), 
 - **VC45:** BLE SMP passkey pairing with bonding (MITM, display-only, static passkey); TX/RX need an encrypted, authenticated link. New BLE keys `ble_auth` (default 1) and `ble_pin` (4-6 digits), `ble_pin_reset` over BLE (`confirm=1`) and USB, `auth:` command; `/diag` adds `ble_pin_set`, `ble_auth`, `ble_bonds`, `ble_encrypted`. Factory reset restores the default PIN and clears bonds. See `docs/BLE_PAIRING.md`.
 - **VC46:** default BLE PIN is **123456**. A stored 1234 is removed once at boot and bonds are cleared.
 - **VC47:** Sungrow SH6.0RS (profile `20`) is listed on the BLE `profile` schema (`0,1,10,11,20`, locked by a host test) and in the manuals; on profile 20 the Dashboard shows import / export / idle (max 5000 W), max export and max charge / discharge current. Review notes in `docs/SUNGROW_SH6RS.md`. No web profile picker (model selection stays in the Flasher and BLE app).
+- **VC48:** the Atom S3R LCD page 7/7 (SETUP) shows the running firmware version and build (`FW 0.0.3+VC48`, `BLD 8af90a2`), from the same values as `/diag` and `/health`; the redundant ACTIVE SETUP heading is removed to make room.
 
 Remaining write-capable web endpoints: `POST /api/profile-command` (Dashboard controls), `POST /api/ota-preflight`, `POST /api/ota-url` and ElegantOTA `/update`. Deye register 80 remains read-only. AUTOMATIC_MODE is unchanged.
 
 ## Hardware validation
 
-- Atom S3R `.110` runs VC47 (`12551a4`, boot 577, 35 h+ uptime with no unexpected reboot, MQTT 3/3 SUBACK-confirmed, P1 OK, `inv_writes`=1, Deye HV). VC44/VC46/VC47 soak since 20 Nov: free heap 88-97 KB, no new panic. Waveshare (ATOM_S3) and T-CAN485 (ESP32) images are built for the feed; T-CAN485 site flash is held until on-site rollback is possible.
+- Atom S3R `.110` (Deye HV) and `.236` (DTU base) run VC48 (`8af90a2`), URL OTA marked_valid, MQTT 3/3, P1 OK. VC44/VC46/VC47 soak on `.110` since 20 Nov: free heap 88-97 KB, no new panic. Waveshare (ATOM_S3) and T-CAN485 (ESP32) images are built for the feed; T-CAN485 site flash is held until on-site rollback is possible.
 - Sungrow SH6.0RS is code-reviewed and host-tested only; no Sungrow unit has been tested.
 - T-CAN485 has no BLE and no serial commands, so its Wi-Fi/MQTT keys stay at the NVS values or the one-time build-flag seed.
 
 ## Build
 
-Built locally from a clean `12551a4` worktree with Arduino-ESP32 3.20016 (espressif32@6.7.0), without `platformio.local.ini` secrets, and published to the FEED with `scripts/publish_firmware_feed.py`.
+Built locally from a clean `8af90a2` worktree with Arduino-ESP32 3.20016 (espressif32@6.7.0), without `platformio.local.ini` secrets, and published to the FEED with `scripts/publish_firmware_feed.py`.

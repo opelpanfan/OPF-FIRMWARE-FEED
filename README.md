@@ -222,13 +222,13 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 #### `v0.0.3`
 
 - Date: 2026-11-24
-- Source commit: `12551a4c91910bb5a221f6bf2473e64677831e3b` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `8af90a2a82f6b4339220db4fe1e592c07b1c7d1f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1925568 bytes, 1.84 MiB)
+  - `ATOM_S3.bin` (1925824 bytes, 1.84 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (1925568 bytes, 1.84 MiB)
+  - `ATOM_S3_R.bin` (1925824 bytes, 1.84 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
@@ -236,25 +236,25 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (4727 bytes, 4.6 KiB)
+  - `RELEASE_NOTES.md` (4959 bytes, 4.8 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (8971 bytes, 8.8 KiB)
+  - `index.json` (9204 bytes, 9.0 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
-  - Firmware **0.0.3+VC47** (`12551a4`, `version_code` 47). Tag `v0.0.3` on `master-grok`, retagged 24 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC43 (`ad9dc39`).
+  - Firmware **0.0.3+VC48** (`8af90a2`, `version_code` 48). Tag `v0.0.3` on `master-grok`, retagged 24 Nov 2026 (Europe/Vilnius); earlier v0.0.3 tags were 0.0.3+VC47 (`12551a4`) and 0.0.3+VC43 (`ad9dc39`).
   - v0.0.3 moves all device settings to BLE (`cfg_schema` / `cfg_get` / `cfg_set`), leaves the web UI as a dashboard plus a read-only Status page, removes inverter auto-detect, hardens the firmware for 24/7 operation, adds BLE PIN pairing and a crash summary, and lists Sungrow…
   - **VC35:** web settings editors removed. Inverter and LoRa tabs are gone and Status-page actions (RS-485 tests, restarts, factory reset, SoftAP open/close, telemetry resume, smartmeter capture) move to BLE (`reboot`, `mqtt_restart`, `factory_reset`, `ap_open` / `ap_close`,…
 
 #### `latest`
 
 - Date: 2026-11-24
-- Source commit: `12551a4c91910bb5a221f6bf2473e64677831e3b` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
+- Source commit: `8af90a2a82f6b4339220db4fe1e592c07b1c7d1f` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
-  - `ATOM_S3.bin` (1925568 bytes, 1.84 MiB)
+  - `ATOM_S3.bin` (1925824 bytes, 1.84 MiB)
   - `ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `ATOM_S3_R.bin` (1925568 bytes, 1.84 MiB)
+  - `ATOM_S3_R.bin` (1925824 bytes, 1.84 MiB)
   - `ATOM_S3_R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ATOM_S3_R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `ATOM_S3_R.partitions.bin` (3072 bytes, 3.0 KiB)
@@ -262,12 +262,12 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
   - `ESP32.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `ESP32.bootloader.bin` (18992 bytes, 18.5 KiB)
   - `ESP32.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (4727 bytes, 4.6 KiB)
+  - `RELEASE_NOTES.md` (4959 bytes, 4.8 KiB)
   - `SHA256SUMS` (1032 bytes, 1.0 KiB)
-  - `index.json` (8970 bytes, 8.8 KiB)
+  - `index.json` (9203 bytes, 9.0 KiB)
 - Full-install files: `ATOM_S3` yes, `ATOM_S3_R` yes, `ESP32` yes
 - Summary:
-  - Firmware **0.0.3+VC47** (`12551a4`, `version_code` 47). Tag `v0.0.3` on `master-grok`, retagged 24 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC43 (`ad9dc39`).
+  - Firmware **0.0.3+VC48** (`8af90a2`, `version_code` 48). Tag `v0.0.3` on `master-grok`, retagged 24 Nov 2026 (Europe/Vilnius); earlier v0.0.3 tags were 0.0.3+VC47 (`12551a4`) and 0.0.3+VC43 (`ad9dc39`).
   - v0.0.3 moves all device settings to BLE (`cfg_schema` / `cfg_get` / `cfg_set`), leaves the web UI as a dashboard plus a read-only Status page, removes inverter auto-detect, hardens the firmware for 24/7 operation, adds BLE PIN pairing and a crash summary, and lists Sungrow…
   - **VC35:** web settings editors removed. Inverter and LoRa tabs are gone and Status-page actions (RS-485 tests, restarts, factory reset, SoftAP open/close, telemetry resume, smartmeter capture) move to BLE (`reboot`, `mqtt_restart`, `factory_reset`, `ap_open` / `ap_close`,…
 
