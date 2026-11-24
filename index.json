@@ -362,13 +362,13 @@
     "FLASHER": {
       "product": "FLASHER",
       "available": true,
-      "semver": "0.0.2",
-      "version": "v0.0.2",
-      "matched_folder": "v0.0.2",
+      "semver": "0.0.3",
+      "version": "v0.0.3",
+      "matched_folder": "v0.0.3",
       "matches_folders": [
-        "v0.0.2"
+        "v0.0.3"
       ],
-      "highest_semver_folder": "v0.0.2",
+      "highest_semver_folder": "v0.0.3",
       "highest_semver_is_latest": true,
       "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/index.json",
       "boards": [
@@ -376,28 +376,28 @@
         "OPF-FLASHER-win-x64"
       ],
       "sha256": {
-        "OPF-FLASHER-linux-amd64": "954ad2ee823f74d555a65f091d018e8f89a9eac720173192dd772376957e005c",
-        "OPF-FLASHER-win-x64": "d0b56507b2bbdeb1136531605885c761b3d9d7599fc843c79a424dbe3d5d79ee"
+        "OPF-FLASHER-linux-amd64": "011c28f411556fe14115793e84c3d4c9aed7c7df630e4ed654a1499451f38e7e",
+        "OPF-FLASHER-win-x64": "29139989bb3fd49b820b0cbece715cf05f8c3d66b68f4a4c9f120e987909298c"
       },
       "artifacts": [
         {
           "board": "OPF-FLASHER-linux-amd64",
           "filename": "OPF-FLASHER-linux-amd64.deb",
-          "sha256": "954ad2ee823f74d555a65f091d018e8f89a9eac720173192dd772376957e005c",
-          "size": 53819944,
+          "sha256": "011c28f411556fe14115793e84c3d4c9aed7c7df630e4ed654a1499451f38e7e",
+          "size": 53844520,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/OPF-FLASHER-linux-amd64.deb",
           "source_filename": "OPF-FLASHER-linux-amd64.deb"
         },
         {
           "board": "OPF-FLASHER-win-x64",
           "filename": "OPF-FLASHER-win-x64.exe",
-          "sha256": "d0b56507b2bbdeb1136531605885c761b3d9d7599fc843c79a424dbe3d5d79ee",
-          "size": 87030472,
+          "sha256": "29139989bb3fd49b820b0cbece715cf05f8c3d66b68f4a4c9f120e987909298c",
+          "size": 32339990,
           "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/OPF-FLASHER-win-x64.exe",
           "source_filename": "OPF-FLASHER-win-x64.exe"
         }
       ],
-      "release_notes": "# OPF-FLASHER v0.0.2 (VC42)\n\nBuilt on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `a61c1576602429fbd1e55fe00e583cef53ea4864` on `master-grok` (version 0.0.2+VC42).\n\n- **Linux:** `OPF-FLASHER-linux-amd64.deb` \u2014 amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.\n- **Windows:** `OPF-FLASHER-win-x64.exe` \u2014 portable self-extracting package (Qt 6.8.3, llvm-mingw). Running it unpacks `OPF-FLASHER-qt-win64` next to the exe and launches `OPF-FLASHER.exe`. esptool and OpenOCD are bundled.\n\nmacOS is not included.\n\nThis package includes the VC42 MQTT Telemetry work and the earlier VC33\u2013VC41 desktop fixes.\n",
+      "release_notes": "# OPF-FLASHER v0.0.3 (package 0.0.2+VC44)\n\nBuilt on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `f361e2220a27795cc91073dd92f63e2e5b3c5290` on `master-grok` (app version 0.0.2+VC44).\n\nThis feed folder is `FLASHER/v0.0.3` because `FLASHER/v0.0.2` is the immutable VC42 package and must not be replaced. The app semver is still 0.0.2.\n\n- **Linux:** `OPF-FLASHER-linux-amd64.deb` \u2014 amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.\n- **Windows:** `OPF-FLASHER-win-x64.exe` \u2014 portable 7-Zip LZMA2 self-extractor (Qt 6.8.3, official MSVC kit). Run it, extract the `OPF-FLASHER-qt-win64` folder, and start `OPF-FLASHER.exe` from that folder. Leave the Qt DLLs, the MSVC runtime, plugin folders, and `tools/` next to the exe. esptool 5.5.0 and xPack OpenOCD 0.12.0-7 are bundled as Windows binaries.\n\nWhat changed since the v0.0.2 (VC42) feed package:\n\n- The main window is freely resizable (minimum 320\u00d7200) and the layout reflows at narrow widths (header, tabs, and page content).\n- Windows Bluetooth uses the WinRT backend. The earlier MinGW package shipped a dummy backend, so no adapter was found.\n- MQTT username (default `opf_api`) and password are set in Settings or on first Connect, stored per user. They are not baked into the installer.\n- The Windows package is a 7-Zip LZMA2 SFX so every feed file stays under GitHub's 100 MB limit.\n\nmacOS is not included.\n",
       "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/RELEASE_NOTES.md"
     },
     "SCREEN": {
@@ -1469,13 +1469,13 @@
       "latest": {
         "product": "FLASHER",
         "available": true,
-        "semver": "0.0.2",
-        "version": "v0.0.2",
-        "matched_folder": "v0.0.2",
+        "semver": "0.0.3",
+        "version": "v0.0.3",
+        "matched_folder": "v0.0.3",
         "matches_folders": [
-          "v0.0.2"
+          "v0.0.3"
         ],
-        "highest_semver_folder": "v0.0.2",
+        "highest_semver_folder": "v0.0.3",
         "highest_semver_is_latest": true,
         "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/index.json",
         "boards": [
@@ -1483,31 +1483,66 @@
           "OPF-FLASHER-win-x64"
         ],
         "sha256": {
-          "OPF-FLASHER-linux-amd64": "954ad2ee823f74d555a65f091d018e8f89a9eac720173192dd772376957e005c",
-          "OPF-FLASHER-win-x64": "d0b56507b2bbdeb1136531605885c761b3d9d7599fc843c79a424dbe3d5d79ee"
+          "OPF-FLASHER-linux-amd64": "011c28f411556fe14115793e84c3d4c9aed7c7df630e4ed654a1499451f38e7e",
+          "OPF-FLASHER-win-x64": "29139989bb3fd49b820b0cbece715cf05f8c3d66b68f4a4c9f120e987909298c"
         },
         "artifacts": [
           {
             "board": "OPF-FLASHER-linux-amd64",
             "filename": "OPF-FLASHER-linux-amd64.deb",
-            "sha256": "954ad2ee823f74d555a65f091d018e8f89a9eac720173192dd772376957e005c",
-            "size": 53819944,
+            "sha256": "011c28f411556fe14115793e84c3d4c9aed7c7df630e4ed654a1499451f38e7e",
+            "size": 53844520,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/OPF-FLASHER-linux-amd64.deb",
             "source_filename": "OPF-FLASHER-linux-amd64.deb"
           },
           {
             "board": "OPF-FLASHER-win-x64",
             "filename": "OPF-FLASHER-win-x64.exe",
-            "sha256": "d0b56507b2bbdeb1136531605885c761b3d9d7599fc843c79a424dbe3d5d79ee",
-            "size": 87030472,
+            "sha256": "29139989bb3fd49b820b0cbece715cf05f8c3d66b68f4a4c9f120e987909298c",
+            "size": 32339990,
             "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/OPF-FLASHER-win-x64.exe",
             "source_filename": "OPF-FLASHER-win-x64.exe"
           }
         ],
-        "release_notes": "# OPF-FLASHER v0.0.2 (VC42)\n\nBuilt on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `a61c1576602429fbd1e55fe00e583cef53ea4864` on `master-grok` (version 0.0.2+VC42).\n\n- **Linux:** `OPF-FLASHER-linux-amd64.deb` \u2014 amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.\n- **Windows:** `OPF-FLASHER-win-x64.exe` \u2014 portable self-extracting package (Qt 6.8.3, llvm-mingw). Running it unpacks `OPF-FLASHER-qt-win64` next to the exe and launches `OPF-FLASHER.exe`. esptool and OpenOCD are bundled.\n\nmacOS is not included.\n\nThis package includes the VC42 MQTT Telemetry work and the earlier VC33\u2013VC41 desktop fixes.\n",
+        "release_notes": "# OPF-FLASHER v0.0.3 (package 0.0.2+VC44)\n\nBuilt on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `f361e2220a27795cc91073dd92f63e2e5b3c5290` on `master-grok` (app version 0.0.2+VC44).\n\nThis feed folder is `FLASHER/v0.0.3` because `FLASHER/v0.0.2` is the immutable VC42 package and must not be replaced. The app semver is still 0.0.2.\n\n- **Linux:** `OPF-FLASHER-linux-amd64.deb` \u2014 amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.\n- **Windows:** `OPF-FLASHER-win-x64.exe` \u2014 portable 7-Zip LZMA2 self-extractor (Qt 6.8.3, official MSVC kit). Run it, extract the `OPF-FLASHER-qt-win64` folder, and start `OPF-FLASHER.exe` from that folder. Leave the Qt DLLs, the MSVC runtime, plugin folders, and `tools/` next to the exe. esptool 5.5.0 and xPack OpenOCD 0.12.0-7 are bundled as Windows binaries.\n\nWhat changed since the v0.0.2 (VC42) feed package:\n\n- The main window is freely resizable (minimum 320\u00d7200) and the layout reflows at narrow widths (header, tabs, and page content).\n- Windows Bluetooth uses the WinRT backend. The earlier MinGW package shipped a dummy backend, so no adapter was found.\n- MQTT username (default `opf_api`) and password are set in Settings or on first Connect, stored per user. They are not baked into the installer.\n- The Windows package is a 7-Zip LZMA2 SFX so every feed file stays under GitHub's 100 MB limit.\n\nmacOS is not included.\n",
         "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/latest/RELEASE_NOTES.md"
       },
       "versions": [
+        {
+          "folder": "v0.0.3",
+          "semver": "0.0.3",
+          "layout": "canonical",
+          "channel": "version",
+          "boards": [
+            "OPF-FLASHER-linux-amd64",
+            "OPF-FLASHER-win-x64"
+          ],
+          "sha256": {
+            "OPF-FLASHER-linux-amd64": "011c28f411556fe14115793e84c3d4c9aed7c7df630e4ed654a1499451f38e7e",
+            "OPF-FLASHER-win-x64": "29139989bb3fd49b820b0cbece715cf05f8c3d66b68f4a4c9f120e987909298c"
+          },
+          "index_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/v0.0.3/index.json",
+          "artifacts": [
+            {
+              "board": "OPF-FLASHER-linux-amd64",
+              "filename": "OPF-FLASHER-linux-amd64.deb",
+              "sha256": "011c28f411556fe14115793e84c3d4c9aed7c7df630e4ed654a1499451f38e7e",
+              "size": 53844520,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/v0.0.3/OPF-FLASHER-linux-amd64.deb",
+              "source_filename": "OPF-FLASHER-linux-amd64.deb"
+            },
+            {
+              "board": "OPF-FLASHER-win-x64",
+              "filename": "OPF-FLASHER-win-x64.exe",
+              "sha256": "29139989bb3fd49b820b0cbece715cf05f8c3d66b68f4a4c9f120e987909298c",
+              "size": 32339990,
+              "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/v0.0.3/OPF-FLASHER-win-x64.exe",
+              "source_filename": "OPF-FLASHER-win-x64.exe"
+            }
+          ],
+          "release_notes": "# OPF-FLASHER v0.0.3 (package 0.0.2+VC44)\n\nBuilt on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `f361e2220a27795cc91073dd92f63e2e5b3c5290` on `master-grok` (app version 0.0.2+VC44).\n\nThis feed folder is `FLASHER/v0.0.3` because `FLASHER/v0.0.2` is the immutable VC42 package and must not be replaced. The app semver is still 0.0.2.\n\n- **Linux:** `OPF-FLASHER-linux-amd64.deb` \u2014 amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.\n- **Windows:** `OPF-FLASHER-win-x64.exe` \u2014 portable 7-Zip LZMA2 self-extractor (Qt 6.8.3, official MSVC kit). Run it, extract the `OPF-FLASHER-qt-win64` folder, and start `OPF-FLASHER.exe` from that folder. Leave the Qt DLLs, the MSVC runtime, plugin folders, and `tools/` next to the exe. esptool 5.5.0 and xPack OpenOCD 0.12.0-7 are bundled as Windows binaries.\n\nWhat changed since the v0.0.2 (VC42) feed package:\n\n- The main window is freely resizable (minimum 320\u00d7200) and the layout reflows at narrow widths (header, tabs, and page content).\n- Windows Bluetooth uses the WinRT backend. The earlier MinGW package shipped a dummy backend, so no adapter was found.\n- MQTT username (default `opf_api`) and password are set in Settings or on first Connect, stored per user. They are not baked into the installer.\n- The Windows package is a 7-Zip LZMA2 SFX so every feed file stays under GitHub's 100 MB limit.\n\nmacOS is not included.\n",
+          "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/FLASHER/v0.0.3/RELEASE_NOTES.md"
+        },
         {
           "folder": "v0.0.2",
           "semver": "0.0.2",

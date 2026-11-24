@@ -351,20 +351,35 @@ Source repository: `opelpanfan/OPF-FLASHER`
   - **Linux:** `OPF-FLASHER-linux-amd64.deb` — amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.
   - **Windows:** `OPF-FLASHER-win-x64.exe` — portable self-extracting package (Qt 6.8.3, llvm-mingw). Running it unpacks `OPF-FLASHER-qt-win64` next to the exe and launches `OPF-FLASHER.exe`. esptool and OpenOCD are bundled.
 
+#### `v0.0.3`
+
+- Date: unknown
+- Source commit: `f361e2220a27795cc91073dd92f63e2e5b3c5290` (opelpanfan/OPF-FLASHER)
+- Files:
+  - `OPF-FLASHER-linux-amd64.deb` (53844520 bytes, 51.35 MiB)
+  - `OPF-FLASHER-win-x64.exe` (32339990 bytes, 30.84 MiB)
+  - `RELEASE_NOTES.md` (1522 bytes, 1.5 KiB)
+  - `SHA256SUMS` (184 bytes)
+  - `index.json` (3344 bytes, 3.3 KiB)
+- Summary:
+  - Built on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `f361e2220a27795cc91073dd92f63e2e5b3c5290` on `master-grok` (app version 0.0.2+VC44).
+  - This feed folder is `FLASHER/v0.0.3` because `FLASHER/v0.0.2` is the immutable VC42 package and must not be replaced. The app semver is still 0.0.2.
+  - **Linux:** `OPF-FLASHER-linux-amd64.deb` — amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.
+
 #### `latest`
 
 - Date: 2026-11-24
-- Source commit: `a61c1576602429fbd1e55fe00e583cef53ea4864` (opelpanfan/OPF-FLASHER)
+- Source commit: `f361e2220a27795cc91073dd92f63e2e5b3c5290` (opelpanfan/OPF-FLASHER)
 - Files:
-  - `OPF-FLASHER-linux-amd64.deb` (53819944 bytes, 51.33 MiB)
-  - `OPF-FLASHER-win-x64.exe` (87030472 bytes, 83.00 MiB)
-  - `RELEASE_NOTES.md` (761 bytes)
+  - `OPF-FLASHER-linux-amd64.deb` (53844520 bytes, 51.35 MiB)
+  - `OPF-FLASHER-win-x64.exe` (32339990 bytes, 30.84 MiB)
+  - `RELEASE_NOTES.md` (1522 bytes, 1.5 KiB)
   - `SHA256SUMS` (184 bytes)
-  - `index.json` (2574 bytes, 2.5 KiB)
+  - `index.json` (3343 bytes, 3.3 KiB)
 - Summary:
-  - Built on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `a61c1576602429fbd1e55fe00e583cef53ea4864` on `master-grok` (version 0.0.2+VC42).
+  - Built on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `f361e2220a27795cc91073dd92f63e2e5b3c5290` on `master-grok` (app version 0.0.2+VC44).
+  - This feed folder is `FLASHER/v0.0.3` because `FLASHER/v0.0.2` is the immutable VC42 package and must not be replaced. The app semver is still 0.0.2.
   - **Linux:** `OPF-FLASHER-linux-amd64.deb` — amd64 package with bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package manager (`dpkg -i` or equivalent). Needs common system graphics and font libraries listed in the package Depends.
-  - **Windows:** `OPF-FLASHER-win-x64.exe` — portable self-extracting package (Qt 6.8.3, llvm-mingw). Running it unpacks `OPF-FLASHER-qt-win64` next to the exe and launches `OPF-FLASHER.exe`. esptool and OpenOCD are bundled.
 
 ### SCREEN
 
