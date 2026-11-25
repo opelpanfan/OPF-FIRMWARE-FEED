@@ -395,7 +395,7 @@ Source repository: `opelpanfan/OPF-RACE-DASH`
 
 #### `v0.0.2`
 
-- Date: unknown
+- Date: 2026-11-26
 - Source commit: `116fce71d69b5888af2814da82309f6832e799e4` (opelpanfan/OPF-RACE-DASH)
 - Files:
   - `RELEASE_NOTES.md` (1966 bytes, 1.9 KiB)
@@ -425,7 +425,7 @@ Source repository: `opelpanfan/OPF-RACE-DASH`
 
 #### `latest`
 
-- Date: 2026-11-24
+- Date: 2026-11-26
 - Source commit: `116fce71d69b5888af2814da82309f6832e799e4` (opelpanfan/OPF-RACE-DASH)
 - Files:
   - `RELEASE_NOTES.md` (1966 bytes, 1.9 KiB)
