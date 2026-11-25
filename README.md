@@ -221,7 +221,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.3`
 
-- Date: 2026-11-24
+- Date: 2026-11-26
 - Source commit: `4ddda59ff63b1535b6e2140c38f9c6514adf4f66` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1930288 bytes, 1.84 MiB)
@@ -247,7 +247,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `latest`
 
-- Date: 2026-11-24
+- Date: 2026-11-26
 - Source commit: `4ddda59ff63b1535b6e2140c38f9c6514adf4f66` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1930288 bytes, 1.84 MiB)
@@ -393,6 +393,21 @@ No version folders.
 
 Source repository: `opelpanfan/OPF-RACE-DASH`
 
+#### `v0.0.2`
+
+- Date: unknown
+- Source commit: `116fce71d69b5888af2814da82309f6832e799e4` (opelpanfan/OPF-RACE-DASH)
+- Files:
+  - `RELEASE_NOTES.md` (1966 bytes, 1.9 KiB)
+  - `SHA256SUMS` (79 bytes)
+  - `esp32-p4.bin` (2536016 bytes, 2.42 MiB)
+  - `index.json` (3301 bytes, 3.2 KiB)
+- Full-install files: `esp32-p4` no
+- Summary:
+  - Version 0.0.2+VC11, commit 116fce71d69b5888af2814da82309f6832e799e4 (master-grok, tag v0.0.2).
+  - OPF Race Dash for the Waveshare ESP32-P4-WIFI6-Touch-LCD-7B (1024x600).
+  - PDM mode & SCS200 integration (`0.0.2` VC1–VC11): Grayhill J1939 keypad support, read-only SCS200 telemetry, key 1–12 output commands, SCS analog inputs, `/pdm.json` rule evaluation with fail-safe CAN loss handling, PDM status and schema 2 setup over BLE, `pdm_scs_apply`…
+
 #### `v0.1.16`
 
 - Date: 2026-11-24
@@ -411,15 +426,15 @@ Source repository: `opelpanfan/OPF-RACE-DASH`
 #### `latest`
 
 - Date: 2026-11-24
-- Source commit: `945821e7a897883c6dadda80adae347ebf344605` (opelpanfan/OPF-RACE-DASH)
+- Source commit: `116fce71d69b5888af2814da82309f6832e799e4` (opelpanfan/OPF-RACE-DASH)
 - Files:
-  - `RELEASE_NOTES.md` (1579 bytes, 1.5 KiB)
+  - `RELEASE_NOTES.md` (1966 bytes, 1.9 KiB)
   - `SHA256SUMS` (79 bytes)
-  - `esp32-p4.bin` (1960288 bytes, 1.87 MiB)
-  - `index.json` (2916 bytes, 2.8 KiB)
+  - `esp32-p4.bin` (2536016 bytes, 2.42 MiB)
+  - `index.json` (3300 bytes, 3.2 KiB)
 - Full-install files: `esp32-p4` no
 - Summary:
-  - Version 0.1.16+VC17, commit 945821e7a897883c6dadda80adae347ebf344605 (master-grok, tag v0.1.16).
-  - OPF Race Dash for the Waveshare ESP32-P4-WIFI6-Touch-LCD-7B (1024x600). This is the first RACE package on the firmware feed.
-  - Tick-driven screen refresh after each CAN update, aiming for a steady 50 FPS
+  - Version 0.0.2+VC11, commit 116fce71d69b5888af2814da82309f6832e799e4 (master-grok, tag v0.0.2).
+  - OPF Race Dash for the Waveshare ESP32-P4-WIFI6-Touch-LCD-7B (1024x600).
+  - PDM mode & SCS200 integration (`0.0.2` VC1–VC11): Grayhill J1939 keypad support, read-only SCS200 telemetry, key 1–12 output commands, SCS analog inputs, `/pdm.json` rule evaluation with fail-safe CAN loss handling, PDM status and schema 2 setup over BLE, `pdm_scs_apply`…
 <!-- FEED-SUMMARY:END -->
