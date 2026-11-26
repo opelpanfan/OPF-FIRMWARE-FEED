@@ -396,17 +396,17 @@ Source repository: `opelpanfan/OPF-RACE-DASH`
 #### `v0.0.2`
 
 - Date: 2026-11-26
-- Source commit: `116fce71d69b5888af2814da82309f6832e799e4` (opelpanfan/OPF-RACE-DASH)
+- Source commit: `f221cfea804e5e722623990af2b2aa1446562fc2` (opelpanfan/OPF-RACE-DASH)
 - Files:
-  - `RELEASE_NOTES.md` (1966 bytes, 1.9 KiB)
+  - `RELEASE_NOTES.md` (2752 bytes, 2.7 KiB)
   - `SHA256SUMS` (79 bytes)
-  - `esp32-p4.bin` (2536016 bytes, 2.42 MiB)
-  - `index.json` (3301 bytes, 3.2 KiB)
+  - `esp32-p4.bin` (2557360 bytes, 2.44 MiB)
+  - `index.json` (4098 bytes, 4.0 KiB)
 - Full-install files: `esp32-p4` no
 - Summary:
-  - Version 0.0.2+VC11, commit 116fce71d69b5888af2814da82309f6832e799e4 (master-grok, tag v0.0.2).
+  - Version 0.0.2+VC12, commit f221cfea804e5e722623990af2b2aa1446562fc2 (master-grok, tag v0.0.2).
   - OPF Race Dash for the Waveshare ESP32-P4-WIFI6-Touch-LCD-7B (1024x600).
-  - PDM mode & SCS200 integration (`0.0.2` VC1–VC11): Grayhill J1939 keypad support, read-only SCS200 telemetry, key 1–12 output commands, SCS analog inputs, `/pdm.json` rule evaluation with fail-safe CAN loss handling, PDM status and schema 2 setup over BLE, `pdm_scs_apply`…
+  - This folder replaces the earlier v0.0.2 package (0.0.2+VC11, 116fce7) at Benas's instruction. The annotated tag `v0.0.2` was moved to this commit.
 
 #### `v0.1.16`
 
@@ -426,15 +426,15 @@ Source repository: `opelpanfan/OPF-RACE-DASH`
 #### `latest`
 
 - Date: 2026-11-26
-- Source commit: `116fce71d69b5888af2814da82309f6832e799e4` (opelpanfan/OPF-RACE-DASH)
+- Source commit: `f221cfea804e5e722623990af2b2aa1446562fc2` (opelpanfan/OPF-RACE-DASH)
 - Files:
-  - `RELEASE_NOTES.md` (1966 bytes, 1.9 KiB)
+  - `RELEASE_NOTES.md` (2752 bytes, 2.7 KiB)
   - `SHA256SUMS` (79 bytes)
-  - `esp32-p4.bin` (2536016 bytes, 2.42 MiB)
-  - `index.json` (3300 bytes, 3.2 KiB)
+  - `esp32-p4.bin` (2557360 bytes, 2.44 MiB)
+  - `index.json` (4097 bytes, 4.0 KiB)
 - Full-install files: `esp32-p4` no
 - Summary:
-  - Version 0.0.2+VC11, commit 116fce71d69b5888af2814da82309f6832e799e4 (master-grok, tag v0.0.2).
+  - Version 0.0.2+VC12, commit f221cfea804e5e722623990af2b2aa1446562fc2 (master-grok, tag v0.0.2).
   - OPF Race Dash for the Waveshare ESP32-P4-WIFI6-Touch-LCD-7B (1024x600).
-  - PDM mode & SCS200 integration (`0.0.2` VC1–VC11): Grayhill J1939 keypad support, read-only SCS200 telemetry, key 1–12 output commands, SCS analog inputs, `/pdm.json` rule evaluation with fail-safe CAN loss handling, PDM status and schema 2 setup over BLE, `pdm_scs_apply`…
+  - This folder replaces the earlier v0.0.2 package (0.0.2+VC11, 116fce7) at Benas's instruction. The annotated tag `v0.0.2` was moved to this commit.
 <!-- FEED-SUMMARY:END -->
