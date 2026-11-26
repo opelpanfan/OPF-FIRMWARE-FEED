@@ -121,39 +121,73 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
   - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
 
-#### `latest`
+#### `v0.0.3`
 
-- Date: 2026-11-24
-- Source commit: `bfb4db446eaa1ab00fa78501e058548eb612e942` (opelpanfan/OPF-STORAGE-DASH)
+- Date: 2026-11-26
+- Source commit: `6144b8d6542f022f221c0559a6e80403d2f15b9c` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1855088 bytes, 1.77 MiB)
+  - `OPF_ATOM_S3.bin` (1860560 bytes, 1.77 MiB)
   - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_ATOM_S3R.bin` (2055008 bytes, 1.96 MiB)
+  - `OPF_ATOM_S3R.bin` (2060752 bytes, 1.97 MiB)
   - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_T2CAN.bin` (1913504 bytes, 1.82 MiB)
+  - `OPF_T2CAN.bin` (1918672 bytes, 1.83 MiB)
   - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS.bin` (1900112 bytes, 1.81 MiB)
+  - `OPF_WS.bin` (1905936 bytes, 1.82 MiB)
   - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS_DASH.bin` (2589760 bytes, 2.47 MiB)
+  - `OPF_WS_DASH.bin` (2597408 bytes, 2.48 MiB)
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (1950 bytes, 1.9 KiB)
+  - `RELEASE_NOTES.md` (2991 bytes, 2.9 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (8854 bytes, 8.6 KiB)
+  - `index.json` (9947 bytes, 9.7 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
-  - Firmware **0.0.3+VC73** (`bfb4db4`, `version_code` 73). Tag `v0.0.3` on `master-grok`, published 24 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC63 (`d046dd1`). Verified on the live .158 pack.
-  - VC65: BLE coredump_info and coredump_get
-  - VC66: BLE passkey pairing, bonding, and PIN reset
+  - Firmware **0.0.3+VC90** (`6144b8d`, `version_code` 90). Tag `v0.0.3` on `master-grok`, published 26 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC73 (`bfb4db4`). Verified on the live .158 pack.
+  - VC74: PSA battery type rework + contactor/wake settings
+  - VC75: contactor control for PSA V1/V2, wake flag on all types
+
+#### `latest`
+
+- Date: 2026-11-24
+- Source commit: `6144b8d6542f022f221c0559a6e80403d2f15b9c` (opelpanfan/OPF-STORAGE-DASH)
+- Files:
+  - `OPF_ATOM_S3.bin` (1860560 bytes, 1.77 MiB)
+  - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_ATOM_S3R.bin` (2060752 bytes, 1.97 MiB)
+  - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_T2CAN.bin` (1918672 bytes, 1.83 MiB)
+  - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS.bin` (1905936 bytes, 1.82 MiB)
+  - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS_DASH.bin` (2597408 bytes, 2.48 MiB)
+  - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (2991 bytes, 2.9 KiB)
+  - `SHA256SUMS` (1776 bytes, 1.7 KiB)
+  - `index.json` (9945 bytes, 9.7 KiB)
+- Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
+- Summary:
+  - Firmware **0.0.3+VC90** (`6144b8d`, `version_code` 90). Tag `v0.0.3` on `master-grok`, published 26 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC73 (`bfb4db4`). Verified on the live .158 pack.
+  - VC74: PSA battery type rework + contactor/wake settings
+  - VC75: contactor control for PSA V1/V2, wake flag on all types
 
 ### BRIDGE
 
