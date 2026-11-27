@@ -1,6 +1,12 @@
 # BMS v0.0.3
 
-Firmware **0.0.3+VC97** (`eece3ff`, `version_code` 97). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC90 (`6144b8d`), then briefly 0.0.3+VC96 (`e7ce2f5`). Verified on the live .158 pack.
+Firmware **0.0.3+VC100** (`50c03fa`, `version_code` 100). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`). This build fixes RS485 slaves that stayed offline.
+
+## VC98–VC100
+
+- VC98: watchdog heartbeat snapshot restore after a crash reboot (76 B packed snapshot); MQTT writes bounded to 5000 ms per write; `/diag` gains `mqtt_write_*` keys
+- VC99: RS485 master waits 28791 us for the first reply byte (was 5 ms); failure back-off counted per slave instead of one shared counter
+- VC100: a SLAVE on a board with RS485 and no slave CAN bus treats a stored `b_slave_com` None as RS485 in RAM only (NVS and `cfg_get` unchanged); every MASTER creates the `rs485_poll` task at boot and idles it when there are no slaves or the link is None; `/diag` gains `slave_link`. Wire format, baud, settings push and MQTT unchanged
 
 ## VC91–VC97
 

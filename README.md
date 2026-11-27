@@ -121,39 +121,73 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - Web UI: v0.0.1 layout restored (Dashboard, Battery, Settings, Status). New settings sit as plain fields in their v0.0.1 sections.
   - Soft start: after boot, charge and discharge limits ramp from 5 A to max over 60 s.
 
-#### `latest`
+#### `v0.0.3`
 
 - Date: 2026-11-27
-- Source commit: `eece3ff118ed5b11031abbe2e341b596cbc82bde` (opelpanfan/OPF-STORAGE-DASH)
+- Source commit: `50c03faf1b480cb5f66e4859b10153277636a8a4` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1866288 bytes, 1.78 MiB)
+  - `OPF_ATOM_S3.bin` (1869088 bytes, 1.78 MiB)
   - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_ATOM_S3R.bin` (2066896 bytes, 1.97 MiB)
+  - `OPF_ATOM_S3R.bin` (2069760 bytes, 1.97 MiB)
   - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_T2CAN.bin` (1924768 bytes, 1.84 MiB)
+  - `OPF_T2CAN.bin` (1927648 bytes, 1.84 MiB)
   - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS.bin` (1911920 bytes, 1.82 MiB)
+  - `OPF_WS.bin` (1914672 bytes, 1.83 MiB)
   - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS_DASH.bin` (2603712 bytes, 2.48 MiB)
+  - `OPF_WS_DASH.bin` (2606624 bytes, 2.49 MiB)
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (3824 bytes, 3.7 KiB)
+  - `RELEASE_NOTES.md` (4517 bytes, 4.4 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (10791 bytes, 10.5 KiB)
+  - `index.json` (11497 bytes, 11.2 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
-  - Firmware **0.0.3+VC97** (`eece3ff`, `version_code` 97). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC90 (`6144b8d`), then briefly 0.0.3+VC96 (`e7ce2f5`). Verified on the live .158 pack.
-  - VC91: dropped (the relay-control-via-web-UI row was Flasher-only; Flasher removed it in its VC57)
-  - VC92: default b_mqtt_contactor on when the NVS key is missing
+  - Firmware **0.0.3+VC100** (`50c03fa`, `version_code` 100). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`). This build fixes RS485 slaves that stayed offline.
+  - VC98: watchdog heartbeat snapshot restore after a crash reboot (76 B packed snapshot); MQTT writes bounded to 5000 ms per write; `/diag` gains `mqtt_write_*` keys
+  - VC99: RS485 master waits 28791 us for the first reply byte (was 5 ms); failure back-off counted per slave instead of one shared counter
+
+#### `latest`
+
+- Date: 2026-11-27
+- Source commit: `50c03faf1b480cb5f66e4859b10153277636a8a4` (opelpanfan/OPF-STORAGE-DASH)
+- Files:
+  - `OPF_ATOM_S3.bin` (1869088 bytes, 1.78 MiB)
+  - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_ATOM_S3R.bin` (2069760 bytes, 1.97 MiB)
+  - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_T2CAN.bin` (1927648 bytes, 1.84 MiB)
+  - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS.bin` (1914672 bytes, 1.83 MiB)
+  - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `OPF_WS_DASH.bin` (2606624 bytes, 2.49 MiB)
+  - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
+  - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
+  - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
+  - `RELEASE_NOTES.md` (4517 bytes, 4.4 KiB)
+  - `SHA256SUMS` (1776 bytes, 1.7 KiB)
+  - `index.json` (11495 bytes, 11.2 KiB)
+- Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
+- Summary:
+  - Firmware **0.0.3+VC100** (`50c03fa`, `version_code` 100). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`). This build fixes RS485 slaves that stayed offline.
+  - VC98: watchdog heartbeat snapshot restore after a crash reboot (76 B packed snapshot); MQTT writes bounded to 5000 ms per write; `/diag` gains `mqtt_write_*` keys
+  - VC99: RS485 master waits 28791 us for the first reply byte (was 5 ms); failure back-off counted per slave instead of one shared counter
 
 ### BRIDGE
 
