@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "product": "P1",
+  "version": "v0.0.3",
+  "semver": "0.0.3",
+  "channel": "version",
+  "folder": "v0.0.3",
+  "files": {
+    "RAK3172_RX": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/v0.0.3/RAK3172_RX.bin",
+    "RAK3172_TX": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/v0.0.3/RAK3172_TX.bin"
+  },
+  "sha256": {
+    "RAK3172_RX": "c8ccefed8800014ffc63f0500572dbd3dd5c5fb7327cf624188bf51ffa3fd6f6",
+    "RAK3172_TX": "800cbd8a2c400690ca42c70b6ecf740fb50b031ae7e1b269a3de7d28712286a7"
+  },
+  "artifacts": [
+    {
+      "board": "RAK3172_RX",
+      "filename": "RAK3172_RX.bin",
+      "sha256": "c8ccefed8800014ffc63f0500572dbd3dd5c5fb7327cf624188bf51ffa3fd6f6",
+      "size": 70372,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/v0.0.3/RAK3172_RX.bin",
+      "source_filename": "RAK3172_RX.bin"
+    },
+    {
+      "board": "RAK3172_TX",
+      "filename": "RAK3172_TX.bin",
+      "sha256": "800cbd8a2c400690ca42c70b6ecf740fb50b031ae7e1b269a3de7d28712286a7",
+      "size": 95148,
+      "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/v0.0.3/RAK3172_TX.bin",
+      "source_filename": "RAK3172_TX.bin"
+    }
+  ],
+  "flash_as_pair": [
+    "RAK3172_TX",
+    "RAK3172_RX"
+  ],
+  "source": {
+    "kind": "release",
+    "repository": "opelpanfan/OPF-P1",
+    "ref": "master-grok",
+    "sha": "9425eea517f0986b9dfe56b42cd4c62d8e0075eb",
+    "tag": "v0.0.3",
+    "fw_build": "9425eea",
+    "fw_version": "0.0.3+VC17",
+    "version_code": 17
+  },
+  "release_notes": "# P1 v0.0.3\n\n**Frequency is 869.525 MHz (EU868 g3).** This is fw17: firmware **0.0.3+VC17** (`9425eea`, `version_code` 17; the device's own version text reads `0.0.2+17`). Tag `v0.0.3` on `master-grok`. Flash both images from this release together. The radio settings and uplink format are the same as v0.0.2.\n\n- The P1 meter stays valid for 15 s (`P1_INVALID_AFTER_MS`), so a meter that sends every 10 s no longer flags every uplink as invalid. In v0.0.2 `dataInvalid` fired after 2 s.\n- The transmitter clears USART1 overrun, framing, noise and parity errors (ORE/FE/NE/PE) on the live path. A stuck overrun used to stop reception.\n- `recoverP1Uart` reinitializes the port after 30 s without an accepted telegram, then backs off to 60 s and 120 s. It does not reinit on top of a live meter.\n- The telegram parser resyncs on `/` after a CR-only cut.\n- Field diagnostics over SWD: `gFieldDiag` at `0x20002ffc` is now 75 words (`mdw 0x20002ffc 75`), with new `p1UartOre`, `p1UartFe`, `p1UartNe` and `p1UartPe` counters.\n- LoRa downlink command to reset the P1 UART (`P1_UART`). Commands are accepted only when the transmitter is built with a command key. This FEED transmitter image is unkeyed, so commands are disabled.\n- The `VERSION` file at this commit reads `0.0.2+17`, so the device version text is `0.0.2+17` while the tag and FEED folder are `v0.0.3`. `FW_ITERATION_ID` is 17.\n",
+  "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/v0.0.3/RELEASE_NOTES.md"
+}

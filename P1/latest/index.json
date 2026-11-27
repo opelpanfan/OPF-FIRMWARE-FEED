@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "product": "P1",
-  "version": "v0.0.2",
-  "semver": "0.0.2",
+  "version": "v0.0.3",
+  "semver": "0.0.3",
   "channel": "latest",
   "folder": "latest",
   "files": {
@@ -10,23 +10,23 @@
     "RAK3172_TX": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/RAK3172_TX.bin"
   },
   "sha256": {
-    "RAK3172_RX": "8e71abce6ba368dd6741ac2a8789be53535eb4cea9ab02c41da87b317a983efe",
-    "RAK3172_TX": "22cabfa7037488abb27b5d95a6dbb7994b6dd57f77f1036d3a2aa7b4acdc6bb8"
+    "RAK3172_RX": "c8ccefed8800014ffc63f0500572dbd3dd5c5fb7327cf624188bf51ffa3fd6f6",
+    "RAK3172_TX": "800cbd8a2c400690ca42c70b6ecf740fb50b031ae7e1b269a3de7d28712286a7"
   },
   "artifacts": [
     {
       "board": "RAK3172_RX",
       "filename": "RAK3172_RX.bin",
-      "sha256": "8e71abce6ba368dd6741ac2a8789be53535eb4cea9ab02c41da87b317a983efe",
-      "size": 70356,
+      "sha256": "c8ccefed8800014ffc63f0500572dbd3dd5c5fb7327cf624188bf51ffa3fd6f6",
+      "size": 70372,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/RAK3172_RX.bin",
       "source_filename": "RAK3172_RX.bin"
     },
     {
       "board": "RAK3172_TX",
       "filename": "RAK3172_TX.bin",
-      "sha256": "22cabfa7037488abb27b5d95a6dbb7994b6dd57f77f1036d3a2aa7b4acdc6bb8",
-      "size": 94620,
+      "sha256": "800cbd8a2c400690ca42c70b6ecf740fb50b031ae7e1b269a3de7d28712286a7",
+      "size": 95148,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/RAK3172_TX.bin",
       "source_filename": "RAK3172_TX.bin"
     }
@@ -39,12 +39,12 @@
     "kind": "release",
     "repository": "opelpanfan/OPF-P1",
     "ref": "master-grok",
-    "sha": "1196aeefe2a98952b070a90ab3c41ca8371eb9ea",
-    "tag": "v0.0.2",
-    "fw_build": "1196aee",
-    "fw_version": "0.0.2+VC16",
-    "version_code": 16
+    "sha": "9425eea517f0986b9dfe56b42cd4c62d8e0075eb",
+    "tag": "v0.0.3",
+    "fw_build": "9425eea",
+    "fw_version": "0.0.3+VC17",
+    "version_code": 17
   },
-  "release_notes": "# P1 v0.0.2\n\n**Frequency is 869.525 MHz (EU868 g3).** This is fw16: firmware **0.0.2+VC16** (`1196aee`, `version_code` 16; the device's own version text reads `0.0.2+16`). Tag `v0.0.2` on `master-grok`. Flash both images from this release together. The radio settings and uplink format are the same as v0.0.1.\n\n- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm. Rolling 1-hour transmit cap stays under 10% duty.\n- `P1_REQUIRE_CRC=0`. A telegram with a missing or wrong CRC is accepted only if it carries U1-3, I1-3 and import power and passes the plausibility guard. A CRC-matching telegram is accepted without that guard.\n- Plausibility guard: voltages are 0 V or 150-280 V, with at least one phase in 150-280 V; currents are at most 100 A; every present power is at most `P1_MAX_POWER_W` (50 kW); frequency, when sent, is 45-55 Hz.\n- A new `/` at the start of a line restarts the telegram, so a telegram cut short on the wire is dropped instead of being glued to the next one.\n- A missing frequency line goes out as 0 Hz, not 50 Hz.\n- After 10 s without an accepted telegram the transmitter restarts USART1 (RCC reset, clear ORE/FE/NE/PE, flush, parser reset), whether or not bytes are still arriving. LoRa keeps sending the last known-good values marked invalid.\n- Transmitter stall watchdog only fires while a transmit is actually in progress. Duty-cycle refusal and idle time no longer count as a radio fault. Watchdog beat age is signed, so a beat newer than the sample time counts as fresh.\n- A P1 hard reset calls `NVIC_SystemReset` immediately, including with a debugger attached. The reset marker is stored with its complement.\n- Radio recovery is split into soft and hard. A hard radio reinit happens only after 3 consecutive faults, and a TX timeout is no longer counted twice.\n- The P1 UART is fully drained after a reinit (up to 512 bytes).\n- LoRa commands: type `0x08` (24-byte command) and type `0x09` (22-byte result), protocol version 1, AES-CMAC. Opcodes are REBOOT `0x01`, P1_UART `0x02`, and RADIO `0x03`. Commands are accepted only when the transmitter is built with a command key. This FEED transmitter image is unkeyed, so commands are disabled.\n- Receiver: Modbus answers exception `0x0B` once no valid frame has arrived for 3 s, so an unplugged meter no longer freezes the last watts. Link stale and Modbus hold are both 3 s.\n- Receiver: Modbus reads outside the register map answer exception `0x02`.\n- Field diagnostics over SWD (`gFieldDiag`, plus `gFwVersionText` for the `0.0.2+16` display string) include radio IRQ, header error, RSSI/SNR, recovery-pending, last sequence, soft-fault and hard-recovery counters, last valid telegram age, watchdog beat-ahead/stale and reset-marker status, and P1 reject diagnostics (bytes seen, telegrams seen and rejected, last reject reason and OBIS prefix, per-reason counts, sticky UART error bits).\n- New PlatformIO env `direct` (P1 to Modbus RS485 with no LoRa) for a meter wired straight to the inverter. It is not part of this feed release.\n",
+  "release_notes": "# P1 v0.0.3\n\n**Frequency is 869.525 MHz (EU868 g3).** This is fw17: firmware **0.0.3+VC17** (`9425eea`, `version_code` 17; the device's own version text reads `0.0.2+17`). Tag `v0.0.3` on `master-grok`. Flash both images from this release together. The radio settings and uplink format are the same as v0.0.2.\n\n- The P1 meter stays valid for 15 s (`P1_INVALID_AFTER_MS`), so a meter that sends every 10 s no longer flags every uplink as invalid. In v0.0.2 `dataInvalid` fired after 2 s.\n- The transmitter clears USART1 overrun, framing, noise and parity errors (ORE/FE/NE/PE) on the live path. A stuck overrun used to stop reception.\n- `recoverP1Uart` reinitializes the port after 30 s without an accepted telegram, then backs off to 60 s and 120 s. It does not reinit on top of a live meter.\n- The telegram parser resyncs on `/` after a CR-only cut.\n- Field diagnostics over SWD: `gFieldDiag` at `0x20002ffc` is now 75 words (`mdw 0x20002ffc 75`), with new `p1UartOre`, `p1UartFe`, `p1UartNe` and `p1UartPe` counters.\n- LoRa downlink command to reset the P1 UART (`P1_UART`). Commands are accepted only when the transmitter is built with a command key. This FEED transmitter image is unkeyed, so commands are disabled.\n- The `VERSION` file at this commit reads `0.0.2+17`, so the device version text is `0.0.2+17` while the tag and FEED folder are `v0.0.3`. `FW_ITERATION_ID` is 17.\n",
   "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/P1/latest/RELEASE_NOTES.md"
 }

@@ -1,19 +1,11 @@
-# P1 v0.0.2
+# P1 v0.0.3
 
-**Frequency is 869.525 MHz (EU868 g3).** This is fw16: firmware **0.0.2+VC16** (`1196aee`, `version_code` 16; the device's own version text reads `0.0.2+16`). Tag `v0.0.2` on `master-grok`. Flash both images from this release together. The radio settings and uplink format are the same as v0.0.1.
+**Frequency is 869.525 MHz (EU868 g3).** This is fw17: firmware **0.0.3+VC17** (`9425eea`, `version_code` 17; the device's own version text reads `0.0.2+17`). Tag `v0.0.3` on `master-grok`. Flash both images from this release together. The radio settings and uplink format are the same as v0.0.2.
 
-- Fast uplink (type `0x06`, 39 bytes) every 1 s. Slow uplink (type `0x07`, 21 bytes) every 30 s. Protocol version byte stays 4. SF7, BW125, CR4/5, preamble 8, sync `0x1424`, 22 dBm. Rolling 1-hour transmit cap stays under 10% duty.
-- `P1_REQUIRE_CRC=0`. A telegram with a missing or wrong CRC is accepted only if it carries U1-3, I1-3 and import power and passes the plausibility guard. A CRC-matching telegram is accepted without that guard.
-- Plausibility guard: voltages are 0 V or 150-280 V, with at least one phase in 150-280 V; currents are at most 100 A; every present power is at most `P1_MAX_POWER_W` (50 kW); frequency, when sent, is 45-55 Hz.
-- A new `/` at the start of a line restarts the telegram, so a telegram cut short on the wire is dropped instead of being glued to the next one.
-- A missing frequency line goes out as 0 Hz, not 50 Hz.
-- After 10 s without an accepted telegram the transmitter restarts USART1 (RCC reset, clear ORE/FE/NE/PE, flush, parser reset), whether or not bytes are still arriving. LoRa keeps sending the last known-good values marked invalid.
-- Transmitter stall watchdog only fires while a transmit is actually in progress. Duty-cycle refusal and idle time no longer count as a radio fault. Watchdog beat age is signed, so a beat newer than the sample time counts as fresh.
-- A P1 hard reset calls `NVIC_SystemReset` immediately, including with a debugger attached. The reset marker is stored with its complement.
-- Radio recovery is split into soft and hard. A hard radio reinit happens only after 3 consecutive faults, and a TX timeout is no longer counted twice.
-- The P1 UART is fully drained after a reinit (up to 512 bytes).
-- LoRa commands: type `0x08` (24-byte command) and type `0x09` (22-byte result), protocol version 1, AES-CMAC. Opcodes are REBOOT `0x01`, P1_UART `0x02`, and RADIO `0x03`. Commands are accepted only when the transmitter is built with a command key. This FEED transmitter image is unkeyed, so commands are disabled.
-- Receiver: Modbus answers exception `0x0B` once no valid frame has arrived for 3 s, so an unplugged meter no longer freezes the last watts. Link stale and Modbus hold are both 3 s.
-- Receiver: Modbus reads outside the register map answer exception `0x02`.
-- Field diagnostics over SWD (`gFieldDiag`, plus `gFwVersionText` for the `0.0.2+16` display string) include radio IRQ, header error, RSSI/SNR, recovery-pending, last sequence, soft-fault and hard-recovery counters, last valid telegram age, watchdog beat-ahead/stale and reset-marker status, and P1 reject diagnostics (bytes seen, telegrams seen and rejected, last reject reason and OBIS prefix, per-reason counts, sticky UART error bits).
-- New PlatformIO env `direct` (P1 to Modbus RS485 with no LoRa) for a meter wired straight to the inverter. It is not part of this feed release.
+- The P1 meter stays valid for 15 s (`P1_INVALID_AFTER_MS`), so a meter that sends every 10 s no longer flags every uplink as invalid. In v0.0.2 `dataInvalid` fired after 2 s.
+- The transmitter clears USART1 overrun, framing, noise and parity errors (ORE/FE/NE/PE) on the live path. A stuck overrun used to stop reception.
+- `recoverP1Uart` reinitializes the port after 30 s without an accepted telegram, then backs off to 60 s and 120 s. It does not reinit on top of a live meter.
+- The telegram parser resyncs on `/` after a CR-only cut.
+- Field diagnostics over SWD: `gFieldDiag` at `0x20002ffc` is now 75 words (`mdw 0x20002ffc 75`), with new `p1UartOre`, `p1UartFe`, `p1UartNe` and `p1UartPe` counters.
+- LoRa downlink command to reset the P1 UART (`P1_UART`). Commands are accepted only when the transmitter is built with a command key. This FEED transmitter image is unkeyed, so commands are disabled.
+- The `VERSION` file at this commit reads `0.0.2+17`, so the device version text is `0.0.2+17` while the tag and FEED folder are `v0.0.3`. `FW_ITERATION_ID` is 17.
