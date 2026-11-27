@@ -1,6 +1,6 @@
 # BRIDGE v0.0.3
 
-Firmware **0.0.3+VC51** (`4ddda59`, `version_code` 51). Tag `v0.0.3` on `master-grok`, retagged 26 Nov 2026 (Europe/Vilnius); earlier v0.0.3 tags were 0.0.3+VC48 (`8af90a2`), 0.0.3+VC47 (`12551a4`) and 0.0.3+VC43 (`ad9dc39`).
+Firmware **0.0.3+VC52** (`2cbc835`, `version_code` 52). Tag `v0.0.3` on `master-grok`, retagged 27 Nov 2026 (Europe/Vilnius); earlier v0.0.3 tags were 0.0.3+VC51 (`4ddda59`), 0.0.3+VC48 (`8af90a2`), 0.0.3+VC47 (`12551a4`) and 0.0.3+VC43 (`ad9dc39`).
 
 v0.0.3 moves all device settings to BLE (`cfg_schema` / `cfg_get` / `cfg_set`), leaves the web UI as a dashboard plus a read-only Status page, removes inverter auto-detect, hardens the firmware for 24/7 operation, adds BLE PIN pairing and a crash summary, and lists Sungrow SH6.0RS.
 
@@ -23,16 +23,17 @@ v0.0.3 moves all device settings to BLE (`cfg_schema` / `cfg_get` / `cfg_set`), 
 - **VC49:** URL OTA pauses the HTTP listener (`opfWebServerQuiesce()` / `opfWebServerResume()`) around the blocking download so `/diag` and `/health` cannot hit async_tcp mid-transfer. ElegantOTA and BLE OTA keep the server. `/diag` and `/api/coredump/summary` include the running ELF SHA and `cdump_matches_build` so a dump from an older image is not read as a panic of this build.
 - **VC50:** signed P1 LoRa commands (`uart_reset`, `reboot`, `radio_reinit`) can be queued from the web, BLE, or MQTT and transmitted in the uplink RX window. The key is a build flag (`P1_CMD_KEY_HEX`); without it the radio never leaves receive.
 - **VC51:** `/update` is open without a password and restyled. ElegantOTA `/ota/start` and `/ota/upload` have auth cleared. URL OTA skips basic auth and keeps the CSRF, JSON, and confirm gates. `web_auth` still covers inverter and P1 writes.
+- **VC52:** one shared logger stack buffer instead of a per-call buffer (about 0.5 KB less stack per task), comms and atom loops idle 10 ms instead of 1 ms (fewer idle wakeups), and the event-crumb ring is guarded by a spinlock to remove races.
 
 Remaining write-capable web endpoints: `POST /api/profile-command` (Dashboard controls), `POST /api/ota-preflight`, `POST /api/ota-url` and ElegantOTA `/update`. Deye register 80 remains read-only. AUTOMATIC_MODE is unchanged.
 
 ## Hardware validation
 
-- Atom S3R `.110` (Deye HV) already runs VC51 (`4ddda59`) from the post-merge URL OTA, marked_valid. `.236` (DTU base) has been unreachable since 24 Nov and was not retried for this retag. VC44/VC46/VC47 soak on `.110` since 20 Nov: free heap 88-97 KB, no new panic. Waveshare (ATOM_S3) and T-CAN485 (ESP32) images are built for the feed; T-CAN485 site flash is held until on-site rollback is possible.
+- Atom S3R `.110` (Deye HV) already runs VC52 (`2cbc835`) (MQTT connected, subscriptions OK, minimum free heap about 85 KB after more than 5 hours; its fw_build label reads 4ddda59-dirty because that image was built just before the commit, from the same tree). `.236` (DTU base) has been unreachable since 24 Nov and was not retried for this retag. VC44/VC46/VC47 soak on `.110` since 20 Nov: free heap 88-97 KB, no new panic. Waveshare (ATOM_S3) and T-CAN485 (ESP32) images are built for the feed; T-CAN485 site flash is held until on-site rollback is possible.
 - Sungrow SH6.0RS is code-reviewed and host-tested only; no Sungrow unit has been tested.
 - T-CAN485 has no BLE and no serial commands, so its Wi-Fi/MQTT keys stay at the NVS values or the one-time build-flag seed.
 - P1 LoRa downlink commands (VC50) are built in but not active until `P1_CMD_KEY_HEX` is set on both the Bridge and the P1 image.
 
 ## Build
 
-Built locally from a clean `4ddda59` worktree with Arduino-ESP32 3.20016 (espressif32@6.7.0), without `platformio.local.ini` secrets, and published to the FEED with `scripts/publish_firmware_feed.py`.
+Built locally from a clean `2cbc835` worktree with Arduino-ESP32 3.20016 (espressif32@6.7.0), without `platformio.local.ini` secrets, and published to the FEED with `scripts/publish_firmware_feed.py`.
