@@ -229,8 +229,8 @@
           "filename": "OPF-FLASHER-linux-amd64.deb",
           "required": true
         },
-        "OPF-FLASHER-win-x64-VC106": {
-          "filename": "OPF-FLASHER-win-x64-VC106.exe",
+        "OPF-FLASHER-win-x64-VC107": {
+          "filename": "OPF-FLASHER-win-x64-VC107.exe",
           "required": false
         }
       }
