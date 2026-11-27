@@ -1,6 +1,22 @@
 # BMS v0.0.3
 
-Firmware **0.0.3+VC102** (`084cd93`, `version_code` 102). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC101 (`7f17616`), 0.0.3+VC100 (`50c03fa`), 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`). This build fixes a task watchdog reset during OTA on masters with a long uptime.
+Firmware **0.0.3+VC105** (`ad85bc9`, `version_code` 105). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier published v0.0.3 was 0.0.3+VC102 (`084cd93`). VC103 (`488b11e`) and VC104 (`e54464c`) were merged to `master-grok` but were not published to this feed. Earlier published tags were 0.0.3+VC101 (`7f17616`), 0.0.3+VC100 (`50c03fa`), 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`). This build renumbers config enums so 0 means None, with a safe NVS migration onto new keys.
+
+## VC103–VC105
+
+- VC103: one shared enum id header; magic enum literals in firmware and host tests are replaced with those ids
+- VC104: drop test inverter 9; boolean settings are stored and accepted only as 0 or 1; the firmware image id is a read-only cfg key
+- VC105: NONE=0 renumber of violator config enums with a safe NVS migration onto new keys (`board_prof2`, `b_bat_can2`, `b_inv_can2`, `b_slv_can2`, `b_dsp_can2`, `b_cmp_src2`, `b_do_neg2` / `pre2` / `pos2` / `gate2`, `b_wake2`, `b_i2c_polarity`). The one-shot commit key `nz_mig=1` is written last; old keys are left untouched so a rollback image still reads the previous encoding. `cfg_get` reports `enum_nz=1`. `cfg_set` writes an old key only when the new value has an old encoding (bus / cmp / wake `None` are not written back; i2c `None` is written to `b_i2c_activelow` as 1). Fail-safe 0: no pack CAN driver and contactors held open, no inverter TX, slave CAN link down, no dash TX, CMP limits 0, no wake TX. A missing `b_wake` uses the new type default (Mute=1 for types 1 and 4, Play=2 otherwise) instead of being treated as a legacy 0/1 value. GPIO 0 is never a contactor/DO pin. Default `b_cmp_current_source` is CAN (2). Factory stored `b_i2c_polarity` is 0 (None / board default, active-low); both 0 and 1 drive active-low. `b_ctc_ctrl` / `b_relay_ctrl` are retired from MQTT health and BLE `cfg_get` but are not renumbered in NVS. Unchanged: `b_priority`, `b_type`, `b_inverter`, `b_protocol`, `b_precharge`, `b_ctc_type`, `b_slave_com`, `b_addon`, chemistry, `DEVICE_STATUS`, and 0/1 flags. MQTT topic/payload/size/buffer are unchanged except the agreed wake-value change and the retired legacy keys.
+
+### Old to new (VC105)
+
+- `board_profile`: old 0–6 → 1–7, old 7 None → 0
+- battery / inverter / slave CAN bus: old 0 CAN1 → 1, old 1 CAN2 → 2, new 0 None
+- display CAN bus: old 2 Off → 0, old 0 CAN1 → 1, old 1 CAN2 → 2
+- `b_cmp_current_source`: old 0 SOC → 1, old 1 CAN → 2, new 0 None
+- contactor DO: old -1 None → 0 on the wire (internal -1), GPIO n stays n; GPIO 0 is not a pin
+- `b_wake`: old 0 Mute → 1, old 1 Play → 2, new 0 None (no TX)
+- `b_i2c_activelow` replaced by `b_i2c_polarity`: old 1 → 1 Active-low, old 0 → 2 Active-high, new 0 None (board default, active-low)
 
 ## VC98–VC102
 

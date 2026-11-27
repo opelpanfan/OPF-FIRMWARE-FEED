@@ -124,70 +124,70 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
 #### `v0.0.3`
 
 - Date: 2026-11-27
-- Source commit: `084cd9335678abb6a63ab6cb35a0ac9a17260cee` (opelpanfan/OPF-STORAGE-DASH)
+- Source commit: `ad85bc927744fef95da325e78eb8060a79ca1aa7` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1869568 bytes, 1.78 MiB)
+  - `OPF_ATOM_S3.bin` (1875152 bytes, 1.79 MiB)
   - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_ATOM_S3R.bin` (2070336 bytes, 1.97 MiB)
+  - `OPF_ATOM_S3R.bin` (2075856 bytes, 1.98 MiB)
   - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_T2CAN.bin` (1928144 bytes, 1.84 MiB)
+  - `OPF_T2CAN.bin` (1933472 bytes, 1.84 MiB)
   - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS.bin` (1915168 bytes, 1.83 MiB)
+  - `OPF_WS.bin` (1920960 bytes, 1.83 MiB)
   - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS_DASH.bin` (2607040 bytes, 2.49 MiB)
+  - `OPF_WS_DASH.bin` (2612624 bytes, 2.49 MiB)
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (5517 bytes, 5.4 KiB)
+  - `RELEASE_NOTES.md` (7986 bytes, 7.8 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (12501 bytes, 12.2 KiB)
+  - `index.json` (14952 bytes, 14.6 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
-  - Firmware **0.0.3+VC102** (`084cd93`, `version_code` 102). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC101 (`7f17616`), 0.0.3+VC100 (`50c03fa`), 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`).…
-  - VC98: watchdog heartbeat snapshot restore after a crash reboot (76 B packed snapshot); MQTT writes bounded to 5000 ms per write; `/diag` gains `mqtt_write_*` keys
-  - VC99: RS485 master waits 28791 us for the first reply byte (was 5 ms); failure back-off counted per slave instead of one shared counter
+  - Firmware **0.0.3+VC105** (`ad85bc9`, `version_code` 105). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier published v0.0.3 was 0.0.3+VC102 (`084cd93`). VC103 (`488b11e`) and VC104 (`e54464c`) were merged to `master-grok` but were not…
+  - VC103: one shared enum id header; magic enum literals in firmware and host tests are replaced with those ids
+  - VC104: drop test inverter 9; boolean settings are stored and accepted only as 0 or 1; the firmware image id is a read-only cfg key
 
 #### `latest`
 
 - Date: 2026-11-27
-- Source commit: `084cd9335678abb6a63ab6cb35a0ac9a17260cee` (opelpanfan/OPF-STORAGE-DASH)
+- Source commit: `ad85bc927744fef95da325e78eb8060a79ca1aa7` (opelpanfan/OPF-STORAGE-DASH)
 - Files:
-  - `OPF_ATOM_S3.bin` (1869568 bytes, 1.78 MiB)
+  - `OPF_ATOM_S3.bin` (1875152 bytes, 1.79 MiB)
   - `OPF_ATOM_S3.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_ATOM_S3R.bin` (2070336 bytes, 1.97 MiB)
+  - `OPF_ATOM_S3R.bin` (2075856 bytes, 1.98 MiB)
   - `OPF_ATOM_S3R.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_ATOM_S3R.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_ATOM_S3R.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_T2CAN.bin` (1928144 bytes, 1.84 MiB)
+  - `OPF_T2CAN.bin` (1933472 bytes, 1.84 MiB)
   - `OPF_T2CAN.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_T2CAN.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_T2CAN.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS.bin` (1915168 bytes, 1.83 MiB)
+  - `OPF_WS.bin` (1920960 bytes, 1.83 MiB)
   - `OPF_WS.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `OPF_WS_DASH.bin` (2607040 bytes, 2.49 MiB)
+  - `OPF_WS_DASH.bin` (2612624 bytes, 2.49 MiB)
   - `OPF_WS_DASH.boot_app0.bin` (8192 bytes, 8.0 KiB)
   - `OPF_WS_DASH.bootloader.bin` (15104 bytes, 14.8 KiB)
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
-  - `RELEASE_NOTES.md` (5517 bytes, 5.4 KiB)
+  - `RELEASE_NOTES.md` (7986 bytes, 7.8 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (12499 bytes, 12.2 KiB)
+  - `index.json` (14950 bytes, 14.6 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
-  - Firmware **0.0.3+VC102** (`084cd93`, `version_code` 102). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC101 (`7f17616`), 0.0.3+VC100 (`50c03fa`), 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`).…
-  - VC98: watchdog heartbeat snapshot restore after a crash reboot (76 B packed snapshot); MQTT writes bounded to 5000 ms per write; `/diag` gains `mqtt_write_*` keys
-  - VC99: RS485 master waits 28791 us for the first reply byte (was 5 ms); failure back-off counted per slave instead of one shared counter
+  - Firmware **0.0.3+VC105** (`ad85bc9`, `version_code` 105). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier published v0.0.3 was 0.0.3+VC102 (`084cd93`). VC103 (`488b11e`) and VC104 (`e54464c`) were merged to `master-grok` but were not…
+  - VC103: one shared enum id header; magic enum literals in firmware and host tests are replaced with those ids
+  - VC104: drop test inverter 9; boolean settings are stored and accepted only as 0 or 1; the firmware image id is a read-only cfg key
 
 ### BRIDGE
 
