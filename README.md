@@ -148,7 +148,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
   - `RELEASE_NOTES.md` (7986 bytes, 7.8 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (14952 bytes, 14.6 KiB)
+  - `index.json` (15010 bytes, 14.7 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
   - Firmware **0.0.3+VC105** (`ad85bc9`, `version_code` 105). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier published v0.0.3 was 0.0.3+VC102 (`084cd93`). VC103 (`488b11e`) and VC104 (`e54464c`) were merged to `master-grok` but were not…
@@ -182,7 +182,7 @@ Source repository: `opelpanfan/OPF-STORAGE-DASH`
   - `OPF_WS_DASH.partitions.bin` (3072 bytes, 3.0 KiB)
   - `RELEASE_NOTES.md` (7986 bytes, 7.8 KiB)
   - `SHA256SUMS` (1776 bytes, 1.7 KiB)
-  - `index.json` (14950 bytes, 14.6 KiB)
+  - `index.json` (15008 bytes, 14.7 KiB)
 - Full-install files: `OPF_WS` yes, `OPF_T2CAN` yes, `OPF_ATOM_S3` yes, `OPF_ATOM_S3R` yes, `OPF_WS_DASH` yes
 - Summary:
   - Firmware **0.0.3+VC105** (`ad85bc9`, `version_code` 105). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier published v0.0.3 was 0.0.3+VC102 (`084cd93`). VC103 (`488b11e`) and VC104 (`e54464c`) were merged to `master-grok` but were not…
