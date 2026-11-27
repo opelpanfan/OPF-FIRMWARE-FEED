@@ -326,7 +326,7 @@ Source repository: `opelpanfan/OPF-CONFIG-APP`
 
 #### `v0.0.3`
 
-- Date: unknown
+- Date: 2026-11-27
 - Source commit: `16bef971e14167808eed32daebdb4a349e005e29` (opelpanfan/OPF-CONFIG-APP)
 - Files:
   - `RELEASE_NOTES.md` (14671 bytes, 14.3 KiB)
@@ -340,7 +340,7 @@ Source repository: `opelpanfan/OPF-CONFIG-APP`
 
 #### `latest`
 
-- Date: unknown
+- Date: 2026-11-27
 - Source commit: `16bef971e14167808eed32daebdb4a349e005e29` (opelpanfan/OPF-CONFIG-APP)
 - Files:
   - `RELEASE_NOTES.md` (14671 bytes, 14.3 KiB)
