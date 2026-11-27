@@ -1,6 +1,16 @@
 # BMS v0.0.3
 
-Firmware **0.0.3+VC90** (`6144b8d`, `version_code` 90). Tag `v0.0.3` on `master-grok`, published 26 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC73 (`bfb4db4`). Verified on the live .158 pack.
+Firmware **0.0.3+VC97** (`eece3ff`, `version_code` 97). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC90 (`6144b8d`), then briefly 0.0.3+VC96 (`e7ce2f5`). Verified on the live .158 pack.
+
+## VC91–VC97
+
+- VC91: dropped (the relay-control-via-web-UI row was Flasher-only; Flasher removed it in its VC57)
+- VC92: default b_mqtt_contactor on when the NVS key is missing
+- VC93: gate non-SE30 BMW iX PACK_SOC on E5CE ready, otherwise hold the last value
+- VC94: one-decimal SoC for BMW iX (E5CE pptt) on web UI and BLE via soc_cpct (0.01 %); MQTT unchanged
+- VC95: PSA V2 reads SOH once after boot (0x22 DC64) with retries at 5, 15 and 45 s, stored in PACK_SOH; /diag gains soh_boot_* keys
+- VC96: CAN IDs shown as uppercase 0x-hex on serial, logs and /diag (lib/UTILS/can_id_fmt.h); cfg_set for b_ivt_id_base and b_i2c_addr accepts 0x, decimal or bare hex. Wire, NVS and MQTT unchanged
+- VC97: copy CAN ID keys in /diag `psa2_tx_suppressed` and `can_dup_rx_ids` so /diag is valid JSON
 
 ## VC74–VC90
 
