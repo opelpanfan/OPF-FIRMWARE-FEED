@@ -1,13 +1,14 @@
 # BMS v0.0.3
 
-Firmware **0.0.3+VC101** (`7f17616`, `version_code` 101). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC100 (`50c03fa`), 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`). This build fixes BLE pairing from Windows.
+Firmware **0.0.3+VC102** (`084cd93`, `version_code` 102). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC101 (`7f17616`), 0.0.3+VC100 (`50c03fa`), 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`). This build fixes a task watchdog reset during OTA on masters with a long uptime.
 
-## VC98–VC101
+## VC98–VC102
 
 - VC98: watchdog heartbeat snapshot restore after a crash reboot (76 B packed snapshot); MQTT writes bounded to 5000 ms per write; `/diag` gains `mqtt_write_*` keys
 - VC99: RS485 master waits 28791 us for the first reply byte (was 5 ms); failure back-off counted per slave instead of one shared counter
 - VC100: a SLAVE on a board with RS485 and no slave CAN bus treats a stored `b_slave_com` None as RS485 in RAM only (NVS and `cfg_get` unchanged); every MASTER creates the `rs485_poll` task at boot and idles it when there are no slaves or the link is None; `/diag` gains `slave_link`. Wire format, baud, settings push and MQTT unchanged
 - VC101: BLE uses legacy passkey pairing (`OPF_BLE_SC_ENABLED` defaults to 0; LE Secure Connections stay a build option) and no longer calls `startSecurity` on connect, so the central starts pairing (fixes Windows Settings and WinRT "Connection failed"). TX/RX still require encryption and authentication; display-only static passkey (`ble_pin`, default 123456) and the 3-bond store (oldest dropped) are unchanged. The auth log line never includes the passkey or keys
+- VC102: `rs485_poll` stores a fresh wake stamp after its 1 s idle delay and during OTA (sleeps 10 ms instead of `vTaskDelayUntil`), and snaps a stamp more than 5 periods stale (tick-wrap safe, `lib/UTILS/task_wake_policy.h`). Since VC100 a stale stamp made the task busy-loop when an OTA started, starving IDLE0 until the 30 s task watchdog reset the unit (seen on a unit with 1744 s uptime). No protocol, settings, MQTT or RS485 frame-timing changes
 
 ## VC91–VC97
 

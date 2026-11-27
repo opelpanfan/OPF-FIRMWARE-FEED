@@ -13,17 +13,17 @@
     "OPF_WS_DASH": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_DASH.bin"
   },
   "sha256": {
-    "OPF_ATOM_S3": "01fcac90b141855ae93b73b90098abe95fc8014485851e05d8f26e241f32b687",
-    "OPF_ATOM_S3R": "1e962237b81003ebeedb6bebb3d753791bb6a3f6faf219364b9676fdd1b6b844",
-    "OPF_T2CAN": "f1f2f3fad510a9b4665b564f826c13dcbb7c0a7b8987df43d6b321189a3a409b",
-    "OPF_WS": "8dc89f90a82d8aeb524e771f94a765ec6c4f4f97e5ab88ec218f1f381ff436d6",
-    "OPF_WS_DASH": "5ea9a3b08d41e37c1154d5c181782a501183f7d4615a959571f6d313ca9024ba"
+    "OPF_ATOM_S3": "7637fb84e0739a472a6c557dec54a841432754b012b66763c2e4c8e78c38fd2b",
+    "OPF_ATOM_S3R": "573b35b07cfc6f0704a0cb02d64bc728d2235b23ca786f881d0fea384ace0ae0",
+    "OPF_T2CAN": "b3b7e58f4e8dab884cb347be3f3f8d66d270869fe7d1ede5a6e9ea0c34611fe8",
+    "OPF_WS": "046f85535b913c8da4db9dffa594aef490b279063325873b887d4e01fdf39d8e",
+    "OPF_WS_DASH": "fbaa0b63e37a5fa38ea034c069d1e3c696ba2a83b586fd6df628c9488c1d38a4"
   },
   "artifacts": [
     {
       "board": "OPF_ATOM_S3",
       "filename": "OPF_ATOM_S3.bin",
-      "sha256": "01fcac90b141855ae93b73b90098abe95fc8014485851e05d8f26e241f32b687",
+      "sha256": "7637fb84e0739a472a6c557dec54a841432754b012b66763c2e4c8e78c38fd2b",
       "size": 1869568,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3.bin",
       "source_filename": "OPF_ATOM_S3.bin",
@@ -51,8 +51,8 @@
     {
       "board": "OPF_ATOM_S3R",
       "filename": "OPF_ATOM_S3R.bin",
-      "sha256": "1e962237b81003ebeedb6bebb3d753791bb6a3f6faf219364b9676fdd1b6b844",
-      "size": 2070304,
+      "sha256": "573b35b07cfc6f0704a0cb02d64bc728d2235b23ca786f881d0fea384ace0ae0",
+      "size": 2070336,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_ATOM_S3R.bin",
       "source_filename": "OPF_ATOM_S3R.bin",
       "install": {
@@ -79,8 +79,8 @@
     {
       "board": "OPF_T2CAN",
       "filename": "OPF_T2CAN.bin",
-      "sha256": "f1f2f3fad510a9b4665b564f826c13dcbb7c0a7b8987df43d6b321189a3a409b",
-      "size": 1928096,
+      "sha256": "b3b7e58f4e8dab884cb347be3f3f8d66d270869fe7d1ede5a6e9ea0c34611fe8",
+      "size": 1928144,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_T2CAN.bin",
       "source_filename": "OPF_T2CAN.bin",
       "install": {
@@ -107,8 +107,8 @@
     {
       "board": "OPF_WS",
       "filename": "OPF_WS.bin",
-      "sha256": "8dc89f90a82d8aeb524e771f94a765ec6c4f4f97e5ab88ec218f1f381ff436d6",
-      "size": 1915152,
+      "sha256": "046f85535b913c8da4db9dffa594aef490b279063325873b887d4e01fdf39d8e",
+      "size": 1915168,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS.bin",
       "source_filename": "OPF_WS.bin",
       "install": {
@@ -135,7 +135,7 @@
     {
       "board": "OPF_WS_DASH",
       "filename": "OPF_WS_DASH.bin",
-      "sha256": "5ea9a3b08d41e37c1154d5c181782a501183f7d4615a959571f6d313ca9024ba",
+      "sha256": "fbaa0b63e37a5fa38ea034c069d1e3c696ba2a83b586fd6df628c9488c1d38a4",
       "size": 2607040,
       "url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/OPF_WS_DASH.bin",
       "source_filename": "OPF_WS_DASH.bin",
@@ -165,14 +165,14 @@
     "kind": "workflow_run",
     "repository": "opelpanfan/OPF-STORAGE-DASH",
     "ref": "master-grok",
-    "sha": "7f17616378380ec8a9204a5c76fb30c9a5655f27",
+    "sha": "084cd9335678abb6a63ab6cb35a0ac9a17260cee",
     "tag": "v0.0.3",
-    "run_id": 45989474093,
+    "run_id": 45996028825,
     "workflow": "build-and-push-feed.yml",
-    "fw_build": "7f17616",
-    "fw_version": "0.0.3+VC101",
-    "version_code": 101
+    "fw_build": "084cd93",
+    "fw_version": "0.0.3+VC102",
+    "version_code": 102
   },
-  "release_notes": "# BMS v0.0.3\n\nFirmware **0.0.3+VC101** (`7f17616`, `version_code` 101). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC100 (`50c03fa`), 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`). This build fixes BLE pairing from Windows.\n\n## VC98\u2013VC101\n\n- VC98: watchdog heartbeat snapshot restore after a crash reboot (76 B packed snapshot); MQTT writes bounded to 5000 ms per write; `/diag` gains `mqtt_write_*` keys\n- VC99: RS485 master waits 28791 us for the first reply byte (was 5 ms); failure back-off counted per slave instead of one shared counter\n- VC100: a SLAVE on a board with RS485 and no slave CAN bus treats a stored `b_slave_com` None as RS485 in RAM only (NVS and `cfg_get` unchanged); every MASTER creates the `rs485_poll` task at boot and idles it when there are no slaves or the link is None; `/diag` gains `slave_link`. Wire format, baud, settings push and MQTT unchanged\n- VC101: BLE uses legacy passkey pairing (`OPF_BLE_SC_ENABLED` defaults to 0; LE Secure Connections stay a build option) and no longer calls `startSecurity` on connect, so the central starts pairing (fixes Windows Settings and WinRT \"Connection failed\"). TX/RX still require encryption and authentication; display-only static passkey (`ble_pin`, default 123456) and the 3-bond store (oldest dropped) are unchanged. The auth log line never includes the passkey or keys\n\n## VC91\u2013VC97\n\n- VC91: dropped (the relay-control-via-web-UI row was Flasher-only; Flasher removed it in its VC57)\n- VC92: default b_mqtt_contactor on when the NVS key is missing\n- VC93: gate non-SE30 BMW iX PACK_SOC on E5CE ready, otherwise hold the last value\n- VC94: one-decimal SoC for BMW iX (E5CE pptt) on web UI and BLE via soc_cpct (0.01 %); MQTT unchanged\n- VC95: PSA V2 reads SOH once after boot (0x22 DC64) with retries at 5, 15 and 45 s, stored in PACK_SOH; /diag gains soh_boot_* keys\n- VC96: CAN IDs shown as uppercase 0x-hex on serial, logs and /diag (lib/UTILS/can_id_fmt.h); cfg_set for b_ivt_id_base and b_i2c_addr accepts 0x, decimal or bare hex. Wire, NVS and MQTT unchanged\n- VC97: copy CAN ID keys in /diag `psa2_tx_suppressed` and `can_dup_rx_ids` so /diag is valid JSON\n\n## VC74\u2013VC90\n\n- VC74: PSA battery type rework + contactor/wake settings\n- VC75: contactor control for PSA V1/V2, wake flag on all types\n- VC76: match PSA V2 CAN contactor, wake and DTC clear to the eCMP schedule; keep TesterPresent and DTC read off eCMP UDS\n- VC77: store every pack as one series cell count\n- VC78: rename Waveshare RS485-CAN board label\n- VC79: remove BMS web settings\n- VC80: drive the negative contactor GPIO on BMW SE30\n- VC81: drive the contactor sequence from b_ctc_ctrl\n- VC82: replace split contactor controls with one b_ctc_type\n- VC83: add CAN bus (stock BMS) as b_precharge 2\n- VC84: reorder slave comm enum to 0 None, 1 RS485, 2 CAN\n- VC85: reject CAN bus selectors the board cannot take\n- VC86: default T-2CANFD inverter to CAN1, pack stays on CAN2\n- VC87: carry b_cell_cap as 32-bit on the RS485 settings push\n- VC88: send FAKE pack values on the Pylon live frames\n- VC89: PSA V2 Clear DTC runs the reset sequence, add BLE reset_bms\n- VC90: board_profile accepted only for the firmware image's own board(s)\n\n## VC65\u2013VC73\n\n- VC65: BLE coredump_info and coredump_get\n- VC66: BLE passkey pairing, bonding, and PIN reset\n- VC67: show Read OTA data in a modal\n- VC68: make grace and timeout timers safe across millis() rollover\n- VC69: Resubscribe all MQTT topics after every connect\n- VC70: Hold a BLE contactor close through every failsafe\n- VC71: Honor the manual contactor hold on PSA 82 type 3\n- VC72: Restyle the OTA page to match the dash\n- VC73: Add an OTA button on the Status page\n\n## Also in this release (after v0.0.2, through VC63)\n\n- Drop the web Settings and Battery tabs; settings are BLE-only (`cfg_get` / `cfg_set` / `cfg_schema`)\n- Publish cell and temperature CSV over MQTT (`cell_data`, `temp_data`); `rt` stays compact and adds module geometry\n- Move the standalone CAN dash to OPF-DASH\n- Give every web control a BLE command and drop the USB serial console\n- Expose the cached pack DTC list on the BLE console (`dtc_list` / `DTC|` notify)\n- VC53: remove Status action sections and their HTTP endpoints\n- VC54: remove Status Health and flatten Device Overview\n- VC55: remove BMS self-test and keep the OTA boot-health gate\n- VC56: remove Dashboard Site summary and keep its values on Status\n- VC57: add ap_hidden so the SoftAP can hide its SSID; drop the Hide SSID control from the Status page\n- VC58: remove the Live data row from the Dashboard\n- VC59: match application HTTP routes exactly\n- VC60: build /diag snapshot off async_tcp; fix slim /health snapshot\n- VC61: remove /health full duplicate and dead code\n- VC62: task watchdog config + heartbeat snapshot in reboot log; fix task heartbeat ages\n- VC63: coalesce soak NVS writes; label async_tcp heartbeat (not_watched, last feed on async_tcp_last_feed_age_ms)\n",
+  "release_notes": "# BMS v0.0.3\n\nFirmware **0.0.3+VC102** (`084cd93`, `version_code` 102). Tag `v0.0.3` on `master-grok`, published 27 Nov 2026 (Europe/Vilnius); the earlier v0.0.3 was 0.0.3+VC101 (`7f17616`), 0.0.3+VC100 (`50c03fa`), 0.0.3+VC97 (`eece3ff`), 0.0.3+VC96 (`e7ce2f5`) and 0.0.3+VC90 (`6144b8d`). This build fixes a task watchdog reset during OTA on masters with a long uptime.\n\n## VC98\u2013VC102\n\n- VC98: watchdog heartbeat snapshot restore after a crash reboot (76 B packed snapshot); MQTT writes bounded to 5000 ms per write; `/diag` gains `mqtt_write_*` keys\n- VC99: RS485 master waits 28791 us for the first reply byte (was 5 ms); failure back-off counted per slave instead of one shared counter\n- VC100: a SLAVE on a board with RS485 and no slave CAN bus treats a stored `b_slave_com` None as RS485 in RAM only (NVS and `cfg_get` unchanged); every MASTER creates the `rs485_poll` task at boot and idles it when there are no slaves or the link is None; `/diag` gains `slave_link`. Wire format, baud, settings push and MQTT unchanged\n- VC101: BLE uses legacy passkey pairing (`OPF_BLE_SC_ENABLED` defaults to 0; LE Secure Connections stay a build option) and no longer calls `startSecurity` on connect, so the central starts pairing (fixes Windows Settings and WinRT \"Connection failed\"). TX/RX still require encryption and authentication; display-only static passkey (`ble_pin`, default 123456) and the 3-bond store (oldest dropped) are unchanged. The auth log line never includes the passkey or keys\n- VC102: `rs485_poll` stores a fresh wake stamp after its 1 s idle delay and during OTA (sleeps 10 ms instead of `vTaskDelayUntil`), and snaps a stamp more than 5 periods stale (tick-wrap safe, `lib/UTILS/task_wake_policy.h`). Since VC100 a stale stamp made the task busy-loop when an OTA started, starving IDLE0 until the 30 s task watchdog reset the unit (seen on a unit with 1744 s uptime). No protocol, settings, MQTT or RS485 frame-timing changes\n\n## VC91\u2013VC97\n\n- VC91: dropped (the relay-control-via-web-UI row was Flasher-only; Flasher removed it in its VC57)\n- VC92: default b_mqtt_contactor on when the NVS key is missing\n- VC93: gate non-SE30 BMW iX PACK_SOC on E5CE ready, otherwise hold the last value\n- VC94: one-decimal SoC for BMW iX (E5CE pptt) on web UI and BLE via soc_cpct (0.01 %); MQTT unchanged\n- VC95: PSA V2 reads SOH once after boot (0x22 DC64) with retries at 5, 15 and 45 s, stored in PACK_SOH; /diag gains soh_boot_* keys\n- VC96: CAN IDs shown as uppercase 0x-hex on serial, logs and /diag (lib/UTILS/can_id_fmt.h); cfg_set for b_ivt_id_base and b_i2c_addr accepts 0x, decimal or bare hex. Wire, NVS and MQTT unchanged\n- VC97: copy CAN ID keys in /diag `psa2_tx_suppressed` and `can_dup_rx_ids` so /diag is valid JSON\n\n## VC74\u2013VC90\n\n- VC74: PSA battery type rework + contactor/wake settings\n- VC75: contactor control for PSA V1/V2, wake flag on all types\n- VC76: match PSA V2 CAN contactor, wake and DTC clear to the eCMP schedule; keep TesterPresent and DTC read off eCMP UDS\n- VC77: store every pack as one series cell count\n- VC78: rename Waveshare RS485-CAN board label\n- VC79: remove BMS web settings\n- VC80: drive the negative contactor GPIO on BMW SE30\n- VC81: drive the contactor sequence from b_ctc_ctrl\n- VC82: replace split contactor controls with one b_ctc_type\n- VC83: add CAN bus (stock BMS) as b_precharge 2\n- VC84: reorder slave comm enum to 0 None, 1 RS485, 2 CAN\n- VC85: reject CAN bus selectors the board cannot take\n- VC86: default T-2CANFD inverter to CAN1, pack stays on CAN2\n- VC87: carry b_cell_cap as 32-bit on the RS485 settings push\n- VC88: send FAKE pack values on the Pylon live frames\n- VC89: PSA V2 Clear DTC runs the reset sequence, add BLE reset_bms\n- VC90: board_profile accepted only for the firmware image's own board(s)\n\n## VC65\u2013VC73\n\n- VC65: BLE coredump_info and coredump_get\n- VC66: BLE passkey pairing, bonding, and PIN reset\n- VC67: show Read OTA data in a modal\n- VC68: make grace and timeout timers safe across millis() rollover\n- VC69: Resubscribe all MQTT topics after every connect\n- VC70: Hold a BLE contactor close through every failsafe\n- VC71: Honor the manual contactor hold on PSA 82 type 3\n- VC72: Restyle the OTA page to match the dash\n- VC73: Add an OTA button on the Status page\n\n## Also in this release (after v0.0.2, through VC63)\n\n- Drop the web Settings and Battery tabs; settings are BLE-only (`cfg_get` / `cfg_set` / `cfg_schema`)\n- Publish cell and temperature CSV over MQTT (`cell_data`, `temp_data`); `rt` stays compact and adds module geometry\n- Move the standalone CAN dash to OPF-DASH\n- Give every web control a BLE command and drop the USB serial console\n- Expose the cached pack DTC list on the BLE console (`dtc_list` / `DTC|` notify)\n- VC53: remove Status action sections and their HTTP endpoints\n- VC54: remove Status Health and flatten Device Overview\n- VC55: remove BMS self-test and keep the OTA boot-health gate\n- VC56: remove Dashboard Site summary and keep its values on Status\n- VC57: add ap_hidden so the SoftAP can hide its SSID; drop the Hide SSID control from the Status page\n- VC58: remove the Live data row from the Dashboard\n- VC59: match application HTTP routes exactly\n- VC60: build /diag snapshot off async_tcp; fix slim /health snapshot\n- VC61: remove /health full duplicate and dead code\n- VC62: task watchdog config + heartbeat snapshot in reboot log; fix task heartbeat ages\n- VC63: coalesce soak NVS writes; label async_tcp heartbeat (not_watched, last feed on async_tcp_last_feed_age_ms)\n",
   "release_notes_url": "https://raw.githubusercontent.com/opelpanfan/OPF-FIRMWARE-FEED/master-grok/BMS/latest/RELEASE_NOTES.md"
 }
