@@ -308,30 +308,30 @@ Source repository: `opelpanfan/OPF-P1`
 #### `v0.0.3`
 
 - Date: 2026-11-27
-- Source commit: `9425eea517f0986b9dfe56b42cd4c62d8e0075eb` (opelpanfan/OPF-P1)
+- Source commit: `c94a98f79e2473185ffc1ca3ef9becf2540e34dc` (opelpanfan/OPF-P1)
 - Files:
   - `RAK3172_RX.bin` (70372 bytes, 68.7 KiB)
   - `RAK3172_TX.bin` (95148 bytes, 92.9 KiB)
-  - `RELEASE_NOTES.md` (1384 bytes, 1.4 KiB)
+  - `RELEASE_NOTES.md` (1302 bytes, 1.3 KiB)
   - `SHA256SUMS` (162 bytes)
-  - `index.json` (3151 bytes, 3.1 KiB)
+  - `index.json` (3069 bytes, 3.0 KiB)
 - Summary:
-  - **Frequency is 869.525 MHz (EU868 g3).** This is fw17: firmware **0.0.3+VC17** (`9425eea`, `version_code` 17; the device's own version text reads `0.0.2+17`). Tag `v0.0.3` on `master-grok`. Flash both images from this release together. The radio settings and uplink format are…
+  - **Frequency is 869.525 MHz (EU868 g3).** This is fw17: firmware **0.0.3+VC17** (`c94a98f`, `version_code` 17; the device's own version text reads `0.0.3+17`). Tag `v0.0.3` on `master-grok`, built from `c94a98f79e2473185ffc1ca3ef9becf2540e34dc`. Flash both images from this…
   - The P1 meter stays valid for 15 s (`P1_INVALID_AFTER_MS`), so a meter that sends every 10 s no longer flags every uplink as invalid. In v0.0.2 `dataInvalid` fired after 2 s.
   - The transmitter clears USART1 overrun, framing, noise and parity errors (ORE/FE/NE/PE) on the live path. A stuck overrun used to stop reception.
 
 #### `latest`
 
 - Date: 2026-11-27
-- Source commit: `9425eea517f0986b9dfe56b42cd4c62d8e0075eb` (opelpanfan/OPF-P1)
+- Source commit: `c94a98f79e2473185ffc1ca3ef9becf2540e34dc` (opelpanfan/OPF-P1)
 - Files:
   - `RAK3172_RX.bin` (70372 bytes, 68.7 KiB)
   - `RAK3172_TX.bin` (95148 bytes, 92.9 KiB)
-  - `RELEASE_NOTES.md` (1384 bytes, 1.4 KiB)
+  - `RELEASE_NOTES.md` (1302 bytes, 1.3 KiB)
   - `SHA256SUMS` (162 bytes)
-  - `index.json` (3150 bytes, 3.1 KiB)
+  - `index.json` (3068 bytes, 3.0 KiB)
 - Summary:
-  - **Frequency is 869.525 MHz (EU868 g3).** This is fw17: firmware **0.0.3+VC17** (`9425eea`, `version_code` 17; the device's own version text reads `0.0.2+17`). Tag `v0.0.3` on `master-grok`. Flash both images from this release together. The radio settings and uplink format are…
+  - **Frequency is 869.525 MHz (EU868 g3).** This is fw17: firmware **0.0.3+VC17** (`c94a98f`, `version_code` 17; the device's own version text reads `0.0.3+17`). Tag `v0.0.3` on `master-grok`, built from `c94a98f79e2473185ffc1ca3ef9becf2540e34dc`. Flash both images from this…
   - The P1 meter stays valid for 15 s (`P1_INVALID_AFTER_MS`), so a meter that sends every 10 s no longer flags every uplink as invalid. In v0.0.2 `dataInvalid` fired after 2 s.
   - The transmitter clears USART1 overrun, framing, noise and parity errors (ORE/FE/NE/PE) on the live path. A stuck overrun used to stop reception.
 
