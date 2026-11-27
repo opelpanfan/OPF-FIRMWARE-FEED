@@ -410,17 +410,18 @@ Source repository: `opelpanfan/OPF-FLASHER`
 #### `latest`
 
 - Date: 2026-11-27
-- Source commit: `c49deddbfeca9747b5f1dfd64462ab0253abf96c` (opelpanfan/OPF-FLASHER)
+- Source commit: `6e265bc8f70ea761c3bc16f9f039431b30bebba2` (opelpanfan/OPF-FLASHER)
 - Files:
   - `OPF-FLASHER-linux-amd64.deb` (54369188 bytes, 51.85 MiB)
-  - `OPF-FLASHER-win-x64.exe` (33090348 bytes, 31.56 MiB)
-  - `RELEASE_NOTES.md` (2825 bytes, 2.8 KiB)
-  - `SHA256SUMS` (184 bytes)
-  - `index.json` (4646 bytes, 4.5 KiB)
+  - `OPF-FLASHER-win-x64-VC103.exe` (33094723 bytes, 31.56 MiB)
+  - `OPF-FLASHER-win-x64.exe` (33094723 bytes, 31.56 MiB)
+  - `RELEASE_NOTES.md` (3472 bytes, 3.4 KiB)
+  - `SHA256SUMS` (280 bytes)
+  - `index.json` (5904 bytes, 5.8 KiB)
 - Summary:
   - `FLASHER/latest` is a mixed package. The Linux deb is still the tagged v0.0.3 build. The Windows portable exe is a newer desktop build. The immutable folder `FLASHER/v0.0.3` and the git tag `v0.0.3` on `opelpanfan/OPF-FLASHER` are unchanged (both platforms there remain…
   - **Linux:** `OPF-FLASHER-linux-amd64.deb` — amd64 package 0.0.2+VC95, built on the OptiPlex from `opelpanfan/OPF-FLASHER` commit `6a925e2494777bb4e1a40eb6c3d8f2790873a812` on `master-grok` (git tag `v0.0.3`). Bundled Qt 6.8.3, esptool, and OpenOCD. Install with your package…
-  - **Windows:** `OPF-FLASHER-win-x64.exe` — portable 7-Zip LZMA2 self-extractor, app version 0.0.2+VC101 from `opelpanfan/OPF-FLASHER` commit `c49deddbfeca9747b5f1dfd64462ab0253abf96c` on `master-grok`. Cross-built on the OptiPlex (Qt 6.8.3, official MSVC kit, clang-cl). This…
+  - **Windows:** `OPF-FLASHER-win-x64-VC103.exe` (the build number is in the file name; `OPF-FLASHER-win-x64.exe` is a copy of the newest build so old links keep working) — portable 7-Zip LZMA2 self-extractor, app version 0.0.2+VC103 from `opelpanfan/OPF-FLASHER` commit…
 
 ### SCREEN
 
