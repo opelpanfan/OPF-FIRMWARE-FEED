@@ -73,6 +73,8 @@
 a25a709fcb46069959656d9e2a373f6a4611f7877fe78755f7601c652f0c6c07  RACE/v0.1.16/esp32-p4.bin
 a2a2e6a27ab712e6745334c838d24de742823e055aa0ac468ef0e47a37ef2095  BMS/latest/OPF_ATOM_S3R.bin
 a2a2e6a27ab712e6745334c838d24de742823e055aa0ac468ef0e47a37ef2095  BMS/v0.0.3/OPF_ATOM_S3R.bin
+a4b3a3dadf123fd35f573e1731c6adee2b6ef86dc5c2ffa40d85bacdcbafcf90  CONFIG_APP/latest/opf-config-app.apk
+a4b3a3dadf123fd35f573e1731c6adee2b6ef86dc5c2ffa40d85bacdcbafcf90  CONFIG_APP/v0.0.3/opf-config-app.apk
 a959aa3b027483a7cc3080152f192ed9cbb8a4435c9ed6189d553d899368976a  BMS/v0.0.2/OPF_ATOM_S3R.bin
 bd0f7954aca2ef7d925ee21aaa1f3dc8822d1d6ce5cbbd26a135e5886bfff6ce  BMS/latest/OPF_WS_DASH.partitions.bin
 bd0f7954aca2ef7d925ee21aaa1f3dc8822d1d6ce5cbbd26a135e5886bfff6ce  BMS/v0.0.2/OPF_WS_DASH.partitions.bin

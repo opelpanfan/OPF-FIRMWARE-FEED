@@ -221,7 +221,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `v0.0.3`
 
-- Date: 2026-11-26
+- Date: 2026-11-27
 - Source commit: `2cbc83552b50fbfb2e024ce80c820ace77ee4acc` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1930192 bytes, 1.84 MiB)
@@ -247,7 +247,7 @@ Source repository: `opelpanfan/OPF-STORAGE-M5-BRIDGE`
 
 #### `latest`
 
-- Date: 2026-11-26
+- Date: 2026-11-27
 - Source commit: `2cbc83552b50fbfb2e024ce80c820ace77ee4acc` (opelpanfan/OPF-STORAGE-M5-BRIDGE)
 - Files:
   - `ATOM_S3.bin` (1930192 bytes, 1.84 MiB)
@@ -324,7 +324,33 @@ Source repository: `opelpanfan/OPF-P1`
 
 Source repository: `opelpanfan/OPF-CONFIG-APP`
 
-No version folders.
+#### `v0.0.3`
+
+- Date: unknown
+- Source commit: `16bef971e14167808eed32daebdb4a349e005e29` (opelpanfan/OPF-CONFIG-APP)
+- Files:
+  - `RELEASE_NOTES.md` (14671 bytes, 14.3 KiB)
+  - `SHA256SUMS` (85 bytes)
+  - `index.json` (16006 bytes, 15.6 KiB)
+  - `opf-config-app.apk` (22750404 bytes, 21.70 MiB)
+- Summary:
+  - 0.0.3+109: Race Dash / PDM work since 0.0.1+104, including live input and formula values, pdm_caps field hiding, park-stop (wiperpark), bitrate labels that never show a raw number, and mid-transfer cancel for fs_put uploads (disconnect, no auto-reconnect). Android versionName…
+  - 0.0.1+104: Cell count is the pack series total from `cell_count` / `b_cell_count`, shown as sent. `b_cells_editable` = 1 (or PSA Custom when that flag is absent on enum v4) is the only editable case, and Save writes `b_cell_count` as the total (1–108). Module counts are…
+  - 0.0.1+103: BMS VC77 cells. Module count is gone from settings, and the live cell view is one flat bar chart (min blue, max amber, the rest green) with a table toggle. On `b_type_enum_v` >= 4, cell count is editable only for PSA Custom (or when cfg_get says so); PSA V1 shows…
+
+#### `latest`
+
+- Date: unknown
+- Source commit: `16bef971e14167808eed32daebdb4a349e005e29` (opelpanfan/OPF-CONFIG-APP)
+- Files:
+  - `RELEASE_NOTES.md` (14671 bytes, 14.3 KiB)
+  - `SHA256SUMS` (85 bytes)
+  - `index.json` (16005 bytes, 15.6 KiB)
+  - `opf-config-app.apk` (22750404 bytes, 21.70 MiB)
+- Summary:
+  - 0.0.3+109: Race Dash / PDM work since 0.0.1+104, including live input and formula values, pdm_caps field hiding, park-stop (wiperpark), bitrate labels that never show a raw number, and mid-transfer cancel for fs_put uploads (disconnect, no auto-reconnect). Android versionName…
+  - 0.0.1+104: Cell count is the pack series total from `cell_count` / `b_cell_count`, shown as sent. `b_cells_editable` = 1 (or PSA Custom when that flag is absent on enum v4) is the only editable case, and Save writes `b_cell_count` as the total (1–108). Module counts are…
+  - 0.0.1+103: BMS VC77 cells. Module count is gone from settings, and the live cell view is one flat bar chart (min blue, max amber, the rest green) with a table toggle. On `b_type_enum_v` >= 4, cell count is editable only for PSA Custom (or when cfg_get says so); PSA V1 shows…
 
 ### METER
 
